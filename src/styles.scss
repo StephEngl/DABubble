@@ -1,1 +1,23 @@
-/* You can add global styles to this file, and also import other style files */
+@import "./assets/styles/mixins.scss";
+@import "./assets/fonts/fonts.scss";
+
+body {
+    font-family: 'Nunito';
+    min-height: 100vh;
+    background-color: var(--col-bg-main);
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    scroll-behavior: smooth;
+}
+
+ul {
+    padding: 0;
+}
+
+button {
+    border: none;
+    cursor: pointer;
+}
