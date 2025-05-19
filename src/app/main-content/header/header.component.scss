@@ -1,0 +1,62 @@
+@import './../../../assets/styles/mixins.scss';
+
+header {
+    @include dFlex($jc:space-between);
+    display: flex;
+    position: relative;
+    justify-content: space-between;
+    width: 100%;
+    height: 100px;
+    padding: 16px;
+}
+
+.header-logo {
+    @include dFlex($ai:center);
+    cursor: pointer;
+    gap: 20px;
+    >img:first-child {
+        height: 70px;
+    }
+    >img:nth-child(2) {
+        height: 24px;
+    }
+}
+
+.search-app {
+    align-self: center;
+    height: 50px;
+    width: 40%;
+    >input {
+        height: 100%;
+        min-width: 100%;
+    }
+}
+
+.user-menu {
+    @include dFlex($ai:center, $gap: 10px);
+    align-self: center;
+    height: 100%;
+
+    .user-icon {
+        position: relative;
+        height: 100%;
+
+        .user-status {
+            border-radius: 50%;
+            position: absolute;
+            bottom: -5px;
+            right: -5px;
+            height: 25px;
+            width: 25px;
+            padding: 4px;
+        }
+    }
+}
+
+.user-picture {
+    height: 100%;
+    aspect-ratio: 1/1;
+    background-size: contain;
+    background-repeat: no-repeat;
+    border-radius: 50%;
+}

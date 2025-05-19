@@ -2,6 +2,7 @@
 @import "./assets/fonts/fonts.scss";
 
 body {
+    @include dFlex($ai:flex-start);
     font-family: 'Nunito';
     min-height: 100vh;
     background-color: var(--col-bg-main);
@@ -20,4 +21,9 @@ ul {
 button {
     border: none;
     cursor: pointer;
+}
+
+input {
+    border: none;
+    border-radius: 20px;
 }
