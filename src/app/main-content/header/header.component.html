@@ -6,16 +6,17 @@
     </div>
 
     <section class="search-app">
-        <input type="text" placeholder="Search">
+        <input type="text" placeholder="Search Devspace">
+        <img src="./../../../assets/icons/general/search_grey.svg" alt="">
     </section>
 
-    <div class="user-menu">
-        <p>User Name</p>
+    <div class="user-menu" (mouseover)="hoverMenu = true" (mouseleave)="hoverMenu = false">
+        <h3 [style.color]="hoverMenu ?'var(--col-font-btn-hover)' : '' ">User Name</h3>
         <div class="user-icon">
-            <div class="user-picture" [style.backgroundImage]="'url(./../../../assets/icons/user/user_fem_2.svg)'"></div>
+            <div class="user-picture" [style.backgroundImage] ="'url(./../../../assets/icons/user/user_fem_2.svg)'"></div>
             <img class="user-status" src="./../../../assets/icons/user/status_online.svg" alt="">
         </div>
-        <img class="menu-icon" src="./../../../assets/icons/general/menu.svg" alt="">
+        <img class="menu-icon" [src]="hoverMenu ? './../../../assets/icons/menu/dropdown_blue.svg' : './../../../assets/icons/menu/dropdown_black.svg'" alt="">
     </div>
 
 </header>

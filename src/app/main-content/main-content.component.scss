@@ -2,7 +2,7 @@
 
 :host {
     @include dFlex($fd: column);
-    gap: 0px;
+    gap: 24px;
     height: 100%;
 }
 
@@ -25,7 +25,17 @@ app-thread {
 }
 
 app-workspace {
+    flex-shrink: 0;
     width: 365px;
+    transition: all 0.3s ease;
+    margin-left: 16px;
+    &.hidden {
+        width: 0;
+        padding: 0;
+        margin: 0;
+        opacity: 0;
+        overflow: hidden;
+    }
 }
 
 app-channel {
@@ -34,4 +44,22 @@ app-channel {
 
 app-thread {
     width: 485px;
+}
+
+.workspace-btn {
+    @include dFlex($gap:16px);
+    cursor: pointer;
+    border-radius: 0 20px 20px 20px;
+    filter: drop-shadow(4px 4px 4px var(--col-transparent-shadow));
+    height: 60px;
+    width: 300px;
+    background-color: var(--col-bg-secondary);
+    position: absolute;
+    transform-origin: left bottom;
+    transform: rotate(-90deg);
+    bottom: 0px;
+    left: calc(16px + 60px);
+    >img {
+        transform: rotate(90deg);
+    }
 }

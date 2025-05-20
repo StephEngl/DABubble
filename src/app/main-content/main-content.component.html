@@ -1,7 +1,11 @@
 <app-header></app-header>
 <section class="main-content">
-    <app-workspace></app-workspace>
+    <app-workspace [class.hidden]="!toggleMenu.showWorkspace()"></app-workspace>
     <app-channel></app-channel>
     <app-thread></app-thread>
 </section>
 
+<nav class="workspace-btn" (click)="toggleWorkspaceMenu()" (mouseenter)="workspaceHovered = true" (mouseleave)="workspaceHovered = false">
+    <h5 [style.color]="workspaceHovered ? 'var(--col-font-btn-hover)' : ''">{{ workspaceStatus }} Workspace Menu</h5>
+    <img [src]="getWorkspaceIcon()" alt="">
+</nav>
