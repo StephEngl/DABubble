@@ -7,5 +7,5 @@ export class MenuToggleService {
 
   constructor() { }
 
-  showWorkspace = signal<boolean>(false);
+  showWorkspace = signal<boolean>(true);
 }
