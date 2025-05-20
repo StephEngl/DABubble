@@ -2,6 +2,8 @@
 
 :host {
   background-color: var(--col-bg-btn-hover);
+  display: flex;
+  flex-direction: column;
   height: 100vh;
 }
 
@@ -29,12 +31,11 @@ header {
 }
 
 main {
-  display: flex;
-  height: 100%;
   flex-grow: 1;
 }
 
 .login-footer {
+  height: 50px;
   @include dFlex($gap: 16px);
 }
 
@@ -42,13 +43,13 @@ a {
   cursor: pointer;
   padding: 10px 15px;
   color: var(--col-font-href);
-  font-size: 18px;
   font-family: "Figtree", sans-serif;
   transition: border-color 0.125s ease-in-out;
   padding: 10px 15px;
   border: 1px solid transparent;
   border-radius: 25px;
 }
+
 .router-link:hover {
   border-color: var(--col-stroke-main);
   color: var(--col-font-btn-hover);
