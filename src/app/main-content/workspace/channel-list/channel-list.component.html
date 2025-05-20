@@ -1,9 +1,9 @@
 <section class="channel-list">
     <header>
-        <button (click)="toggleChannelList()">
-            <img src="./../../../../assets/icons/menu/dropdown_black.svg" alt="" [style.transform]="channelListOpened ? 'rotate(0deg)' : 'rotate(-90deg)'">
-            <img src="./../../../../assets/icons/general/workspace_icon_black.svg" alt="">
-            <h4>Channels</h4>
+        <button (click)="toggleChannelList()" (mouseenter)="channelListHovered = true" (mouseleave)="channelListHovered = false">
+            <img [src]="'./../../../../assets/icons/menu/dropdown_'+ imageColor() +'.svg'" alt="" [style.transform]="channelListOpened ? 'rotate(0deg)' : 'rotate(-90deg)'">
+            <img [src]="'./../../../../assets/icons/general/workspace_icon_' + imageColor() + '.svg'" alt="">
+            <h4 [style.color]="channelListHovered ? 'var(--col-font-btn-hover)' : 'black'">Channels</h4>
         </button>
         <img src="./../../../../assets/icons/menu/add_black.svg" alt="">
     </header>

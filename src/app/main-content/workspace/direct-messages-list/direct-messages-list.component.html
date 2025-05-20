@@ -1,12 +1,12 @@
 <section class="direct-messages-list">
     <header>
         <button (click)="toggleChannelList()">
-            <img src="./../../../../assets/icons/menu/dropdown_black.svg" alt="" [style.transform]="channelListOpened ? 'rotate(0deg)' : 'rotate(-90deg)'">
+            <img src="./../../../../assets/icons/menu/dropdown_black.svg" alt="" [style.transform]="directMessageListOpened ? 'rotate(0deg)' : 'rotate(-90deg)'">
             <img src="./../../../../assets/icons/general/account_circle_black.svg" alt="">
             <h4>Direct Messages</h4>
         </button>
     </header>
-    <div [class]="{'close-list': !channelListOpened}" class="direct-messages">
+    <div [class]="{'close-list': !directMessageListOpened}" class="direct-messages">
         <ul>
             @for (element of tempArrayItemCount; track element) {
             <li>

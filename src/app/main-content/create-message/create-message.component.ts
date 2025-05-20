@@ -23,9 +23,9 @@ export class CreateMessageComponent {
   ];
 
 
-  getMenuIcon(object: any): string {
-    const color = object.hovered ? 'blue' : 'grey';
-    const symbol = object.src;
+  getMenuIcon(index: number): string {
+    const color = this.menuOptions[index].hovered ? 'blue' : 'grey';
+    const symbol = this.menuOptions[index].src;
     return `./../../../assets/icons/message/${symbol}_${color}.svg`;
   }
 

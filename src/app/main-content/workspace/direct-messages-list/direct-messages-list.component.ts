@@ -9,9 +9,9 @@ import { Component } from '@angular/core';
 })
 export class DirectMessagesListComponent {
   tempArrayItemCount: string[] = ['fem_1', 'fem_2', 'mal_1', 'mal_2', 'mal_3'];
-  channelListOpened: boolean = false;
+  directMessageListOpened: boolean = false;
 
   toggleChannelList() {
-    this.channelListOpened = !this.channelListOpened;
+    this.directMessageListOpened = !this.directMessageListOpened;
   }
 }

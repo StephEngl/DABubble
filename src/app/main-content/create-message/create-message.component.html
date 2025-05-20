@@ -6,7 +6,7 @@
                 <img
                     (mouseover)="menuOptions[index].hovered = true"
                     (mouseleave)="menuOptions[index].hovered = false"
-                    [src]="getMenuIcon(icon)"
+                    [src]="getMenuIcon(index)"
                     [alt]="icon.name">
             }
         </div>
