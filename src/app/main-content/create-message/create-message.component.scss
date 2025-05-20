@@ -1,0 +1,32 @@
+@import './../../../assets/styles/mixins.scss';
+
+.create-message {
+    >textarea {
+        height: 40px;
+        min-width: 100%;
+        text-wrap: wrap;
+        overflow-y: auto;
+        border-radius: 0px;
+        font-size: clamp(18px, 1rem, 20px);
+    }
+    .message-menu {
+        @include dFlex($jc: space-between);
+    }
+    .menu-options {
+        @include dFlex($gap:16px);
+        >img {
+            cursor: pointer;
+        }
+    }
+    .send-message {
+        @include dFlex();
+        cursor: pointer;
+        padding: 12px;
+        height: 34px;
+        width: 34px;
+        border-radius: 50%;
+        &:hover {
+            background-color: var(--col-bg-main);
+        }
+    }
+}

@@ -21,9 +21,12 @@ ul {
 button {
     border: none;
     cursor: pointer;
+    background-color: transparent;
 }
 
-input {
+input,
+textarea {
     border: none;
+    resize: none;
     border-radius: 20px;
 }

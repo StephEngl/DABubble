@@ -1,0 +1,23 @@
+    <header>
+        <nav>
+            <img src="./../../../assets/icons/general/tag_black.svg" alt="">
+            <h2>Channel Name</h2>
+            <img src="./../../../assets/icons/menu/dropdown_black.svg" alt="">
+        </nav>
+
+        <section class="header-right">
+            <div class="channel-members">
+                <!-- @for (channelmembers) -->
+                    <!-- @if (membercount <= 4 ) -->
+                    <img src="./../../../../assets/icons/user/user_mal_1.svg" class="member-icon">
+                    <img src="./../../../../assets/icons/user/user_mal_1.svg" class="member-icon">
+                    <!-- @else membercount -4 + rest amount -->
+                    <p class="member-overflow">+2</p> 
+            </div>
+
+            <div class="add-members" (mouseenter)="addMembersHovered = true" (mouseleave)="addMembersHovered = false">
+                <img [src]="addMembersHovered ? './../../../../assets/icons/menu/person_add_blue.svg' : './../../../../assets/icons/menu/person_add_black.svg'" alt="">
+            </div>
+        </section>
+
+    </header>

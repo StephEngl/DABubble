@@ -1,0 +1,52 @@
+@import './../../../../assets/styles/mixins.scss';
+
+header {
+    @include dFlex($jc: space-between);
+    padding: 16px;
+    border-radius: 20px 20px 0 0;
+    background-color: white;
+    filter: drop-shadow(0px 4px 4px var(--col-transparent-shadow));
+    .header-right {
+        @include dFlex($gap: 10px);
+    }
+    >nav,
+    .channel-members,
+    .add-members {
+        @include dFlex($gap: 10px);
+        cursor: pointer;
+    }
+}
+
+.channel-members {
+    padding: 6px 12px;
+    border-radius: 10px;
+
+    .member-icon {
+        height: 40px;
+        border-radius: 50%;
+        border: 2px solid white;
+        margin-right: -20px;
+    }
+    .member-overflow {
+        margin-left: 15px;
+        font-weight: 700;
+    }
+    &:hover {
+        background-color: var(--col-bg-main);
+    }
+}
+
+.add-members {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background-color: var(--col-bg-main);
+    >img {
+        transition: all 0.4s ease;
+    }
+    &:hover {
+        >img {
+            transform: scale(1.01);
+        }
+    }
+}

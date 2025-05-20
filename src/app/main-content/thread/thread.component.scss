@@ -1,0 +1,10 @@
+@import './../../../assets/styles/mixins.scss';
+
+.thread {
+    position: relative;
+    height: 100%;
+}
+
+app-create-message {
+    @include createMessage($width: calc(100% - 32px));
+}

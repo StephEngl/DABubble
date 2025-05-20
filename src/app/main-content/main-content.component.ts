@@ -27,9 +27,9 @@ export class MainContentComponent {
   }
 
   getWorkspaceIcon(): string {
-  const color = this.workspaceHovered ? 'blue' : 'black';
-  const status = this.workspaceStatus === 'Open' ? 'workspace_open' : 'workspace_close';
-  return `./../../assets/icons/menu/${status}_${color}.svg`;
-}
+    const color = this.workspaceHovered ? 'blue' : 'black';
+    const status = this.workspaceStatus === 'Open' ? 'workspace_open' : 'workspace_close';
+    return `./../../assets/icons/menu/${status}_${color}.svg`;
+  }
 
 }

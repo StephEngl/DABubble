@@ -44,21 +44,22 @@ app-channel {
 
 app-thread {
     width: 485px;
+    margin-right: 16px;
 }
 
 .workspace-btn {
-    @include dFlex($gap:16px);
-    cursor: pointer;
-    border-radius: 0 20px 20px 20px;
-    filter: drop-shadow(4px 4px 4px var(--col-transparent-shadow));
+    @include dFlex($gap:16px, $pos:absolute);
     height: 60px;
     width: 300px;
-    background-color: var(--col-bg-secondary);
-    position: absolute;
-    transform-origin: left bottom;
-    transform: rotate(-90deg);
     bottom: 0px;
     left: calc(16px + 60px);
+    transform: rotate(-90deg);
+    transform-origin: left bottom;
+    background-color: var(--col-bg-secondary);
+    filter: drop-shadow(4px 4px 4px var(--col-transparent-shadow));
+    border-radius: 0 20px 20px 20px;
+    cursor: pointer;
+
     >img {
         transform: rotate(90deg);
     }

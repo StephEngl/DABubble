@@ -29,8 +29,10 @@ p, a {
     text-decoration: none;
 }
 
-input {
+input,
+textarea {
     font-family: 'Nunito';
+    resize: none;
     &:focus {
         outline: none;
         box-shadow: none;
