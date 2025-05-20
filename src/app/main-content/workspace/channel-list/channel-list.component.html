@@ -1,1 +1,24 @@
-<p>channel-list works!</p>
+<section class="channel-list">
+    <header>
+        <button (click)="toggleChannelList()">
+            <img src="./../../../../assets/icons/menu/dropdown_black.svg" alt="" [style.transform]="channelListOpened ? 'rotate(0deg)' : 'rotate(-90deg)'">
+            <img src="./../../../../assets/icons/general/workspace_icon_black.svg" alt="">
+            <h3>Channels</h3>
+        </button>
+        <img src="./../../../../assets/icons/menu/add_black.svg" alt="">
+    </header>
+    <div [class]="{'close-list': !channelListOpened}" class="channels">
+        <ul>
+            @for (elements of tempArrayItemCount; track elements) {
+            <li>
+                <img src="./../../../../assets/icons/general/tag_black.svg" alt="">
+                <p>channel name</p>
+            </li>
+            }
+        </ul>
+        <button class="add-channel">
+            <img src="./../../../../assets/icons/menu/add_circle_black.svg" alt="">
+            <h4>Add Channel</h4>
+        </button>
+    </div>
+</section>

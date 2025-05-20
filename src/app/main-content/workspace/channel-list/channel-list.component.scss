@@ -1,0 +1,53 @@
+@import './../../../../assets/styles/mixins.scss';
+
+.channel-list {
+    @include dFlex($fd:column, $ai:flex-start, $gap: 16px);
+}
+
+header {
+    @include dFlex($jc: space-between, $gap: 10px);
+    width: 100%;
+    >button {
+        @include dFlex($gap: 10px);
+        >img {
+            width: 20px;
+        }
+    }
+    >img {
+        cursor: pointer;
+    }
+}
+
+ul {
+    @include dFlex($fd:column, $ai:flex-start, $gap: 16px);
+    >li {
+        @include dFlex($gap: 10px);
+        >p {
+            font-size: 22px;
+            font-weight: 700;
+        }
+        >img {
+            width: 26px;
+            height: 26px;
+        }
+    }
+}
+
+.add-channel {
+    @include dFlex($gap: 10px);
+    padding: 0;
+}
+
+.close-list {
+    max-height: 0px !important;
+    padding: 0 !important;
+}
+
+.channels {
+    @include dFlex($fd:column, $ai:flex-start, $gap: 16px);
+    width: 100%;
+    overflow: hidden;
+    max-height: 500px;
+    transition: all 0.5s ease;
+    padding-bottom: 20px;
+}

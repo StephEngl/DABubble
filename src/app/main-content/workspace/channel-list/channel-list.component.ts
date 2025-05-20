@@ -9,4 +9,10 @@ import { Component } from '@angular/core';
 })
 export class ChannelListComponent {
 
+  tempArrayItemCount: number[] = [0,1,2,3,4];
+  channelListOpened: boolean = false;
+
+  toggleChannelList() {
+    this.channelListOpened = !this.channelListOpened;
+  }
 }
