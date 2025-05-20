@@ -1,0 +1,55 @@
+@import "../../assets/styles/mixins.scss";
+
+:host {
+  background-color: var(--col-bg-btn-hover);
+  height: 100vh;
+}
+
+header {
+  @include dFlex($jc: space-between);
+  width: 100%;
+  height: $header-height;
+  padding: 16px 16px 0 16px;
+
+  .header-logo {
+    @include dFlex($ai: center);
+    cursor: pointer;
+    gap: 20px;
+    > img:nth-child(1) {
+      height: 70px;
+    }
+    > img:nth-child(2) {
+      height: 24px;
+    }
+  }
+
+  .register-box {
+    @include dFlex($fd: column, $gap: 16px);
+  }
+}
+
+main {
+  display: flex;
+  height: 100%;
+  flex-grow: 1;
+}
+
+.login-footer {
+  @include dFlex($gap: 16px);
+}
+
+a {
+  cursor: pointer;
+  padding: 10px 15px;
+  color: var(--col-font-href);
+  font-size: 18px;
+  font-family: "Figtree", sans-serif;
+  transition: border-color 0.125s ease-in-out;
+  padding: 10px 15px;
+  border: 1px solid transparent;
+  border-radius: 25px;
+}
+.router-link:hover {
+  border-color: var(--col-stroke-main);
+  color: var(--col-font-btn-hover);
+}
