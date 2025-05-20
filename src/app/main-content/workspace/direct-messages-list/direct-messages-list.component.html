@@ -1,1 +1,21 @@
-<p>direct-messages-list works!</p>
+<section class="direct-messages-list">
+    <header>
+        <button (click)="toggleChannelList()">
+            <img src="./../../../../assets/icons/menu/dropdown_black.svg" alt="" [style.transform]="channelListOpened ? 'rotate(0deg)' : 'rotate(-90deg)'">
+            <img src="./../../../../assets/icons/general/account_circle_black.svg" alt="">
+            <h4>Direct Messages</h4>
+        </button>
+    </header>
+    <div [class]="{'close-list': !channelListOpened}" class="direct-messages">
+        <ul>
+            @for (element of tempArrayItemCount; track element) {
+            <li>
+                <div class="user-icon">
+                    <img [src]="'./../../../../assets/icons/user/user_' + element +'.svg'" alt="">
+                </div>
+                <h5>User Name</h5>
+            </li>
+            }
+        </ul>
+    </div>
+</section>

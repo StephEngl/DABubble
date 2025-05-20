@@ -11,8 +11,12 @@ header {
     .workspace-title {
         @include dFlex($gap: 12px);
     }
+    >img {
+        cursor: pointer;
+    }
 }
 
 .workspace-lists {
     width: 100%;
+    overflow-y: auto;
 }

@@ -40,14 +40,14 @@ ul {
 
 .close-list {
     max-height: 0px !important;
-    padding: 0 !important;
+    padding-bottom: 0 !important;
 }
 
 .channels {
-    @include dFlex($fd:column, $ai:flex-start, $gap: 16px);
+    @include dFlex($fd:column, $ai:flex-start, $gap: 24px);
     width: 100%;
     overflow: hidden;
     max-height: 500px;
     transition: all 0.5s ease;
-    padding-bottom: 20px;
+    padding: 0 0 20px 30px;
 }

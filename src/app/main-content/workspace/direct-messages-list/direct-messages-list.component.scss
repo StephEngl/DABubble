@@ -1,0 +1,51 @@
+@import './../../../../assets/styles/mixins.scss';
+
+.direct-messages-list {
+    @include dFlex($fd:column, $ai:flex-start, $gap: 16px);
+}
+
+header {
+    @include dFlex($jc: space-between, $gap: 10px);
+    width: 100%;
+    >button {
+        @include dFlex($gap: 10px);
+        >img {
+            width: 20px;
+        }
+    }
+    >img {
+        cursor: pointer;
+    }
+}
+
+ul {
+    @include dFlex($fd:column, $ai:flex-start, $gap: 16px);
+    >li {
+        @include dFlex($gap: 10px);
+        .user-icon {
+            >img {
+                border-radius: 50%;
+                width: 45px;
+                height: 45px;
+            }
+        }
+        >img {
+            width: 26px;
+            height: 26px;
+        }
+    }
+}
+
+.close-list {
+    max-height: 0px !important;
+    padding-bottom: 0 !important;
+}
+
+.direct-messages {
+    @include dFlex($fd:column, $ai:flex-start, $gap: 16px);
+    width: 100%;
+    overflow: hidden;
+    max-height: 500px;
+    transition: all 0.5s ease;
+    padding: 0 0 20px 30px;
+}
