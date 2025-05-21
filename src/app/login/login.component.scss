@@ -58,6 +58,16 @@ app-login-dialog {
   display: none;
   width: 100%;
   padding-top: 16px;
+
+  .signup {
+    border: 1px solid var(--col-font-href);
+    color: var(--col-bg-btn-main);
+    font-weight: 700;
+
+    &:hover {
+      background-color: var(--col-stroke-main);
+    }
+  }
 }
 
 .login-footer {
