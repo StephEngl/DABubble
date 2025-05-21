@@ -7,4 +7,5 @@
 
 app-create-message {
     @include createMessage();
+    background-color: var(--col-bg-secondary);
 }

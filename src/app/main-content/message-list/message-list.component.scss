@@ -1,0 +1,27 @@
+@import './../../../assets/styles/mixins.scss';
+
+.message-list {
+    height: 100%;
+    width: 100%;
+    max-height: calc(100vh - 240px);
+    overflow-y: auto;
+    padding-bottom: 140px;
+}
+
+.date-separator {
+    position: relative;
+    height: 1px;
+    background-color: black;
+    margin: 24px 0;
+    >p {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        height: 35px;
+        padding: 4px 8px;
+        border-radius: 50px;
+        border: 1px solid black;
+        background-color: var(--col-bg-secondary);
+    }
+}

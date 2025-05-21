@@ -1,1 +1,11 @@
-<p>chat-message works!</p>
+<section class="chat-message" 
+    [style.alignItems]="isOwnMessage ? 'flex-start' : 'flex-end'"
+    [style.backgroundColor]="isOwnMessage ? 'var(--col-bg-main)' : 'var(--col-bg-secondary)'"
+    >
+    <div class="message-title">
+        <h5>User Name</h5>
+        <p>12:00 PM</p>
+    </div>
+    <p>{{ messageText }}</p>
+</section>
+
