@@ -3,7 +3,7 @@
 :host {
     @include dFlex($fd: column);
     gap: 24px;
-    height: 100%;
+    height: calc(100vh - 16px);
 }
 
 app-header,

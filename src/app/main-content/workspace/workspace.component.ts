@@ -11,4 +11,5 @@ import { DirectMessagesListComponent } from './direct-messages-list/direct-messa
 })
 export class WorkspaceComponent {
 
+  startConversationHovered: boolean = false;
 }

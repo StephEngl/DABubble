@@ -10,8 +10,14 @@ import { Component } from '@angular/core';
 export class DirectMessagesListComponent {
   tempArrayItemCount: string[] = ['fem_1', 'fem_2', 'mal_1', 'mal_2', 'mal_3'];
   directMessageListOpened: boolean = false;
+  directMessageListHovered: boolean = false;
 
-  toggleChannelList() {
+  toggleDirectMessageList() {
     this.directMessageListOpened = !this.directMessageListOpened;
+  }
+
+  imageColor(input: boolean):string {
+    const color = input ? 'blue' : 'black';
+    return color; 
   }
 }

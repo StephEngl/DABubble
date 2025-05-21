@@ -12,13 +12,17 @@ export class ChannelListComponent {
   tempArrayItemCount: number[] = [0,1,2,3,4];
   channelListOpened: boolean = false;
   channelListHovered: boolean = false;
+  channelListItemHovered: boolean = false;
+  addChannelHovered: boolean = false;
+
+  hoveredIndex: number | null = null;
 
   toggleChannelList() {
     this.channelListOpened = !this.channelListOpened;
   }
 
-  imageColor():string {
-    const color = this.channelListHovered ? 'blue' : 'black';
+  imageColor(input: boolean):string {
+    const color = input ? 'blue' : 'black';
     return color; 
   }
 }
