@@ -8,7 +8,8 @@
         <app-chat-message
             [messageText]="message.text"
             [isOwnMessage]="message.postedBy === 'A' ? true: false"
-            [hasReplies]="message.hasReplies">
+            [hasReplies]="message.hasReplies"
+            [paddingHorizontal]="'65'">
         </app-chat-message>
     }
 </section>

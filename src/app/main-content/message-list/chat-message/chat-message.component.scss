@@ -3,7 +3,6 @@
 .app-message {
     @include dFlex($gap:20px, $ai:flex-start);
     width: 100%; 
-    padding: 20px;
     transition: all 0.3s ease;
 }
 
