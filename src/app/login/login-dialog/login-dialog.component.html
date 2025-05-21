@@ -1,1 +1,86 @@
-<p>login-dialog works!</p>
+<section class="login-dialog">
+  <div class="title-wrapper">
+    <h1>Log in</h1>
+    <div class="login-underline"></div>
+  </div>
+  <form
+    (ngSubmit)="onSubmit(contactForm)"
+    #contactForm="ngForm"
+    class="form-login"
+  >
+    <div class="mail-input-wrapper">
+      <input
+        #email="ngModel"
+        [(ngModel)]="emailInput"
+        type="text"
+        class="input"
+        id="mail"
+        name="email"
+        required
+        pattern="[a-zA-Z0-9._%+\-]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,}"
+        placeholder="Email"
+      />
+      <div class="icon">
+        <img
+          src="./assets/icons/contacts/contact_mail.svg"
+          alt="Mail Icon"
+        />
+      </div>
+    </div>
+    <div class="password-input-wrapper">
+      <input
+        #password="ngModel"
+        [(ngModel)]="passwordInput"
+        [type]="passwordVisible ? 'text' : 'password'"
+        class="input"
+        id="password"
+        name="password"
+        required
+        pattern=".{8,}"
+        placeholder="Password"
+      />
+
+      @if (!passwordInput) {
+      <div class="icon">
+        <img src="./assets/icons/kanban/lock.svg" alt="Password Icon" />
+      </div>
+      } @if (passwordInput) {
+      <div class="icon" (click)="togglePasswordVisibility()">
+        <img
+          [src]="
+            passwordVisible
+              ? './assets/icons/kanban/visibility.svg'
+              : './assets/icons/kanban/visibility_off.svg'
+          "
+        />
+      </div>
+      }
+    </div>
+
+    @if ((formSubmitted && (!email.valid || !password.valid)) || noUserFound) {
+    <span class="error-message"
+      >Check your email and password. Please try again.</span>
+    } @else if (formSubmitted && noUserFound) {
+    <span class="error-message"> No user found. Please try again. </span>
+    } @else { 
+      <span class="error-message"></span> 
+    }
+
+    <div class="login-button-wrapper">
+      <button
+        class="login-button"
+        type="submit"
+        [disabled]="!email.valid || !password.valid"
+        (click)="login(this.emailInput, this.passwordInput)"
+      >
+        Log in
+      </button>
+      <button
+        class="guest-button"
+        (click)="guestLogin('admin@join.com', 'joinadmin')"
+      >
+        Guest Log In
+      </button>
+    </div>
+  </form>
+</section>
