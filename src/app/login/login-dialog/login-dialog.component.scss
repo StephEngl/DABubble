@@ -22,13 +22,14 @@
 
 .form-login {
   width: 100%;
-  max-width: 440px;
   @include dFlex($gap: 32px);
   flex-direction: column;
 
+  .input-wrapper, 
   .mail-input-wrapper,
   .password-input-wrapper {
     display: flex;
+    flex-direction: column;
     position: relative;
     width: 100%;
 
@@ -96,6 +97,21 @@
       transform: scale(1.02);
     }
   }
+
+  .error-message {
+    color: #e44c36;
+    font-size: 12px;
+    text-align: left;
+    padding: 8px 20px 0px;
+  }
+
+  .error-message-placeholder {
+    height: 24px;
+  }
+
+  .mb-12 {
+    margin-bottom: -12px;
+  }
 }
 
 button {
@@ -120,6 +136,11 @@ button {
       background-color: #787ef2;
       border-color: #787ef2;
     }
+
+    &:disabled {
+      pointer-events: none;
+      background-color: var(--col-stroke-main);
+    }
   }
 
   .guest-button {
@@ -131,4 +152,26 @@ button {
       color: white;
     }
   }
+}
+
+
+@media screen and (max-width: 550px) {
+    .login-dialog {
+        padding: 32px 32px;
+    }
+}
+
+@media screen and (max-width: 450px) {
+    .login-dialog {
+        padding: 32px 16px;
+    }
+
+    .google-login-btn {
+        gap: 12px;
+    }
+
+    button {
+        padding: 12px 22px;
+        font-size: 16px;
+    }
 }

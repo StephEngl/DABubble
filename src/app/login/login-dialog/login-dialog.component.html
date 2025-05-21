@@ -2,68 +2,79 @@
   <div class="login-content">
     <h2>Login</h2>
 
-    <span class="recommendation">We recommend you to use the email address you use at work</span>
+    <span class="recommendation"
+      >We recommend you to use the email address you use at work</span
+    >
     <form
       (ngSubmit)="onSubmit(contactForm)"
       #contactForm="ngForm"
       class="form-login"
     >
-      <div class="mail-input-wrapper">
-        <input
-          #email="ngModel"
-          [(ngModel)]="emailInput"
-          type="text"
-          class="input"
-          id="mail"
-          name="email"
-          required
-          pattern="[a-zA-Z0-9._%+\-]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,}"
-          placeholder="name@email.com"
-        />
-        <div class="icon">
-          <img src="./assets/icons/login/mail_black.svg" alt="Mail Icon" />
-        </div>
-      </div>
-      <div class="password-input-wrapper">
-        <input
-          #password="ngModel"
-          [(ngModel)]="passwordInput"
-          [type]="passwordVisible ? 'text' : 'password'"
-          class="input"
-          id="password"
-          name="password"
-          required
-          pattern=".{8,}"
-          placeholder="Password"
-        />
-
-        @if (!passwordInput) {
-        <div class="icon">
-          <img src="./assets/icons/login/lock_black.svg" alt="Password Icon" />
-        </div>
-        } @if (passwordInput) {
-        <div class="icon" (click)="togglePasswordVisibility()">
-          <img
-            [src]="
-              passwordVisible
-                ? './assets/icons/login/visibility.svg'
-                : './assets/icons/login/visibility_off.svg'
-            "
+      <div class="input-wrapper">
+        <div class="mail-input-wrapper">
+          <input
+            #email="ngModel"
+            [(ngModel)]="emailInput"
+            type="text"
+            class="input"
+            id="mail"
+            name="email"
+            required
+            pattern="[a-zA-Z0-9._%+\-]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,}"
+            placeholder="name@email.com"
           />
+          <div class="icon">
+            <img src="./assets/icons/login/mail_black.svg" alt="Mail Icon" />
+          </div>
+          @if (email.touched && email.invalid) {
+          <span class="error-message">Please enter a valid mail address</span>
+          } @else {<span class="error-message-placeholder"></span> }
         </div>
+
+        <div class="password-input-wrapper">
+          <input
+            #password="ngModel"
+            [(ngModel)]="passwordInput"
+            [type]="passwordVisible ? 'text' : 'password'"
+            class="input"
+            id="password"
+            name="password"
+            required
+            pattern=".{8,}"
+            placeholder="Password"
+          />
+
+          @if (!passwordInput) {
+          <div class="icon">
+            <img
+              src="./assets/icons/login/lock_black.svg"
+              alt="Password Icon"
+            />
+          </div>
+          } @if (passwordInput) {
+          <div class="icon" (click)="togglePasswordVisibility()">
+            <img
+              [src]="
+                passwordVisible
+                  ? './assets/icons/login/visibility.svg'
+                  : './assets/icons/login/visibility_off.svg'
+              "
+            />
+          </div>
+          }
+        </div>
+
+        @if ((formSubmitted && (!email.valid || !password.valid)) ||
+        noUserFound) {
+        <span class="error-message mb-12"
+          >Check your email and password. Please try again.</span
+        >
+        } @else if (formSubmitted && noUserFound) {
+        <span class="error-message mb-12"> No user found. Please try again. </span>
+        } @else {
+        <span class="error-message-placeholder mb-12"></span>
         }
       </div>
-
-      @if ((formSubmitted && (!email.valid || !password.valid)) || noUserFound)
-      {
-      <span class="error-message"
-        >Check your email and password. Please try again.</span
-      >
-      } @else if (formSubmitted && noUserFound) {
-      <span class="error-message"> No user found. Please try again. </span>
-      } @else {
-      <span class="error-message"></span>
-      }
 
       <p class="forgotten-password">Forgot password?</p>
       <div class="seperator">
