@@ -1,11 +1,34 @@
-<section class="chat-message" 
-    [style.alignItems]="isOwnMessage ? 'flex-start' : 'flex-end'"
-    [style.backgroundColor]="isOwnMessage ? 'var(--col-bg-main)' : 'var(--col-bg-secondary)'"
-    >
-    <div class="message-title">
-        <h5>User Name</h5>
-        <p>12:00 PM</p>
-    </div>
-    <p>{{ messageText }}</p>
+<section class="app-message" [style.flexDirection]="isOwnMessage ? 'row-reverse' : 'row'">
+
+    <aside class="user-avatar">
+        <img src="./../../../../assets/icons/user/user_fem_1.svg" alt="">
+    </aside>
+
+    <section class="chat-message" [style.alignItems]="isOwnMessage ? 'flex-end' : 'flex-start'">
+        <div class="message-title">
+            <h5>User Name</h5>
+            <p>12:00 PM</p>
+        </div>
+        <p  class="message-text"
+            [class]="isOwnMessage ? 'own-message':'normal-message'">
+            {{ messageText }}
+        </p>
+        <div class="reactions">
+            @for (reaction of reactions; track reaction) {
+                {{ reaction.emoji }} {{ reaction.count }}
+            }
+        </div>
+        <div class="answers">
+            @if (hasReplies) {
+                <!-- reply count out of database -->
+                <button>5 Replies</button>
+                <p>last reply on xx.xx.25</p>
+            } @else {
+                <button>Reply</button>
+            }
+        </div>
+    </section>
+
 </section>
+
 

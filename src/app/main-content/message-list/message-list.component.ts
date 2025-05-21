@@ -5,6 +5,7 @@ interface Message {
   text: string;
   dateCreated: Date;
   postedBy: string;
+  hasReplies: boolean;
 }
 
 @Component({
@@ -17,14 +18,14 @@ interface Message {
 export class MessageListComponent {
 
   messages: Message[] = [
-    { text: 'Hey, how are you?', dateCreated: new Date('2024-05-14T08:15:00'), postedBy: 'A' },
-    { text: 'Did you send the files already?', dateCreated: new Date('2024-05-14T09:30:00'), postedBy: 'B' },
-    { text: 'I’m in a meeting, I’ll get back to you.', dateCreated: new Date('2024-05-16T10:05:00'), postedBy: 'C' },
-    { text: 'Let’s discuss this tomorrow.', dateCreated: new Date('2024-05-20T11:00:00'), postedBy: 'A' },
-    { text: 'Sounds good, thanks!', dateCreated: new Date('2024-05-20T12:45:00'), postedBy: 'B' },
-    { text: 'Be right back.', dateCreated: new Date('2024-05-22T13:10:00'), postedBy: 'C' },
-    { text: 'Can we finish this by tonight?', dateCreated: new Date('2024-05-22T14:25:00'), postedBy: 'A' },
-    { text: 'Perfect, thanks again.', dateCreated: new Date('2024-05-22T15:55:00'), postedBy: 'B' }
+    { text: 'Hey, how are you?', dateCreated: new Date('2024-05-14T08:15:00'), postedBy: 'A', hasReplies: true },
+    { text: 'Did you send the files already?', dateCreated: new Date('2024-05-14T09:30:00'), postedBy: 'B', hasReplies: false },
+    { text: 'I’m in a meeting, I’ll get back to you.', dateCreated: new Date('2024-05-16T10:05:00'), postedBy: 'C', hasReplies: true },
+    { text: 'Let’s discuss this tomorrow.', dateCreated: new Date('2024-05-20T11:00:00'), postedBy: 'A', hasReplies: false },
+    { text: 'Sounds good, thanks!', dateCreated: new Date('2024-05-20T12:45:00'), postedBy: 'B', hasReplies: true },
+    { text: 'Be right back.', dateCreated: new Date('2024-05-22T13:10:00'), postedBy: 'C', hasReplies: false },
+    { text: 'Can we finish this by tonight?', dateCreated: new Date('2024-05-22T14:25:00'), postedBy: 'A', hasReplies: true },
+    { text: 'Perfect, thanks again.', dateCreated: new Date('2024-05-22T15:55:00'), postedBy: 'B', hasReplies: false }
   ];
 
   isSameDate(date1: Date, date2: Date): boolean {

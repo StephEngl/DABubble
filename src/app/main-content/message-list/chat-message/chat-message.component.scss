@@ -1,6 +1,75 @@
+@import './../../../../assets/styles/mixins.scss';
+
+.app-message {
+    @include dFlex($gap:20px, $ai:flex-start);
+    width: 100%; 
+    padding: 20px;
+    transition: all 0.3s ease;
+}
+
+.user-avatar {
+    width: 70px; height: 70px;
+    >img {
+        width: 100%;
+        height: 100%;
+        border-radius: 50%;
+    }
+}
+
 .chat-message {
-    display: flex;
-    flex-direction: column;
-    width: 90%;
-    margin: 10px auto;
+    @include dFlex($fd:column, $gap:10px, $ai: flex-start);
+    flex: 1;
+
+    .message-text {
+        padding: 10px 20px;
+        max-width: 100%;
+    }
+    .message-title {
+        @include dFlex($gap:10px);
+        >h5 {
+            font-weight: 700;
+        }
+    }
+    .answers {
+        @include dFlex($gap:5px);
+        >button {
+            color: var(--col-font-href);
+            font-size: 18px;
+        }
+        >p {
+            color: var(--col-font-info);
+        }
+    }
+}
+
+.own-message {
+    background-color: var(--col-font-href);
+    color: var(--col-font-secondary);
+    border-radius: 15px 0 15px 15px;
+}
+
+.normal-message {
+    background-color: var(--col-bg-main);
+    color: var(--col-font-main);
+    border-radius: 0 15px 15px 15px;
+}
+
+.app-message:hover {
+    background-color: var(--col-bg-main);
+    .chat-message {
+        .normal-message {
+            background-color: var(--col-bg-secondary);
+        }
+        .own-message {
+            background-color: var(--col-bg-btn-main);
+        }
+    }
+    .answers {
+        >button {
+            color: var(--col-bg-btn-main);
+        }
+        >p {
+            color: black;
+        }
+    }
 }

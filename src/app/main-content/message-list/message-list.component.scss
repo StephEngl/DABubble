@@ -5,13 +5,13 @@
     width: 100%;
     max-height: calc(100vh - 240px);
     overflow-y: auto;
-    padding-bottom: 140px;
+    padding: 20px 0 140px 0;
 }
 
 .date-separator {
     position: relative;
     height: 1px;
-    background-color: black;
+    background-color: var(--col-stroke-main);
     margin: 24px 0;
     >p {
         position: absolute;
@@ -21,7 +21,7 @@
         height: 35px;
         padding: 4px 8px;
         border-radius: 50px;
-        border: 1px solid black;
+        border: 1px solid var(--col-stroke-main);
         background-color: var(--col-bg-secondary);
     }
 }

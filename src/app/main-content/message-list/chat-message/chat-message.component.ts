@@ -11,4 +11,13 @@ export class ChatMessageComponent {
 
   @Input() messageText: string = '';
   @Input() isOwnMessage: boolean = false;
+  @Input() hasReplies: boolean = false;
+
+  reactions: { emoji:string, count: number} [] = [
+    {emoji:'👍',count:1},
+    {emoji:'👎',count:2},
+    {emoji:'❤️',count:3},
+    {emoji:'😂',count:4},
+    {emoji:'😍',count:5},
+  ];
 }

@@ -5,6 +5,10 @@
                 <p>{{ formatDate(message.dateCreated) }}</p>
             </div>
         }
-        <app-chat-message [messageText]="message.text" [isOwnMessage]="message.postedBy === 'A' ? true: false"></app-chat-message>
+        <app-chat-message
+            [messageText]="message.text"
+            [isOwnMessage]="message.postedBy === 'A' ? true: false"
+            [hasReplies]="message.hasReplies">
+        </app-chat-message>
     }
 </section>
