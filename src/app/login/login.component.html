@@ -1,22 +1,31 @@
 <header class="login-header">
-  <div class="header-logo">
+  <div class="header-logo" routerLink="/login">
     <img src="./../../../assets/icons/general/dabubble_logo.svg" alt="" />
     <img src="./../../../assets/icons/general/dabubble_logo_title.svg" alt="" />
   </div>
 
   <div class="register-box">
     <p>New at DABubble?</p>
-    <a class="signup">Register</a>
+    <a class="signup" (click)="showRegisterDialog()">Register</a>
   </div>
 </header>
 
 <main class="dialog-wrapper">
-  <app-login-dialog></app-login-dialog>
-  
-  <div class="register-box-mobile">
-    <p>New at DABubble?</p>
-    <a class="signup">Register</a>
-  </div>
+  @if (signalService.isLoginDialog()) {
+    <app-login-dialog></app-login-dialog>
+    
+    <div class="register-box-mobile">
+      <p>New at DABubble?</p>
+      <a class="signup" (click)="showRegisterDialog()">Register</a>
+    </div>
+  }
+  @if (signalService.isRegisterDialog()) {
+    <app-register-dialog></app-register-dialog>
+  }
+  @if (signalService.isPasswordForgottenDialog()) {
+    <app-password-dialog></app-password-dialog>
+  }
+
 </main>
 
 

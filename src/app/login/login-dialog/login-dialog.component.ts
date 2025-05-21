@@ -31,6 +31,13 @@ export class LoginDialogComponent {
     this.passwordVisible = !this.passwordVisible;
   }
 
+  openPasswordForgottenDialog() {
+    this.signalService.isPasswordForgottenDialog.set(true);
+    this.signalService.isLoginDialog.set(false);
+    this.signalService.isRegisterDialog.set(false);
+    this.signalService.isChoosingAvatarDialog.set(false);
+  }
+
   /**
    * Called when the login form is submitted.
    * Sets the submission flag if the login is not a guest login.

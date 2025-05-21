@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, signal } from '@angular/core';
 
 @Injectable({
   providedIn: 'root'
@@ -6,4 +6,10 @@ import { Injectable } from '@angular/core';
 export class SignalsService {
 
   constructor() { }
+
+  isLoginDialog = signal<boolean>(true);
+  isRegisterDialog = signal<boolean>(false);
+  isChoosingAvatarDialog = signal<boolean>(false);
+  isPasswordForgottenDialog = signal<boolean>(false);
+
 }
