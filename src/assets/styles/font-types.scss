@@ -1,3 +1,5 @@
+@import "../styles/colors.scss";
+
 h1 {
     font-weight: 700;
     font-size: clamp(30px, 2.556rem, 46px);
@@ -6,6 +8,7 @@ h1 {
 h2 {
     font-weight: 700;
     font-size: clamp(26px, 2.111rem, 38px);
+    color: var(--col-bg-btn-main);
 }
 
 h3 {
