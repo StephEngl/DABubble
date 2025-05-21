@@ -2,11 +2,12 @@
   <div class="login-content">
     <h2>Login</h2>
 
-    <span>We recommend you to use the email address you use at work</span>
+    <span class="recommendation">We recommend you to use the email address you use at work</span>
     <form
       (ngSubmit)="onSubmit(contactForm)"
       #contactForm="ngForm"
-      class="form-login">
+      class="form-login"
+    >
       <div class="mail-input-wrapper">
         <input
           #email="ngModel"
@@ -63,6 +64,16 @@
       } @else {
       <span class="error-message"></span>
       }
+
+      <p class="forgotten-password">Forgot password?</p>
+      <div class="seperator">
+        <span>OR</span>
+      </div>
+
+      <button class="google-login-btn">
+        <img src="./assets/icons/login/google_logo.svg" alt="Google Logo" />
+        Login with Google
+      </button>
 
       <div class="login-button-wrapper">
         <button

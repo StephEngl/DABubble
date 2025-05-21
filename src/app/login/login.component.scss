@@ -37,6 +37,7 @@ header {
   width: 100%;
   max-width: 1920px;
   max-height: 1080px;
+  overflow-y: auto;
 }
 
 app-login-dialog {
@@ -44,7 +45,6 @@ app-login-dialog {
   height: 100%;
   max-height: 1080px;
   padding: 16px;
-  
 }
 
 .login-footer {

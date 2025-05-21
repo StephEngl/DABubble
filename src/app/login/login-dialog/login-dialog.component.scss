@@ -3,7 +3,6 @@
 .login-dialog {
   width: 100%;
   max-width: 600px;
-  //   height: 450px;
   border-radius: 30px;
   padding: 50px 60px;
   background-color: white;
@@ -15,7 +14,7 @@
   flex-direction: column;
   text-align: center;
 
-  span {
+  .recommendation {
     font-family: "Nunito";
     font-size: 20px;
   }
@@ -47,6 +46,89 @@
       border-radius: 100px;
       padding: 18px 32px 18px 60px;
       background-color: var(--col-bg-btn-hover);
+
+      &:focus {
+        outline: none;
+        border-color: var(--col-font-href);
+      }
+    }
+  }
+
+  .forgotten-password {
+    cursor: pointer;
+    font-family: "Figtree", sans-serif;
+    font-size: 18px;
+    color: var(--col-font-href);
+    padding: 5px 15px;
+    border-radius: 25px;
+    border: 1px solid transparent;
+    transition: background-color 0.125s ease-in-out;
+
+    &:hover {
+      background-color: var(--col-bg-btn-hover);
+    }
+  }
+
+  .seperator {
+    width: 100%;
+    height: 1px;
+    background-color: var(--col-stroke-main);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    span {
+      background-color: white;
+      padding: 10px 20px;
+    }
+  }
+
+  .google-login-btn {
+    @include dFlex($gap: 20px);
+    width: 100%;
+    color: #444df2;
+    border-radius: 100px;
+    background-color: var(--col-bg-btn-hover);
+    border: unset;
+    transition: all 0.125s ease-in-out;
+
+    &:hover {
+      transform: scale(1.02);
+    }
+  }
+}
+
+button {
+  padding: 12px 25px;
+  font-family: "Nunito", sans-serif;
+  font-size: 18px;
+  border-radius: 25px;
+  border: 1px solid #797ef3;
+  width: fit-content;
+  transition: background-color 0.125s ease-in-out;
+  font-weight: 700;
+}
+
+.login-button-wrapper {
+  @include dFlex($gap: 30px);
+
+  .login-button {
+    color: white;
+    background-color: #444df2;
+
+    &:hover {
+      background-color: #787ef2;
+      border-color: #787ef2;
+    }
+  }
+
+  .guest-button {
+    color: #444df2;
+
+    &:hover {
+      background-color: #5359f1;
+      border-color: #5359f1;
+      color: white;
     }
   }
 }
