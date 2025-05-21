@@ -87,7 +87,7 @@
   .google-login-btn {
     @include dFlex($gap: 20px);
     width: 100%;
-    color: #444df2;
+    color: var(--col-bg-btn-main);
     border-radius: 100px;
     background-color: var(--col-bg-btn-hover);
     border: unset;
@@ -99,7 +99,7 @@
   }
 
   .error-message {
-    color: #e44c36;
+    color: var(--col-font-error);
     font-size: 12px;
     text-align: left;
     padding: 8px 20px 0px;
@@ -119,7 +119,7 @@ button {
   font-family: "Nunito", sans-serif;
   font-size: 18px;
   border-radius: 25px;
-  border: 1px solid #797ef3;
+  border: 1px solid var(--col-font-href);
   width: fit-content;
   transition: background-color 0.125s ease-in-out;
   font-weight: 700;
@@ -130,11 +130,11 @@ button {
 
   .login-button {
     color: white;
-    background-color: #444df2;
+    background-color: var(--col-bg-btn-main);
 
     &:hover {
-      background-color: #787ef2;
-      border-color: #787ef2;
+      background-color: var(--col-btn-hover-light);
+      border-color: var(--col-btn-hover-light);
     }
 
     &:disabled {
@@ -144,11 +144,11 @@ button {
   }
 
   .guest-button {
-    color: #444df2;
+    color: var(--col-bg-btn-main);
 
     &:hover {
-      background-color: #5359f1;
-      border-color: #5359f1;
+      background-color: var(--col-btn-hover-dark);
+      border-color: var(--col-btn-hover-dark);
       color: white;
     }
   }
