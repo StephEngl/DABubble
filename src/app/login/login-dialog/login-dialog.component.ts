@@ -75,8 +75,8 @@ export class LoginDialogComponent {
    * @param password - The guest/admin password.
    */
   async guestLogin(mail: string, password: string) {
-    // this.isGuestLogin = true;
-    // this.noUserFound = false;
+    this.isGuestLogin = true;
+    this.noUserFound = false;
     // await this.authService.signInUser(mail, password);
     // setTimeout(() => (this.isGuestLogin = false), 100);
   }

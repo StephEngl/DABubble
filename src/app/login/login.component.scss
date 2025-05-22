@@ -31,7 +31,7 @@ header {
   }
 
   .register-box {
-    @include dFlex($fd: column, $gap: 16px);
+    @include dFlex($fd: column);
 
     @media screen and (max-width: 550px) {
       display: none;
@@ -48,7 +48,9 @@ header {
   overflow-y: auto;
 }
 
-app-login-dialog {
+app-login-dialog,
+app-register-dialog,
+app-password-dialog {
   @include dFlex();
   max-height: 1080px;
   padding: 16px;
