@@ -8,17 +8,24 @@ import { PasswordDialogComponent } from './password-dialog/password-dialog.compo
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [RouterLink, LoginDialogComponent, RegisterDialogComponent, PasswordDialogComponent ],
+  imports: [
+    RouterLink,
+    LoginDialogComponent,
+    RegisterDialogComponent,
+    PasswordDialogComponent,
+  ],
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss',
 })
 export class LoginComponent {
   signalService = inject(SignalsService);
 
-  // isLoginDialog: boolean = true;
-  // isRegisterDialog: boolean = false;
-  // isChoosingAvatarDialog: boolean = false;
-  // isPasswordForgottenDialog: boolean = false;
+  openLoginDialog() {
+    this.signalService.isLoginDialog.set(true);
+    this.signalService.isRegisterDialog.set(false);
+    this.signalService.isChoosingAvatarDialog.set(false);
+    this.signalService.isPasswordForgottenDialog.set(false);
+  }
 
   showRegisterDialog() {
     this.signalService.isLoginDialog.set(false);

@@ -1,3 +1,140 @@
 <section class="register-dialog">
-    
+  <div class="register-content">
+    <img
+      src="/assets/icons/login/arrow-back-black.svg"
+      alt="Arrow back"
+      class="back-to-login"
+      (click)="backToLogin()"
+    />
+    <h2>Create Account</h2>
+
+    <span class="register-info">
+      Get your own DABubble-account with your name and mail-address
+    </span>
+
+    <form
+      (ngSubmit)="onSubmit(contactForm)"
+      #contactForm="ngForm"
+      class="form-login"
+    >
+      <div class="input-wrapper">
+        <div class="name-input-wrapper">
+          <input
+            #name="ngModel"
+            [(ngModel)]="nameInput"
+            type="text"
+            class="input"
+            id="name"
+            name="name"
+            required
+            pattern=""
+            placeholder="First and last name"
+          />
+          <div class="icon">
+            <img src="./assets/icons/login/name_black.svg" alt="User Icon" />
+          </div>
+          @if (name.touched && name.invalid) {
+          <span class="error-message">Please enter a first and last name</span>
+          } @else {<span class="error-message-placeholder"></span> }
+        </div>
+
+        <div class="mail-input-wrapper">
+          <input
+            #email="ngModel"
+            [(ngModel)]="emailInput"
+            type="text"
+            class="input"
+            id="mail"
+            name="email"
+            required
+            pattern="[a-zA-Z0-9._%+\-]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,}"
+            placeholder="Email"
+          />
+          <div class="icon">
+            <img src="./assets/icons/login/mail_black.svg" alt="Mail Icon" />
+          </div>
+          @if (email.touched && email.invalid) {
+          <span class="error-message">Please enter a valid mail address</span>
+          } @else {<span class="error-message-placeholder"></span> }
+        </div>
+
+        <div class="password-input-wrapper">
+          <input
+            #password="ngModel"
+            [(ngModel)]="passwordInput"
+            [type]="passwordVisible ? 'text' : 'password'"
+            class="input"
+            id="password"
+            name="password"
+            required
+            pattern=".{8,}"
+            placeholder="Password"
+          />
+
+          @if (!passwordInput) {
+          <div class="icon">
+            <img
+              src="./assets/icons/login/lock_black.svg"
+              alt="Password Icon"
+            />
+          </div>
+          } @if (passwordInput) {
+          <div class="icon" (click)="togglePasswordVisibility()">
+            <img
+              [src]="
+                passwordVisible
+                  ? './assets/icons/login/visibility.svg'
+                  : './assets/icons/login/visibility_off.svg'
+              "
+            />
+          </div>
+          } @if (password.touched && password.invalid) {
+          <span class="error-message"
+            >Please enter a valid password with at least 8 letters</span
+          >
+          } @else {<span class="error-message-placeholder"></span> }
+        </div>
+
+        <div class="privacy-policy-wrapper">
+          <label for="privacy-policy-checkbox">
+            <input
+              type="checkbox"
+              name="checkbox"
+              id="privacy-policy-checkbox"
+              [checked]="privacyPolicyAccepted"
+              (change)="privacyPolicyAccepted = !privacyPolicyAccepted"
+              required
+            />
+            <span class="checkmark"></span>
+            <span class="checkbox-text">I accept the
+              <a routerLink="/privacy-policy" class="privacy-policy-link">Privacy Policy</a>
+            </span
+            >
+          </label>
+        </div>
+
+        <div class="apply-button-wrapper">
+          <button
+            class="apply-button"
+            type="submit"
+            [disabled]="
+              !name.valid ||
+              !email.valid ||
+              !password.valid ||
+              !privacyPolicyAccepted
+            "
+            (click)="
+              goToAvatarChoice(
+                this.nameInput,
+                this.emailInput,
+                this.passwordInput
+              )
+            "
+          >
+            Apply
+          </button>
+        </div>
+      </div>
+    </form>
+  </div>
 </section>

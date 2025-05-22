@@ -1,4 +1,5 @@
 @import "../../../assets/styles/mixins.scss";
+@import "../login-dialog/login-dialog.component.scss";
 
 .register-dialog {
   width: 100%;
@@ -7,4 +8,122 @@
   padding: 50px 60px;
   background-color: white;
   box-shadow: 0px 2px 10px 0px rgba(0, 0, 0, 0.0784313725);
+}
+
+.back-to-login {
+  cursor: pointer;
+  position: absolute;
+  left: 0;
+  top: 0;
+  border-radius: 50%;
+  transition: all 0.125s ease-in-out;
+
+  &:hover {
+    background-color: #eceefe;
+  }
+}
+
+.register-content {
+  @include dFlex($gap: 32px);
+  flex-direction: column;
+  text-align: center;
+
+  .register-info {
+    font-family: "Nunito";
+    font-size: 20px;
+  }
+}
+
+.input-wrapper {
+  gap: 12px;
+}
+
+.name-input-wrapper {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  width: 100%;
+
+  .icon {
+    @include dFlex();
+    position: absolute;
+    left: 20px;
+    top: 16px;
+    height: 21px;
+  }
+}
+
+.privacy-policy-wrapper {
+  width: 100%;
+  @include dFlex($jc: flex-start, $gap: 16px);
+
+  label {
+    display: flex;
+    align-items: center;
+
+    &:hover input ~ .checkmark {
+      background-color: var(--col-bg-btn-hover);
+      border-radius: 50%;
+    }
+
+    input:checked ~ .checkmark {
+      background-image: url("/assets/icons/login/checkbox_checked.svg");
+    }
+  }
+
+  #privacy-policy-checkbox {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+    height: 0;
+    width: 0;
+  }
+
+  .checkmark {
+    cursor: pointer;
+    height: 24px;
+    width: 24px;
+    background-image: url("/assets/icons/login/checkbox_blank.svg");
+    background-position: center;
+    background-repeat: no-repeat;
+    transition: background-color 0.3s ease;
+  }
+
+  .checkbox-text {
+    padding-left: 12px;
+  }
+
+  .privacy-policy-link {
+    cursor: pointer;
+    font-family: "Figtree", sans-serif;
+    color: var(--col-font-href);
+    padding: 5px 10px;
+    border-radius: 25px;
+    border: 1px solid transparent;
+    transition: background-color 0.125s ease-in-out;
+
+    &:hover {
+      background-color: var(--col-bg-btn-hover);
+    }
+  }
+}
+
+.apply-button-wrapper {
+  display: flex;
+  justify-content: flex-end;
+
+  .apply-button {
+    color: white;
+    background-color: var(--col-bg-btn-main);
+
+    &:hover {
+      background-color: #787ef2;
+      border-color: #787ef2;
+    }
+
+    &:disabled {
+      pointer-events: none;
+      background-color: var(--col-stroke-main);
+    }
+  }
 }
