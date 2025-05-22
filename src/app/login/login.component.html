@@ -25,6 +25,9 @@
   @if (signalService.isPasswordForgottenDialog()) {
     <app-password-dialog></app-password-dialog>
   }
+  @if (signalService.isChoosingAvatarDialog()) {
+    <app-choose-avatar-dialog></app-choose-avatar-dialog>
+  }
 
 </main>
 
