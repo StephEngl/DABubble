@@ -43,6 +43,7 @@ export class ChannelsService {
           const channel = element.data();
           this.channels.push(this.setChannelObject(element.id, channel));
         });
+        
       },
       (error) => {
         console.error('Firestore Error', error.message);
@@ -115,7 +116,7 @@ export class ChannelsService {
       await addDoc(this.getChannelMessagesRef(activeChannel), {
         text: message.text,
         createdAt: Timestamp.now(),
-        author: message.senderId || 'Unknown',
+        senderId: message.senderId || 'Unknown',
         reactions: []
       });
     } catch (error) {
@@ -128,8 +129,32 @@ export class ChannelsService {
     return collection(this.firestore,`channels/${id}/channelMessages`);
   }
 
-  getChannelById(id: string): ChannelInterface | undefined {
+  getChannelById(id: string) {
     return this.channels.find(channel => channel.id === id);
   }
-  
+
+  subscribeToChannelMessages(channelId: string) {
+  const q = query(this.getChannelMessagesRef(channelId), orderBy('createdAt'));
+  return onSnapshot(q, (snapshot) => {
+    const messages: ChannelMessageInterface[] = [];
+
+    snapshot.forEach((doc) => {
+      const data = doc.data() as ChannelMessageInterface;
+      messages.push({
+        text: data.text,
+        createdAt: data.createdAt,
+        senderId: data.senderId,
+        reactions: data.reactions || [],
+        threadMessages: data.threadMessages || []
+      });
+    });
+
+    const channel = this.getChannelById(channelId);
+    if (channel) {
+      channel.channelMessages = [...messages];
+    }
+  });
+}
+
+
 }

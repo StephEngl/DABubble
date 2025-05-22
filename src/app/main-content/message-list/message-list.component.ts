@@ -1,5 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { ChatMessageComponent } from './chat-message/chat-message.component';
+import { ChannelsService } from '../../services/channels.service';
+import { ChannelMessageInterface } from '../../interfaces/message.interface';
+
 
 interface Message {
   text: string;
@@ -28,11 +31,25 @@ export class MessageListComponent {
     { text: 'Perfect, thanks again.', dateCreated: new Date('2024-05-22T15:55:00'), postedBy: 'B', hasReplies: false }
   ];
 
+  channelService = inject(ChannelsService);
+
+  ngOnInit() {
+  const currentChannelId = localStorage.getItem('currentChannel');
+  if (currentChannelId) {
+    this.channelService.subscribeToChannelMessages(currentChannelId);
+  }
+  }
+
   isSameDate(date1: Date, date2: Date): boolean {
     return date1.getFullYear() === date2.getFullYear()
       && date1.getMonth() === date2.getMonth()
       && date1.getDate() === date2.getDate();
   }
+
+  toDate(timestamp: any): Date {
+  return timestamp?.toDate ? timestamp.toDate() : timestamp;
+}
+
 
   formatDate(date: Date): string {
     const day = date.getDate().toString().padStart(2, '0');
@@ -40,4 +57,13 @@ export class MessageListComponent {
     const year = date.getFullYear().toString().slice(-2);
     return `${day}.${month}.${year}`;
   }
+
+  currentChannel(): string {
+    return localStorage.getItem('currentChannel') || '';
+  }
+
+  getChannelMessages(): ChannelMessageInterface[] {
+    return this.channelService.getChannelById(this.currentChannel())?.channelMessages || [];
+  }
+  
 }

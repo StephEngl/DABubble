@@ -1,17 +1,25 @@
-<section class="create-message">
-    <textarea placeholder="Write your message..."></textarea>
-    <span class="message-menu">
-        <div class="menu-options">
-            @for (icon of menuOptions; track icon; let index = $index) {
-                <img
-                    (mouseover)="menuOptions[index].hovered = true"
-                    (mouseleave)="menuOptions[index].hovered = false"
-                    [src]="getMenuIcon(index)"
-                    [alt]="icon.name">
-            }
-        </div>
-        <button class="send-message">
-            <img src="./../../../assets/icons/message/send_darkblue.svg" alt="">
-        </button>
-    </span>
-</section>
+<form #form="ngForm" (ngSubmit)="sendMessage(form)">
+    <section class="create-message">
+        <textarea 
+            [(ngModel)]="messageText"
+            name="message"
+            minlength="3"
+            required
+            placeholder="Write your message...">
+        </textarea>
+        <span class="message-menu">
+            <div class="menu-options">
+                @for (icon of menuOptions; track icon; let index = $index) {
+                    <img
+                        (mouseover)="menuOptions[index].hovered = true"
+                        (mouseleave)="menuOptions[index].hovered = false"
+                        [src]="getMenuIcon(index)"
+                        [alt]="icon.name">
+                }
+            </div>
+            <button class="send-message" type="submit">
+                <img src="./../../../assets/icons/message/send_darkblue.svg" alt="">
+            </button>
+        </span>
+    </section>
+</form>

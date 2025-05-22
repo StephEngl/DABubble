@@ -1,14 +1,20 @@
 <section class="message-list">
-    @for (message of messages; track message; let index = $index) {
-        @if (index === 0 || !isSameDate(message.dateCreated, messages[index - 1].dateCreated)) {
+    @for (message of getChannelMessages(); track message; let index = $index) {
+        @if (
+            index === 0 ||
+            !isSameDate(
+                message.createdAt.toDate(),
+                getChannelMessages()[index - 1].createdAt!.toDate()
+            )
+        ) {
             <div class="date-separator">
-                <p>{{ formatDate(message.dateCreated) }}</p>
+                <p>{{ formatDate(message.createdAt.toDate()) }}</p>
             </div>
         }
         <app-chat-message
             [messageText]="message.text"
-            [isOwnMessage]="message.postedBy === 'A' ? true: false"
-            [hasReplies]="message.hasReplies"
+            [isOwnMessage]="message.senderId === 'A' ? true: false"
+            [hasReplies]="message.threadMessages!.length > 0"
             [paddingHorizontal]="'65'">
         </app-chat-message>
     }
