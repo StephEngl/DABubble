@@ -1,1 +1,37 @@
-<p>choose-avatar-dialog works!</p>
+<section class="avatar-dialog">
+  <div class="choose-avatar-content">
+    <img
+      src="/assets/icons/login/arrow-back-black.svg"
+      alt="Arrow back"
+      class="back-to-register"
+      (click)="backToRegister()"
+    />
+    <h2>Create Account</h2>
+
+    <img
+      src="/assets/icons/user/user_default.png"
+      alt="User Image"
+      class="profile-image"
+    />
+
+    <span> Please, choose your Avatar from the following list: </span>
+    <div class="avatar-list">
+        <img class="avatar-image" src="/assets/icons/user/user_fem_1.svg" alt="">
+        <img class="avatar-image" src="/assets/icons/user/user_fem_2.svg" alt="">
+        <img class="avatar-image" src="/assets/icons/user/user_mal_1.svg" alt="">
+        <img class="avatar-image" src="/assets/icons/user/user_mal_2.svg" alt="">
+        <img class="avatar-image" src="/assets/icons/user/user_mal_3.svg" alt="">
+        <img class="avatar-image" src="/assets/icons/user/user_mal_4.svg" alt="">
+    </div>
+
+    <div class="apply-button-wrapper">
+          <button
+            class="apply-button"
+            type="submit"
+            
+            (click)="createAccount()">Apply
+          </button>
+        </div>
+
+  </div>
+</section>

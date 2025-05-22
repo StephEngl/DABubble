@@ -1,11 +1,12 @@
 @import "../../../assets/styles/mixins.scss";
+@import "../../../assets/styles/variables.scss";
 @import "../login-dialog/login-dialog.component.scss";
 
 .register-dialog {
   width: 100%;
   max-width: 600px;
   border-radius: 30px;
-  padding: 50px 60px;
+  padding: $dialog-padding-desktop;
   background-color: white;
   box-shadow: 0px 2px 10px 0px rgba(0, 0, 0, 0.0784313725);
 }
@@ -129,18 +130,18 @@
 }
 
 @media screen and (max-width: 550px) {
-    .register-dialog {
-        padding: 32px 32px;
-    }
+  .register-dialog {
+    padding: $dialog-padding-mid;
+  }
 }
 
 @media screen and (max-width: 450px) {
-    .register-dialog {
-        padding: 32px 16px;
-    }
+  .register-dialog {
+    padding: $dialog-padding-mobile;
+  }
 
-    button {
-        padding: 12px 22px;
-        font-size: 16px;
-    }
+  button {
+    padding: 12px 22px;
+    font-size: 16px;
+  }
 }

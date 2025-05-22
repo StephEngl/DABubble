@@ -50,6 +50,7 @@ header {
 
 app-login-dialog,
 app-register-dialog,
+app-choose-avatar-dialog,
 app-password-dialog {
   @include dFlex();
   max-height: 1080px;

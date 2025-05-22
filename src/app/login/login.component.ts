@@ -22,10 +22,10 @@ import { ChooseAvatarDialogComponent } from './choose-avatar-dialog/choose-avata
 export class LoginComponent {
   signalService = inject(SignalsService);
 
-  openLoginDialog() {
-    this.signalService.isLoginDialog.set(true);
+  openChooseAvatarDialog() {
+    this.signalService.isLoginDialog.set(false);
     this.signalService.isRegisterDialog.set(false);
-    this.signalService.isChoosingAvatarDialog.set(false);
+    this.signalService.isChoosingAvatarDialog.set(true);
     this.signalService.isPasswordForgottenDialog.set(false);
   }
 
