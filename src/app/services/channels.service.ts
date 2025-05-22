@@ -107,4 +107,29 @@ export class ChannelsService {
     };
   }
 
+  async postMessage(message: ChannelMessageInterface) {
+    const activeChannel = localStorage.getItem("currentChannel");
+    if (!activeChannel) return;
+
+    try {
+      await addDoc(this.getChannelMessagesRef(activeChannel), {
+        text: message.text,
+        createdAt: Timestamp.now(),
+        author: message.senderId || 'Unknown',
+        reactions: []
+      });
+    } catch (error) {
+      console.error("Failed to post message:", error);
+    }
+  }
+
+  // => Subcollection Channel Messages
+  getChannelMessagesRef(id:string) {
+    return collection(this.firestore,`channels/${id}/channelMessages`);
+  }
+
+  getChannelById(id: string): ChannelInterface | undefined {
+    return this.channels.find(channel => channel.id === id);
+  }
+  
 }

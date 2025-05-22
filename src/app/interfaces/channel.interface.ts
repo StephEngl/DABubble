@@ -4,8 +4,8 @@ import { ChannelMessageInterface } from './message.interface';
 export interface ChannelInterface {
     id?: string;
     createdAt: Timestamp;
-    members: string[];
+    members?: string[];
     channelName: string;
     channelDescription?: string;
-    channelMessages: ChannelMessageInterface[];
+    channelMessages?: ChannelMessageInterface[];
 }

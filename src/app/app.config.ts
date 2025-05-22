@@ -14,8 +14,5 @@ export const appConfig: ApplicationConfig = {
     provideFirebaseApp(() => initializeApp(environment.firebaseConfig)),
     provideAuth(() => getAuth()),
     provideFirestore(() => getFirestore()),
-    provideFirebaseApp(() => initializeApp()),
-    provideAuth(() => getAuth()),
-    provideFirestore(() => getFirestore()),
   ],
 };

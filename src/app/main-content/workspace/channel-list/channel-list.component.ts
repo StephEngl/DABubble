@@ -1,5 +1,6 @@
 import { Component, inject } from '@angular/core';
 import { MenuToggleService } from '../../../services/menu-toggle.service';
+import { ChannelsService } from '../../../services/channels.service';
 
 @Component({
   selector: 'app-channel-list',
@@ -11,6 +12,7 @@ import { MenuToggleService } from '../../../services/menu-toggle.service';
 export class ChannelListComponent {
 
   menuToggleService = inject(MenuToggleService);
+  channelService = inject(ChannelsService);
 
   tempArrayItemCount: number[] = [0,1,2,3,4];
   channelListOpened: boolean = false;
@@ -27,5 +29,10 @@ export class ChannelListComponent {
   imageColor(input: boolean):string {
     const color = input ? 'blue' : 'black';
     return color; 
+  }
+
+  showChannelId(id: string) {
+    console.log(id);
+    localStorage.setItem("currentChannel", id);
   }
 }

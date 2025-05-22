@@ -9,10 +9,10 @@
     </header>
     <div [class]="{'close-list': !channelListOpened}" class="channels">
         <ul>
-            @for (elements of tempArrayItemCount; track elements; let index = $index) {
-            <li (mouseenter)="hoveredIndex = index" (mouseleave)="hoveredIndex = null">
+            @for (channel of channelService.channels; track channel; let index = $index) {
+            <li (mouseenter)="hoveredIndex = index" (mouseleave)="hoveredIndex = null" (click)="showChannelId(channel.id!)">
                 <img [src]="'./../../../../assets/icons/general/tag_' + imageColor(hoveredIndex === index) + '.svg'" alt="">
-                <p>channel name</p>
+                <p>{{ channel.channelName }}</p>
             </li>
             }
         </ul>

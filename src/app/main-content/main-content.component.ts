@@ -5,6 +5,7 @@ import { ChannelComponent } from './channel/channel.component';
 import { WorkspaceComponent } from './workspace/workspace.component';
 import { MenuToggleService } from '../services/menu-toggle.service';
 import { CreateChannelComponent } from './channel/create-channel/create-channel.component';
+import { ChannelsService } from '../services/channels.service';
 
 @Component({
   selector: 'app-main-content',
@@ -22,11 +23,21 @@ import { CreateChannelComponent } from './channel/create-channel/create-channel.
 export class MainContentComponent {
 
   toggleMenu = inject(MenuToggleService);
+  channelService = inject(ChannelsService);
   workspaceOpened: boolean = false;
   workspaceHovered: boolean = false;
   workspaceStatus:  "Open" | "Close" = "Open";
 
+  constructor() {
+    this.setInitialChannel();
+  }
 
+  setInitialChannel() {
+    if (!localStorage.getItem('currentChannel') && this.channelService.channels.length > 0) {
+      localStorage.setItem('currentChannel', this.channelService.channels[0].id!);
+    }
+  };
+  
   toggleWorkspaceMenu():void {
     this.workspaceOpened = !this.workspaceOpened;
     this.workspaceStatus = this.workspaceOpened ? 'Close' : 'Open';
