@@ -7,5 +7,6 @@ export class MenuToggleService {
 
   constructor() { }
 
-  showWorkspace = signal<boolean>(true);
+  showWorkspace = signal<boolean>(false);
+  showCreateChannel = signal<boolean>(false);
 }

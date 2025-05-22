@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
+import { MenuToggleService } from '../../../services/menu-toggle.service';
 
 @Component({
   selector: 'app-channel-list',
@@ -8,6 +9,8 @@ import { Component } from '@angular/core';
   styleUrl: './channel-list.component.scss'
 })
 export class ChannelListComponent {
+
+  menuToggleService = inject(MenuToggleService);
 
   tempArrayItemCount: number[] = [0,1,2,3,4];
   channelListOpened: boolean = false;

@@ -1,0 +1,48 @@
+<section class="create-channel">
+    <h3>Create Channel</h3>
+    <p>
+        Channels are used by your team for communication.
+        Ideally, they should be topic-based – for example, #marketing.
+    </p>
+    <form
+        (ngSubmit)="submitForm(createChannelForm)"
+        #createChannelForm="ngForm"
+        >
+        <label for="channelName">Channel-Name</label>
+        <div class="input-wrapper">
+            <input
+                #channelName="ngModel"
+                [(ngModel)]="channelNameInput"
+                type="text"
+                name="channelName"
+                required
+                minlength="3"
+                placeholder="e.g. Cooperation projects"
+            />
+            @if (channelName.touched && channelName.invalid) {
+                <span class="error-message">
+                    Channel-Name must have at least 3 characters
+                </span>
+            }
+        </div>
+        
+        <label for="channelDescription">Description (optional)</label>
+        <div>
+            <textarea
+                [(ngModel)]="channelDescriptionInput"
+                name="channelDescription"
+                id="channelDescription"
+                rows="4"
+                placeholder="Describe the purpose of this channel (optional)"
+            ></textarea>
+        </div>
+
+        <button type="submit" [disabled]="channelName.invalid" > Create Channel</button>
+    </form>
+
+    <button class="close-create-channel" (click)="menuToggleService.showCreateChannel.set(false)">
+        <img src="./../../../../assets/icons/menu/close_black.svg" alt="">
+    </button>
+
+</section> 
+

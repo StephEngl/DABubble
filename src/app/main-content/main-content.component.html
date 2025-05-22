@@ -9,3 +9,9 @@
     <h5 [style.color]="workspaceHovered ? 'var(--col-font-btn-hover)' : ''">{{ workspaceStatus }} Workspace Menu</h5>
     <img [src]="getWorkspaceIcon()" alt="">
 </nav>
+
+@if (toggleMenu.showCreateChannel()) {
+    <section class="create-channel" (click)="toggleMenu.showCreateChannel.set(false)">
+        <app-create-channel (click)="$event.stopPropagation()"></app-create-channel>
+    </section>
+}
