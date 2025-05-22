@@ -65,6 +65,7 @@ export class ChannelsService {
       members: channelData.members,
       channelName: channelData.channelName,
       channelMessages: channelData.channelMessages,
+      channelDescription: channelData.channelDescription || '',
     };
   }
 
@@ -102,6 +103,7 @@ export class ChannelsService {
       members: channel.members,
       channelName: channel.channelName,
       channelMessages: channel.channelMessages,
+      channelDescription: channel.channelDescription
     };
   }
 

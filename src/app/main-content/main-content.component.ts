@@ -4,11 +4,18 @@ import { ThreadComponent } from './thread/thread.component';
 import { ChannelComponent } from './channel/channel.component';
 import { WorkspaceComponent } from './workspace/workspace.component';
 import { MenuToggleService } from '../services/menu-toggle.service';
+import { CreateChannelComponent } from './channel/create-channel/create-channel.component';
 
 @Component({
   selector: 'app-main-content',
   standalone: true,
-  imports: [HeaderComponent, ThreadComponent, ChannelComponent, WorkspaceComponent],
+  imports: [
+    HeaderComponent,
+    ThreadComponent,
+    ChannelComponent,
+    WorkspaceComponent,
+    CreateChannelComponent
+  ],
   templateUrl: './main-content.component.html',
   styleUrl: './main-content.component.scss'
 })

@@ -6,5 +6,6 @@ export interface ChannelInterface {
     createdAt: Timestamp;
     members: string[];
     channelName: string;
+    channelDescription?: string;
     channelMessages: ChannelMessageInterface[];
 }
