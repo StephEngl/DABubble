@@ -1,10 +1,10 @@
 import { Timestamp } from '@angular/fire/firestore';
-import { ChannelMessage } from './message.interface';
+import { ChannelMessageInterface } from './message.interface';
 
-export interface Channel {
+export interface ChannelInterface {
     id?: string;
     createdAt: Timestamp;
     members: string[];
     channelName: string;
-    channelMessages: ChannelMessage[];
+    channelMessages: ChannelMessageInterface[];
 }

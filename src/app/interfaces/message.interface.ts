@@ -1,23 +1,23 @@
 import { Timestamp } from '@angular/fire/firestore';
 
-export interface ThreadMessage {
+export interface ThreadMessageInterface {
     id?: string;
     createdAt: Timestamp;
     senderId: string;
     text: string;
-    reactions: Reaction[];
+    reactions: ReactionInterface[];
 }
 
-export interface ChannelMessage {
+export interface ChannelMessageInterface {
     id?: string;
     createdAt: Timestamp;
     senderId: string;
     text: string;
-    reactions: Reaction[];
-    threadMessages?: ThreadMessage[];
+    reactions: ReactionInterface[];
+    threadMessages?: ThreadMessageInterface[];
 }
 
-export interface Reaction {
+export interface ReactionInterface {
     emojiCode: string;
     postedBy: string[]; 
     count: number;
