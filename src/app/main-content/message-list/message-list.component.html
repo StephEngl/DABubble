@@ -1,21 +1,42 @@
 <section class="message-list">
-    @for (message of getChannelMessages(); track message; let index = $index) {
-        @if (
-            index === 0 ||
-            !isSameDate(
-                message.createdAt.toDate(),
-                getChannelMessages()[index - 1].createdAt!.toDate()
-            )
-        ) {
-            <div class="date-separator">
-                <p>{{ formatDate(message.createdAt.toDate()) }}</p>
-            </div>
+    @if (isChannel) {
+        @for (message of getChannelMessages(); track message; let index = $index) {
+            @if (
+                index === 0 ||
+                !isSameDate(
+                    message.createdAt.toDate(),
+                    getChannelMessages()[index - 1].createdAt!.toDate()
+                )
+            ) {
+                <div class="date-separator">
+                    <p>{{ formatDate(message.createdAt.toDate()) }}</p>
+                </div>
+            }
+            <app-chat-message
+                [messageText]="message.text"
+                [isOwnMessage]="message.senderId === 'A' ? true: false"
+                [hasReplies]="message.threadMessages!.length > 0"
+                [paddingHorizontal]="'65'"
+                [isChannelMessage]="isChannel">
+            </app-chat-message>
         }
+    } @else if (isThread) {
         <app-chat-message
-            [messageText]="message.text"
-            [isOwnMessage]="message.senderId === 'A' ? true: false"
-            [hasReplies]="message.threadMessages!.length > 0"
-            [paddingHorizontal]="'65'">
+            [messageText]="'Thread Title'"
+            [isOwnMessage]="false"
+            [hasReplies]="false"
+            [paddingHorizontal]="'16'"
+            [isChannelMessage]="isChannel">
         </app-chat-message>
+        <div class="answers-seperator"></div>
+        @for (message of getThreadMessages; track message) {
+            <app-chat-message
+                [messageText]="'Antwort Thread'"
+                [isOwnMessage]="false"
+                [hasReplies]="false"
+                [paddingHorizontal]="'16'"
+                [isChannelMessage]="isChannel">
+            </app-chat-message>
+        } 
     }
 </section>

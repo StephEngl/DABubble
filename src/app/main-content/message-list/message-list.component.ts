@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, Input } from '@angular/core';
 import { ChatMessageComponent } from './chat-message/chat-message.component';
 import { ChannelsService } from '../../services/channels.service';
 import { ChannelMessageInterface } from '../../interfaces/message.interface';
@@ -20,6 +20,7 @@ interface Message {
 })
 export class MessageListComponent {
 
+  // demo data start
   messages: Message[] = [
     { text: 'Hey, how are you?', dateCreated: new Date('2024-05-14T08:15:00'), postedBy: 'A', hasReplies: true },
     { text: 'Did you send the files already?', dateCreated: new Date('2024-05-14T09:30:00'), postedBy: 'B', hasReplies: false },
@@ -31,6 +32,11 @@ export class MessageListComponent {
     { text: 'Perfect, thanks again.', dateCreated: new Date('2024-05-22T15:55:00'), postedBy: 'B', hasReplies: false }
   ];
 
+  getThreadMessages = [1,2,3,4];
+  // demo data end
+
+  @Input() isChannel: boolean = false;
+  @Input() isThread: boolean = false;
   channelService = inject(ChannelsService);
 
   ngOnInit() {
