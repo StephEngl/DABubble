@@ -41,4 +41,23 @@ export class AuthenticationService {
     return this.isAuthenticated();
   }
 
+ /**
+   * Creates a new user account with the provided email, password, and name.
+   * @param email The email of the new user.
+   * @param password The password of the new user.
+   * @param name The name of the new user.
+   * @returns {Promise<UserCredential>} The user credential returned by Firebase after user creation.
+   * @throws {Error} Throws an error if the user creation fails.
+   */
+  async createUser(email: string, password: string, name: string): Promise<UserCredential> {
+    try {
+      const userCredential = await createUserWithEmailAndPassword(this.auth, email, password);
+      await updateProfile(userCredential.user, { displayName: name });
+      this.router.navigate(['/login']);
+      return userCredential;
+    } catch (error) {
+      throw error;
+    }
+  }
+
 }

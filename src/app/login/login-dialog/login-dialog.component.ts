@@ -1,6 +1,6 @@
 import { Component, inject } from '@angular/core';
 import { FormsModule, NgForm } from '@angular/forms';
-import { UserInterface } from '../../interfaces/user.interface';
+import { UserLoginInterface } from '../../interfaces/user.interface';
 import { AuthenticationService } from '../../services/authentication.service';
 import { SignalsService } from '../../services/signals.service';
 
@@ -21,7 +21,7 @@ export class LoginDialogComponent {
   noUserFound: Boolean = false;
   isGuestLogin = false;
 
-  loginData: UserInterface = {
+  loginData: UserLoginInterface = {
     email: '',
     password: '',
   };
