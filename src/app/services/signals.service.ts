@@ -12,4 +12,7 @@ export class SignalsService {
   isChoosingAvatarDialog = signal<boolean>(false);
   isPasswordForgottenDialog = signal<boolean>(false);
 
+  showWorkspace = signal<boolean>(true);
+  showCreateChannel = signal<boolean>(false);
+
 }

@@ -3,9 +3,9 @@ import { HeaderComponent } from './header/header.component';
 import { ThreadComponent } from './thread/thread.component';
 import { ChannelComponent } from './channel/channel.component';
 import { WorkspaceComponent } from './workspace/workspace.component';
-import { MenuToggleService } from '../services/menu-toggle.service';
 import { CreateChannelComponent } from './channel/create-channel/create-channel.component';
 import { ChannelsService } from '../services/channels.service';
+import { SignalsService } from '../services/signals.service';
 
 @Component({
   selector: 'app-main-content',
@@ -22,9 +22,9 @@ import { ChannelsService } from '../services/channels.service';
 })
 export class MainContentComponent {
 
-  toggleMenu = inject(MenuToggleService);
+  signalService = inject(SignalsService);
   channelService = inject(ChannelsService);
-  workspaceOpened: boolean = false;
+  workspaceOpened: boolean = true;
   workspaceHovered: boolean = false;
   workspaceStatus:  "Open" | "Close" = "Open";
 
@@ -41,7 +41,7 @@ export class MainContentComponent {
   toggleWorkspaceMenu():void {
     this.workspaceOpened = !this.workspaceOpened;
     this.workspaceStatus = this.workspaceOpened ? 'Close' : 'Open';
-    this.workspaceOpened ? this.toggleMenu.showWorkspace.set(true) : this.toggleMenu.showWorkspace.set(false);
+    this.workspaceOpened ? this.signalService.showWorkspace.set(true) : this.signalService.showWorkspace.set(false);
   }
 
   getWorkspaceIcon(): string {

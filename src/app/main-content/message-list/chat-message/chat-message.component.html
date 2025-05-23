@@ -18,15 +18,19 @@
                 {{ reaction.emoji }} {{ reaction.count }}
             }
         </div>
+                    @if(isChannelMessage) {
         <div class="answers">
-            @if (hasReplies) {
-                <!-- reply count out of database -->
-                <button>5 Replies</button>
-                <p>last reply on xx.xx.25</p>
-            } @else {
-                <button>Reply</button>
-            }
+
+                @if (hasReplies) {
+                    <!-- reply count out of database -->
+                    <button>5 Replies</button>
+                    <p>last reply on xx.xx.25</p>
+                } @else {
+                    <button>Reply</button>
+                }
+
         </div>
+                    }
     </section>
 
 </section>

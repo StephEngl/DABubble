@@ -1,9 +1,9 @@
 import { Component, inject } from '@angular/core';
 import { FormsModule, NgForm } from '@angular/forms';
-import { MenuToggleService } from '../../../services/menu-toggle.service';
 import { ChannelInterface } from '../../../interfaces/channel.interface';
 import { Timestamp } from 'firebase/firestore';
 import { ChannelsService } from '../../../services/channels.service';
+import { SignalsService } from '../../../services/signals.service';
 
 @Component({
   selector: 'app-create-channel',
@@ -14,7 +14,7 @@ import { ChannelsService } from '../../../services/channels.service';
 })
 export class CreateChannelComponent {
 
-  menuToggleService = inject(MenuToggleService);
+  signalService = inject(SignalsService);
   channelService = inject(ChannelsService);
   channelNameInput: string = "";
   channelDescriptionInput: string = "";

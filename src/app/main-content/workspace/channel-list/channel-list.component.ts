@@ -1,6 +1,6 @@
 import { Component, inject } from '@angular/core';
-import { MenuToggleService } from '../../../services/menu-toggle.service';
 import { ChannelsService } from '../../../services/channels.service';
+import { SignalsService } from '../../../services/signals.service';
 
 @Component({
   selector: 'app-channel-list',
@@ -11,7 +11,7 @@ import { ChannelsService } from '../../../services/channels.service';
 })
 export class ChannelListComponent {
 
-  menuToggleService = inject(MenuToggleService);
+  signalService = inject(SignalsService);
   channelService = inject(ChannelsService);
 
   tempArrayItemCount: number[] = [0,1,2,3,4];
