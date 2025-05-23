@@ -1,6 +1,6 @@
 <app-header></app-header>
 <section class="main-content">
-    <app-workspace [class.hidden]="!toggleMenu.showWorkspace()"></app-workspace>
+    <app-workspace [class.hidden]="!signalService.showWorkspace()"></app-workspace>
     <app-channel></app-channel>
     <app-thread></app-thread>
 </section>
@@ -10,8 +10,8 @@
     <img [src]="getWorkspaceIcon()" alt="">
 </nav>
 
-@if (toggleMenu.showCreateChannel()) {
-    <section class="create-channel" (click)="toggleMenu.showCreateChannel.set(false)">
+@if (signalService.showCreateChannel()) {
+    <section class="create-channel" (click)="signalService.showCreateChannel.set(false)">
         <app-create-channel (click)="$event.stopPropagation()"></app-create-channel>
     </section>
 }

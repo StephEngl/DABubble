@@ -5,7 +5,7 @@
             <img [src]="'./../../../../assets/icons/general/workspace_icon_' + imageColor(channelListHovered) + '.svg'" alt="">
             <h4 [style.color]="channelListHovered ? 'var(--col-font-btn-hover)' : 'black'">Channels</h4>
         </button>
-        <img (click)="menuToggleService.showCreateChannel.set(true)" src="./../../../../assets/icons/menu/add_black.svg" alt="">
+        <img (click)="signalService.showCreateChannel.set(true)" src="./../../../../assets/icons/menu/add_black.svg" alt="">
     </header>
     <div [class]="{'close-list': !channelListOpened}" class="channels">
         <ul>
@@ -18,7 +18,7 @@
         </ul>
         <button
             class="add-channel"
-            (click)="menuToggleService.showCreateChannel.set(true)"
+            (click)="signalService.showCreateChannel.set(true)"
             (mouseenter)="addChannelHovered = true"
             (mouseleave)="addChannelHovered = false">
             <img [src]="'./../../../../assets/icons/menu/add_circle_' + imageColor(addChannelHovered) + '.svg'" alt="">
