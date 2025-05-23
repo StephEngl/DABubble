@@ -41,6 +41,54 @@
     }
 }
 
+.edit-message {
+    @include dFlex($fd: column);
+    border-radius: 20px;
+    border: 1px solid var(--col-stroke-main);
+    background-color: var(--col-bg-secondary);
+    width: 100%;
+    padding: 12px;
+    >textarea {
+        border-radius: 10px;
+        padding: 8px;
+        width: 100%;
+        font-size: 18px;
+    }
+    
+    .edit-menu {
+        @include dFlex($jc: space-between);
+        width: 100%;
+        .edit-buttons {
+            @include dFlex($gap: 8px);
+            >button {
+                font-size: 18px;
+                font-weight: 700;
+                padding: 10px 18px;
+                border-radius: 100px;
+                cursor: pointer;
+                border: 1px solid transparent;
+                color: var(--col-font-secondary);
+                transition: all 0.3s ease;
+            }
+            >button:first-child {
+                border: 1px solid var(--col-stroke-main);
+                color: var(--col-font-href);
+                &:hover {
+                    color: var(--col-bg-btn-main);
+                    background-color: var(--col-bg-main);
+                }
+            }
+            >button:nth-child(2) {
+                background-color: var(--col-font-href);
+                &:hover {
+                    color: var(--col-font-secondary);
+                    background-color: var(--col-bg-btn-main);
+                }
+            }
+        }
+    }
+}
+
 .own-message {
     background-color: var(--col-font-href);
     color: var(--col-font-secondary);

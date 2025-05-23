@@ -32,7 +32,7 @@
         @for (message of getThreadMessages; track message) {
             <app-chat-message
                 [messageText]="'Antwort Thread'"
-                [isOwnMessage]="false"
+                [isOwnMessage]="true"
                 [hasReplies]="false"
                 [paddingHorizontal]="'16'"
                 [isChannelMessage]="isChannel">

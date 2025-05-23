@@ -9,28 +9,46 @@
             <h5>User Name</h5>
             <p>12:00 PM</p>
         </div>
-        <p  class="message-text"
-            [class]="isOwnMessage ? 'own-message':'normal-message'">
-            {{ messageText }}
-        </p>
-        <div class="reactions">
-            @for (reaction of reactions; track reaction) {
-                {{ reaction.emoji }} {{ reaction.count }}
-            }
-        </div>
-                    @if(isChannelMessage) {
-        <div class="answers">
 
-                @if (hasReplies) {
-                    <!-- reply count out of database -->
-                    <button>5 Replies</button>
-                    <p>last reply on xx.xx.25</p>
-                } @else {
-                    <button>Reply</button>
+        @if (!editMode) {
+            <p  
+                class="message-text"
+                (click)="editMode = true"
+                [class]="isOwnMessage ? 'own-message':'normal-message'">
+                {{ messageText }}
+            </p>
+
+            <div class="reactions">
+                @for (reaction of reactions; track reaction) {
+                    {{ reaction.emoji }} {{ reaction.count }}
                 }
+            </div>
 
-        </div>
+            @if(isChannelMessage) {
+                <div class="answers">
+                    @if (hasReplies) {
+                        <!-- reply count out of database -->
+                        <button>5 Replies</button>
+                        <p>last reply on xx.xx.25</p>
+                    } @else {
+                        <button>Reply</button>
                     }
+                </div>
+            }
+
+        } @else if(editMode) {
+            <section class="edit-message">
+                <textarea name="" id=""></textarea>
+                <div class="edit-menu">
+                    <img src="./../../../../assets/icons/message/email_at_grey.svg" alt="">
+                    <div class="edit-buttons">
+                        <button (click)="editMode = false">Cancel</button>
+                        <button>Save</button>
+                    </div>
+                </div>            
+            </section>
+        }
+
     </section>
 
 </section>

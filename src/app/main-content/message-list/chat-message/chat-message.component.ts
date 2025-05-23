@@ -14,6 +14,7 @@ export class ChatMessageComponent {
   @Input() hasReplies: boolean = false;
   @Input() paddingHorizontal: string = '';
   @Input() isChannelMessage: boolean = false;
+  editMode: boolean = false;
 
   reactions: { emoji:string, count: number} [] = [
     {emoji:'👍',count:1},
