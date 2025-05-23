@@ -1,5 +1,5 @@
 <section class="message-list">
-    @if (isChannel) {
+    @if (isChannel && getChannelMessages()) {
         @for (message of getChannelMessages(); track message; let index = $index) {
             @if (
                 index === 0 ||
@@ -12,31 +12,34 @@
                     <p>{{ formatDate(message.createdAt.toDate()) }}</p>
                 </div>
             }
-            <app-chat-message
-                [messageText]="message.text"
-                [isOwnMessage]="message.senderId === 'A' ? true: false"
-                [hasReplies]="message.threadMessages!.length > 0"
-                [paddingHorizontal]="'65'"
-                [isChannelMessage]="isChannel">
-            </app-chat-message>
+            @if (message.threadMessages) {
+                <app-chat-message
+                    [messageText]="message.text"
+                    [messageId]="message.id!"
+                    [isOwnMessage]="false"
+                    [threadCount]="message.threadMessages.length"
+                    [paddingHorizontal]="'65'"
+                    [isChannelMessage]="isChannel">
+                </app-chat-message>
+            }
         }
-    } @else if (isThread) {
+    } @else if (isThread && getThreadMessages()) {
         <app-chat-message
             [messageText]="'Thread Title'"
             [isOwnMessage]="false"
-            [hasReplies]="false"
             [paddingHorizontal]="'16'"
             [isChannelMessage]="isChannel">
         </app-chat-message>
         <div class="answers-seperator"></div>
-        @for (message of getThreadMessages; track message) {
+        @for (message of getThreadMessages(); track message) {
+            @if (message) {
             <app-chat-message
-                [messageText]="'Antwort Thread'"
+                [messageText]="message.text"
                 [isOwnMessage]="true"
-                [hasReplies]="false"
                 [paddingHorizontal]="'16'"
                 [isChannelMessage]="isChannel">
             </app-chat-message>
+            }
         } 
     }
 </section>

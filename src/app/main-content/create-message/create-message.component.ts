@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, Input } from '@angular/core';
 import { Timestamp } from '@angular/fire/firestore';
 import { ChannelsService } from '../../services/channels.service';
 import { CommonModule } from '@angular/common';
@@ -15,6 +15,7 @@ import { ChannelMessageInterface } from '../../interfaces/message.interface';
 export class CreateMessageComponent {
 
   channelService = inject(ChannelsService);
+  @Input() isChannelMessage: boolean = false;
   messageText: string = '';
 
   // demo-data start
@@ -40,14 +41,20 @@ export class CreateMessageComponent {
 
   sendMessage(form: NgForm) {
     if (!form.valid) return;
+    const currentChannel = localStorage.getItem('currentChannel');
     const message: ChannelMessageInterface = { 
       text: this.messageText,
       createdAt: Timestamp.now(),
       senderId: '0vRFU6JRgcygyROgaJWo',
       reactions: []
     };
-    this.channelService.postMessage(message);
+    if (this.isChannelMessage) {
+      this.channelService.postMessage(message);
+    } else {
+      this.channelService.postThreadMessage(message);
+    }
     console.log("Valid message:", this.messageText);
+    this.channelService.loadChannel(currentChannel!);
     form.resetForm();
   }
 

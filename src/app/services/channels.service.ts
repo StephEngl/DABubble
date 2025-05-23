@@ -14,7 +14,7 @@ import {
     DocumentReference
 } from '@angular/fire/firestore';
 import { ChannelInterface } from '../interfaces/channel.interface';
-import { ChannelMessageInterface } from '../interfaces/message.interface';
+import { ChannelMessageInterface, ThreadMessageInterface } from '../interfaces/message.interface';
 @Injectable({
   providedIn: 'root'
 })
@@ -124,16 +124,46 @@ export class ChannelsService {
     }
   }
 
+  async postThreadMessage(message: ChannelMessageInterface) {
+    const activeChannel = localStorage.getItem("currentChannel");
+    const activeThread = localStorage.getItem("currentThread");
+    if (!activeChannel || !activeThread) return;
+
+    try {
+      await addDoc(this.getThreadMessagesRef(activeChannel, activeThread), {
+        text: message.text,
+        createdAt: Timestamp.now(),
+        senderId: message.senderId || 'Unknown',
+        reactions: []
+      });
+    } catch (error) {
+      console.error("Failed to post message:", error);
+    }
+  }
+
   // => Subcollection Channel Messages
   getChannelMessagesRef(id:string) {
     return collection(this.firestore,`channels/${id}/channelMessages`);
+  }
+
+  // => Subcollection Thread Messages
+  getThreadMessagesRef(idChannel:string, idMessage: string) {
+    return collection(this.firestore,`channels/${idChannel}/channelMessages/${idMessage}/threadMessages`);
   }
 
   getChannelById(id: string) {
     return this.channels.find(channel => channel.id === id);
   }
 
-  subscribeToChannelMessages(channelId: string) {
+  getMessageById(id: string) {
+    const currentChannel = localStorage.getItem('currentChannel');
+    if (!currentChannel) return;
+    const channel = this.getChannelById(currentChannel);
+    if (!channel || !channel.channelMessages) return;
+    return channel.channelMessages.find(message => message.id === id);
+  }
+
+subscribeToChannelMessages(channelId: string) {
   const q = query(this.getChannelMessagesRef(channelId), orderBy('createdAt'));
   return onSnapshot(q, (snapshot) => {
     const messages: ChannelMessageInterface[] = [];
@@ -141,20 +171,54 @@ export class ChannelsService {
     snapshot.forEach((doc) => {
       const data = doc.data() as ChannelMessageInterface;
       messages.push({
+        id: doc.id,
         text: data.text,
         createdAt: data.createdAt,
         senderId: data.senderId,
-        reactions: data.reactions || [],
-        threadMessages: data.threadMessages || []
+        reactions: data.reactions,
+        threadMessages: data.threadMessages
       });
     });
 
     const channel = this.getChannelById(channelId);
     if (channel) {
       channel.channelMessages = [...messages];
+
+      messages.forEach(msg => {
+        this.subscribeToThreadMessages(channelId, msg.id!);
+      });
     }
   });
 }
 
+  subscribeToThreadMessages(channelId: string, messageId: string) {
+    const q = query(this.getThreadMessagesRef(channelId, messageId), orderBy('createdAt'));
+
+    return onSnapshot(q, (snapshot) => {
+      const threadMessages: ThreadMessageInterface[] = [];
+
+      snapshot.forEach((doc) => {
+        const data = doc.data() as ThreadMessageInterface;
+        threadMessages.push({
+          id: doc.id,
+          text: data.text,
+          createdAt: data.createdAt,
+          senderId: data.senderId,
+          reactions: data.reactions,
+        });
+      });
+
+      const channel = this.getChannelById(channelId);
+      const parentMessage = channel?.channelMessages?.find(m => m.id === messageId);
+      if (parentMessage) {
+        parentMessage.threadMessages = [...threadMessages];
+      }
+    });
+  }
+
+  async loadChannel(id: string): Promise<void> {
+    localStorage.setItem("currentChannel", id);
+    this.subscribeToChannelMessages(id);
+  }
 
 }

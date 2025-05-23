@@ -29,7 +29,7 @@ export class CreateChannelComponent {
     }
     // implement check for existing channelname
     // if channelNameInput === database channel name => return
-    console.log(channelData);
+    // console.log(channelData);
     this.channelService.addChannel(channelData);
     ngForm.reset();
   } 

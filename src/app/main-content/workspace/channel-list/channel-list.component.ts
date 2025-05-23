@@ -31,9 +31,9 @@ export class ChannelListComponent {
     return color; 
   }
 
-  showChannelId(id: string) {
+  async showChannelId(id: string) {
     localStorage.setItem("currentChannel", id);
-    const currentChannelId = localStorage.getItem('currentChannel');
-    this.channelService.subscribeToChannelMessages(currentChannelId!);
+    this.channelService.subscribeToChannelMessages(id);
   }
+  
 }

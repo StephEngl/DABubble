@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { HeaderComponent } from './header/header.component';
 import { ThreadComponent } from './thread/thread.component';
 import { ChannelComponent } from './channel/channel.component';
@@ -20,7 +20,7 @@ import { SignalsService } from '../services/signals.service';
   templateUrl: './main-content.component.html',
   styleUrl: './main-content.component.scss'
 })
-export class MainContentComponent {
+export class MainContentComponent implements OnInit {
 
   signalService = inject(SignalsService);
   channelService = inject(ChannelsService);
@@ -30,6 +30,13 @@ export class MainContentComponent {
 
   constructor() {
     this.setInitialChannel();
+  }
+
+  async ngOnInit() {
+    const currentChannelId = localStorage.getItem('currentChannel');
+    if (currentChannelId) {
+      await this.channelService.loadChannel(currentChannelId!);
+    } 
   }
 
   setInitialChannel() {
