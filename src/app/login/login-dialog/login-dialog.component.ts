@@ -12,7 +12,7 @@ import { SignalsService } from '../../services/signals.service';
   styleUrl: './login-dialog.component.scss',
 })
 export class LoginDialogComponent {
-  // authService = inject(AuthenticationService);
+  authService = inject(AuthenticationService);
   signalService = inject(SignalsService);
   formSubmitted = false;
   passwordVisible: Boolean = false;
@@ -56,16 +56,18 @@ export class LoginDialogComponent {
    * @param password - The user's password.
    */
   async login(mail: string, password: string) {
-    // try {
-    //   this.noUserFound = false;
-    //   await this.authService.signInUser(mail, password);
-    // } catch (error) {
-    //   this.noUserFound = true;
-    //   setTimeout(() => {
-    //     this.noUserFound = false;
-    //   }, 5000);
-    //   console.error('Login fehlgeschlagen:', error);
-    // }
+    try {
+      this.noUserFound = false;
+      await this.authService.signInUser(mail, password);
+      console.log("logged in as: ", mail);
+      
+    } catch (error) {
+      this.noUserFound = true;
+      setTimeout(() => {
+        this.noUserFound = false;
+      }, 5000);
+      console.error('Login fehlgeschlagen:', error);
+    }
   }
 
   /**

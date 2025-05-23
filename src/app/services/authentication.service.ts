@@ -60,4 +60,41 @@ export class AuthenticationService {
     }
   }
 
+    /**
+   * Signs in a user with the provided email and password.
+   * @param email The email of the user.
+   * @param password The password of the user.
+   * @returns {Promise<any>} The user object after successful sign-in.
+   * @throws {Error} Throws an error if the sign-in fails.
+   */
+  async signInUser(email: string, password: string): Promise<any> {
+    try {
+      const userCredential = await signInWithEmailAndPassword(this.auth, email, password);
+      this.router.navigate(['/']);
+      this.isAuthenticated.set(true);
+      return userCredential.user;
+    } catch (error) {
+      throw error;
+    }
+  }
+
+    /**
+   * Updates the profile of the currently authenticated user with the new name.
+   * @param name The new name to set for the user.
+   * @returns {Promise<void>} Resolves when the profile update is complete.
+   * @throws {Error} Throws an error if the profile update fails.
+   */
+  async updateProfileUser(name: string): Promise<void> {
+    if (!this.auth.currentUser) {
+      throw new Error('No user is currently logged in.');
+    }
+
+    try {
+      await updateProfile(this.auth.currentUser, {
+        displayName: name
+      });
+    } catch (error) {
+      throw error;
+    }
+  }
 }
