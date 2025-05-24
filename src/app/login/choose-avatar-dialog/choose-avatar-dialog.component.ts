@@ -1,16 +1,31 @@
 import { Component, inject } from '@angular/core';
 import { SignalsService } from '../../services/signals.service';
+import { UsersService } from '../../services/users.service';
+import { UserInterface } from '../../interfaces/user.interface';
 
 @Component({
   selector: 'app-choose-avatar-dialog',
   standalone: true,
   imports: [],
   templateUrl: './choose-avatar-dialog.component.html',
-  styleUrl: './choose-avatar-dialog.component.scss'
+  styleUrl: './choose-avatar-dialog.component.scss',
 })
 export class ChooseAvatarDialogComponent {
   signalService = inject(SignalsService);
+  userService = inject(UsersService);
 
+  currentUser?: UserInterface;
+
+  ngOnInit() {
+    this.getCurrentUser();
+  }
+
+  async getCurrentUser() {
+    const uid = this.signalService.currentUid();
+    if (!uid) return;
+
+    this.currentUser = await this.userService.getUserByUid(uid);
+  }
 
   backToRegister() {
     this.signalService.isLoginDialog.set(false);
@@ -19,7 +34,42 @@ export class ChooseAvatarDialogComponent {
     this.signalService.isPasswordForgottenDialog.set(false);
   }
 
-  createAccount() {
+  async createAccount() {
+    if (!this.currentUser) return;
+    await this.userService.updateUserAvatar(
+      this.currentUser.id!,
+      this.currentUser.avatarId
+    );
+    this.backToLogin();
+  }
+
+  selectAvatarId(avatarId: string) {
+    if (!this.currentUser) return;
+    this.currentUser.avatarId = avatarId;
+  }
+
+  getAvatarImagePath() {
+    if (!this.currentUser || !this.currentUser.avatarId) {
+      return '/assets/icons/user/user_default.png';
+    }
+    return `/assets/icons/user/user_${this.getAvatarFileName(
+      this.currentUser.avatarId
+    )}.svg`;
+  }
+
+  getAvatarFileName(avatarId: string): string {
+    const mapping: Record<string, string> = {
+      '1': 'fem_1',
+      '2': 'fem_2',
+      '3': 'mal_1',
+      '4': 'mal_2',
+      '5': 'mal_3',
+      '6': 'mal_4',
+    };
+    return mapping[avatarId] ?? 'default';
+  }
+
+  backToLogin() {
     this.signalService.isLoginDialog.set(true);
     this.signalService.isRegisterDialog.set(false);
     this.signalService.isChoosingAvatarDialog.set(false);

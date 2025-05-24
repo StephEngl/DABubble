@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, Output } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { LoginDialogComponent } from './login-dialog/login-dialog.component';
 import { SignalsService } from '../services/signals.service';
@@ -22,6 +22,8 @@ import { ChooseAvatarDialogComponent } from './choose-avatar-dialog/choose-avata
 export class LoginComponent {
   signalService = inject(SignalsService);
 
+  @Output() uid!: string;
+  
   openChooseAvatarDialog() {
     this.signalService.isLoginDialog.set(false);
     this.signalService.isRegisterDialog.set(false);

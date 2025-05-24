@@ -45,7 +45,7 @@ export class RegisterDialogComponent {
     this.formSubmitted = true;
   }
 
-  goToAvatarChoice(name: string, mail: string, password: string) {
+  goToAvatarChoice() {
     this.signalService.isLoginDialog.set(false);
     this.signalService.isRegisterDialog.set(false);
     this.signalService.isChoosingAvatarDialog.set(true);
@@ -59,13 +59,14 @@ export class RegisterDialogComponent {
      * @param password string - user's password
      */
     async createUser(nameInput: string, mailInput: string, password: string) {
-        const user:UserInterface = { name: nameInput, email: mailInput, status: 'online', avatarId: "1" }
-        if (this.userAlreadyExists(user.name)) return;
+        const user:UserInterface = { name: nameInput, email: mailInput, status: 'online', avatarId: "" }
+        // if (this.userAlreadyExists(user.name)) return;
         const userCredential = await this.authService.createUser(user.email, password, user.name);
         const uid = userCredential.user.uid;
         this.usersService.addUser(uid, user);
+        this.signalService.currentUid.set(uid);
 
-        this.goToAvatarChoice(nameInput, mailInput, this.passwordInput);
+        this.goToAvatarChoice();
     }
 
     /**
@@ -73,9 +74,9 @@ export class RegisterDialogComponent {
      * @param mail string - email to check
      * @returns boolean - true if the user already exists
      */
-    userAlreadyExists(mail: string): boolean {
-        return (
-            this.usersService.users.some(user => user.email.trim().toLowerCase() === mail.trim().toLowerCase())
-        );
-    }
+    // userAlreadyExists(mail: string): boolean {
+    //     return (
+    //         this.usersService.users.some(user => user.email.trim().toLowerCase() === mail.trim().toLowerCase())
+    //     );
+    // }
 }

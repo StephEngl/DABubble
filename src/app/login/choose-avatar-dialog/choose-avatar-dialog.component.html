@@ -8,32 +8,58 @@
     />
     <h2>Create Account</h2>
 
-    <img
-      src="/assets/icons/user/user_default.png"
-      alt="User Image"
-      class="profile-image"
-    />
+    <img [src]="getAvatarImagePath()" alt="User Image" class="profile-image" />
 
-    <span class="user-name">User Name</span>
+    @if (currentUser) {
+    <span class="user-name">{{ currentUser.name }}</span>
+    } @else {
+    <span class="user-name"></span>
+    }
 
     <span> Please, choose your Avatar from the following list: </span>
     <div class="avatar-list">
-        <img class="avatar-image" src="/assets/icons/user/user_fem_1.svg" alt="">
-        <img class="avatar-image" src="/assets/icons/user/user_fem_2.svg" alt="">
-        <img class="avatar-image" src="/assets/icons/user/user_mal_1.svg" alt="">
-        <img class="avatar-image" src="/assets/icons/user/user_mal_2.svg" alt="">
-        <img class="avatar-image" src="/assets/icons/user/user_mal_3.svg" alt="">
-        <img class="avatar-image" src="/assets/icons/user/user_mal_4.svg" alt="">
+      <img
+        class="avatar-image"
+        src="/assets/icons/user/user_fem_1.svg"
+        alt=""
+        (click)="selectAvatarId('1')"
+      />
+      <img
+        class="avatar-image"
+        src="/assets/icons/user/user_fem_2.svg"
+        alt=""
+        (click)="selectAvatarId('2')"
+      />
+      <img
+        class="avatar-image"
+        src="/assets/icons/user/user_mal_1.svg"
+        alt=""
+        (click)="selectAvatarId('3')"
+      />
+      <img
+        class="avatar-image"
+        src="/assets/icons/user/user_mal_2.svg"
+        alt=""
+        (click)="selectAvatarId('4')"
+      />
+      <img
+        class="avatar-image"
+        src="/assets/icons/user/user_mal_3.svg"
+        alt=""
+        (click)="selectAvatarId('5')"
+      />
+      <img
+        class="avatar-image"
+        src="/assets/icons/user/user_mal_4.svg"
+        alt=""
+        (click)="selectAvatarId('6')"
+      />
     </div>
 
     <div class="apply-button-wrapper">
-          <button
-            class="apply-button"
-            type="submit"
-            
-            (click)="createAccount()">Apply
-          </button>
-        </div>
-
+      <button class="apply-button" type="submit" (click)="createAccount()">
+        Apply
+      </button>
+    </div>
   </div>
 </section>
