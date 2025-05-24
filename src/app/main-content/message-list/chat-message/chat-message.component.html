@@ -1,58 +1,62 @@
 @if (isChannelMessage || isThreadTitle || isThreadMessage) {
-<section class="app-message" [style.padding]="'20px ' + paddingHorizontal + 'px'" [style.flexDirection]="isOwnMessage ? 'row-reverse' : 'row'">
+    <section class="app-message" [style.padding]="'20px ' + paddingHorizontal + 'px'" [style.flexDirection]="isOwnMessage ? 'row-reverse' : 'row'">
 
-    <aside class="user-avatar">
-        <img src="./../../../../assets/icons/user/user_fem_1.svg" alt="">
-    </aside>
+        <aside class="user-avatar">
+            <img src="./../../../../assets/icons/user/user_fem_1.svg" alt="">
+        </aside>
 
-    <section class="chat-message" [style.alignItems]="isOwnMessage ? 'flex-end' : 'flex-start'">
-        <div class="message-title">
-            <h5>User Name</h5>
-            <p> {{ createdAt() }}</p>
-        </div>
-
-        @if (!editMode) {
-            <p  
-                class="message-text"
-                (click)="editMode = true"
-                [class]="isOwnMessage ? 'own-message':'normal-message'">
-                {{ text() }}
-            </p>
-
-            <div class="reactions">
-                @for (reaction of reactions; track reaction) {
-                    {{ reaction.emoji }} {{ reaction.count }}
-                }
+        <section class="chat-message" [style.alignItems]="isOwnMessage ? 'flex-end' : 'flex-start'">
+            <div class="message-title">
+                <h5>User Name</h5>
+                <p> {{ createdAt() }}</p>
             </div>
 
-            @if(isChannelMessage) {
-                <div class="answers">
-                    @if (threadMessages.length > 0) {
-                        <!-- reply count out of database -->
-                        <button (click)="openThread()">{{ threadMessages.length }} Replies</button>
-                        <p>last on {{ dateLastThread(threadMessages[threadMessages.length -1 ].createdAt.toDate()) }}</p>
-                    } @else {
-                        <button (click)="openThread()">Reply</button>
+            @if (!editMode) {
+                <p  
+                    class="message-text"
+                    (click)="editMode = true"
+                    [class]="isOwnMessage ? 'own-message':'normal-message'">
+                    {{ text() }}
+                </p>
+
+                <div class="reactions">
+                    @for (reaction of reactions; track reaction) {
+                        {{ reaction.emoji }} {{ reaction.count }}
                     }
                 </div>
-            }
 
-        } @else if(editMode) {
-            <section class="edit-message">
-                <textarea name="" id="">{{ messageText }}</textarea>
-                <div class="edit-menu">
-                    <img src="./../../../../assets/icons/message/emoji_satisfied_grey.svg" alt="">
-                    <div class="edit-buttons">
-                        <button (click)="editMode = false">Cancel</button>
-                        <button>Save</button>
+                @if(isChannelMessage) {
+                    <div class="answers">
+                        @if (threadMessages.length > 0) {
+                            <!-- reply count out of database -->
+                            <button (click)="openThread()">{{ threadMessages.length }} Replies</button>
+                            <p>last on {{ dateLastThread(threadMessages[threadMessages.length -1 ].createdAt.toDate()) }}</p>
+                        } @else {
+                            <button (click)="openThread()">Reply</button>
+                        }
                     </div>
-                </div>            
-            </section>
-        }
+                }
+
+            } @else if(editMode) {
+                <section class="edit-message">
+                    <textarea name="" id="">{{ messageText }}</textarea>
+                    <div class="edit-menu">
+                        <img src="./../../../../assets/icons/message/emoji_satisfied_grey.svg" alt="">
+                        <div class="edit-buttons">
+                            <button (click)="editMode = false">Cancel</button>
+                            <button>Save</button>
+                        </div>
+                    </div>            
+                </section>
+            }
+        </section>
+
+        <nav
+        [class]="isOwnMessage ? 'left' : 'right'">
+            work in progess bar
+        </nav>
 
     </section>
-
-</section>
 }
 
 
