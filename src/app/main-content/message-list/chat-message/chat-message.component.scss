@@ -129,12 +129,12 @@ nav {
     border: 1px solid var(--col-stroke-main);
     background-color: var(--col-bg-secondary);
     &.left {
-        border-radius: 20px;
+        border-radius: 20px 20px 0 20px;
         left: 16px;
         right: auto;
     }
     &.right {
-        border-radius: 20px;
+        border-radius: 20px 20px 20px 0;
         left: auto;
         right: 16px;
     }
