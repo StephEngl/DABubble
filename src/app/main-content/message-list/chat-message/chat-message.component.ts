@@ -1,10 +1,11 @@
 import { Component, Input, inject } from '@angular/core';
 import { ChannelsService } from '../../../services/channels.service';
+import { NgClass } from '@angular/common';
 
 @Component({
   selector: 'app-chat-message',
   standalone: true,
-  imports: [],
+  imports: [NgClass],
   templateUrl: './chat-message.component.html',
   styleUrl: './chat-message.component.scss'
 })
@@ -28,6 +29,15 @@ export class ChatMessageComponent {
   @Input() isThreadTitle: boolean = false;
 
   editMode: boolean = false;
+  hoverMessage: boolean = false;
+
+  menuBar: {imgSrc: string, shownInThread: boolean}[] = [
+    { imgSrc: './../../../../assets/icons/message/emoji_laughing.png', shownInThread: false },
+    { imgSrc: './../../../../assets/icons/message/emoji_thumbs_up.png', shownInThread: false },
+    { imgSrc: './../../../../assets/icons/message/add_reaction_black.svg', shownInThread: true },
+    { imgSrc: './../../../../assets/icons/message/comment_black.svg', shownInThread: false },
+    { imgSrc: './../../../../assets/icons/message/more_options_black.svg', shownInThread: true },
+  ];
 
   reactions: { emoji:string, count: number} [] = [
     {emoji:'👍',count:1},
@@ -73,7 +83,7 @@ export class ChatMessageComponent {
 
   createdAt() {
     if (this.isChannelMessage) {
-        return this.dateDayMonthYear(this.message.createdAt.toDate())
+        return this.timeHourMinute(this.message.createdAt.toDate())
       } else if (this.isThreadMessage) {
         return this.timeHourMinute(this.threadMessage.createdAt.toDate());
       } else if (this.isThreadTitle) {

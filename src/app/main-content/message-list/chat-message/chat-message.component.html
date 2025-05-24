@@ -1,5 +1,11 @@
 @if (isChannelMessage || isThreadTitle || isThreadMessage) {
-    <section class="app-message" [style.padding]="'20px ' + paddingHorizontal + 'px'" [style.flexDirection]="isOwnMessage ? 'row-reverse' : 'row'">
+    <section 
+        class="app-message"
+        [style.padding]="'20px ' + paddingHorizontal + 'px'"
+        [style.flexDirection]="isOwnMessage ? 'row-reverse' : 'row'"
+        (mouseenter)="hoverMessage = true"
+        (mouseleave)="hoverMessage = false"
+    >
 
         <aside class="user-avatar">
             <img src="./../../../../assets/icons/user/user_fem_1.svg" alt="">
@@ -51,10 +57,23 @@
             }
         </section>
 
-        <nav [class]="isOwnMessage ? 'left' : 'right'">
-            work in progess bar
-        </nav>
-
+        @if (!isThreadTitle) {
+            <nav [ngClass]="{
+                'left': isOwnMessage,
+                'right': !isOwnMessage,
+                'shown': hoverMessage
+            }">
+                @for (item of menuBar; track item) {
+                    @if (isThreadMessage) {
+                        @if (item.shownInThread) {
+                            <img [src]="item.imgSrc" alt="">
+                        }
+                    } @else if (isChannelMessage) {
+                        <img [src]="item.imgSrc" alt="">
+                    }
+                }
+            </nav>
+        }
     </section>
 }
 

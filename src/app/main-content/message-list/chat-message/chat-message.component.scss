@@ -122,20 +122,46 @@
 }
 
 nav {
-    @include dFlex($pos:absolute);
-    top: -10px;
-    height: 35px;
-    width: 200px;
+    @include dFlex($pos: absolute, $gap: 4px);
+    top: 30px;
+    height: 0px;
+    padding: 12px;
+    overflow-y: hidden;
+    opacity: 0;
+    width: auto;
     border: 1px solid var(--col-stroke-main);
     background-color: var(--col-bg-secondary);
+    transition: all 0.5s ease;
+    >img {
+        border-radius: 50%;
+        width: 30px;
+        height: 30px;
+        padding: 5px;
+        object-fit: contain;
+        overflow:visible;
+        transition: all 0.3s ease;
+        cursor: pointer;
+        &:hover {
+            background-color: var(--col-bg-main);
+            border: 1px solid var(--col-stroke-main);
+        }
+    }
     &.left {
+        transform: translateX(50%);
         border-radius: 20px 20px 0 20px;
         left: 16px;
         right: auto;
     }
     &.right {
+        transform: translateX(-50%);
         border-radius: 20px 20px 20px 0;
         left: auto;
         right: 16px;
+    }
+    &.shown {
+        transform: translateX(0%);
+        opacity: 1;
+        height: auto;
+        top: -10px;
     }
 }
