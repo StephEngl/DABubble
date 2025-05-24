@@ -3,6 +3,7 @@ import { ChatMessageComponent } from './chat-message/chat-message.component';
 import { ChannelsService } from '../../services/channels.service';
 import { ChannelMessageInterface } from '../../interfaces/message.interface';
 import { ThreadMessageInterface } from '../../interfaces/message.interface';
+import { Timestamp } from '@angular/fire/firestore';
 
 interface Message {
   text: string;
@@ -44,6 +45,17 @@ export class MessageListComponent {
       && date1.getDate() === date2.getDate();
   }
 
+  shouldShowDateSeparator(index: number, messages: any): boolean {
+    if (index === 0) return true;
+
+    const current = messages[index]?.createdAt?.toDate?.();
+    const prev = messages[index - 1]?.createdAt?.toDate?.();
+
+    if (!current || !prev) return false;
+
+    return !this.isSameDate(current, prev);
+  }
+
   toDate(timestamp: any): Date {
     return timestamp?.toDate ? timestamp.toDate() : timestamp;
   }
@@ -72,8 +84,24 @@ export class MessageListComponent {
     return this.channelService.getMessageById(this.currentThread())?.threadMessages || [];
   }
 
+  getThreadMessageTitle(): string {
+    return this.channelService.getMessageById(this.currentThread())?.text || '';
+  }
+
+  getThreadMessageDate(): Timestamp {
+    return this.channelService.getMessageById(this.currentThread())?.createdAt!;
+  }
+
+  getCurrentThreadMessage(): ThreadMessageInterface | undefined {
+    return this.channelService.getMessageById(this.currentThread());
+  }
+
   hasThreadMessages(): boolean {
     return this.getThreadMessages().length > 0;
   }
   
+  currentThreadActive() {
+    return this.getCurrentThreadMessage()?.id === localStorage.getItem('currentThread');
+  }
+
 }

@@ -1,3 +1,4 @@
+@if (isChannelMessage || isThreadTitle || isThreadMessage) {
 <section class="app-message" [style.padding]="'20px ' + paddingHorizontal + 'px'" [style.flexDirection]="isOwnMessage ? 'row-reverse' : 'row'">
 
     <aside class="user-avatar">
@@ -7,7 +8,7 @@
     <section class="chat-message" [style.alignItems]="isOwnMessage ? 'flex-end' : 'flex-start'">
         <div class="message-title">
             <h5>User Name</h5>
-            <p>12:00 PM</p>
+            <p> {{ createdAt() }}</p>
         </div>
 
         @if (!editMode) {
@@ -15,7 +16,7 @@
                 class="message-text"
                 (click)="editMode = true"
                 [class]="isOwnMessage ? 'own-message':'normal-message'">
-                {{ messageText }}
+                {{ text() }}
             </p>
 
             <div class="reactions">
@@ -26,10 +27,10 @@
 
             @if(isChannelMessage) {
                 <div class="answers">
-                    @if (threadCount > 0) {
+                    @if (threadMessages.length > 0) {
                         <!-- reply count out of database -->
-                        <button>{{ threadCount }} Replies</button>
-                        <p>last reply on xx.xx.25</p>
+                        <button (click)="openThread()">{{ threadMessages.length }} Replies</button>
+                        <p>last on {{ dateLastThread(threadMessages[threadMessages.length -1 ].createdAt.toDate()) }}</p>
                     } @else {
                         <button (click)="openThread()">Reply</button>
                     }
@@ -52,5 +53,6 @@
     </section>
 
 </section>
+}
 
 

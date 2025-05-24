@@ -11,12 +11,22 @@ import { ChannelsService } from '../../../services/channels.service';
 export class ChatMessageComponent {
 
   channelService = inject(ChannelsService);
+  // demo input to remove start
   @Input() messageText: string = '';
   @Input() isOwnMessage: boolean = false;
-  @Input() threadCount: number = 0;
+  @Input() messageId: string = '';
+  // demo input to remove end
+
+  @Input() threadMessages: any = [];
+  @Input() message: any = {};
+  @Input() threadMessage: any = {};
+  @Input() threadTitle: any = {};
+  
   @Input() paddingHorizontal: string = '';
   @Input() isChannelMessage: boolean = false;
-  @Input() messageId: string = '';
+  @Input() isThreadMessage: boolean = false;
+  @Input() isThreadTitle: boolean = false;
+
   editMode: boolean = false;
 
   reactions: { emoji:string, count: number} [] = [
@@ -35,5 +45,53 @@ export class ChatMessageComponent {
       this.channelService.subscribeToThreadMessages(currentChannelId, currentThreadId);
     }
   }
+
+  dateDayMonthYear(date: Date): string {
+    const day = date.getDate().toString().padStart(2, '0');
+    const month = (date.getMonth() + 1).toString().padStart(2, '0');
+    const year = date.getFullYear().toString().slice(-2);
+    return `${day}.${month}.${year}`;
+  }
+
+  timeHourMinute(date: Date): string {
+    const day = date.getDate().toString().padStart(2, '0');
+    const month = (date.getMonth() + 1).toString().padStart(2, '0');
+    const year = date.getFullYear().toString().slice(-2);
+    const hours = date.getHours().toString().padStart(2, '0');
+    const minutes = date.getMinutes().toString().padStart(2, '0');
+    return `${hours}:${minutes}`;
+  }
+
+  dateLastThread(date: Date): string {
+    const day = date.getDate().toString().padStart(2, '0');
+    const month = (date.getMonth() + 1).toString().padStart(2, '0');
+    const year = date.getFullYear().toString().slice(-2);
+    const hours = date.getHours().toString().padStart(2, '0');
+    const minutes = date.getMinutes().toString().padStart(2, '0');
+    return `${day}.${month}.${year} | ${hours}:${minutes}`;
+  }
+
+  createdAt() {
+    if (this.isChannelMessage) {
+        return this.dateDayMonthYear(this.message.createdAt.toDate())
+      } else if (this.isThreadMessage) {
+        return this.timeHourMinute(this.threadMessage.createdAt.toDate());
+      } else if (this.isThreadTitle) {
+        return this.timeHourMinute(this.threadTitle.createdAt.toDate());
+      } else {
+      return '';
+    }
+  }
+
+  text() {
+    if (this.isChannelMessage) {
+      return this.message.text;
+    } else if (this.isThreadMessage) {
+      return this.threadMessage.text;
+    } else if (this.isThreadTitle) {
+      return this.threadTitle.text;
+    }
+  }
+
 
 }

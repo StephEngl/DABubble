@@ -1,13 +1,7 @@
 <section class="message-list">
     @if (isChannel && getChannelMessages()) {
         @for (message of getChannelMessages(); track message; let index = $index) {
-            @if (
-                index === 0 ||
-                !isSameDate(
-                    message.createdAt.toDate(),
-                    getChannelMessages()[index - 1].createdAt!.toDate()
-                )
-            ) {
+            @if (shouldShowDateSeparator(index, getChannelMessages())){
                 <div class="date-separator">
                     <p>{{ formatDate(message.createdAt.toDate()) }}</p>
                 </div>
@@ -17,29 +11,37 @@
                     [messageText]="message.text"
                     [messageId]="message.id!"
                     [isOwnMessage]="false"
-                    [threadCount]="message.threadMessages.length"
+                    [message]="message"
+                    [threadMessages]="message.threadMessages"
                     [paddingHorizontal]="'65'"
                     [isChannelMessage]="isChannel">
                 </app-chat-message>
             }
         }
     } @else if (isThread && getThreadMessages()) {
-        <app-chat-message
-            [messageText]="'Thread Title'"
-            [isOwnMessage]="false"
-            [paddingHorizontal]="'16'"
-            [isChannelMessage]="isChannel">
-        </app-chat-message>
-        <div class="answers-seperator"></div>
-        @for (message of getThreadMessages(); track message) {
-            @if (message) {
+        @if (currentThreadActive()) {
             <app-chat-message
-                [messageText]="message.text"
-                [isOwnMessage]="true"
+                [threadTitle]="getCurrentThreadMessage()"
+                [isOwnMessage]="false"
                 [paddingHorizontal]="'16'"
-                [isChannelMessage]="isChannel">
+                [isThreadTitle]="true">
             </app-chat-message>
-            }
-        } 
+            <div class="answers-seperator"></div>
+            @for (message of getThreadMessages(); track message; let index = $index) {
+                @if (shouldShowDateSeparator(index, getThreadMessages())) {
+                    <div class="date-separator">
+                        <p>{{ formatDate(message.createdAt.toDate()) }}</p>
+                    </div>
+                }
+                @if (message) {
+                <app-chat-message
+                    [isOwnMessage]="true"
+                    [threadMessage]="message"
+                    [paddingHorizontal]="'16'"
+                    [isThreadMessage]="isThread">
+                </app-chat-message>
+                }
+            } 
+        }
     }
 </section>
