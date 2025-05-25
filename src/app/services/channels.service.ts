@@ -87,11 +87,11 @@ export class ChannelsService {
     }
   }
 
-  async updateChannel(task: ChannelInterface) {
-    if (task.id) {
+  async updateChannel(channel: ChannelInterface) {
+    if (channel.id) {
       try {
-        let docRef = this.getSingleDocRef(task.id);
-        await updateDoc(docRef, this.getCleanJson(task));
+        let docRef = this.getSingleDocRef(channel.id);
+        await updateDoc(docRef, this.getCleanJson(channel));
       } catch (err) {
         console.error(err);
       }
@@ -141,6 +141,28 @@ export class ChannelsService {
     }
   }
 
+  async updateMessage(
+    messageId: string,
+    updatedData: Partial<ChannelMessageInterface | ThreadMessageInterface>,
+    options: { isThread?: boolean }
+  ) {
+    const activeChannel = localStorage.getItem("currentChannel");
+    const activeThread = localStorage.getItem("currentThread");
+    if (!activeChannel) return;
+    try {
+      let docRef;
+      if (options.isThread && activeThread) {
+        docRef = doc(this.getThreadMessagesRef(activeChannel, activeThread), messageId);
+      } else {
+        docRef = doc(this.getChannelMessagesRef(activeChannel), messageId);
+      }
+      await updateDoc(docRef, updatedData);
+    } catch (error) {
+      console.error("Failed to update message:", error);
+    }
+  }
+
+
   // => Subcollection Channel Messages
   getChannelMessagesRef(id:string) {
     return collection(this.firestore,`channels/${id}/channelMessages`);
@@ -163,9 +185,9 @@ export class ChannelsService {
     return channel.channelMessages.find(message => message.id === id);
   }
 
-subscribeToChannelMessages(channelId: string) {
-  const q = query(this.getChannelMessagesRef(channelId), orderBy('createdAt'));
-  return onSnapshot(q, (snapshot) => {
+  subscribeToChannelMessages(channelId: string) {
+    const q = query(this.getChannelMessagesRef(channelId), orderBy('createdAt'));
+    return onSnapshot(q, (snapshot) => {
     const messages: ChannelMessageInterface[] = [];
 
     snapshot.forEach((doc) => {

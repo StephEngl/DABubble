@@ -141,7 +141,10 @@ nav {
         overflow:visible;
         transition: all 0.3s ease;
         cursor: pointer;
-        &:hover {
+        &:hover:nth-child(-n + 2) {
+            transform: scale(1.3);
+        }
+        &:hover:nth-child(n + 3) {
             background-color: var(--col-bg-main);
             border: 1px solid var(--col-stroke-main);
         }

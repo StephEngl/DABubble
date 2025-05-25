@@ -1,24 +1,24 @@
-import { Component, Input, inject } from '@angular/core';
+import { Component, Input, NgModule, inject } from '@angular/core';
 import { ChannelsService } from '../../../services/channels.service';
 import { NgClass } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+import { SignalsService } from '../../../services/signals.service';
 
 @Component({
   selector: 'app-chat-message',
   standalone: true,
-  imports: [NgClass],
+  imports: [NgClass, FormsModule],
   templateUrl: './chat-message.component.html',
   styleUrl: './chat-message.component.scss'
 })
 export class ChatMessageComponent {
 
   channelService = inject(ChannelsService);
-  // demo input to remove start
-  @Input() messageText: string = '';
+  signalService = inject(SignalsService);
+  // placeholder data: will be removed // start
   @Input() isOwnMessage: boolean = false;
-  @Input() messageId: string = '';
-  // demo input to remove end
+  // placeholder data: will be removed // end
 
-  @Input() threadMessages: any = [];
   @Input() message: any = {};
   @Input() threadMessage: any = {};
   @Input() threadTitle: any = {};
@@ -29,31 +29,31 @@ export class ChatMessageComponent {
   @Input() isThreadTitle: boolean = false;
 
   editMode: boolean = false;
+  emojiBar: boolean = false;
   hoverMessage: boolean = false;
 
-  menuBar: {imgSrc: string, shownInThread: boolean}[] = [
-    { imgSrc: './../../../../assets/icons/message/emoji_laughing.png', shownInThread: false },
-    { imgSrc: './../../../../assets/icons/message/emoji_thumbs_up.png', shownInThread: false },
-    { imgSrc: './../../../../assets/icons/message/add_reaction_black.svg', shownInThread: true },
-    { imgSrc: './../../../../assets/icons/message/comment_black.svg', shownInThread: false },
-    { imgSrc: './../../../../assets/icons/message/more_options_black.svg', shownInThread: true },
+  menuBar: {imgSrc: string, shownInThread: boolean, clickFunction: () => void}[] = [
+    { imgSrc: './../../../../assets/icons/message/emoji_laughing.png', shownInThread: false, clickFunction: () => this.postReaction(this.singleMessageId(),'😂') },
+    { imgSrc: './../../../../assets/icons/message/emoji_thumbs_up.png', shownInThread: false, clickFunction: () => this.postReaction(this.singleMessageId(),'👍') },
+    { imgSrc: './../../../../assets/icons/message/add_reaction_black.svg', shownInThread: true, clickFunction: () => this.emojiBar = true },
+    { imgSrc: './../../../../assets/icons/message/comment_black.svg', shownInThread: false, clickFunction: () => this.openThread() },
+    { imgSrc: './../../../../assets/icons/message/more_options_black.svg', shownInThread: true, clickFunction: () => this.editMode = true },
   ];
 
-  reactions: { emoji:string, count: number} [] = [
-    {emoji:'👍',count:1},
-    {emoji:'👎',count:2},
-    {emoji:'❤️',count:3},
-    {emoji:'😂',count:4},
-    {emoji:'😍',count:5},
-  ];
+  messageEditText: string = '';
+
+  ngOnInit() {
+    this.messageEditText = this.text();
+  }
 
   openThread() {
-    localStorage.setItem('currentThread', this.messageId);
+    localStorage.setItem('currentThread', this.message.id);
     const currentThreadId = localStorage.getItem('currentThread');
     const currentChannelId = localStorage.getItem('currentChannel');
     if (currentChannelId && currentThreadId) {
       this.channelService.subscribeToThreadMessages(currentChannelId, currentThreadId);
     }
+
   }
 
   dateDayMonthYear(date: Date): string {
@@ -103,5 +103,53 @@ export class ChatMessageComponent {
     }
   }
 
+  reactions() {
+    if (this.isChannelMessage) {
+      return this.message.reactions;
+    } else if (this.isThreadMessage) {
+      return this.threadMessage.reactions;
+    }
+  }
+
+  singleMessageId() {
+    if (this.isChannelMessage) {
+      return this.message.id;
+    } else if (this.isThreadMessage) {
+      return this.threadMessage.id;
+    }
+  }
+
+  sendMessageUpdate(id: string) {
+    const message = this.messageEditText;
+    if(this.isChannelMessage) {
+      this.channelService.updateMessage(id, { text: message }, {});
+    } else {
+      this.channelService.updateMessage(id, { text: message }, { isThread: true });
+    }
+  }
+
+  postReaction(id: string, code: string): void {
+    const user = 'currentUser';
+    let reactions = this.reactions();
+    const existingReaction = reactions.find((reaction: { emojiCode: string; }) => reaction.emojiCode === code);
+    if (existingReaction) {
+      if (!existingReaction.postedBy.includes(user)) {
+        existingReaction.postedBy.push(user);
+        existingReaction.count += 1;
+      }
+    } else {
+      reactions.push({
+        emojiCode: code,
+        postedBy: [user],
+        count: 1
+      });
+    }
+
+    if (this.isChannelMessage) {
+      this.channelService.updateMessage(id, { reactions: reactions }, {});
+    } else {
+      this.channelService.updateMessage(id, { reactions: reactions }, { isThread: true });
+    }
+  }
 
 }

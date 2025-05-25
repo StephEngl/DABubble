@@ -1,9 +1,17 @@
-import { Component, inject, Input, OnInit } from '@angular/core';
+import {
+  Component, 
+  inject, 
+  Input,   
+  AfterViewChecked,
+  ViewChild,
+  ElementRef,
+} from '@angular/core';
 import { ChatMessageComponent } from './chat-message/chat-message.component';
 import { ChannelsService } from '../../services/channels.service';
 import { ChannelMessageInterface } from '../../interfaces/message.interface';
 import { ThreadMessageInterface } from '../../interfaces/message.interface';
 import { Timestamp } from '@angular/fire/firestore';
+import { SignalsService } from '../../services/signals.service';
 
 interface Message {
   text: string;
@@ -19,25 +27,30 @@ interface Message {
   templateUrl: './message-list.component.html',
   styleUrl: './message-list.component.scss'
 })
-export class MessageListComponent {
-
-  // demo data start
-  messages: Message[] = [
-    { text: 'Hey, how are you?', dateCreated: new Date('2024-05-14T08:15:00'), postedBy: 'A', hasReplies: true },
-    { text: 'Did you send the files already?', dateCreated: new Date('2024-05-14T09:30:00'), postedBy: 'B', hasReplies: false },
-    { text: 'I’m in a meeting, I’ll get back to you.', dateCreated: new Date('2024-05-16T10:05:00'), postedBy: 'C', hasReplies: true },
-    { text: 'Let’s discuss this tomorrow.', dateCreated: new Date('2024-05-20T11:00:00'), postedBy: 'A', hasReplies: false },
-    { text: 'Sounds good, thanks!', dateCreated: new Date('2024-05-20T12:45:00'), postedBy: 'B', hasReplies: true },
-    { text: 'Be right back.', dateCreated: new Date('2024-05-22T13:10:00'), postedBy: 'C', hasReplies: false },
-    { text: 'Can we finish this by tonight?', dateCreated: new Date('2024-05-22T14:25:00'), postedBy: 'A', hasReplies: true },
-    { text: 'Perfect, thanks again.', dateCreated: new Date('2024-05-22T15:55:00'), postedBy: 'B', hasReplies: false }
-  ];
-  // demo data end
+export class MessageListComponent implements AfterViewChecked{
 
   @Input() isChannel: boolean = false;
   @Input() isThread: boolean = false;
+  @ViewChild('messageContainer') messageContainer?: ElementRef<HTMLDivElement>;
+  shouldScroll = true;
   channelService = inject(ChannelsService);
+  signalService = inject(SignalsService);
 
+  ngAfterViewChecked(): void {
+      this.scrollToBottom();
+  }
+
+  scrollToBottom(): void {
+    if (this.signalService.scrollChannelToBottom()) {
+    setTimeout(() => {
+      this.messageContainer?.nativeElement.scrollTo({
+        top: this.messageContainer.nativeElement.scrollHeight,
+        behavior: 'smooth'
+      });
+    }, 150);
+    this.signalService.scrollChannelToBottom.set(false);
+    }
+  }
 
   isSameDate(date1: Date, date2: Date): boolean {
     return date1.getFullYear() === date2.getFullYear()
@@ -47,12 +60,9 @@ export class MessageListComponent {
 
   shouldShowDateSeparator(index: number, messages: any): boolean {
     if (index === 0) return true;
-
     const current = messages[index]?.createdAt?.toDate?.();
     const prev = messages[index - 1]?.createdAt?.toDate?.();
-
     if (!current || !prev) return false;
-
     return !this.isSameDate(current, prev);
   }
 

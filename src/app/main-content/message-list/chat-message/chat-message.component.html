@@ -20,23 +20,22 @@
             @if (!editMode) {
                 <p  
                     class="message-text"
-                    (click)="editMode = true"
                     [class]="isOwnMessage ? 'own-message':'normal-message'">
                     {{ text() }}
                 </p>
 
                 <div class="reactions">
-                    @for (reaction of reactions; track reaction) {
-                        {{ reaction.emoji }} {{ reaction.count }}
+                    @for (reaction of reactions(); track reaction) {
+                        {{ reaction.emojiCode }} {{ reaction.count }}
                     }
                 </div>
 
                 @if(isChannelMessage) {
                     <div class="answers">
-                        @if (threadMessages.length > 0) {
+                        @if (message.threadMessages.length > 0) {
                             <!-- reply count out of database -->
-                            <button (click)="openThread()">{{ threadMessages.length }} Replies</button>
-                            <p>last on {{ dateLastThread(threadMessages[threadMessages.length -1 ].createdAt.toDate()) }}</p>
+                            <button (click)="openThread()">{{ message.threadMessages.length }} Replies</button>
+                            <p>last on {{ dateLastThread(message.threadMessages[message.threadMessages.length -1 ].createdAt.toDate()) }}</p>
                         } @else {
                             <button (click)="openThread()">Reply</button>
                         }
@@ -45,19 +44,19 @@
 
             } @else if(editMode) {
                 <section class="edit-message">
-                    <textarea name="" id="">{{ messageText }}</textarea>
+                    <textarea [(ngModel)]="messageEditText"></textarea>
                     <div class="edit-menu">
                         <img src="./../../../../assets/icons/message/emoji_satisfied_grey.svg" alt="">
                         <div class="edit-buttons">
                             <button (click)="editMode = false">Cancel</button>
-                            <button>Save</button>
+                            <button (click)="sendMessageUpdate(singleMessageId())">Save</button>
                         </div>
                     </div>            
                 </section>
             }
         </section>
 
-        @if (!isThreadTitle) {
+        @if (!isThreadTitle && !editMode) {
             <nav [ngClass]="{
                 'left': isOwnMessage,
                 'right': !isOwnMessage,
@@ -66,10 +65,10 @@
                 @for (item of menuBar; track item) {
                     @if (isThreadMessage) {
                         @if (item.shownInThread) {
-                            <img [src]="item.imgSrc" alt="">
+                            <img (click)="item.clickFunction()" [src]="item.imgSrc" alt="">
                         }
                     } @else if (isChannelMessage) {
-                        <img [src]="item.imgSrc" alt="">
+                        <img (click)="item.clickFunction()" [src]="item.imgSrc" alt="">
                     }
                 }
             </nav>

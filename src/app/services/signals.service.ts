@@ -15,6 +15,8 @@ export class SignalsService {
   showWorkspace = signal<boolean>(true);
   showCreateChannel = signal<boolean>(false);
 
+  scrollChannelToBottom = signal<boolean>(false);
+
   // Signal for current User-ID
   currentUid = signal<string>('');
 }

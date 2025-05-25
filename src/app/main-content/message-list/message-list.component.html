@@ -1,4 +1,4 @@
-<section class="message-list">
+<section class="message-list" #messageContainer>
     @if (isChannel && getChannelMessages()) {
         @for (message of getChannelMessages(); track message; let index = $index) {
             @if (shouldShowDateSeparator(index, getChannelMessages())){
@@ -8,11 +8,8 @@
             }
             @if (message.threadMessages) {
                 <app-chat-message
-                    [messageText]="message.text"
-                    [messageId]="message.id!"
                     [isOwnMessage]="false"
                     [message]="message"
-                    [threadMessages]="message.threadMessages"
                     [paddingHorizontal]="'65'"
                     [isChannelMessage]="isChannel">
                 </app-chat-message>
