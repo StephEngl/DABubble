@@ -157,6 +157,21 @@ export class AuthenticationService {
     }
   }
 
+    /**
+   * Checks the current authentication status and navigates to
+   * the appropriate page based on the user's state.
+   */
+  checkAuthStatus() {
+    onAuthStateChanged(this.auth, (user) => {
+      if (user) {
+        this.isAuthenticated.set(true); 
+        this.router.navigate(['/']);
+      } else {
+        this.isAuthenticated.set(false);
+      }
+    });
+  }
+
   /**
    * Signs out the currently authenticated user and redirects to the login page.
    * @returns {Promise<void>} Resolves when the user has been signed out.
