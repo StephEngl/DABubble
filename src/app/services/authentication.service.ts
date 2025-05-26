@@ -187,4 +187,21 @@ export class AuthenticationService {
       console.error('Sign out error:', error);
     }
   }
+
+   /**
+   * Deletes the currently authenticated user account.
+   * @returns {Promise<void>} Resolves when the user account has been deleted.
+   * @throws {Error} Throws an error if deleting the user fails.
+   */
+  async deleteUser(): Promise<void> {
+    const user = this.auth.currentUser;
+    if (!user) return;
+    try {
+      await deleteUser(user);
+      this.isAuthenticated.set(false);
+      this.router.navigate(['/login']).then(() => location.reload());
+    } catch (error) {
+      console.error("Deleting active user failed", error);
+    }
+  }
 }
