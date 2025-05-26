@@ -7,8 +7,6 @@
 
         <section class="header-right">
             <div class="channel-members">
-                <!-- @for (channelmembers) -->
-                    <!-- @if (membercount <= 4 ) -->
                     @for (member of currentChannel?.members; track member; let index = $index) {
                         @if (index <= 3) {
                             <img [src]="usersService.getAvatar(member)" class="member-icon">
@@ -17,8 +15,6 @@
                     @if (currentChannel?.members!.length > 4) {
                         <p class="member-overflow"> {{ currentChannel?.members!.length - 4 }}</p> 
                     } @else { <p class="member-overflow"></p> }
-                    <!-- @else membercount -4 + rest amount -->
-
             </div>
 
             <div class="add-members" (mouseenter)="addMembersHovered = true" (mouseleave)="addMembersHovered = false">

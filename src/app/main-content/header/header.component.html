@@ -6,8 +6,37 @@
     </div>
 
     <section class="search-app">
-        <input type="text" placeholder="Search Devspace">
+        <input type="text" placeholder="Search Devspace" #searchBar [(ngModel)]="searchInput" >
         <img src="./../../../assets/icons/general/search_grey.svg" alt="" routerLink='/login'>
+
+        @if (searchInput.length > 0) {
+            <div class="search-result">
+                @if (searchInput.length > 0 && serchResultsChannel.length === 0) {
+                    <div>no results for Channels</div>
+                } @else if (searchInput.length > 0) {
+                    @for (result of serchResultsChannel; track result) {
+                        <div class="single-result" (click)="showThread(result.id!)">
+                            <p>Channel:</p>
+                            <p class="result-info">#{{ result.channelName }}</p>
+                        </div>
+                    }
+                }
+
+                @if (searchInput.length > 0 && serchResultsUser.length === 0) {
+                    <div>no results for Users</div>
+                } @else if (searchInput.length > 0) {
+                    @for (result of serchResultsUser; track result) {
+                        <div class="single-result" (click)="showUserInfo(result.id!)">
+                            <p>User:</p>
+                            <img [src]="usersService.getAvatar(result.id!)" alt="">
+                            <p class="result-info">{{ result.name }}</p>
+                        </div>
+                    }
+                }
+                <!-- results direct messages -->
+            </div>
+        }
+
     </section>
 
     <div class="user-menu" (mouseover)="hoverMenu = true" (mouseleave)="hoverMenu = false">

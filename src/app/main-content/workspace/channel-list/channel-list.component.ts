@@ -31,7 +31,7 @@ export class ChannelListComponent {
     return color; 
   }
 
-  async showChannelId(id: string) {
+  showChannelId(id: string) {
     localStorage.setItem("currentChannel", id);
     this.channelService.subscribeToChannelMessages(id);
     this.signalService.scrollChannelToBottom.set(true);

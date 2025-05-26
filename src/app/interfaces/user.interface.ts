@@ -4,6 +4,7 @@ export interface UserInterface {
   name: string;
   avatarId: string;
   status: 'online' | 'offline' | 'afk';
+  // directChatsWith?: string[]; // => all directMessages this user has active
 }
 
 export interface UserLoginInterface {

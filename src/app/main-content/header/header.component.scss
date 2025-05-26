@@ -51,6 +51,42 @@ header {
     }
 }
 
+.search-result {
+    @include dFlex($fd: column, $pos:absolute, $ai: flex-start, $jc: flex-start, $gap: 10px);
+    z-index: 2;
+    top: 60px;
+    padding: 18px;
+    left: 0;
+    height: auto;
+    max-height: 300px;
+    width: 320px;
+    overflow-y: auto;
+    border-radius: 20px;
+    background-color: var(--col-bg-secondary);
+    filter: drop-shadow(4px 4px 4px var(--col-transparent-shadow));
+
+    .single-result {
+        @include dFlex($jc: flex-start, $gap: 6px);
+        width: 100%;
+        padding: 6px;
+        border-radius: 10px;
+        cursor: pointer;
+        &:hover {
+            background-color: var(--col-bg-main);
+            color: var(--col-font-href);
+        }
+        >img { 
+            border-radius: 50%;
+            height: 35px;
+            width: 35px;
+        }
+        .result-info {
+            font-weight: 700;
+            font-size: 18px;
+        }
+    }
+}
+
 .user-menu {
     @include dFlex($ai:center, $gap: 10px);
     align-self: center;
