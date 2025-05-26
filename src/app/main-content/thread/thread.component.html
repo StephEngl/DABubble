@@ -3,9 +3,9 @@
         <div>
             <h3>Thread</h3>
             <img src="./../../../assets/icons/general/tag_blue.svg" alt="">
-            <p>Channel Name</p>
+            <p>{{getChannelMessages()}}</p>
         </div>
-        <button class="close-thread">x</button>
+        <button (click)="signalService.showThread.set(false)" class="close-thread">X</button>
     </header>
     <app-message-list [isThread]="true"></app-message-list>
     <app-create-message [isChannelMessage]="false"></app-create-message>

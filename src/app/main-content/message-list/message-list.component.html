@@ -23,7 +23,9 @@
                 [paddingHorizontal]="'16'"
                 [isThreadTitle]="true">
             </app-chat-message>
-            <div class="answers-seperator"></div>
+            <div class="answers-seperator">
+                {{getThreadMessages().length}} Answers
+            </div>
             @for (message of getThreadMessages(); track message; let index = $index) {
                 @if (shouldShowDateSeparator(index, getThreadMessages())) {
                     <div class="date-separator">
@@ -39,6 +41,10 @@
                 </app-chat-message>
                 }
             } 
+        } @else {
+            <div class="no-thread-selected">
+                <p>please reply a message to show thread</p>
+            </div>
         }
     }
 </section>

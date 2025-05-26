@@ -53,7 +53,7 @@ export class ChatMessageComponent {
     if (currentChannelId && currentThreadId) {
       this.channelService.subscribeToThreadMessages(currentChannelId, currentThreadId);
     }
-
+    this.signalService.showThread.set(true);
   }
 
   dateDayMonthYear(date: Date): string {

@@ -13,6 +13,7 @@ export class SignalsService {
   isPasswordForgottenDialog = signal<boolean>(false);
 
   showWorkspace = signal<boolean>(true);
+  showThread = signal<boolean>(false);
   showCreateChannel = signal<boolean>(false);
 
   scrollChannelToBottom = signal<boolean>(false);
