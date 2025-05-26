@@ -3,6 +3,7 @@ import { ChannelsService } from '../../../services/channels.service';
 import { NgClass } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { SignalsService } from '../../../services/signals.service';
+import { UsersService } from '../../../services/users.service';
 
 @Component({
   selector: 'app-chat-message',
@@ -15,6 +16,7 @@ export class ChatMessageComponent {
 
   channelService = inject(ChannelsService);
   signalService = inject(SignalsService);
+  usersService = inject(UsersService);
   // placeholder data: will be removed // start
   @Input() isOwnMessage: boolean = false;
   // placeholder data: will be removed // end
@@ -150,6 +152,22 @@ export class ChatMessageComponent {
     } else {
       this.channelService.updateMessage(id, { reactions: reactions }, { isThread: true });
     }
+  }
+
+  showName(): string {
+    if (this.isChannelMessage && this.message?.senderId) {
+      return this.findName(this.message.senderId);
+    } else if (this.isThreadMessage && this.threadMessage?.senderId) {
+      return this.findName(this.threadMessage.senderId);
+    } else if (this.isThreadTitle && this.threadTitle.senderId) {
+      return this.findName(this.threadTitle.senderId);
+    }
+    return 'Unknown';
+  }
+
+  findName(id: string): string {
+    const searchedUser = this.usersService.users.find(user => user.id === id);
+    return searchedUser?.name ?? 'Unknown';
   }
 
 }
