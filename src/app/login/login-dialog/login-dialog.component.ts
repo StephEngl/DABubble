@@ -1,4 +1,5 @@
 import { Component, inject } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { FormsModule, NgForm } from '@angular/forms';
 import { UserLoginInterface } from '../../interfaces/user.interface';
 import { AuthenticationService } from '../../services/authentication.service';
@@ -26,6 +27,12 @@ export class LoginDialogComponent {
     password: '',
   };
 
+  constructor(private route: ActivatedRoute) { }
+
+  ngOnInit() {
+    this.authService.handleRedirectResult();
+  }
+
   /** Toggles the visibility of the password input field. */
   togglePasswordVisibility() {
     this.passwordVisible = !this.passwordVisible;
@@ -45,7 +52,7 @@ export class LoginDialogComponent {
    */
   onSubmit(ngForm: NgForm) {
     if (!this.isGuestLogin) {
-      this.formSubmitted = true;
+      // this.formSubmitted = true;
     }
   }
 
@@ -80,5 +87,11 @@ export class LoginDialogComponent {
     this.noUserFound = false;
     await this.authService.signInUser(mail, password);
     setTimeout(() => (this.isGuestLogin = false), 100);
+  }
+
+  async loginWithGoogle() {
+    const returnUrl = this.route.snapshot.queryParamMap.get('returnUrl') || '/';
+    localStorage.setItem('returnUrl', returnUrl);
+    this.authService.signInWithGoogleRedirect();
   }
 }
