@@ -56,10 +56,7 @@ export class UsersService implements OnDestroy {
    * @param user The user data to be added
    * @returns A promise that resolves with the document reference of the newly added user
    */
-  async addUser(
-    uid: string,
-    user: UserInterface
-  ): Promise<void | DocumentReference> {
+  async addUser(uid: string, user: UserInterface): Promise<void | DocumentReference> {
     try {
       const userRef = doc(this.getUsersRef(), uid);
       await setDoc(userRef, user);
@@ -92,7 +89,7 @@ export class UsersService implements OnDestroy {
       id: id,
       name: obj.name || '',
       email: obj.email || '',
-      avatarId: obj.avatarId || '',
+      avatarId: obj.avatarId || '0',
       status: obj.status,
     };
   }
