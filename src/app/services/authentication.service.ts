@@ -1,5 +1,5 @@
 import { Injectable, signal, inject } from '@angular/core';
-import { initializeApp } from "firebase/app";
+import { initializeApp } from 'firebase/app';
 import { Router } from '@angular/router';
 import {
   getAuth,
@@ -10,8 +10,11 @@ import {
   onAuthStateChanged,
   signOut,
   UserCredential,
-  deleteUser
-} from "@angular/fire/auth";
+  deleteUser,
+  GoogleAuthProvider,
+  signInWithRedirect,
+  getRedirectResult,
+} from '@angular/fire/auth';
 import { UsersService } from './users.service';
 
 /**
@@ -20,18 +23,18 @@ import { UsersService } from './users.service';
  * and provides reactive signals for tracking login state and active user initials.
  */
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class AuthenticationService {
   isAuthenticated = signal<boolean>(false);
   usersService = inject(UsersService);
   activeUserName: string = '';
+  provider = new GoogleAuthProvider();
   private auth: Auth;
 
   constructor(private router: Router) {
     this.auth = getAuth();
   }
-
 
   /**
    * Returns whether the user is currently authenticated.
@@ -41,7 +44,7 @@ export class AuthenticationService {
     return this.isAuthenticated();
   }
 
- /**
+  /**
    * Creates a new user account with the provided email, password, and name.
    * @param email The email of the new user.
    * @param password The password of the new user.
@@ -49,9 +52,17 @@ export class AuthenticationService {
    * @returns {Promise<UserCredential>} The user credential returned by Firebase after user creation.
    * @throws {Error} Throws an error if the user creation fails.
    */
-  async createUser(email: string, password: string, name: string): Promise<UserCredential> {
+  async createUser(
+    email: string,
+    password: string,
+    name: string
+  ): Promise<UserCredential> {
     try {
-      const userCredential = await createUserWithEmailAndPassword(this.auth, email, password);
+      const userCredential = await createUserWithEmailAndPassword(
+        this.auth,
+        email,
+        password
+      );
       await updateProfile(userCredential.user, { displayName: name });
       this.router.navigate(['/login']);
       return userCredential;
@@ -60,7 +71,7 @@ export class AuthenticationService {
     }
   }
 
-    /**
+  /**
    * Signs in a user with the provided email and password.
    * @param email The email of the user.
    * @param password The password of the user.
@@ -69,7 +80,11 @@ export class AuthenticationService {
    */
   async signInUser(email: string, password: string): Promise<any> {
     try {
-      const userCredential = await signInWithEmailAndPassword(this.auth, email, password);
+      const userCredential = await signInWithEmailAndPassword(
+        this.auth,
+        email,
+        password
+      );
       this.router.navigate(['/']);
       this.isAuthenticated.set(true);
       return userCredential.user;
@@ -78,7 +93,35 @@ export class AuthenticationService {
     }
   }
 
-    /**
+  signInWithGoogleRedirect(): void {
+    signInWithRedirect(this.auth, this.provider);
+  }
+
+  async handleRedirectResult(): Promise<void> {
+    try {
+      const result = await getRedirectResult(this.auth);
+      if (result) {
+        const user = result.user;
+        this.isAuthenticated.set(true);
+
+        await this.usersService.addUser(user.uid, {
+        name: user.displayName ?? 'Unknown',
+        email: user.email ?? '',
+        avatarId: "0",
+        status: 'online',
+      });
+
+        // navigate to main page after signing in with Google
+        const returnUrl = localStorage.getItem('returnUrl') || '/';
+        localStorage.removeItem('returnUrl');
+        this.router.navigateByUrl(returnUrl);
+      }
+    } catch (error) {
+      console.error('Google Sign-In Redirect Fehler:', error);
+    }
+  }
+
+  /**
    * Updates the profile of the currently authenticated user with the new name.
    * @param name The new name to set for the user.
    * @returns {Promise<void>} Resolves when the profile update is complete.
@@ -91,7 +134,7 @@ export class AuthenticationService {
 
     try {
       await updateProfile(this.auth.currentUser, {
-        displayName: name
+        displayName: name,
       });
     } catch (error) {
       throw error;
@@ -99,6 +142,22 @@ export class AuthenticationService {
   }
 
     /**
+   * Observes the authentication state and returns the current user (if authenticated).
+   * @returns {Promise<any>} A promise resolving to the user object or null if not authenticated.
+   * @throws {Error} Throws an error if there's an issue while checking authentication state.
+   */
+  async onAuthStateChanged(): Promise<any> {
+    try {
+      return await new Promise((resolve) => {
+        onAuthStateChanged(this.auth, (user) => resolve(user));
+      });
+    } catch (error) {
+      console.error('Auth status error:', error);
+      return null;
+    }
+  }
+
+  /**
    * Signs out the currently authenticated user and redirects to the login page.
    * @returns {Promise<void>} Resolves when the user has been signed out.
    * @throws {Error} Throws an error if the sign-out process fails.
@@ -108,7 +167,7 @@ export class AuthenticationService {
       await signOut(this.auth);
       this.isAuthenticated.set(false);
       this.router.navigate(['/login']);
-      console.log("User logged out");      
+      console.log('User logged out');
     } catch (error) {
       console.error('Sign out error:', error);
     }
