@@ -102,4 +102,20 @@ export class UsersService implements OnDestroy {
       console.error(err);
     }
   }
+
+
+  findName(id: string): string {
+    const searchedUser = this.users.find(user => user.id === id);
+    return searchedUser?.name ?? 'Unknown';
+  }
+
+  getAvatar(id: string): string {
+    const searchedUser = this.users.find(user => user.id === id);
+    if (searchedUser?.avatarId !== undefined) {
+      return `./../../../../assets/icons/user/user_${searchedUser.avatarId}.svg`;
+    }
+    return './../../../../assets/icons/user/user_0.svg';
+  }
+
+
 }

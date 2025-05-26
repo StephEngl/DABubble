@@ -156,18 +156,23 @@ export class ChatMessageComponent {
 
   showName(): string {
     if (this.isChannelMessage && this.message?.senderId) {
-      return this.findName(this.message.senderId);
+      return this.usersService.findName(this.message.senderId);
     } else if (this.isThreadMessage && this.threadMessage?.senderId) {
-      return this.findName(this.threadMessage.senderId);
+      return this.usersService.findName(this.threadMessage.senderId);
     } else if (this.isThreadTitle && this.threadTitle.senderId) {
-      return this.findName(this.threadTitle.senderId);
+      return this.usersService.findName(this.threadTitle.senderId);
     }
     return 'Unknown';
   }
 
-  findName(id: string): string {
-    const searchedUser = this.usersService.users.find(user => user.id === id);
-    return searchedUser?.name ?? 'Unknown';
+  showAvatar(): string {
+    if (this.isChannelMessage && this.message?.senderId) {
+      return this.usersService.getAvatar(this.message.senderId)
+    } else if (this.isThreadMessage && this.threadMessage?.senderId) {
+      return this.usersService.getAvatar(this.threadMessage.senderId);
+    } else if (this.isThreadTitle && this.threadTitle.senderId) {
+      return this.usersService.getAvatar(this.threadTitle.senderId);
+    }
+    return './../../../../assets/icons/user/user_0.svg';
   }
-
 }
