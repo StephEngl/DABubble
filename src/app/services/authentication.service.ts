@@ -97,4 +97,20 @@ export class AuthenticationService {
       throw error;
     }
   }
+
+    /**
+   * Signs out the currently authenticated user and redirects to the login page.
+   * @returns {Promise<void>} Resolves when the user has been signed out.
+   * @throws {Error} Throws an error if the sign-out process fails.
+   */
+  async signOutUser(): Promise<void> {
+    try {
+      await signOut(this.auth);
+      this.isAuthenticated.set(false);
+      this.router.navigate(['/login']);
+      console.log("User logged out");      
+    } catch (error) {
+      console.error('Sign out error:', error);
+    }
+  }
 }

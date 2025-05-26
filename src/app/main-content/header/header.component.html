@@ -16,7 +16,9 @@
             <div class="user-picture" [style.backgroundImage] ="'url(./../../../assets/icons/user/user_fem_2.svg)'"></div>
             <img class="user-status" src="./../../../assets/icons/user/status_online.svg" alt="">
         </div>
-        <img class="menu-icon" [src]="hoverMenu ? './../../../assets/icons/menu/dropdown_blue.svg' : './../../../assets/icons/menu/dropdown_black.svg'" alt="">
+        <button (click)="logout()">
+            <img class="menu-icon" [src]="hoverMenu ? './../../../assets/icons/menu/dropdown_blue.svg' : './../../../assets/icons/menu/dropdown_black.svg'" alt="">
+        </button>
     </div>
 
 </header>
