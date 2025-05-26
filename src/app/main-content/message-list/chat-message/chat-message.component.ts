@@ -4,11 +4,14 @@ import { NgClass } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { SignalsService } from '../../../services/signals.service';
 import { UsersService } from '../../../services/users.service';
+import { PickerModule } from '@ctrl/ngx-emoji-mart';
+import data from '@emoji-mart/data';
+import { EmojiMartData } from '@emoji-mart/data';
 
 @Component({
   selector: 'app-chat-message',
   standalone: true,
-  imports: [NgClass, FormsModule],
+  imports: [NgClass, FormsModule, PickerModule],
   templateUrl: './chat-message.component.html',
   styleUrl: './chat-message.component.scss'
 })
@@ -20,6 +23,8 @@ export class ChatMessageComponent {
   // placeholder data: will be removed // start
   @Input() isOwnMessage: boolean = false;
   // placeholder data: will be removed // end
+
+  emojiData: EmojiMartData = data as EmojiMartData;
 
   @Input() message: any = {};
   @Input() threadMessage: any = {};
@@ -174,5 +179,10 @@ export class ChatMessageComponent {
       return this.usersService.getAvatar(this.threadTitle.senderId);
     }
     return './../../../../assets/icons/user/user_0.svg';
+  }
+
+  onEmojiSelect(event: any) {
+    console.log(event);
+    
   }
 }

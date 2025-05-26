@@ -73,7 +73,18 @@
                 }
             </nav>
         }
+        @if(emojiBar) {
+            <div class="emoji-wrapper" (mouseleave)="emojiBar = false">
+                <emoji-mart
+                    [set]="'apple'"
+                    [i18n]="{ categories: { people: 'Smileys' } }"
+                    (emojiSelect)="onEmojiSelect($event)">
+                </emoji-mart>
+            </div>
+        }
     </section>
 }
+
+
 
 

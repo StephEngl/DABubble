@@ -1,5 +1,6 @@
 @import "./assets/styles/mixins.scss";
 @import "./assets/fonts/fonts.scss";
+@import '@ctrl/ngx-emoji-mart/picker';
 
 body {
     @include dFlex($ai:flex-start);
