@@ -193,7 +193,7 @@ export class AuthenticationService {
    * @returns {Promise<void>} Resolves when the user account has been deleted.
    * @throws {Error} Throws an error if deleting the user fails.
    */
-  async deleteUser(): Promise<void> {
+  async deleteCurrentUser(): Promise<void> {
     const user = this.auth.currentUser;
     if (!user) return;
     try {
