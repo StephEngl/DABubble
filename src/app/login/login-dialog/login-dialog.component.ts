@@ -59,8 +59,7 @@ export class LoginDialogComponent {
     try {
       this.noUserFound = false;
       await this.authService.signInUser(mail, password);
-      console.log("logged in as: ", mail);
-      
+      console.log('logged in as: ', mail);
     } catch (error) {
       this.noUserFound = true;
       setTimeout(() => {
@@ -79,7 +78,7 @@ export class LoginDialogComponent {
   async guestLogin(mail: string, password: string) {
     this.isGuestLogin = true;
     this.noUserFound = false;
-    // await this.authService.signInUser(mail, password);
-    // setTimeout(() => (this.isGuestLogin = false), 100);
+    await this.authService.signInUser(mail, password);
+    setTimeout(() => (this.isGuestLogin = false), 100);
   }
 }
