@@ -2,7 +2,8 @@
 <section class="main-content">
     <app-workspace [class.hidden]="!signalService.showWorkspace()"></app-workspace>
     <app-channel></app-channel>
-    <app-thread></app-thread>
+    <app-thread [class.hidden]="!signalService.showThread()"></app-thread>
+
 </section>
 
 <nav class="workspace-btn" (click)="toggleWorkspaceMenu()" (mouseenter)="workspaceHovered = true" (mouseleave)="workspaceHovered = false">

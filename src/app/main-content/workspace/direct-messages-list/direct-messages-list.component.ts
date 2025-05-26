@@ -8,7 +8,7 @@ import { Component } from '@angular/core';
   styleUrl: './direct-messages-list.component.scss'
 })
 export class DirectMessagesListComponent {
-  tempArrayItemCount: string[] = ['fem_1', 'fem_2', 'mal_1', 'mal_2', 'mal_3'];
+  tempArrayItemCount: string[] = ['_1', '_2', '_3', '_4', '_5', '_6'];
   directMessageListOpened: boolean = false;
   directMessageListHovered: boolean = false;
 

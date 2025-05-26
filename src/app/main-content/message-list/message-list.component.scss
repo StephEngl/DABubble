@@ -25,3 +25,11 @@
         background-color: var(--col-bg-secondary);
     }
 }
+
+.no-thread-selected,
+.answers-seperator {
+    @include dFlex();
+    width: 100%;
+    color: var(--col-font-info);
+    padding-bottom: 10px;
+}

@@ -8,12 +8,12 @@
     >
 
         <aside class="user-avatar">
-            <img src="./../../../../assets/icons/user/user_fem_1.svg" alt="">
+            <img [src]="showAvatar()" alt="">
         </aside>
 
         <section class="chat-message" [style.alignItems]="isOwnMessage ? 'flex-end' : 'flex-start'">
             <div class="message-title">
-                <h5>User Name</h5>
+                <h5>{{ showName() }}</h5>
                 <p> {{ createdAt() }}</p>
             </div>
 

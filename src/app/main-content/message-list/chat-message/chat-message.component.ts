@@ -3,6 +3,7 @@ import { ChannelsService } from '../../../services/channels.service';
 import { NgClass } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { SignalsService } from '../../../services/signals.service';
+import { UsersService } from '../../../services/users.service';
 
 @Component({
   selector: 'app-chat-message',
@@ -15,6 +16,7 @@ export class ChatMessageComponent {
 
   channelService = inject(ChannelsService);
   signalService = inject(SignalsService);
+  usersService = inject(UsersService);
   // placeholder data: will be removed // start
   @Input() isOwnMessage: boolean = false;
   // placeholder data: will be removed // end
@@ -53,7 +55,7 @@ export class ChatMessageComponent {
     if (currentChannelId && currentThreadId) {
       this.channelService.subscribeToThreadMessages(currentChannelId, currentThreadId);
     }
-
+    this.signalService.showThread.set(true);
   }
 
   dateDayMonthYear(date: Date): string {
@@ -152,4 +154,25 @@ export class ChatMessageComponent {
     }
   }
 
+  showName(): string {
+    if (this.isChannelMessage && this.message?.senderId) {
+      return this.usersService.findName(this.message.senderId);
+    } else if (this.isThreadMessage && this.threadMessage?.senderId) {
+      return this.usersService.findName(this.threadMessage.senderId);
+    } else if (this.isThreadTitle && this.threadTitle.senderId) {
+      return this.usersService.findName(this.threadTitle.senderId);
+    }
+    return 'Unknown';
+  }
+
+  showAvatar(): string {
+    if (this.isChannelMessage && this.message?.senderId) {
+      return this.usersService.getAvatar(this.message.senderId)
+    } else if (this.isThreadMessage && this.threadMessage?.senderId) {
+      return this.usersService.getAvatar(this.threadMessage.senderId);
+    } else if (this.isThreadTitle && this.threadTitle.senderId) {
+      return this.usersService.getAvatar(this.threadTitle.senderId);
+    }
+    return './../../../../assets/icons/user/user_0.svg';
+  }
 }

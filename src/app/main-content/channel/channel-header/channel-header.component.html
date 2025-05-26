@@ -9,10 +9,16 @@
             <div class="channel-members">
                 <!-- @for (channelmembers) -->
                     <!-- @if (membercount <= 4 ) -->
-                    <img src="./../../../../assets/icons/user/user_mal_1.svg" class="member-icon">
-                    <img src="./../../../../assets/icons/user/user_mal_1.svg" class="member-icon">
+                    @for (member of currentChannel?.members; track member; let index = $index) {
+                        @if (index <= 3) {
+                            <img [src]="usersService.getAvatar(member)" class="member-icon">
+                        }
+                    }
+                    @if (currentChannel?.members!.length > 4) {
+                        <p class="member-overflow"> {{ currentChannel?.members!.length - 4 }}</p> 
+                    } @else { <p class="member-overflow"></p> }
                     <!-- @else membercount -4 + rest amount -->
-                    <p class="member-overflow">+2</p> 
+
             </div>
 
             <div class="add-members" (mouseenter)="addMembersHovered = true" (mouseleave)="addMembersHovered = false">

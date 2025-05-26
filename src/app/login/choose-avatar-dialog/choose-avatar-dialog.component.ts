@@ -59,12 +59,12 @@ export class ChooseAvatarDialogComponent {
 
   getAvatarFileName(avatarId: string): string {
     const mapping: Record<string, string> = {
-      '1': 'fem_1',
-      '2': 'fem_2',
-      '3': 'mal_1',
-      '4': 'mal_2',
-      '5': 'mal_3',
-      '6': 'mal_4',
+      '1': '_1',
+      '2': '_2',
+      '3': '_3',
+      '4': '_4',
+      '5': '_5',
+      '6': '_6',
     };
     return mapping[avatarId] ?? 'default';
   }
