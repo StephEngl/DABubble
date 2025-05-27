@@ -15,6 +15,8 @@ import {
   signInWithPopup,
   signInWithRedirect,
   getRedirectResult,
+  verifyPasswordResetCode,
+  confirmPasswordReset,
 } from '@angular/fire/auth';
 import { UsersService } from './users.service';
 
