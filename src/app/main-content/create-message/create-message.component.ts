@@ -24,16 +24,18 @@ export class CreateMessageComponent {
   emojiData: EmojiMartData = data as EmojiMartData;
   emojiBar: boolean = false;
 
-  menuOptions: {name: string, src: string, hovered: boolean}[] = [
+  menuOptions: {name: string, src: string, hovered: boolean, clickFunction: () => void}[] = [
     {
       name: "add-reaction",
       src: 'emoji_satisfied',
       hovered: false,
+      clickFunction: () => this.emojiBar = true,
     },
     {
       name: "adress-user",
       src: 'email_at',
       hovered: false,
+      clickFunction: () => console.log("adress user")
     }
   ];
 
@@ -63,7 +65,8 @@ export class CreateMessageComponent {
   }
 
   onEmojiSelect(event: any) {
-    console.log(event.emoji.native);
+    this.messageText += " " + event.emoji.native;
+    this.emojiBar = false;
   }
 
 }

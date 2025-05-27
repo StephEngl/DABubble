@@ -39,6 +39,22 @@
             color: var(--col-font-info);
         }
     }
+    .reactions {
+        @include dFlex($gap: 8px, $jc:flex-start);
+        flex-wrap: wrap;
+        .reaction,
+        >button {
+            @include dFlex($gap: 6px);
+            border: 1px solid var(--col-stroke-main);
+            padding: 4px 8px;
+            border-radius: 50px;
+            background-color: var(--col-bg-secondary);
+            cursor: pointer;
+        }
+        >button:hover {
+            transform: scale(1.05);
+        }
+    }
 }
 
 .edit-message {
@@ -177,4 +193,9 @@ nav {
     margin: auto;
     z-index: 3;
     filter: drop-shadow(4px 4px 4px var(--col-transparent-shadow));
+}
+
+.emoji-mart-edit-mode {
+    position: absolute;
+    bottom: 30px;
 }

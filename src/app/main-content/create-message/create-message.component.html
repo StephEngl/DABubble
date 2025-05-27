@@ -13,6 +13,7 @@
                     <img
                         (mouseover)="menuOptions[index].hovered = true"
                         (mouseleave)="menuOptions[index].hovered = false"
+                        (click)="icon.clickFunction()"
                         [src]="getMenuIcon(index)"
                         [alt]="icon.name">
                 }
@@ -23,6 +24,7 @@
             
             @if(emojiBar) {
                 <emoji-mart
+                    (mouseleave)="emojiBar = false"
                     [set]="'apple'"
                     previewPosition="none"
                     [exclude]="['recent']"

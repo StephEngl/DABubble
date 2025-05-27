@@ -25,8 +25,19 @@
                 </p>
 
                 <div class="reactions">
-                    @for (reaction of reactions(); track reaction) {
-                        {{ reaction.emojiCode }} {{ reaction.count }}
+                    @for (reaction of reactions(); track reaction; let index = $index) {
+                        @if(index < maxEmoji) {
+                            <div class="reaction">
+                                <p>{{ reaction.emojiCode }}</p>
+                                <p>{{ reaction.count }}</p> 
+                            </div>
+                        }
+                    }
+                    @if(reactions() && reactions().length > maxEmoji) {
+                        <button (click)="toggleShownEmojis()">show all</button>
+                    }
+                    @if(reactions() && reactions().length === maxEmoji) {
+                        <button (click)="toggleShownEmojis()">show less</button>
                     }
                 </div>
 
@@ -46,11 +57,22 @@
                 <section class="edit-message">
                     <textarea [(ngModel)]="messageEditText"></textarea>
                     <div class="edit-menu">
-                        <img src="./../../../../assets/icons/message/emoji_satisfied_grey.svg" alt="">
+                        <img (click)="emojiBarEditMode = true " src="./../../../../assets/icons/message/emoji_satisfied_grey.svg" alt="">
                         <div class="edit-buttons">
                             <button (click)="editMode = false">Cancel</button>
                             <button (click)="sendMessageUpdate(singleMessageId())">Save</button>
                         </div>
+                        @if(emojiBarEditMode) {
+                            <emoji-mart
+                                class="emoji-mart-edit-mode"
+                                (mouseleave)="emojiBarEditMode = false"
+                                [set]="'apple'"
+                                previewPosition="none"
+                                [exclude]="['recent']"
+                                [i18n]="{ categories: { people: 'Smileys' } }"
+                                (emojiSelect)="onEmojiSelect($event)">
+                            </emoji-mart>
+                        }
                     </div>            
                 </section>
             }

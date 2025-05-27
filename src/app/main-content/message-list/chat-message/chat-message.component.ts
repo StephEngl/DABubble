@@ -37,6 +37,7 @@ export class ChatMessageComponent {
 
   editMode: boolean = false;
   emojiBar: boolean = false;
+  emojiBarEditMode: boolean = false;
   hoverMessage: boolean = false;
 
   menuBar: {imgSrc: string, shownInThread: boolean, clickFunction: () => void}[] = [
@@ -182,6 +183,21 @@ export class ChatMessageComponent {
   }
 
   onEmojiSelect(event: any) {
-    console.log(event.emoji.native);
+    if(this.emojiBar) {
+      this.postReaction(this.singleMessageId(), event.emoji.native)
+    } else {
+      console.log("post in edit mode");
+      this.messageEditText += " " + event.emoji.native;
+      this.emojiBarEditMode = false;
+    }
   }
+
+  maxEmoji: number = 7;
+  showAll: boolean = false;
+
+  toggleShownEmojis() {
+    this.showAll = !this.showAll;
+    this.maxEmoji = this.showAll ? this.reactions()?.length || 0 : 7;
+  }
+
 }
