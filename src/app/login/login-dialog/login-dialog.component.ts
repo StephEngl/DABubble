@@ -27,11 +27,12 @@ export class LoginDialogComponent {
     password: '',
   };
 
-  constructor(private route: ActivatedRoute) { }
+  constructor(private route: ActivatedRoute) {}
 
-  ngOnInit() {
-    this.authService.handleRedirectResult();
-  }
+  // ngOnInit() {
+    // this.authService.handleRedirectResult();
+    // this.authService.checkAuthStatus();
+  // }
 
   /** Toggles the visibility of the password input field. */
   togglePasswordVisibility() {
@@ -90,8 +91,10 @@ export class LoginDialogComponent {
   }
 
   async loginWithGoogle() {
-    const returnUrl = this.route.snapshot.queryParamMap.get('returnUrl') || '/';
-    localStorage.setItem('returnUrl', returnUrl);
-    this.authService.signInWithGoogleRedirect();
+    // const returnUrl = this.route.snapshot.queryParamMap.get('returnUrl') || '/';
+    // localStorage.setItem('returnUrl', returnUrl);
+    // this.authService.signInWithGoogleRedirect();
+    this.authService.signInWithGooglePopup();
+    
   }
 }
