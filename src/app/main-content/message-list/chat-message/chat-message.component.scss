@@ -1,5 +1,4 @@
 @import './../../../../assets/styles/mixins.scss';
-@import '@ctrl/ngx-emoji-mart/picker';
 
 .app-message {
     @include dFlex($gap:20px, $ai:flex-start);
@@ -150,46 +149,32 @@ nav {
             border: 1px solid var(--col-stroke-main);
         }
     }
-    &.left {
-        transform: translateX(50%);
-        border-radius: 20px 20px 0 20px;
-        left: 16px;
-        right: auto;
-    }
-    &.right {
-        transform: translateX(-50%);
-        border-radius: 20px 20px 20px 0;
-        left: auto;
-        right: 16px;
-    }
-    &.shown {
-        transform: translateX(0%);
-        opacity: 1;
-        height: auto;
-        top: -10px;
-    }
+}
 
+.left {
+    transform: translateX(50%);
+    border-radius: 20px 20px 0 20px;
+    left: 16px;
+    right: auto;
+}
+
+.right {
+    transform: translateX(-50%);
+    border-radius: 20px 20px 20px 0;
+    left: auto;
+    right: 16px;
+}
+
+.shown {
+    transform: translateX(0%);
+    opacity: 1;
+    height: auto;
+    top: -10px;
 }
 
 .emoji-wrapper {
-
     position: absolute;
     margin: auto;
     z-index: 3;
+    filter: drop-shadow(4px 4px 4px var(--col-transparent-shadow));
 }
-
-::ng-deep emoji-mart {
-    font-family: 'Inter', sans-serif;
-    border-radius: 10px;
-}
-
-::ng-deep emoji-mart .emoji-mart {
-    background-color: white;
-    color: black;
-}
-
-::ng-deep emoji-mart .emoji-mart-anchors {
-    display: flex;
-    justify-content: center;
-}
-

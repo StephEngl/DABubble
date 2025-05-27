@@ -27,6 +27,7 @@ interface Message {
   templateUrl: './message-list.component.html',
   styleUrl: './message-list.component.scss'
 })
+
 export class MessageListComponent implements AfterViewChecked{
 
   @Input() isChannel: boolean = false;

@@ -20,6 +20,16 @@
             <button class="send-message" type="submit">
                 <img src="./../../../assets/icons/message/send_darkblue.svg" alt="">
             </button>
+            
+            @if(emojiBar) {
+                <emoji-mart
+                    [set]="'apple'"
+                    previewPosition="none"
+                    [exclude]="['recent']"
+                    [i18n]="{ categories: { people: 'Smileys' } }"
+                    (emojiSelect)="onEmojiSelect($event)">
+                </emoji-mart>
+            }
         </span>
     </section>
 </form>

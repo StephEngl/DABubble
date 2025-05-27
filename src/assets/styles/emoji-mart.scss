@@ -1,0 +1,78 @@
+@import './mixins.scss';
+@import '@ctrl/ngx-emoji-mart/picker';
+
+
+
+::ng-deep .emoji-mart {
+    background-color: white;
+    color: black;
+    font-family: 'Inter', sans-serif;
+    border-radius: 20px;
+    width: 300px !important;
+    height: 300px !important;
+    overflow: hidden;
+}
+
+::ng-deep .emoji-mart-anchors {
+    display: flex;
+    justify-content: center;
+}
+
+::ng-deep .emoji-mart-preview {
+    display: none !important;
+}
+
+::ng-deep .emoji-mart-bar:last-child {
+    border-top-width: 0;
+}
+
+::ng-deep .emoji-mart-dark .emoji-mart-search input,
+::ng-deep .emoji-mart-dark .emoji-mart-category-label span {
+    background-color: white;
+    color: black;
+}
+
+::ng-deep .emoji-mart-search input {
+    border: 1px solid var(--col-stroke-main);
+    margin: 10px auto !important;
+}
+
+::ng-deep .emoji-mart-dark .emoji-mart-category-label span {
+    padding: 6px;
+    border-bottom: 1px solid var(--col-stroke-main);
+    font-family: 'Nunito';
+}
+
+::ng-deep .emoji-mart-anchors svg{
+    cursor: pointer;
+}
+
+::ng-deep .emoji-mart-scroll {
+    margin-bottom: 6px;
+}
+
+::ng-deep .emoji-mart-anchor {
+    color: var(--col-bg-btn-disabled);
+}
+
+::ng-deep .emoji-mart-anchor:focus,
+::ng-deep .emoji-mart-anchor:hover,
+::ng-deep .emoji-mart-anchor-selected {
+    color: var(--col-bg-btn-main) !important;
+}
+
+::ng-deep .emoji-mart-anchor-bar {
+    background-color: var(--col-bg-btn-main) !important;
+}
+
+::ng-deep .emoji-mart-dark .emoji-mart-category .emoji-mart-emoji:hover:before {
+    background-color: var(--col-bg-main);
+}
+
+::ng-deep .emoji-mart-dark .emoji-mart-category .emoji-mart-emoji:hover {
+    cursor: pointer;
+    >span {
+        cursor: pointer;
+    }
+}
+

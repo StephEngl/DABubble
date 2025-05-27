@@ -74,9 +74,16 @@
             </nav>
         }
         @if(emojiBar) {
-            <div class="emoji-wrapper" (mouseleave)="emojiBar = false">
+            <div class="emoji-wrapper" (mouseleave)="emojiBar = false"
+            [ngClass]="{
+                'left': isOwnMessage,
+                'right': !isOwnMessage,
+                'shown': hoverMessage
+            }">
                 <emoji-mart
                     [set]="'apple'"
+                    previewPosition="none"
+                    [exclude]="['recent']"
                     [i18n]="{ categories: { people: 'Smileys' } }"
                     (emojiSelect)="onEmojiSelect($event)">
                 </emoji-mart>

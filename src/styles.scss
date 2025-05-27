@@ -32,3 +32,26 @@ textarea {
     resize: none;
     border-radius: 20px;
 }
+
+// scrollbar styling
+
+::-webkit-scrollbar {
+    width: 12px;
+}
+
+::-webkit-scrollbar-track {
+    background: transparent;
+    margin: 10px auto;
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: var(--col-btn-hover-secondary);
+    border-radius: 10px;       /* Runde Ecken */
+    border: 2px solid transparent;
+    background-clip: content-box;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background-color: var(--col-font-href);
+    cursor: pointer;
+}

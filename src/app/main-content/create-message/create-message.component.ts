@@ -4,11 +4,14 @@ import { ChannelsService } from '../../services/channels.service';
 import { CommonModule } from '@angular/common';
 import { FormsModule, NgForm } from '@angular/forms';
 import { ChannelMessageInterface } from '../../interfaces/message.interface';
+import { PickerModule } from '@ctrl/ngx-emoji-mart';
+import data from '@emoji-mart/data';
+import { EmojiMartData } from '@emoji-mart/data';
 
 @Component({
   selector: 'app-create-message',
   standalone: true,
-  imports: [FormsModule],
+  imports: [FormsModule, PickerModule],
   templateUrl: './create-message.component.html',
   styleUrl: './create-message.component.scss'
 })
@@ -18,7 +21,9 @@ export class CreateMessageComponent {
   @Input() isChannelMessage: boolean = false;
   messageText: string = '';
 
-  // demo-data start
+  emojiData: EmojiMartData = data as EmojiMartData;
+  emojiBar: boolean = false;
+
   menuOptions: {name: string, src: string, hovered: boolean}[] = [
     {
       name: "add-reaction",
@@ -31,7 +36,6 @@ export class CreateMessageComponent {
       hovered: false,
     }
   ];
-  // demo data end
 
   getMenuIcon(index: number): string {
     const color = this.menuOptions[index].hovered ? 'blue' : 'grey';
@@ -56,6 +60,10 @@ export class CreateMessageComponent {
     console.log("Valid message:", this.messageText);
     this.channelService.loadChannel(currentChannel!);
     form.resetForm();
+  }
+
+  onEmojiSelect(event: any) {
+    console.log(event.emoji.native);
   }
 
 }

@@ -13,7 +13,7 @@ import { EmojiMartData } from '@emoji-mart/data';
   standalone: true,
   imports: [NgClass, FormsModule, PickerModule],
   templateUrl: './chat-message.component.html',
-  styleUrl: './chat-message.component.scss'
+  styleUrls: ['./chat-message.component.scss','./../../../../assets/styles/emoji-mart.scss' ]
 })
 export class ChatMessageComponent {
 
@@ -182,7 +182,6 @@ export class ChatMessageComponent {
   }
 
   onEmojiSelect(event: any) {
-    console.log(event);
-    
+    console.log(event.emoji.native);
   }
 }
