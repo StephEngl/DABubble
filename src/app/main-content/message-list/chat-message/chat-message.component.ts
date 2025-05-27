@@ -7,6 +7,8 @@ import { UsersService } from '../../../services/users.service';
 import { PickerModule } from '@ctrl/ngx-emoji-mart';
 import data from '@emoji-mart/data';
 import { EmojiMartData } from '@emoji-mart/data';
+import { ReactionInterface } from '../../../interfaces/message.interface';
+import { MessageService } from '../../../services/message.service';
 
 @Component({
   selector: 'app-chat-message',
@@ -19,6 +21,7 @@ import { EmojiMartData } from '@emoji-mart/data';
 export class ChatMessageComponent {
 
   channelService = inject(ChannelsService);
+  messageService = inject(MessageService);
   signalService = inject(SignalsService);
   usersService = inject(UsersService);
   // placeholder data: will be removed // start
@@ -48,8 +51,8 @@ export class ChatMessageComponent {
 
 
   menuBar: {imgSrc: string, shownInThread: boolean, clickFunction: () => void}[] = [
-    { imgSrc: './../../../../assets/icons/message/emoji_laughing.png', shownInThread: false, clickFunction: () => this.postReaction(this.singleMessageId(),'😂') },
-    { imgSrc: './../../../../assets/icons/message/emoji_thumbs_up.png', shownInThread: false, clickFunction: () => this.postReaction(this.singleMessageId(),'👍') },
+    { imgSrc: './../../../../assets/icons/message/emoji_laughing.png', shownInThread: false, clickFunction: () => this.messageService.postReaction(this.singleMessageId(), '😂', this.reactions(), this.isChannelMessage)},
+    { imgSrc: './../../../../assets/icons/message/emoji_thumbs_up.png', shownInThread: false, clickFunction: () => this.messageService.postReaction(this.singleMessageId(), '👍', this.reactions(), this.isChannelMessage)},
     { imgSrc: './../../../../assets/icons/message/add_reaction_black.svg', shownInThread: true, clickFunction: () => this.emojiBar = true },
     { imgSrc: './../../../../assets/icons/message/comment_black.svg', shownInThread: false, clickFunction: () => this.openThread() },
     { imgSrc: './../../../../assets/icons/message/more_options_black.svg', shownInThread: true, clickFunction: () => this.editMode = true },
@@ -139,33 +142,9 @@ export class ChatMessageComponent {
   sendMessageUpdate(id: string) {
     const message = this.messageEditText;
     if(this.isChannelMessage) {
-      this.channelService.updateMessage(id, { text: message }, {});
+      this.messageService.updateMessage(id, { text: message }, {});
     } else {
-      this.channelService.updateMessage(id, { text: message }, { isThread: true });
-    }
-  }
-
-  postReaction(id: string, code: string): void {
-    const user = 'currentUser'; // connect to auth.service (current user.id)
-    let reactions = this.reactions();
-    const existingReaction = reactions.find((reaction: { emojiCode: string; }) => reaction.emojiCode === code);
-    if (existingReaction) {
-      if (!existingReaction.postedBy.includes(user)) {
-        existingReaction.postedBy.push(user);
-        existingReaction.count += 1;
-      }
-    } else {
-      reactions.push({
-        emojiCode: code,
-        postedBy: [user],
-        count: 1
-      });
-    }
-
-    if (this.isChannelMessage) {
-      this.channelService.updateMessage(id, { reactions: reactions }, {});
-    } else {
-      this.channelService.updateMessage(id, { reactions: reactions }, { isThread: true });
+      this.messageService.updateMessage(id, { text: message }, { isThread: true });
     }
   }
 
@@ -193,7 +172,7 @@ export class ChatMessageComponent {
 
   onEmojiSelect(event: any):void {
     if(this.emojiBar) {
-      this.postReaction(this.singleMessageId(), event.emoji.native)
+      this.messageService.postReaction(this.singleMessageId(), event.emoji.native, this.reactions(), this.isChannelMessage)
     } else {
       console.log("post in edit mode");
       this.messageEditText += " " + event.emoji.native;

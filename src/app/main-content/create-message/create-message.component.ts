@@ -7,6 +7,7 @@ import { ChannelMessageInterface } from '../../interfaces/message.interface';
 import { PickerModule } from '@ctrl/ngx-emoji-mart';
 import data from '@emoji-mart/data';
 import { EmojiMartData } from '@emoji-mart/data';
+import { MessageService } from '../../services/message.service';
 
 @Component({
   selector: 'app-create-message',
@@ -18,6 +19,8 @@ import { EmojiMartData } from '@emoji-mart/data';
 export class CreateMessageComponent {
 
   channelService = inject(ChannelsService);
+  messageService = inject(MessageService);
+
   @Input() isChannelMessage: boolean = false;
   messageText: string = '';
 
@@ -55,9 +58,9 @@ export class CreateMessageComponent {
       reactions: []
     };
     if (this.isChannelMessage) {
-      this.channelService.postMessage(message);
+      this.messageService.postMessage(message);
     } else {
-      this.channelService.postThreadMessage(message);
+      this.messageService.postThreadMessage(message);
     }
     console.log("Valid message:", this.messageText);
     this.channelService.loadChannel(currentChannel!);
