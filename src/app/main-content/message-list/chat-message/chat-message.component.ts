@@ -51,11 +51,31 @@ export class ChatMessageComponent {
 
 
   menuBar: {imgSrc: string, shownInThread: boolean, clickFunction: () => void}[] = [
-    { imgSrc: './../../../../assets/icons/message/emoji_laughing.png', shownInThread: false, clickFunction: () => this.messageService.postReaction(this.singleMessageId(), '😂', this.reactions(), this.isChannelMessage)},
-    { imgSrc: './../../../../assets/icons/message/emoji_thumbs_up.png', shownInThread: false, clickFunction: () => this.messageService.postReaction(this.singleMessageId(), '👍', this.reactions(), this.isChannelMessage)},
-    { imgSrc: './../../../../assets/icons/message/add_reaction_black.svg', shownInThread: true, clickFunction: () => this.emojiBar = true },
-    { imgSrc: './../../../../assets/icons/message/comment_black.svg', shownInThread: false, clickFunction: () => this.openThread() },
-    { imgSrc: './../../../../assets/icons/message/more_options_black.svg', shownInThread: true, clickFunction: () => this.editMode = true },
+    { 
+      imgSrc: './../../../../assets/icons/message/emoji_laughing.png',
+      shownInThread: false,
+      clickFunction: () => this.messageService.postReaction(this.singleMessageId(), '😂', this.reactions(), this.isChannelMessage)
+    },
+    { 
+      imgSrc: './../../../../assets/icons/message/emoji_thumbs_up.png',
+      shownInThread: false,
+      clickFunction: () => this.messageService.postReaction(this.singleMessageId(), '👍', this.reactions(), this.isChannelMessage)
+    },
+    { 
+      imgSrc: './../../../../assets/icons/message/add_reaction_black.svg',
+      shownInThread: true,
+      clickFunction: () => this.emojiBar = true
+    },
+    { 
+      imgSrc: './../../../../assets/icons/message/comment_black.svg',
+      shownInThread: false,
+      clickFunction: () => this.openThread()
+    },
+    { 
+      imgSrc: './../../../../assets/icons/message/more_options_black.svg',
+      shownInThread: true,
+      clickFunction: () => this.editMode = true
+    },
   ];
 
   ngOnInit() {
@@ -70,6 +90,7 @@ export class ChatMessageComponent {
       this.channelService.subscribeToThreadMessages(currentChannelId, currentThreadId);
     }
     this.signalService.showThread.set(true);
+    this.signalService.focusThread.set(true);
   }
 
   dateDayMonthYear(date: Date): string {
@@ -172,7 +193,13 @@ export class ChatMessageComponent {
 
   onEmojiSelect(event: any):void {
     if(this.emojiBar) {
-      this.messageService.postReaction(this.singleMessageId(), event.emoji.native, this.reactions(), this.isChannelMessage)
+      this.messageService.postReaction
+        (
+          this.singleMessageId(),
+          event.emoji.native,
+          this.reactions(),
+          this.isChannelMessage
+        )
     } else {
       console.log("post in edit mode");
       this.messageEditText += " " + event.emoji.native;

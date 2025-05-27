@@ -97,5 +97,31 @@ export class MessageService {
     }
   }
 
+  // optional -->
+
+  // postMention(
+  //   messageId: string,
+  //   mentionedUserId: string,
+  //   mentionsArray: string[],
+  //   isChannelMessage: boolean
+  // ): void {
+  //   const currentUserId = 'currentUser';
+  //   //if (!currentUserId) return;
+
+  //   if (!mentionsArray.includes(mentionedUserId)) {
+  //     mentionsArray.push(mentionedUserId);
+  //   }
+
+  //   const updatePayload = { mentions: mentionsArray };
+
+  //   if (isChannelMessage) {
+  //     this.updateMessage(messageId, updatePayload, {});
+  //   } else {
+  //     this.updateMessage(messageId, updatePayload, { isThread: true });
+  //   }
+  // }
+
+  // <-- optional
+
 
 }

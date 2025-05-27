@@ -1,6 +1,7 @@
 <form #form="ngForm" (ngSubmit)="sendMessage(form)">
     <section class="create-message">
-        <textarea 
+        <textarea
+            #messageInput
             [(ngModel)]="messageText"
             name="message"
             minlength="3"
