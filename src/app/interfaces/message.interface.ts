@@ -6,6 +6,7 @@ export interface ThreadMessageInterface {
     senderId: string;
     text: string;
     reactions: ReactionInterface[];
+    mentions?: string[];
 }
 
 export interface ChannelMessageInterface {
@@ -15,6 +16,7 @@ export interface ChannelMessageInterface {
     text: string;
     reactions: ReactionInterface[];
     threadMessages?: ThreadMessageInterface[];
+    mentions?: string[];
 }
 
 export interface ReactionInterface {

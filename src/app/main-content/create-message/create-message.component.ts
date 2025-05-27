@@ -1,12 +1,13 @@
-import { Component, inject, Input } from '@angular/core';
+import { Component, inject, Input, ViewChild, ElementRef, AfterViewChecked } from '@angular/core';
 import { Timestamp } from '@angular/fire/firestore';
 import { ChannelsService } from '../../services/channels.service';
-import { CommonModule } from '@angular/common';
 import { FormsModule, NgForm } from '@angular/forms';
 import { ChannelMessageInterface } from '../../interfaces/message.interface';
 import { PickerModule } from '@ctrl/ngx-emoji-mart';
 import data from '@emoji-mart/data';
 import { EmojiMartData } from '@emoji-mart/data';
+import { MessageService } from '../../services/message.service';
+import { SignalsService } from '../../services/signals.service';
 
 @Component({
   selector: 'app-create-message',
@@ -15,10 +16,16 @@ import { EmojiMartData } from '@emoji-mart/data';
   templateUrl: './create-message.component.html',
   styleUrl: './create-message.component.scss'
 })
-export class CreateMessageComponent {
+export class CreateMessageComponent implements AfterViewChecked {
 
   channelService = inject(ChannelsService);
+  messageService = inject(MessageService);
+  signalService = inject(SignalsService);
+
   @Input() isChannelMessage: boolean = false;
+  @Input() isThreadMessage: boolean = false;
+  @ViewChild('messageInput') messageInputRef!: ElementRef<HTMLTextAreaElement>;
+
   messageText: string = '';
 
   emojiData: EmojiMartData = data as EmojiMartData;
@@ -35,9 +42,18 @@ export class CreateMessageComponent {
       name: "adress-user",
       src: 'email_at',
       hovered: false,
-      clickFunction: () => console.log("adress user")
+      clickFunction: () => this.onFocus()
     }
   ];
+
+  ngAfterViewChecked() {
+    if(this.isChannelMessage && this.signalService.focusChat()) {
+      this.onFocus();
+    }
+    if(this.isThreadMessage && this.signalService.focusThread()) {
+      this.onFocus();
+    }
+  }
 
   getMenuIcon(index: number): string {
     const color = this.menuOptions[index].hovered ? 'blue' : 'grey';
@@ -55,9 +71,9 @@ export class CreateMessageComponent {
       reactions: []
     };
     if (this.isChannelMessage) {
-      this.channelService.postMessage(message);
+      this.messageService.postMessage(message);
     } else {
-      this.channelService.postThreadMessage(message);
+      this.messageService.postThreadMessage(message);
     }
     console.log("Valid message:", this.messageText);
     this.channelService.loadChannel(currentChannel!);
@@ -67,6 +83,12 @@ export class CreateMessageComponent {
   onEmojiSelect(event: any) {
     this.messageText += " " + event.emoji.native;
     this.emojiBar = false;
+  }
+
+  onFocus() {
+    this.messageInputRef?.nativeElement.focus();
+    this.signalService.focusChat.set(false);
+    this.signalService.focusThread.set(false);
   }
 
 }

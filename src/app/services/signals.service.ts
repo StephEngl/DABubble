@@ -11,6 +11,8 @@ export class SignalsService {
   isChoosingAvatarDialog = signal<boolean>(false);
   isPasswordForgottenDialog = signal<boolean>(false);
   isPasswordResetDialog = signal<boolean>(false);
+  focusChat = signal<boolean>(false);
+  focusThread = signal<boolean>(false);
 
   showWorkspace = signal<boolean>(true);
   showThread = signal<boolean>(false);

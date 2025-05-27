@@ -8,5 +8,5 @@
         <button (click)="signalService.showThread.set(false)" class="close-thread">X</button>
     </header>
     <app-message-list [isThread]="true"></app-message-list>
-    <app-create-message [isChannelMessage]="false"></app-create-message>
+    <app-create-message [isThreadMessage]="true"></app-create-message>
 </section>
