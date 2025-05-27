@@ -15,6 +15,7 @@ import { EmojiMartData } from '@emoji-mart/data';
   templateUrl: './chat-message.component.html',
   styleUrls: ['./chat-message.component.scss','./../../../../assets/styles/emoji-mart.scss' ]
 })
+
 export class ChatMessageComponent {
 
   channelService = inject(ChannelsService);
@@ -39,6 +40,12 @@ export class ChatMessageComponent {
   emojiBar: boolean = false;
   emojiBarEditMode: boolean = false;
   hoverMessage: boolean = false;
+  messageEditText: string = '';
+  hoveredReactionIndex: number | null = null;
+  maxEmoji: number = 7;
+  showAll: boolean = false;
+  reactionHovered: boolean = false;
+
 
   menuBar: {imgSrc: string, shownInThread: boolean, clickFunction: () => void}[] = [
     { imgSrc: './../../../../assets/icons/message/emoji_laughing.png', shownInThread: false, clickFunction: () => this.postReaction(this.singleMessageId(),'😂') },
@@ -47,8 +54,6 @@ export class ChatMessageComponent {
     { imgSrc: './../../../../assets/icons/message/comment_black.svg', shownInThread: false, clickFunction: () => this.openThread() },
     { imgSrc: './../../../../assets/icons/message/more_options_black.svg', shownInThread: true, clickFunction: () => this.editMode = true },
   ];
-
-  messageEditText: string = '';
 
   ngOnInit() {
     this.messageEditText = this.text();
@@ -89,7 +94,7 @@ export class ChatMessageComponent {
     return `${day}.${month}.${year} | ${hours}:${minutes}`;
   }
 
-  createdAt() {
+  createdAt():string {
     if (this.isChannelMessage) {
         return this.timeHourMinute(this.message.createdAt.toDate())
       } else if (this.isThreadMessage) {
@@ -108,6 +113,8 @@ export class ChatMessageComponent {
       return this.threadMessage.text;
     } else if (this.isThreadTitle) {
       return this.threadTitle.text;
+    } else {
+      return '';
     }
   }
 
@@ -119,11 +126,13 @@ export class ChatMessageComponent {
     }
   }
 
-  singleMessageId() {
+  singleMessageId():string {
     if (this.isChannelMessage) {
       return this.message.id;
     } else if (this.isThreadMessage) {
       return this.threadMessage.id;
+    } else {
+      return 'unknown';
     }
   }
 
@@ -137,7 +146,7 @@ export class ChatMessageComponent {
   }
 
   postReaction(id: string, code: string): void {
-    const user = 'currentUser';
+    const user = 'currentUser'; // connect to auth.service (current user.id)
     let reactions = this.reactions();
     const existingReaction = reactions.find((reaction: { emojiCode: string; }) => reaction.emojiCode === code);
     if (existingReaction) {
@@ -182,7 +191,7 @@ export class ChatMessageComponent {
     return './../../../../assets/icons/user/user_0.svg';
   }
 
-  onEmojiSelect(event: any) {
+  onEmojiSelect(event: any):void {
     if(this.emojiBar) {
       this.postReaction(this.singleMessageId(), event.emoji.native)
     } else {
@@ -192,12 +201,21 @@ export class ChatMessageComponent {
     }
   }
 
-  maxEmoji: number = 7;
-  showAll: boolean = false;
-
-  toggleShownEmojis() {
+  toggleShownEmojis():void {
     this.showAll = !this.showAll;
     this.maxEmoji = this.showAll ? this.reactions()?.length || 0 : 7;
+  }
+
+  showUserName(id: string):string {
+    return this.usersService.findName(id);
+  }
+
+  showReactionInfos(index: number) {
+    this.hoveredReactionIndex = index;
+  }
+
+  hideReactionInfos() {
+    this.hoveredReactionIndex = null;
   }
 
 }

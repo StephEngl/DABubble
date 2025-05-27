@@ -27,9 +27,27 @@
                 <div class="reactions">
                     @for (reaction of reactions(); track reaction; let index = $index) {
                         @if(index < maxEmoji) {
-                            <div class="reaction">
+                            <div class="reaction" (mouseenter)="showReactionInfos(index)" (mouseleave)="hideReactionInfos()">
                                 <p>{{ reaction.emojiCode }}</p>
-                                <p>{{ reaction.count }}</p> 
+                                <p>{{ reaction.count }}</p>
+                                @if (hoveredReactionIndex === index) {
+                                    <aside class="reaction-info">
+                                        <p>{{ reaction.emojiCode }}</p>
+                                        @for (user of reaction.postedBy; track user; let index = $index) {
+                                            @if (index === 0 && reaction.postedBy.length > 1) {
+                                                <p class="reaction-username">{{ showUserName(user) }},</p>
+                                            } @else if (index === 0) {
+                                                <p class="reaction-username">{{ showUserName(user) }}</p>
+                                            } @else if (index === 1) {
+                                                <p class="reaction-username">{{ showUserName(user) }}</p>
+                                            }
+                                        }
+                                        @if (reaction.postedBy.length > 2) {
+                                            <p> + {{ reaction.postedBy.length -2 }} </p>
+                                        }
+                                        <p> has reacted</p>
+                                    </aside>
+                                }
                             </div>
                         }
                     }
@@ -44,7 +62,6 @@
                 @if(isChannelMessage) {
                     <div class="answers">
                         @if (message.threadMessages.length > 0) {
-                            <!-- reply count out of database -->
                             <button (click)="openThread()">{{ message.threadMessages.length }} Replies</button>
                             <p>last on {{ dateLastThread(message.threadMessages[message.threadMessages.length -1 ].createdAt.toDate()) }}</p>
                         } @else {
