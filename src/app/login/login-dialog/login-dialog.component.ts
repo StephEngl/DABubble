@@ -44,6 +44,7 @@ export class LoginDialogComponent {
     this.signalService.isLoginDialog.set(false);
     this.signalService.isRegisterDialog.set(false);
     this.signalService.isChoosingAvatarDialog.set(false);
+    this.signalService.isPasswordResetDialog.set(false);
   }
 
   /**

@@ -1,6 +1,8 @@
 import { Component, inject } from '@angular/core';
 import { FormsModule, NgForm } from '@angular/forms';
 import { SignalsService } from '../../services/signals.service';
+import { getAuth, sendPasswordResetEmail } from '@angular/fire/auth';
+import { ToastService } from '../../services/toast.service';
 
 @Component({
   selector: 'app-password-dialog',
@@ -11,6 +13,7 @@ import { SignalsService } from '../../services/signals.service';
 })
 export class PasswordDialogComponent {
   signalService = inject(SignalsService);
+  toastService = inject(ToastService);
   emailInput: string = '';
 
   /**
@@ -20,15 +23,21 @@ export class PasswordDialogComponent {
    */
   onSubmit(ngForm: NgForm) {}
 
-  backToLogin() {
-    this.signalService.isLoginDialog.set(true);
-    this.signalService.isRegisterDialog.set(false);
-    this.signalService.isChoosingAvatarDialog.set(false);
-    this.signalService.isPasswordForgottenDialog.set(false);
-  }
-
   sendMailForNewPassword(email: string) {
-    // send mail to reset password
-    this.backToLogin();
+    const auth = getAuth();
+    sendPasswordResetEmail(auth, email, {
+      // Optional: use of a continueUrl
+      url: 'http://localhost:4200/login',
+      handleCodeInApp: true,
+    })
+      .then(() => {
+        this.toastService.triggerToast('Password reset', 'update');
+        // alert('E-Mail zum Zurücksetzen wurde gesendet!');
+        this.signalService.showPasswordResetDialog();
+      })
+      .catch((error) => {
+        // Fehlerbehandlung
+        alert('Fehler: ' + error.message);
+      });
   }
 }

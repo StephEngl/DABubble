@@ -34,6 +34,7 @@ export class RegisterDialogComponent {
     this.signalService.isRegisterDialog.set(false);
     this.signalService.isChoosingAvatarDialog.set(false);
     this.signalService.isPasswordForgottenDialog.set(false);
+    this.signalService.isPasswordResetDialog.set(false);
   }
 
   /** Toggles the visibility of the password input field. */
@@ -50,6 +51,7 @@ export class RegisterDialogComponent {
     this.signalService.isRegisterDialog.set(false);
     this.signalService.isChoosingAvatarDialog.set(true);
     this.signalService.isPasswordForgottenDialog.set(false);
+    this.signalService.isPasswordResetDialog.set(false);
   }
 
       /**
@@ -60,7 +62,7 @@ export class RegisterDialogComponent {
      */
     async createUser(nameInput: string, mailInput: string, password: string) {
         const user:UserInterface = { name: nameInput, email: mailInput, status: 'online', avatarId: "" }
-        // if (this.userAlreadyExists(user.name)) return;
+        if (this.userAlreadyExists(user.name)) return;
         const userCredential = await this.authService.createUser(user.email, password, user.name);
         const uid = userCredential.user.uid;
         this.usersService.addUser(uid, user);
@@ -74,9 +76,9 @@ export class RegisterDialogComponent {
      * @param mail string - email to check
      * @returns boolean - true if the user already exists
      */
-    // userAlreadyExists(mail: string): boolean {
-    //     return (
-    //         this.usersService.users.some(user => user.email.trim().toLowerCase() === mail.trim().toLowerCase())
-    //     );
-    // }
+    userAlreadyExists(mail: string): boolean {
+        return (
+            this.usersService.users.some(user => user.email.trim().toLowerCase() === mail.trim().toLowerCase())
+        );
+    }
 }

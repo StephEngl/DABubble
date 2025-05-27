@@ -1,10 +1,11 @@
-import { Component, inject, Output } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { LoginDialogComponent } from './login-dialog/login-dialog.component';
 import { SignalsService } from '../services/signals.service';
 import { RegisterDialogComponent } from './register-dialog/register-dialog.component';
 import { PasswordDialogComponent } from './password-dialog/password-dialog.component';
 import { ChooseAvatarDialogComponent } from './choose-avatar-dialog/choose-avatar-dialog.component';
+import { PasswordResetDialogComponent } from './password-reset-dialog/password-reset-dialog.component';
 
 @Component({
   selector: 'app-login',
@@ -14,27 +15,12 @@ import { ChooseAvatarDialogComponent } from './choose-avatar-dialog/choose-avata
     LoginDialogComponent,
     RegisterDialogComponent,
     PasswordDialogComponent,
-    ChooseAvatarDialogComponent
+    PasswordResetDialogComponent,
+    ChooseAvatarDialogComponent,
   ],
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss',
 })
 export class LoginComponent {
   signalService = inject(SignalsService);
-
-  @Output() uid!: string;
-  
-  openChooseAvatarDialog() {
-    this.signalService.isLoginDialog.set(false);
-    this.signalService.isRegisterDialog.set(false);
-    this.signalService.isChoosingAvatarDialog.set(true);
-    this.signalService.isPasswordForgottenDialog.set(false);
-  }
-
-  showRegisterDialog() {
-    this.signalService.isLoginDialog.set(false);
-    this.signalService.isRegisterDialog.set(true);
-    this.signalService.isChoosingAvatarDialog.set(false);
-    this.signalService.isPasswordForgottenDialog.set(false);
-  }
 }

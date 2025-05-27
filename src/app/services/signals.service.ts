@@ -1,16 +1,16 @@
 import { Injectable, signal } from '@angular/core';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class SignalsService {
-
-  constructor() { }
+  constructor() {}
 
   isLoginDialog = signal<boolean>(true);
   isRegisterDialog = signal<boolean>(false);
   isChoosingAvatarDialog = signal<boolean>(false);
   isPasswordForgottenDialog = signal<boolean>(false);
+  isPasswordResetDialog = signal<boolean>(false);
 
   showWorkspace = signal<boolean>(true);
   showThread = signal<boolean>(false);
@@ -20,4 +20,44 @@ export class SignalsService {
 
   // Signal for current User-ID
   currentUid = signal<string>('');
+
+  backToLogin() {
+    this.isLoginDialog.set(true);
+    this.isRegisterDialog.set(false);
+    this.isChoosingAvatarDialog.set(false);
+    this.isPasswordForgottenDialog.set(false);
+    this.isPasswordResetDialog.set(false);
+  }
+
+  showRegisterDialog() {
+    this.isLoginDialog.set(false);
+    this.isRegisterDialog.set(true);
+    this.isChoosingAvatarDialog.set(false);
+    this.isPasswordForgottenDialog.set(false);
+    this.isPasswordResetDialog.set(false);
+  }
+
+  goToAvatarChoice() {
+    this.isLoginDialog.set(false);
+    this.isRegisterDialog.set(false);
+    this.isChoosingAvatarDialog.set(true);
+    this.isPasswordForgottenDialog.set(false);
+    this.isPasswordResetDialog.set(false);
+  }
+
+  showPasswordForgottenDialog() {
+    this.isPasswordForgottenDialog.set(true);
+    this.isLoginDialog.set(false);
+    this.isRegisterDialog.set(false);
+    this.isChoosingAvatarDialog.set(false);
+    this.isPasswordResetDialog.set(false);
+  }
+
+  showPasswordResetDialog() {
+    this.isLoginDialog.set(false);
+    this.isRegisterDialog.set(false);
+    this.isChoosingAvatarDialog.set(false);
+    this.isPasswordForgottenDialog.set(false);
+    this.isPasswordResetDialog.set(true);
+  }
 }
