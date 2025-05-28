@@ -13,6 +13,9 @@
         <div class="mention-list" [style.display]="showList ? 'flex' : 'none'">
             <div class="scroll-content">
                 @if(mentionTrigger === '@') {
+                    @if (searchResultsUser.length === 0) {
+                        <div>No users found</div>
+                    }
                     @for(user of searchResultsUser; track user) {
                         <div class="result" (click)="tagUser(user.name)">
                             <img [src]="usersService.getAvatar(user.id!)" alt="">
@@ -21,6 +24,9 @@
                     }
                 }
                 @if(mentionTrigger === '#') {
+                    @if (searchResultsChannel.length === 0) {
+                        <div>No results</div>
+                    }
                     @for(channel of searchResultsChannel; track channel) {
                         <div class="result" (click)="tagChannel(channel.id!)">
                             <p># {{ channel.channelName }}</p>

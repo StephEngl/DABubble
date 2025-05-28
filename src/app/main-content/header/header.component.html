@@ -26,7 +26,7 @@
                     <div>no results for Users</div>
                 } @else if (searchInput.length > 0) {
                     @for (result of searchResultsUser; track result) {
-                        <div class="single-result" (click)="showUserInfo(result.id!)">
+                        <div class="single-result" >
                             <p>User:</p>
                             <img [src]="usersService.getAvatar(result.id!)" alt="">
                             <p class="result-info">{{ result.name }}</p>
@@ -38,16 +38,16 @@
         }
 
     </section>
-
-    <div class="user-menu" (mouseover)="hoverMenu = true" (mouseleave)="hoverMenu = false">
-        <h3 [style.color]="hoverMenu ?'var(--col-font-btn-hover)' : '' ">User Name</h3>
-        <div class="user-icon">
-            <div class="user-picture" [style.backgroundImage] ="'url(./../../../assets/icons/user/user_2.svg)'"></div>
-            <img class="user-status" src="./../../../assets/icons/user/status_online.svg" alt="">
+    @if (authService.currentUser()) {
+        <div class="user-menu" (mouseover)="hoverMenu = true" (mouseleave)="hoverMenu = false">
+            <h3 [style.color]="hoverMenu ?'var(--col-font-btn-hover)' : '' ">{{ authService.currentUser()!.name }}</h3>
+            <div class="user-icon">
+                <div class="user-picture" [style.backgroundImage] ="'url(./../../../assets/icons/user/user_' + authService.currentUser()!.avatarId + '.svg)'"></div>
+                <img class="user-status" [src]="'./../../../assets/icons/user/status_' + authService.currentUser()!.status + '.svg'" alt="">
+            </div>
+            <button (click)="logout()">
+                <img class="menu-icon" [src]="hoverMenu ? './../../../assets/icons/menu/dropdown_blue.svg' : './../../../assets/icons/menu/dropdown_black.svg'" alt="">
+            </button>
         </div>
-        <button (click)="logout()">
-            <img class="menu-icon" [src]="hoverMenu ? './../../../assets/icons/menu/dropdown_blue.svg' : './../../../assets/icons/menu/dropdown_black.svg'" alt="">
-        </button>
-    </div>
-
+    }
 </header>

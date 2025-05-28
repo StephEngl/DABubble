@@ -6,6 +6,7 @@ import {
   onSnapshot,
   setDoc,
   getDoc,
+  updateDoc,
   DocumentReference,
 } from '@angular/fire/firestore';
 import { UserInterface } from '../interfaces/user.interface';
@@ -114,6 +115,17 @@ export class UsersService implements OnDestroy {
       return `./../../../../assets/icons/user/user_${searchedUser.avatarId}.svg`;
     }
     return './../../../../assets/icons/user/user_0.svg';
+  }
+
+  async updateUserStatus(userId: string, status: 'online' | 'offline' | 'afk') {
+    try {
+      const userDocRef = doc(this.firestore, 'users', userId);
+      await updateDoc(userDocRef, { status });
+      const user = this.users.find(u => u.id === userId);
+      if (user) user.status = status;
+    } catch (error) {
+      console.error('Error updating user status:', error);
+    }
   }
 
 

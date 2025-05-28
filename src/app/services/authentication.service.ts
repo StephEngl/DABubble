@@ -32,6 +32,7 @@ export class AuthenticationService {
   isAuthenticated = signal<boolean>(false);
   usersService = inject(UsersService);
   activeUserName: string = '';
+  userId: string = '';
   provider = new GoogleAuthProvider();
   private auth: Auth;
 
@@ -214,6 +215,7 @@ export class AuthenticationService {
    */
   async signOutUser(): Promise<void> {
     try {
+      await this.usersService.updateUserStatus(this.userId, 'offline');
       await signOut(this.auth);
       this.isAuthenticated.set(false);
       this.router.navigate(['/login']);
@@ -239,4 +241,23 @@ export class AuthenticationService {
       console.error('Deleting active user failed', error);
     }
   }
+
+  async getActiveUserId() {
+    try {
+      const user = await this.onAuthStateChanged();
+      this.userId = user?.uid;
+    } catch (error) {
+      console.error('Error fetching user:', error);
+      this.userId = 'error';
+    }
+  }
+
+  currentUser() {
+    const currentUserId = this.userId;
+    const user = this.usersService.users.find(user => user.id === currentUserId);
+    return user;
+  }
+
 }
+
+

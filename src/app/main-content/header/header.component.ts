@@ -21,6 +21,7 @@ export class HeaderComponent {
   searchInput: string = '';
   hoverMenu: boolean = false;
 
+
   /** Logs out the current user and closes the logout popup. */
   logout() {
     this.authService.signOutUser();
@@ -52,11 +53,6 @@ export class HeaderComponent {
     localStorage.setItem("currentChannel", id);
     this.channelsService.subscribeToChannelMessages(id);
     this.signalService.scrollChannelToBottom.set(true);
-  }
-
-  showUserInfo(id: string) {
-    console.log(this.usersService.users.find(user => user.id === id));
-    // open userInfo Dialog
   }
 
 }
