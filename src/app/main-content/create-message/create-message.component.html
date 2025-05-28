@@ -6,7 +6,7 @@
             name="message"
             minlength="3"
             required
-            (input)="searchForUserOrChannel()"
+            (input)="triggerUserOrChannelList()"
             placeholder="Write your message...">
         </textarea>
 
@@ -14,7 +14,7 @@
             <div class="scroll-content">
                 @if(mentionTrigger === '@') {
                     @for(user of searchResultsUser; track user) {
-                        <div class="result">
+                        <div class="result" (click)="tagUser(user.name)">
                             <img [src]="usersService.getAvatar(user.id!)" alt="">
                             <p>{{ user.name}}</p>
                         </div>
@@ -22,7 +22,7 @@
                 }
                 @if(mentionTrigger === '#') {
                     @for(channel of searchResultsChannel; track channel) {
-                        <div class="result">
+                        <div class="result" (click)="tagChannel(channel.id!)">
                             <p># {{ channel.channelName }}</p>
                         </div>
                     }

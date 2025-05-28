@@ -93,8 +93,32 @@ export class CreateMessageComponent implements AfterViewChecked {
   onMentionSelect() {
     if (this.messageText?.slice(-1) === "@") return;
     this.messageText += "@";
-    this.searchForUserOrChannel();
+    this.triggerUserOrChannelList();
     this.onFocus();
+  }
+
+  tagUser(name: string) {
+    const mention = `@${name}`;
+    if (this.messageText.includes(mention)) return;
+
+    const text = this.messageText;
+    const atIndex = text.lastIndexOf('@');
+    if (atIndex === -1) return;
+
+    const spaceIndex = text.lastIndexOf(' ', atIndex);
+    const start = spaceIndex + 1;
+
+    this.messageText = text.slice(0, start) + mention + ' ' + text.slice(atIndex + 1).replace(/^\S*/, '');
+    this.showList = false;
+  }
+
+  tagChannel(id: string) {
+    this.messageText = "";
+    this.showList = false;
+    localStorage.setItem("currentChannel", id);
+    this.channelService.subscribeToChannelMessages(id);
+    this.signalService.scrollChannelToBottom.set(true);
+    this.signalService.focusChat.set(true);
   }
 
   onFocus() {
@@ -102,7 +126,6 @@ export class CreateMessageComponent implements AfterViewChecked {
     this.signalService.focusChat.set(false);
     this.signalService.focusThread.set(false);
   }
-
 
   get searchResultsChannel() {
     const match = this.messageText.match(/#(\w*)$/);
@@ -130,7 +153,7 @@ export class CreateMessageComponent implements AfterViewChecked {
       );
   }
 
-  searchForUserOrChannel() {
+  triggerUserOrChannelList() {
     const adressUser = this.messageText.match(/@([^@]*)$/);
     const adressChannel = this.messageText.match(/#(\w*)$/);
     if (adressUser) {
