@@ -13,9 +13,10 @@
         @include dFlex($jc: space-between);
     }
     .menu-options {
-        @include dFlex($gap:16px);
+        @include dFlex($gap:10px);
         >img {
             cursor: pointer;
+            height: 20px;
         }
     }
     .send-message {
@@ -29,6 +30,42 @@
             background-color: var(--col-bg-main);
         }
     }
+}
+
+.mention-list {
+    @include dFlex($fd:column, $pos: absolute);
+    box-sizing: border-box;
+    border-radius: 20px;
+    border: 1px solid var(--col-stroke-main);
+    bottom: 130px;
+    background-color: var(--col-bg-secondary);
+    filter: drop-shadow(4px 4px 4px var(--col-transparent-shadow));
+    .result {
+        @include dFlex($jc:flex-start, $gap: 10px);
+        width: 100%;
+        padding: 8px 16px;
+        border-radius: 50px;
+        transition: all 0.2s ease;
+        >p {
+            font-weight: 700;
+        }
+        >img {
+            width: 35px;
+            height: 35px;
+            border-radius: 100%;
+        }
+        &:hover {
+            transform: scale(1.05);
+            background-color: var(--col-bg-main);
+            cursor: pointer;
+        }
+    }
+}
+
+.scroll-content {
+    padding: 16px 20px; 
+    overflow-y: auto;
+    max-height: 300px;
 }
 
 emoji-mart {

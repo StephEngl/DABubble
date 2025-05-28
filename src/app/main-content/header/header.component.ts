@@ -26,7 +26,7 @@ export class HeaderComponent {
     this.authService.signOutUser();
   }
 
-  get serchResultsChannel() {
+  get searchResultsChannel() {
     const searchTerm = this.searchInput.trim().toLowerCase();
     if (!searchTerm) return [];
     const matches = this.channelsService.channels.filter(channel =>
@@ -35,7 +35,7 @@ export class HeaderComponent {
     return matches.length > 0 ? matches : [];
   }
 
-  get serchResultsUser() {
+  get searchResultsUser() {
     const searchTerm = this.searchInput.trim().toLowerCase();
     if (!searchTerm) return [];
     const matches = this.usersService.users.filter(user =>
@@ -44,7 +44,7 @@ export class HeaderComponent {
     return matches.length > 0 ? matches : [];
   }
 
-  get serchResultsDirectMessages() {
+  get searchResultsDirectMessages() {
     return '';
   }
 

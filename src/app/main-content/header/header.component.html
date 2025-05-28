@@ -11,10 +11,10 @@
 
         @if (searchInput.length > 0) {
             <div class="search-result">
-                @if (searchInput.length > 0 && serchResultsChannel.length === 0) {
+                @if (searchInput.length > 0 && searchResultsChannel.length === 0) {
                     <div>no results for Channels</div>
                 } @else if (searchInput.length > 0) {
-                    @for (result of serchResultsChannel; track result) {
+                    @for (result of searchResultsChannel; track result) {
                         <div class="single-result" (click)="showThread(result.id!)">
                             <p>Channel:</p>
                             <p class="result-info">#{{ result.channelName }}</p>
@@ -22,10 +22,10 @@
                     }
                 }
 
-                @if (searchInput.length > 0 && serchResultsUser.length === 0) {
+                @if (searchInput.length > 0 && searchResultsUser.length === 0) {
                     <div>no results for Users</div>
                 } @else if (searchInput.length > 0) {
-                    @for (result of serchResultsUser; track result) {
+                    @for (result of searchResultsUser; track result) {
                         <div class="single-result" (click)="showUserInfo(result.id!)">
                             <p>User:</p>
                             <img [src]="usersService.getAvatar(result.id!)" alt="">

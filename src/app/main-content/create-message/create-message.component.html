@@ -6,8 +6,29 @@
             name="message"
             minlength="3"
             required
+            (input)="searchForUserOrChannel()"
             placeholder="Write your message...">
         </textarea>
+
+        <div class="mention-list" [style.display]="showList ? 'flex' : 'none'">
+            <div class="scroll-content">
+                @if(mentionTrigger === '@') {
+                    @for(user of searchResultsUser; track user) {
+                        <div class="result">
+                            <img [src]="usersService.getAvatar(user.id!)" alt="">
+                            <p>{{ user.name}}</p>
+                        </div>
+                    }
+                }
+                @if(mentionTrigger === '#') {
+                    @for(channel of searchResultsChannel; track channel) {
+                        <div class="result">
+                            <p># {{ channel.channelName }}</p>
+                        </div>
+                    }
+                }
+            </div>
+        </div>
         <span class="message-menu">
             <div class="menu-options">
                 @for (icon of menuOptions; track icon; let index = $index) {

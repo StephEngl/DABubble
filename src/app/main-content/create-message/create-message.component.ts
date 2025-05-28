@@ -8,11 +8,14 @@ import data from '@emoji-mart/data';
 import { EmojiMartData } from '@emoji-mart/data';
 import { MessageService } from '../../services/message.service';
 import { SignalsService } from '../../services/signals.service';
+import { ChannelInterface } from '../../interfaces/channel.interface';
+import { UsersService } from '../../services/users.service';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-create-message',
   standalone: true,
-  imports: [FormsModule, PickerModule],
+  imports: [FormsModule, PickerModule, CommonModule],
   templateUrl: './create-message.component.html',
   styleUrl: './create-message.component.scss'
 })
@@ -21,15 +24,17 @@ export class CreateMessageComponent implements AfterViewChecked {
   channelService = inject(ChannelsService);
   messageService = inject(MessageService);
   signalService = inject(SignalsService);
+  usersService = inject(UsersService);
 
   @Input() isChannelMessage: boolean = false;
   @Input() isThreadMessage: boolean = false;
   @ViewChild('messageInput') messageInputRef!: ElementRef<HTMLTextAreaElement>;
-
+  mentionTrigger: '@' | '#' | null = null;
   messageText: string = '';
 
   emojiData: EmojiMartData = data as EmojiMartData;
   emojiBar: boolean = false;
+  showList: boolean = false;
 
   menuOptions: {name: string, src: string, hovered: boolean, clickFunction: () => void}[] = [
     {
@@ -42,7 +47,7 @@ export class CreateMessageComponent implements AfterViewChecked {
       name: "adress-user",
       src: 'email_at',
       hovered: false,
-      clickFunction: () => this.onFocus()
+      clickFunction: () => this.onMentionSelect()
     }
   ];
 
@@ -85,10 +90,57 @@ export class CreateMessageComponent implements AfterViewChecked {
     this.emojiBar = false;
   }
 
+  onMentionSelect() {
+    if (this.messageText?.slice(-1) === "@") return;
+    this.messageText += "@";
+    this.searchForUserOrChannel();
+    this.onFocus();
+  }
+
   onFocus() {
     this.messageInputRef?.nativeElement.focus();
     this.signalService.focusChat.set(false);
     this.signalService.focusThread.set(false);
+  }
+
+
+  get searchResultsChannel() {
+    const match = this.messageText.match(/#(\w*)$/);
+    const searchTerm = match?.[1]?.toLowerCase() ?? 'no results';
+
+    return this.channelService.channels.filter(channel =>
+      channel.channelName.toLowerCase().includes(searchTerm)
+    );
+  }
+
+  get searchResultsUser() {
+    if (!this.messageInputRef) return [];
+
+    const match = this.messageText.match(/@([^@]*)$/);
+    const searchTerm = match?.[1]?.toLowerCase().trim() ?? 'no results';
+
+    const currentChannelId = localStorage.getItem("currentChannel");
+    const currentChannel = this.channelService.getChannelById(currentChannelId!);
+    if (!currentChannel) return [];
+
+    return this.usersService.users
+      .filter(user =>
+        currentChannel.members!.includes(user.id!) &&
+        user.name.toLowerCase().includes(searchTerm)
+      );
+  }
+
+  searchForUserOrChannel() {
+    const text = this.messageText.match(/@([^@]*)$/);
+    if (text) {
+      this.mentionTrigger = '@';
+      this.showList = true;
+    } else if (text) {
+      this.mentionTrigger = '#';
+      this.showList = true;
+    } else {
+      this.showList = false;
+    }
   }
 
 }
