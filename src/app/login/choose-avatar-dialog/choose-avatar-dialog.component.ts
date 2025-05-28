@@ -50,9 +50,9 @@ export class ChooseAvatarDialogComponent {
 
   getAvatarImagePath() {
     if (!this.currentUser || this.currentUser.avatarId === "0") {
-      return '/assets/icons/user/user_default.png';
+      return '/assets/icons/user/user_0.svg';
     }
-    return `/assets/icons/user/user_${this.getAvatarFileName(
+    return `/assets/icons/user/user${this.getAvatarFileName(
       this.currentUser.avatarId
     )}.svg`;
   }

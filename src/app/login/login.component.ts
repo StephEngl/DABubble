@@ -6,6 +6,7 @@ import { RegisterDialogComponent } from './register-dialog/register-dialog.compo
 import { PasswordDialogComponent } from './password-dialog/password-dialog.component';
 import { ChooseAvatarDialogComponent } from './choose-avatar-dialog/choose-avatar-dialog.component';
 import { PasswordResetDialogComponent } from './password-reset-dialog/password-reset-dialog.component';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -22,5 +23,15 @@ import { PasswordResetDialogComponent } from './password-reset-dialog/password-r
   styleUrl: './login.component.scss',
 })
 export class LoginComponent {
+  route = inject(ActivatedRoute);
   signalService = inject(SignalsService);
+
+ngOnInit() {
+  // Show Password-Reset-Dialog, after clicking link in password forgotten mail!
+    this.route.queryParams.subscribe(params => {
+      if (params['mode'] === 'resetPassword' && params['oobCode']) {
+        this.signalService.showPasswordResetDialog();
+      }
+    });
+  }
 }
