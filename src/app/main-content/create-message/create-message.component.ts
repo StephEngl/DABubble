@@ -131,11 +131,12 @@ export class CreateMessageComponent implements AfterViewChecked {
   }
 
   searchForUserOrChannel() {
-    const text = this.messageText.match(/@([^@]*)$/);
-    if (text) {
+    const adressUser = this.messageText.match(/@([^@]*)$/);
+    const adressChannel = this.messageText.match(/#(\w*)$/);
+    if (adressUser) {
       this.mentionTrigger = '@';
       this.showList = true;
-    } else if (text) {
+    } else if (adressChannel) {
       this.mentionTrigger = '#';
       this.showList = true;
     } else {
