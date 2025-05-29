@@ -1,10 +1,11 @@
 @import './../../../../assets/styles/mixins.scss';
 
 header {
+    z-index: 4;
     @include dFlex($jc: space-between);
-    padding: 16px;
+    padding: 16px 24px;
     border-radius: 20px 20px 0 0;
-    background-color: white;
+    background-color: var(--col-bg-secondary);
     filter: drop-shadow(0px 4px 4px var(--col-transparent-shadow));
     .header-right {
         @include dFlex($gap: 10px);
@@ -24,7 +25,7 @@ header {
     .member-icon {
         height: 40px;
         border-radius: 50%;
-        border: 2px solid white;
+        border: 2px solid var(--col-font-secondary);
         margin-right: -20px;
     }
     .member-overflow {
@@ -49,4 +50,58 @@ header {
             transform: scale(1.01);
         }
     }
+}
+
+.new-conversation {
+    width: 100%;
+    >p {
+        font-size: 24px;
+        font-weight: 700;
+    }
+    >input {
+        width: 100%;
+        padding: 10px 20px;
+        font-size: 18px;
+        margin: 10px 0;
+        border: 1px solid var(--col-stroke-main);
+    }
+    >input:focus {
+        border: 1px solid var(--col-bg-btn-main);
+    }
+}
+
+.mention-list {
+    @include dFlex($fd:column, $pos: fixed);
+    box-sizing: border-box;
+    border-radius: 20px;
+    border: 1px solid var(--col-stroke-main);
+    top: 110px;
+    background-color: var(--col-bg-secondary);
+    filter: drop-shadow(4px 4px 4px var(--col-transparent-shadow));
+    .result {
+        @include dFlex($jc:flex-start, $gap: 10px);
+        width: 100%;
+        padding: 8px 16px;
+        border-radius: 50px;
+        transition: all 0.2s ease;
+        >p {
+            font-weight: 700;
+        }
+        >img {
+            width: 35px;
+            height: 35px;
+            border-radius: 100%;
+        }
+        &:hover {
+            transform: scale(1.05);
+            background-color: var(--col-bg-main);
+            cursor: pointer;
+        }
+    }
+}
+
+.scroll-content {
+    padding: 16px 20px; 
+    overflow-y: auto;
+    max-height: 300px;
 }

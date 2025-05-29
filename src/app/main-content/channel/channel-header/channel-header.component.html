@@ -1,25 +1,61 @@
-    <header>
-        <nav>
-            <img src="./../../../assets/icons/general/tag_black.svg" alt="">
-            <h3>{{currentChannel?.channelName}}</h3>
-            <img src="./../../../assets/icons/menu/dropdown_black.svg" alt="">
-        </nav>
+<header>
+    @if(!signalService.startConversation()) {
+    <nav>
+        <img src="./../../../assets/icons/general/tag_black.svg" alt="">
+        <h3>{{currentChannel?.channelName}}</h3>
+        <img src="./../../../assets/icons/menu/dropdown_black.svg" alt="">
+    </nav>
 
-        <section class="header-right">
-            <div class="channel-members">
-                    @for (member of currentChannel?.members; track member; let index = $index) {
-                        @if (index <= 3) {
-                            <img [src]="usersService.getAvatar(member)" class="member-icon">
-                        }
-                    }
-                    @if (currentChannel?.members!.length > 4) {
-                        <p class="member-overflow"> {{ currentChannel?.members!.length - 4 }}</p> 
-                    } @else { <p class="member-overflow"></p> }
+    <section class="header-right">
+        <div class="channel-members">
+            @for (member of currentChannel?.members; track member; let index = $index) {
+            @if (index <= 3) { <img [src]="usersService.getAvatar(member)" class="member-icon">
+                }
+                }
+                @if (currentChannel?.members!.length > 4) {
+                <p class="member-overflow"> {{ currentChannel?.members!.length - 4 }}</p>
+                } @else { <p class="member-overflow"></p> }
+        </div>
+
+        <div class="add-members" (mouseenter)="addMembersHovered = true" (mouseleave)="addMembersHovered = false">
+            <img [src]="addMembersHovered ? './../../../../assets/icons/menu/person_add_blue.svg' : './../../../../assets/icons/menu/person_add_black.svg'"
+                alt="">
+        </div>
+    </section>
+    } @else {
+    <section class="new-conversation">
+        <p>Start Conversation</p>
+        <input
+            #messageInput
+            [(ngModel)]="inputText"
+            type="text"
+            (ngModelChange)="triggerUserOrChannelList()"
+            placeholder="To: #Channel, or @User">
+    </section>
+    <div class="mention-list" [style.display]="showList ? 'flex' : 'none'">
+        <div class="scroll-content">
+            @if(mentionTrigger === '@') {
+            @if (searchResultsUser.length === 0) {
+            <div>No users found</div>
+            }
+            @for(user of searchResultsUser; track user) {
+            <div class="result" (click)="startConversationWithUser(user.name)">
+                <img [src]="usersService.getAvatar(user.id!)" alt="">
+                <p>{{ user.name}}</p>
             </div>
-
-            <div class="add-members" (mouseenter)="addMembersHovered = true" (mouseleave)="addMembersHovered = false">
-                <img [src]="addMembersHovered ? './../../../../assets/icons/menu/person_add_blue.svg' : './../../../../assets/icons/menu/person_add_black.svg'" alt="">
+            }
+            }
+            @if(mentionTrigger === '#') {
+            @if (searchResultsChannel.length === 0) {
+            <div>No results</div>
+            }
+            @for(channel of searchResultsChannel; track channel) {
+            <div class="result" (click)="tagChannel(channel.id!)">
+                <p># {{ channel.channelName }}</p>
             </div>
-        </section>
-
-    </header>
+            }
+            }
+        </div>
+    </div>
+    }
+</header>

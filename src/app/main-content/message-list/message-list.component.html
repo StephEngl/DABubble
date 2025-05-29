@@ -3,12 +3,11 @@
         @for (message of getChannelMessages(); track message; let index = $index) {
             @if (shouldShowDateSeparator(index, getChannelMessages())){
                 <div class="date-separator">
-                    <p>{{ formatDate(message.createdAt.toDate()) }}</p>
+                    <p>{{ timeService.getDate(message.createdAt.toDate(), 'dd-mm-yyyy') }}</p>
                 </div>
             }
             @if (message.threadMessages) {
                 <app-chat-message
-                    [isOwnMessage]="false"
                     [message]="message"
                     [paddingHorizontal]="'65'"
                     [isChannelMessage]="isChannel">
@@ -19,7 +18,6 @@
         @if (currentThreadActive()) {
             <app-chat-message
                 [threadTitle]="getCurrentThreadMessage()"
-                [isOwnMessage]="false"
                 [paddingHorizontal]="'16'"
                 [isThreadTitle]="true">
             </app-chat-message>
@@ -29,12 +27,11 @@
             @for (message of getThreadMessages(); track message; let index = $index) {
                 @if (shouldShowDateSeparator(index, getThreadMessages())) {
                     <div class="date-separator">
-                        <p>{{ formatDate(message.createdAt.toDate()) }}</p>
+                        <p>{{ timeService.getDate(message.createdAt.toDate(), 'dd-mm-yyyy') }}</p>
                     </div>
                 }
                 @if (message) {
                 <app-chat-message
-                    [isOwnMessage]="true"
                     [threadMessage]="message"
                     [paddingHorizontal]="'16'"
                     [isThreadMessage]="isThread">

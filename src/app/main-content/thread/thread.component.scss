@@ -15,7 +15,7 @@ header {
     height: 84px;
     padding: 16px;
     border-radius: 20px 20px 0 0;
-    background-color: white;
+    background-color: var(--col-bg-secondary);
     filter: drop-shadow(0px 4px 4px var(--col-transparent-shadow));
     >div {
         @include dFlex($gap: 6px);

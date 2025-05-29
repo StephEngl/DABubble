@@ -13,6 +13,8 @@ export class SignalsService {
   isPasswordResetDialog = signal<boolean>(false);
   focusChat = signal<boolean>(false);
   focusThread = signal<boolean>(false);
+  startConversation = signal<boolean>(false);
+  sendingMessage = signal<boolean>(false);
 
   showWorkspace = signal<boolean>(true);
   showThread = signal<boolean>(false);

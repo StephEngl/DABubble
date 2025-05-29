@@ -3,6 +3,7 @@ import {
   inject, 
   Input,   
   AfterViewChecked,
+  AfterViewInit,
   ViewChild,
   ElementRef,
 } from '@angular/core';
@@ -12,6 +13,7 @@ import { ChannelMessageInterface } from '../../interfaces/message.interface';
 import { ThreadMessageInterface } from '../../interfaces/message.interface';
 import { Timestamp } from '@angular/fire/firestore';
 import { SignalsService } from '../../services/signals.service';
+import { TimeService } from '../../services/time.service';
 
 interface Message {
   text: string;
@@ -28,21 +30,40 @@ interface Message {
   styleUrl: './message-list.component.scss'
 })
 
-export class MessageListComponent implements AfterViewChecked{
-
+export class MessageListComponent implements AfterViewChecked {
+  
+  channelService = inject(ChannelsService);
+  signalService = inject(SignalsService);
+  timeService = inject(TimeService);
+  
   @Input() isChannel: boolean = false;
   @Input() isThread: boolean = false;
   @ViewChild('messageContainer') messageContainer?: ElementRef<HTMLDivElement>;
   shouldScroll = true;
-  channelService = inject(ChannelsService);
-  signalService = inject(SignalsService);
+  scrollOnInit = false;
 
-  ngAfterViewChecked(): void {
-      this.scrollToBottom();
+  ngOnInit(): void {
+    this.scrollOnInit = true;
+    setTimeout(() => {
+      this.scrollOnInit = false;
+    }, 1000);
   }
 
+  ngAfterViewChecked(): void {
+    if(this.signalService.sendingMessage()) {
+      this.scrollToBottomInstant();
+    }
+    this.scrollToBottom();
+  }
+
+  scrollToBottomInstant(): void {
+  if (this.messageContainer) {
+    this.messageContainer.nativeElement.scrollTop = this.messageContainer.nativeElement.scrollHeight;
+  }
+}
+
   scrollToBottom(): void {
-    if (this.signalService.scrollChannelToBottom()) {
+    if ((this.signalService.scrollChannelToBottom() && !this.signalService.sendingMessage()) || this.scrollOnInit) {
     setTimeout(() => {
       this.messageContainer?.nativeElement.scrollTo({
         top: this.messageContainer.nativeElement.scrollHeight,
@@ -69,14 +90,6 @@ export class MessageListComponent implements AfterViewChecked{
 
   toDate(timestamp: any): Date {
     return timestamp?.toDate ? timestamp.toDate() : timestamp;
-  }
-
-
-  formatDate(date: Date): string {
-    const day = date.getDate().toString().padStart(2, '0');
-    const month = (date.getMonth() + 1).toString().padStart(2, '0');
-    const year = date.getFullYear().toString().slice(-2);
-    return `${day}.${month}.${year}`;
   }
 
   currentChannel(): string {

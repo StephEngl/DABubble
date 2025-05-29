@@ -1,8 +1,8 @@
-@if (isChannelMessage || isThreadTitle || isThreadMessage) {
+@if (isChannelMessage || isThreadTitle || isThreadMessage) {
     <section 
         class="app-message"
         [style.padding]="'20px ' + paddingHorizontal + 'px'"
-        [style.flexDirection]="isOwnMessage ? 'row-reverse' : 'row'"
+        [style.flexDirection]="checkifOwnMessage() ? 'row-reverse' : 'row'"
         (mouseenter)="hoverMessage = true"
         (mouseleave)="hoverMessage = false"
     >
@@ -11,16 +11,16 @@
             <img [src]="showAvatar()" alt="">
         </aside>
 
-        <section class="chat-message" [style.alignItems]="isOwnMessage ? 'flex-end' : 'flex-start'">
+        <section class="chat-message" [style.alignItems]="checkifOwnMessage() ? 'flex-end' : 'flex-start'">
             <div class="message-title">
                 <h5>{{ showName() }}</h5>
                 <p> {{ createdAt() }}</p>
             </div>
 
             @if (!editMode) {
-                <p  
+                <p
                     class="message-text"
-                    [class]="isOwnMessage ? 'own-message':'normal-message'">
+                    [class]="checkifOwnMessage() ? 'own-message':'normal-message'">
                     {{ text() }}
                 </p>
 
@@ -63,7 +63,7 @@
                     <div class="answers">
                         @if (message.threadMessages.length > 0) {
                             <button (click)="openThread()">{{ message.threadMessages.length }} Replies</button>
-                            <p>last on {{ dateLastThread(message.threadMessages[message.threadMessages.length -1 ].createdAt.toDate()) }}</p>
+                            <p>last on {{ timeService.getDate(message.threadMessages[message.threadMessages.length -1 ].createdAt.toDate(), 'last-thread') }}</p>
                         } @else {
                             <button (click)="openThread()">Reply</button>
                         }
@@ -97,8 +97,8 @@
 
         @if (!isThreadTitle && !editMode) {
             <nav [ngClass]="{
-                'left': isOwnMessage,
-                'right': !isOwnMessage,
+                'left': checkifOwnMessage(),
+                'right': !checkifOwnMessage(),
                 'shown': hoverMessage
             }">
                 @for (item of menuBar; track item) {
@@ -115,8 +115,8 @@
         @if(emojiBar) {
             <div class="emoji-wrapper" (mouseleave)="emojiBar = false"
             [ngClass]="{
-                'left': isOwnMessage,
-                'right': !isOwnMessage,
+                'left': checkifOwnMessage(),
+                'right': !checkifOwnMessage(),
                 'shown': hoverMessage
             }">
                 <emoji-mart

@@ -4,8 +4,8 @@
 
 
 ::ng-deep .emoji-mart {
-    background-color: white;
-    color: black;
+    background-color: var(--col-bg-secondary);
+    color: var(--col-font-main);
     font-family: 'Inter', sans-serif;
     border-radius: 20px;
     width: 300px !important;
@@ -28,8 +28,8 @@
 
 ::ng-deep .emoji-mart-dark .emoji-mart-search input,
 ::ng-deep .emoji-mart-dark .emoji-mart-category-label span {
-    background-color: white;
-    color: black;
+    background-color: var(--col-bg-secondary);
+    color: var(--col-font-main);
 }
 
 ::ng-deep .emoji-mart-search input {

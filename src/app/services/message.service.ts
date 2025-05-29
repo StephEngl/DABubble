@@ -8,6 +8,7 @@ import {
     doc,
     updateDoc,
 } from '@angular/fire/firestore';
+import { AuthenticationService } from './authentication.service';
 
 @Injectable({
   providedIn: 'root'
@@ -18,6 +19,7 @@ export class MessageService {
 
   firestore: Firestore = inject(Firestore);
   channelService = inject(ChannelsService);
+  authService = inject(AuthenticationService);
 
   async postMessage(message: ChannelMessageInterface) {
     const activeChannel = localStorage.getItem("currentChannel");
@@ -74,7 +76,7 @@ export class MessageService {
   }
   
   postReaction(id: string, code: string, targetArray: ReactionInterface[], isChannelMessage: boolean): void {
-    const user = 'currentUser'; // connect to auth.service (current user.id)
+    const user = this.authService.userId;
     let reactions = targetArray;
     const existingReaction = reactions.find((reaction: { emojiCode: string; }) => reaction.emojiCode === code);
     if (existingReaction) {

@@ -1,6 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { ChannelListComponent } from './channel-list/channel-list.component';
 import { DirectMessagesListComponent } from './direct-messages-list/direct-messages-list.component';
+import { SignalsService } from '../../services/signals.service';
 
 @Component({
   selector: 'app-workspace',
@@ -11,5 +12,10 @@ import { DirectMessagesListComponent } from './direct-messages-list/direct-messa
 })
 export class WorkspaceComponent {
 
+  signalService = inject(SignalsService);
   startConversationHovered: boolean = false;
+
+  newConversation() {
+    this.signalService.startConversation.set(true);
+  }
 }

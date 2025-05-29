@@ -11,6 +11,7 @@ import { SignalsService } from '../../services/signals.service';
 import { ChannelInterface } from '../../interfaces/channel.interface';
 import { UsersService } from '../../services/users.service';
 import { CommonModule } from '@angular/common';
+import { AuthenticationService } from '../../services/authentication.service';
 
 @Component({
   selector: 'app-create-message',
@@ -25,12 +26,14 @@ export class CreateMessageComponent implements AfterViewChecked {
   messageService = inject(MessageService);
   signalService = inject(SignalsService);
   usersService = inject(UsersService);
+  authService = inject(AuthenticationService);
 
   @Input() isChannelMessage: boolean = false;
   @Input() isThreadMessage: boolean = false;
   @ViewChild('messageInput') messageInputRef!: ElementRef<HTMLTextAreaElement>;
   mentionTrigger: '@' | '#' | null = null;
   messageText: string = '';
+  
 
   emojiData: EmojiMartData = data as EmojiMartData;
   emojiBar: boolean = false;
@@ -68,11 +71,12 @@ export class CreateMessageComponent implements AfterViewChecked {
 
   sendMessage(form: NgForm) {
     if (!form.valid) return;
+    this.signalService.sendingMessage.set(true);
     const currentChannel = localStorage.getItem('currentChannel');
     const message: ChannelMessageInterface = { 
       text: this.messageText,
       createdAt: Timestamp.now(),
-      senderId: '0vRFU6JRgcygyROgaJWo',
+      senderId: this.authService.userId,
       reactions: []
     };
     if (this.isChannelMessage) {
@@ -80,9 +84,12 @@ export class CreateMessageComponent implements AfterViewChecked {
     } else {
       this.messageService.postThreadMessage(message);
     }
-    console.log("Valid message:", this.messageText);
     this.channelService.loadChannel(currentChannel!);
     form.resetForm();
+    this.onFocus();
+    setTimeout(() => {
+      this.signalService.sendingMessage.set(false);
+    }, 1000);
   }
 
   onEmojiSelect(event: any) {

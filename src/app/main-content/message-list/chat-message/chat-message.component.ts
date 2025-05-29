@@ -9,6 +9,8 @@ import data from '@emoji-mart/data';
 import { EmojiMartData } from '@emoji-mart/data';
 import { ReactionInterface } from '../../../interfaces/message.interface';
 import { MessageService } from '../../../services/message.service';
+import { AuthenticationService } from '../../../services/authentication.service';
+import { TimeService } from '../../../services/time.service';
 
 @Component({
   selector: 'app-chat-message',
@@ -24,17 +26,15 @@ export class ChatMessageComponent {
   messageService = inject(MessageService);
   signalService = inject(SignalsService);
   usersService = inject(UsersService);
-  // placeholder data: will be removed // start
-  @Input() isOwnMessage: boolean = false;
-  // placeholder data: will be removed // end
+  authService = inject(AuthenticationService);
+  timeService = inject(TimeService);
 
   emojiData: EmojiMartData = data as EmojiMartData;
 
+  @Input() paddingHorizontal: string = '';
   @Input() message: any = {};
   @Input() threadMessage: any = {};
   @Input() threadTitle: any = {};
-  
-  @Input() paddingHorizontal: string = '';
   @Input() isChannelMessage: boolean = false;
   @Input() isThreadMessage: boolean = false;
   @Input() isThreadTitle: boolean = false;
@@ -80,6 +80,11 @@ export class ChatMessageComponent {
 
   ngOnInit() {
     this.messageEditText = this.text();
+    this.checkifOwnMessage();
+  }
+
+  checkifOwnMessage() {
+    return ((this.message.senderId || this.threadMessage.senderId) === this.authService.userId);
   }
 
   openThread() {
@@ -93,38 +98,14 @@ export class ChatMessageComponent {
     this.signalService.focusThread.set(true);
   }
 
-  dateDayMonthYear(date: Date): string {
-    const day = date.getDate().toString().padStart(2, '0');
-    const month = (date.getMonth() + 1).toString().padStart(2, '0');
-    const year = date.getFullYear().toString().slice(-2);
-    return `${day}.${month}.${year}`;
-  }
-
-  timeHourMinute(date: Date): string {
-    const day = date.getDate().toString().padStart(2, '0');
-    const month = (date.getMonth() + 1).toString().padStart(2, '0');
-    const year = date.getFullYear().toString().slice(-2);
-    const hours = date.getHours().toString().padStart(2, '0');
-    const minutes = date.getMinutes().toString().padStart(2, '0');
-    return `${hours}:${minutes}`;
-  }
-
-  dateLastThread(date: Date): string {
-    const day = date.getDate().toString().padStart(2, '0');
-    const month = (date.getMonth() + 1).toString().padStart(2, '0');
-    const year = date.getFullYear().toString().slice(-2);
-    const hours = date.getHours().toString().padStart(2, '0');
-    const minutes = date.getMinutes().toString().padStart(2, '0');
-    return `${day}.${month}.${year} | ${hours}:${minutes}`;
-  }
 
   createdAt():string {
     if (this.isChannelMessage) {
-        return this.timeHourMinute(this.message.createdAt.toDate())
+        return this.timeService.getDate(this.message.createdAt.toDate(), 'hh-mm');
       } else if (this.isThreadMessage) {
-        return this.timeHourMinute(this.threadMessage.createdAt.toDate());
+        return this.timeService.getDate(this.threadMessage.createdAt.toDate(), 'hh-mm');
       } else if (this.isThreadTitle) {
-        return this.timeHourMinute(this.threadTitle.createdAt.toDate());
+        return this.timeService.getDate(this.threadTitle.createdAt.toDate(), 'hh-mm');
       } else {
       return '';
     }
