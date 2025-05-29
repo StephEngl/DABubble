@@ -114,7 +114,7 @@
   justify-content: flex-end;
 
   .apply-button {
-    color: ar(--col-font-secondary);
+    color: var(--col-font-secondary);
     background-color: var(--col-bg-btn-main);
 
     &:hover {
