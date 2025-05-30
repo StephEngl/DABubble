@@ -25,4 +25,12 @@ export interface ReactionInterface {
     count: number;
 }
 
+export interface DirectMessageInterface {
+    id?: string;
+    createdAt: Timestamp;
+    senderId: string;
+    text: string;
+    reactions: ReactionInterface[];
+    mentions?: string[];
+}
 
