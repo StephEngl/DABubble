@@ -22,7 +22,12 @@ export class PasswordResetDialogComponent {
 
   onSubmit(ngForm: NgForm) {}
 
-  setNewPassword(password: string) {}
+  setNewPassword(password: string) {
+    this.signalService.triggerToast('Password reset', 'update');
+      setTimeout(() => {
+        this.signalService.backToLogin();
+      }, 2500);
+  }
 
   get passwordsMatch(): boolean {
     if (this.passwordInput) {
