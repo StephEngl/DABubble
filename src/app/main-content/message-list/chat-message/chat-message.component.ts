@@ -169,7 +169,7 @@ export class ChatMessageComponent {
     } else if (this.isThreadTitle && this.threadTitle.senderId) {
       return this.usersService.getAvatar(this.threadTitle.senderId);
     }
-    return './../../../../assets/icons/user/user_0.svg';
+    return './../../../../assets/icons/user/user_0.png';
   }
 
   onEmojiSelect(event: any):void {

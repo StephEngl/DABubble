@@ -40,8 +40,8 @@
 }
 
 .avatar-list {
-  display: flex;
-  gap: 16px;
+  @include dFlex($gap: 16px);
+  flex-wrap: wrap;
 
   .avatar-image {
     cursor: pointer;
@@ -102,7 +102,6 @@
 
   .avatar-list {
     @include dFlex($gap: 12px);
-    flex-wrap: wrap;
   }
 
   .apply-button-wrapper {

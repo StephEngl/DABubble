@@ -13,6 +13,7 @@ import { UserInterface } from '../../interfaces/user.interface';
 export class ChooseAvatarDialogComponent {
   signalService = inject(SignalsService);
   userService = inject(UsersService);
+  avatarIds: string[] = ['1', '2', '3', '4', '5', '6', '7', '8', '9'];
 
   currentUser?: UserInterface;
 
@@ -50,24 +51,24 @@ export class ChooseAvatarDialogComponent {
 
   getAvatarImagePath() {
     if (!this.currentUser || this.currentUser.avatarId === "0") {
-      return '/assets/icons/user/user_0.svg';
+      return '/assets/icons/user/user_0.png';
     }
-    return `/assets/icons/user/user${this.getAvatarFileName(
+    return `/assets/icons/user/user_${
       this.currentUser.avatarId
-    )}.svg`;
+    }.png`;
   }
 
-  getAvatarFileName(avatarId: string): string {
-    const mapping: Record<string, string> = {
-      '1': '_1',
-      '2': '_2',
-      '3': '_3',
-      '4': '_4',
-      '5': '_5',
-      '6': '_6',
-    };
-    return mapping[avatarId] ?? 'default';
-  }
+  // getAvatarFileName(avatarId: string): string {
+  //   const mapping: Record<string, string> = {
+  //     '1': '_1',
+  //     '2': '_2',
+  //     '3': '_3',
+  //     '4': '_4',
+  //     '5': '_5',
+  //     '6': '_6',
+  //   };
+  //   return mapping[avatarId] ?? 'default';
+  // }
 
   backToLogin() {
     this.signalService.isLoginDialog.set(true);
