@@ -34,4 +34,8 @@ ngOnInit() {
       }
     });
   }
+
+  showTestToast() {
+    this.signalService.triggerToast('Zeig mal her', 'create', '/assets/icons/login/lock_grey.svg')
+  }
 }
