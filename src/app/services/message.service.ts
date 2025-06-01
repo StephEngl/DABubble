@@ -109,7 +109,8 @@ export class MessageService {
         text: message.text,
         createdAt: Timestamp.now(),
         senderId: message.senderId || 'Unknown',
-        reactions: []
+        reactions: [],
+        replyTo: message.replyTo
       });
     } catch (error) {
       console.error("Failed to post message:", error);

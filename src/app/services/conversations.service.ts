@@ -111,10 +111,10 @@ export class ConversationService {
     return this.conversations.find(conversation => conversation.id === id);
   }
 
-  getMessageById(id: string) {
+  getMessageById(id: string, messageId: string) {
     const conversation = this.getConversationById(id);
     if (!conversation || !conversation.messages) return;
-    return conversation.messages.find((message : DirectMessageInterface ) => message.id === id);
+    return conversation.messages.find((message : DirectMessageInterface ) => message.id === messageId);
   }
 
   subscribeToDirectMessages(conversationId: string) {
@@ -130,6 +130,7 @@ export class ConversationService {
           createdAt: data.createdAt,
           senderId: data.senderId,
           reactions: data.reactions,
+          replyTo: data.replyTo
         });
       });
 

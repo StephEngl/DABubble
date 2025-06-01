@@ -1,4 +1,4 @@
-@if (isChannelMessage || isThreadTitle || isThreadMessage || isDirectMessage) {
+@if (messageExist()) {
     <section 
         class="app-message"
         [style.padding]="'20px ' + paddingHorizontal + 'px'"
@@ -18,6 +18,18 @@
             </div>
 
             @if (!editMode) {
+                @if(directMessage.replyTo && replyMessageInfo()) {
+                <div class="reply-text" [class]="checkifOwnMessage() ? 'own-message':'normal-message'">
+                    <div class="reply-title">
+                        <img src="./../../../../assets/icons/message/answer_arrow_black.svg" alt="">
+                        <p>{{ usersService.findName(replyMessageInfo()?.senderId!) }}</p>
+                        <img [src]="usersService.getAvatar(replyMessageInfo()?.senderId!)" alt="">
+                        <p>:</p>
+                    </div>
+
+                    <p>{{ replyMessageInfo()?.text }}</p>
+                </div>
+                }
                 <p
                     class="message-text"
                     [class]="checkifOwnMessage() ? 'own-message':'normal-message'">
@@ -68,6 +80,11 @@
                             <button (click)="openThread()">Reply</button>
                         }
                     </div>
+                } @else if (isDirectMessage) {
+                    <div class="answers">
+                        <button (click)="replyTo()">Reply</button>
+                    </div>
+                    
                 }
 
             } @else if(editMode) {

@@ -64,3 +64,12 @@
         </span>
     </section>
 </form>
+
+@if (replyToInfo) {
+    <section class="reply-to">
+        <img src="./../../../assets/icons/message/answer_arrow_white.svg" alt="">
+        <p>reply to</p>
+        <img class="profile-img" [src]="usersService.getAvatar(replyToInfo.senderId)" alt="">
+        <p><span>{{ usersService.findName(replyToInfo.senderId) }}</span>: "{{ replyToInfo.text }}" </p>
+    </section>
+}

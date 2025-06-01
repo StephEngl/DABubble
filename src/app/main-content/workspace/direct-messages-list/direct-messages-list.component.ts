@@ -40,11 +40,7 @@ export class DirectMessagesListComponent {
 
   async openConversation(id: string) {
     await this.conversationService.loadConversation(id);
-
-    this.signalService.channelActive.set(false);
-    this.signalService.conversationActive.set(true);
-    this.signalService.activeConId.set(id);
-    console.log(this.signalService.activeConId());
+    this.signalService.setConversationSignals(id);
   }
 
 }

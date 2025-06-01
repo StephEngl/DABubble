@@ -11,6 +11,7 @@ import { ReactionInterface } from '../../../interfaces/message.interface';
 import { MessageService } from '../../../services/message.service';
 import { AuthenticationService } from '../../../services/authentication.service';
 import { TimeService } from '../../../services/time.service';
+import { ConversationService } from '../../../services/conversations.service';
 
 @Component({
   selector: 'app-chat-message',
@@ -24,6 +25,7 @@ export class ChatMessageComponent {
 
   channelService = inject(ChannelsService);
   messageService = inject(MessageService);
+  conService = inject(ConversationService);
   signalService = inject(SignalsService);
   usersService = inject(UsersService);
   authService = inject(AuthenticationService);
@@ -87,11 +89,16 @@ export class ChatMessageComponent {
     this.checkifOwnMessage();
   }
 
-  checkifOwnMessage() {
+
+  messageExist():boolean {
+    return this.isChannelMessage || this.isThreadTitle || this.isThreadMessage || this.isDirectMessage
+  }
+
+  checkifOwnMessage():boolean {
     return ((this.message.senderId || this.threadMessage.senderId || this.directMessage.senderId) === this.authService.userId);
   }
 
-  openThread() {
+  openThread():void {
     localStorage.setItem('currentThread', this.message.id);
     const currentThreadId = localStorage.getItem('currentThread');
     const currentChannelId = localStorage.getItem('currentChannel');
@@ -102,6 +109,20 @@ export class ChatMessageComponent {
     this.signalService.focusThread.set(true);
   }
 
+  replyTo() {
+    this.signalService.activeReplyToId.set(this.directMessage.id);
+    this.signalService.focusConversation.set(true);
+  }
+
+replyMessageInfo() {
+  if (this.isDirectMessage) {
+    const conId = this.signalService.activeConId();
+    const messageId = this.directMessage.replyTo;
+    return this.conService.getMessageById(conId, messageId);
+  } else {
+    return null;
+  }
+}
 
   createdAt():string {
     if (this.isChannelMessage) {

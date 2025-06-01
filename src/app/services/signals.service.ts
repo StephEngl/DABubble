@@ -7,10 +7,16 @@ import { ToastInterface } from '../interfaces/toast.interface';
 export class SignalsService {
   constructor() {}
 
+  // signals for controlling various channel & message statuses
   focusChat = signal<boolean>(false);
   focusThread = signal<boolean>(false);
+  focusConversation = signal<boolean>(false);
   startConversation = signal<boolean>(false);
   sendingMessage = signal<boolean>(false);
+  channelActive = signal<boolean>(true);
+  conversationActive = signal<boolean>(false);
+  activeConId = signal<string>('');
+  activeReplyToId = signal<string>('');
   
   showWorkspace = signal<boolean>(true);
   showThread = signal<boolean>(false);
@@ -27,10 +33,6 @@ export class SignalsService {
   isChoosingAvatarDialog = signal<boolean>(false);
   isPasswordForgottenDialog = signal<boolean>(false);
   isPasswordResetDialog = signal<boolean>(false);
-
-  channelActive = signal<boolean>(true);
-  conversationActive = signal<boolean>(false);
-  activeConId = signal<string>('');
 
   backToLogin() {
     this.isLoginDialog.set(true);
@@ -93,4 +95,22 @@ export class SignalsService {
     setTimeout(() => this.toast.update(t => ({ ...t, isAnimated: false })), 3000);
     setTimeout(() => this.toast.update(t => ({ ...t, isOpen: false })), 3500);
   }
+
+  // signal methods for triggering the different chat channels
+
+  setChannelSignals(id:string):void {
+    this.activeReplyToId.set('');
+    this.conversationActive.set(false);
+    this.scrollChannelToBottom.set(true);
+    this.focusChat.set(true);
+  }
+
+  setConversationSignals(id:string):void {
+    this.activeReplyToId.set('');
+    this.channelActive.set(false);
+    this.conversationActive.set(true);
+    this.activeConId.set(id);
+    this.showThread.set(false);
+  }
+
 }

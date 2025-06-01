@@ -68,6 +68,30 @@
     max-height: 300px;
 }
 
+.reply-to {
+    @include dFlex($gap: 8px);
+    height: 40px;
+    position: absolute;
+    background-color: var(--col-bg-btn-main);
+    padding: 8px 16px;
+    border-radius: 50px;
+    top: -50px;
+    left: 20px;
+    >p span {
+        font-weight: 700;
+    }
+    >img {
+        height: 20px;
+        width: 20px;
+    }
+    .profile-img {
+        border-radius: 50%;
+    }
+    >p {
+        color: var(--col-font-secondary);
+    }
+}
+
 emoji-mart {
     position: absolute;
     bottom: 30px;
