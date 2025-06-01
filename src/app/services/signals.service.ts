@@ -11,23 +11,37 @@ export class SignalsService {
   focusThread = signal<boolean>(false);
   startConversation = signal<boolean>(false);
   sendingMessage = signal<boolean>(false);
-  
+
   showWorkspace = signal<boolean>(true);
   showThread = signal<boolean>(false);
   showCreateChannel = signal<boolean>(false);
-  
+
   scrollChannelToBottom = signal<boolean>(false);
-  
+
+  // Signals for intro animation
+  showIntro = signal<boolean>(true);
+  slideOut = signal<boolean>(false);
+  moveUp = signal<boolean>(false);
+
+  startIntroAnimation() {
+      // Slide out title logo after 1,3s
+      setTimeout(() => this.slideOut.set(true), 1800);
+      // Animate complete logo to the upper left after 2,2s
+      setTimeout(() => this.moveUp.set(true), 3000);
+      // Fade out intro after 3s
+      setTimeout(() => this.showIntro.set(false), 4000);
+    }
+
   // Signal for current User-ID
   currentUid = signal<string>('');
-  
+
   // Signalmethods for showing the different dialogs at login-section
   isLoginDialog = signal<boolean>(true);
   isRegisterDialog = signal<boolean>(false);
   isChoosingAvatarDialog = signal<boolean>(false);
   isPasswordForgottenDialog = signal<boolean>(false);
   isPasswordResetDialog = signal<boolean>(false);
-  
+
   backToLogin() {
     this.isLoginDialog.set(true);
     this.isRegisterDialog.set(false);
@@ -74,19 +88,29 @@ export class SignalsService {
     type: 'create',
     isOpen: false,
     isAnimated: false,
-    icon: ''
+    icon: '',
   });
 
-  triggerToast(message: string, type: ToastInterface['type'], icon: string = '') {
+  triggerToast(
+    message: string,
+    type: ToastInterface['type'],
+    icon: string = ''
+  ) {
     this.toast.set({
       message,
       type,
       icon,
       isOpen: true,
-      isAnimated: false
+      isAnimated: false,
     });
-    setTimeout(() => this.toast.update(t => ({ ...t, isAnimated: true })), 10);
-    setTimeout(() => this.toast.update(t => ({ ...t, isAnimated: false })), 3000);
-    setTimeout(() => this.toast.update(t => ({ ...t, isOpen: false })), 3500);
+    setTimeout(
+      () => this.toast.update((t) => ({ ...t, isAnimated: true })),
+      10
+    );
+    setTimeout(
+      () => this.toast.update((t) => ({ ...t, isAnimated: false })),
+      3000
+    );
+    setTimeout(() => this.toast.update((t) => ({ ...t, isOpen: false })), 3500);
   }
 }

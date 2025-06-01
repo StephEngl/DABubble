@@ -1,0 +1,18 @@
+@if (signalService.showIntro()) {
+<div class="intro-bg" >
+  <div class="intro-logo-group" [class.move-up]="signalService.moveUp()">
+    <img
+      src="./../../../assets/icons/general/dabubble_logo.svg"
+      alt="Logo"
+      class="logo-image"
+      [class.slide-out]="signalService.slideOut()"
+    />
+    <img
+      src="./../../../assets/icons/general/dabubble_logo_title_white.svg"
+      alt="Logo Title"
+      class="logo-title"
+      [class.slide-out]="signalService.slideOut()"
+    />
+  </div>
+</div>
+}

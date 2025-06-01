@@ -1,0 +1,62 @@
+@import "../../assets/styles/mixins.scss";
+
+.intro-bg {
+  @include dFlex($pos: fixed);
+  inset: 0;
+  z-index: 100;
+  background: linear-gradient(to bottom, #797ef3, #313ae5);
+}
+
+.intro-logo-group {
+  @include dFlex($gap: 20px, $pos: absolute);
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  transition: all 0.7s ease;
+}
+
+.logo-image {
+  width: 180px;
+  height: auto;
+  z-index: 2;
+  transition: transform 0.6s ease, width 0.6s ease, height 0.6s ease;
+  transform: translateX(100px);
+}
+
+.logo-title {
+  width: 200px;
+  height: auto;
+  z-index: 1;
+  opacity: 0;
+  transform: translateX(-100px);
+  transition: (opacity 0.6s ease) 0.5s, (transform 0.6s ease) 0.5s, width 0.6s ease,
+    height 0.6s ease;
+  position: relative;
+}
+
+/* Phase 2: title appears and slides to the right while logo slides to the left */
+.logo-title.slide-out {
+  transform: translateX(0);
+  opacity: 1;
+}
+
+.logo-image.slide-out {
+  transform: translateX(0);
+}
+
+/* Phase 3: Logo and title move to the upper left */
+.intro-logo-group.move-up {
+  left: 16px;
+  top: 16px;
+  transform: translate(0, 0);
+  
+  .logo-title {
+    width: 160px;
+    height: auto;
+  }
+
+  .logo-image {
+    height: 70px;
+    width: auto;
+  }
+}
