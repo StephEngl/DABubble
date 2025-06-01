@@ -97,11 +97,7 @@ export class SignalsService {
     icon: '',
   });
 
-  triggerToast(
-    message: string,
-    type: ToastInterface['type'],
-    icon: string = ''
-  ) {
+  triggerToast(message: string,type: ToastInterface['type'],icon: string = '') {
     this.toast.set({
       message,
       type,
@@ -109,16 +105,9 @@ export class SignalsService {
       isOpen: true,
       isAnimated: false,
     });
-    setTimeout(
-      () => this.toast.update((t) => ({ ...t, isAnimated: true })),
-      10
-    );
-    setTimeout(
-      () => this.toast.update((t) => ({ ...t, isAnimated: false })),
-      3000
-    );
-    setTimeout(() => this.toast.update((t) => ({ ...t, isOpen: false })), 3500);
-  }
+    setTimeout(() => this.toast.update((t) => ({ ...t, isAnimated: true })),10);
+    setTimeout(() => this.toast.update((t) => ({ ...t, isAnimated: false })),3000);
+    setTimeout(() => this.toast.update((t) => ({ ...t, isOpen: false })), 3500);}
 
   // signal methods for triggering the different chat channels
 
