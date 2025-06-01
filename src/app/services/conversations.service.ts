@@ -15,11 +15,13 @@ import {
 } from '@angular/fire/firestore';
 import { DirectMessageInterface } from '../interfaces/message.interface';
 import { ConversationInterface } from '../interfaces/conversation.interface';
+import { AuthenticationService } from './authentication.service';
 @Injectable({
   providedIn: 'root'
 })
 export class ConversationService {
   firestore: Firestore = inject(Firestore);
+  authService = inject(AuthenticationService);
   conversations: ConversationInterface[] = [];
   unsubscribeDirectMessages;
 
@@ -160,4 +162,7 @@ export class ConversationService {
     this.subscribeToDirectMessages(id);
   }
 
+  participant(conversation: any): any  {
+    return conversation.participants.find((id: string) => id !== this.authService.userId)
+  }
 }

@@ -13,7 +13,7 @@ import { SignalsService } from '../../../services/signals.service';
 })
 export class DirectMessagesListComponent {
   tempArrayItemCount: string[] = ['1', '2', '3', '4', '5', '6'];
-  conversationService = inject(ConversationService);
+  conService = inject(ConversationService);
   authService = inject(AuthenticationService);
   userService = inject(UsersService);
   signalService = inject(SignalsService);
@@ -30,16 +30,12 @@ export class DirectMessagesListComponent {
   }
 
   get filteredConversations() {
-    return this.conversationService.conversations
+    return this.conService.conversations
       .filter(c => c.participants.includes(this.authService.userId));
   }
 
-  participant(conversation: any): any  {
-    return conversation.participants.find((id: string) => id !== this.authService.userId)
-  }
-
   async openConversation(id: string) {
-    await this.conversationService.loadConversation(id);
+    await this.conService.loadConversation(id);
     this.signalService.setConversationSignals(id);
   }
 

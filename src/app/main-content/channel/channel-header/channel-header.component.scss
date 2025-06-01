@@ -16,6 +16,12 @@ header {
         @include dFlex($gap: 10px);
         cursor: pointer;
     }
+    >nav {
+        .participant-avatar {
+            height: 60px;
+            width: 60px;
+        }
+    }
 }
 
 .channel-members {

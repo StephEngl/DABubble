@@ -103,6 +103,7 @@ export class SignalsService {
     this.conversationActive.set(false);
     this.scrollChannelToBottom.set(true);
     this.focusChat.set(true);
+    this.startConversation.set(false);
   }
 
   setConversationSignals(id:string):void {
@@ -111,6 +112,7 @@ export class SignalsService {
     this.conversationActive.set(true);
     this.activeConId.set(id);
     this.showThread.set(false);
+    this.startConversation.set(false);
   }
 
 }

@@ -20,9 +20,9 @@
         @for (conversation of filteredConversations; track conversation) {
             <li (click)="openConversation(conversation.id!)"> 
                 <div class="user-icon">
-                    <img [src]="userService.getAvatar(participant(conversation))" alt="">
+                    <img [src]="userService.getAvatar(conService.participant(conversation))" alt="">
                 </div>
-                <h5>{{ userService.findName(participant(conversation)) }}</h5>
+                <h5>{{ userService.findName(conService.participant(conversation)) }}</h5>
             </li>
         }
     }
