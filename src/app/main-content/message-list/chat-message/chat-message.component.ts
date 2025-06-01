@@ -53,7 +53,7 @@ export class ChatMessageComponent {
   reactionHovered: boolean = false;
 
 
-  menuBar: {imgSrc: string, shownInThread: boolean, clickFunction: () => void}[] = [
+  menuBar: {imgSrc: string, shownInThread: boolean, shownIfOwnMessage?: boolean, clickFunction: () => void}[] = [
     { 
       imgSrc: './../../../../assets/icons/message/emoji_laughing.png',
       shownInThread: false,
@@ -77,6 +77,7 @@ export class ChatMessageComponent {
     { 
       imgSrc: './../../../../assets/icons/message/more_options_black.svg',
       shownInThread: true,
+      shownIfOwnMessage: true,
       clickFunction: () => this.editMode = true
     },
   ];

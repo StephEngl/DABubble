@@ -3,7 +3,7 @@
         <button (click)="toggleDirectMessageList()" (mouseenter)="directMessageListHovered = true" (mouseleave)="directMessageListHovered = false">
             <img [src]="'./../../../../assets/icons/menu/dropdown_'+ imageColor(directMessageListHovered) +'.svg'" alt="" [style.transform]="directMessageListOpened ? 'rotate(0deg)' : 'rotate(-90deg)'">
             <img [src]="'./../../../../assets/icons/general/account_circle_' + imageColor(directMessageListHovered) + '.svg'" alt="">
-            <h4 [style.color]="directMessageListHovered ? 'var(--col-font-btn-hover)' : 'black'">Direct Messages</h4>
+            <h4 [style.color]="directMessageListHovered ? 'var(--col-font-btn-hover)' : 'var(--col-font-main)'">Direct Messages</h4>
         </button>
     </header>
     <div [class]="{'close-list': !directMessageListOpened}" class="direct-messages">

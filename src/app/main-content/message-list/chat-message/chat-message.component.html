@@ -102,17 +102,16 @@
                 'shown': hoverMessage
             }">
                 @for (item of menuBar; track item; let index = $index) {
-                    @if (isThreadMessage || isDirectMessage) {
-                        @if (item.shownInThread) {
+                    @if (index < menuBar.length -1) {
+                        @if (isThreadMessage || isDirectMessage) {
+                            @if (item.shownInThread) {
+                                <img (click)="item.clickFunction()" [src]="item.imgSrc" alt="">
+                            }
+                        } @else {
                             <img (click)="item.clickFunction()" [src]="item.imgSrc" alt="">
                         }
-                    } @else {
-                        @if (index === menuBar.length -1 && !checkifOwnMessage()) {
-                            <!-- hide element -->
-                        }
-                        @else {
-                            <img (click)="item.clickFunction()" [src]="item.imgSrc" alt="">
-                        }
+                    } @else if(checkifOwnMessage()) {
+                        <img (click)="menuBar[menuBar.length -1].clickFunction()" [src]="item.imgSrc" alt="">
                     }
                 }
             </nav>

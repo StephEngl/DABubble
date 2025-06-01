@@ -1,7 +1,7 @@
 @import './../../../../assets/styles/mixins.scss';
 
 header {
-    z-index: 4;
+    z-index: 1;
     @include dFlex($jc: space-between);
     padding: 16px 24px;
     border-radius: 20px 20px 0 0;

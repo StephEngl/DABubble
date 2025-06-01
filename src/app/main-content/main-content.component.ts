@@ -45,6 +45,7 @@ export class MainContentComponent implements OnInit {
     const currentChannelId = localStorage.getItem('currentChannel');
     await this.conService.loadCons();
     if (currentChannelId) {
+      this.signalService.conversationActive.set(false);
       await this.channelService.loadChannel(currentChannelId!);
     }
     await this.authService.getActiveUserId();
