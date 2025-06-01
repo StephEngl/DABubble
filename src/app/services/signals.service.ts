@@ -28,14 +28,17 @@ export class SignalsService {
   showIntro = signal<boolean>(true);
   slideOut = signal<boolean>(false);
   moveUp = signal<boolean>(false);
+  fadeOut = signal<boolean>(false);
 
   startIntroAnimation() {
       // Slide out title logo after 1,3s
-      setTimeout(() => this.slideOut.set(true), 1800);
+      setTimeout(() => this.slideOut.set(true), 1300);
       // Animate complete logo to the upper left after 2,2s
-      setTimeout(() => this.moveUp.set(true), 3000);
+      setTimeout(() => this.moveUp.set(true), 2500);
       // Fade out intro after 3s
-      setTimeout(() => this.showIntro.set(false), 4000);
+      setTimeout(() => this.fadeOut.set(true), 3200);
+      // End intro and delete from DOM
+      setTimeout(() => this.showIntro.set(false), 3900);
     }
 
   // Signal for current User-ID
@@ -107,10 +110,10 @@ export class SignalsService {
     });
     setTimeout(() => this.toast.update((t) => ({ ...t, isAnimated: true })),10);
     setTimeout(() => this.toast.update((t) => ({ ...t, isAnimated: false })),3000);
-    setTimeout(() => this.toast.update((t) => ({ ...t, isOpen: false })), 3500);}
+    setTimeout(() => this.toast.update((t) => ({ ...t, isOpen: false })), 3500);
+  }
 
   // signal methods for triggering the different chat channels
-
   setChannelSignals(id:string):void {
     this.activeReplyToId.set('');
     this.conversationActive.set(false);
