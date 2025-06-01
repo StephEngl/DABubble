@@ -8,6 +8,7 @@ import { ChannelsService } from '../services/channels.service';
 import { SignalsService } from '../services/signals.service';
 import { AuthenticationService } from '../services/authentication.service';
 import { UsersService } from '../services/users.service';
+import { ConversationService } from '../services/conversations.service';
 
 @Component({
   selector: 'app-main-content',
@@ -28,6 +29,7 @@ export class MainContentComponent implements OnInit {
   channelService = inject(ChannelsService);
   authService = inject(AuthenticationService);
   usersService = inject(UsersService);
+  conService = inject(ConversationService);
   workspaceOpened: boolean = true;
   workspaceHovered: boolean = false;
   workspaceStatus:  "Open" | "Close" = "Open";
@@ -36,15 +38,18 @@ export class MainContentComponent implements OnInit {
 
   constructor() {
     this.setInitialChannel();
+    
   }
 
   async ngOnInit() {
     const currentChannelId = localStorage.getItem('currentChannel');
+    await this.conService.loadCons();
     if (currentChannelId) {
       await this.channelService.loadChannel(currentChannelId!);
     }
     await this.authService.getActiveUserId();
     this.listenToActivity();
+    
   }
 
   listenToActivity(): void {

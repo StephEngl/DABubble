@@ -5,6 +5,7 @@ import {
     collection,
     doc,
     onSnapshot,
+    getDocs,
     addDoc,
     updateDoc,
     deleteDoc,
@@ -137,6 +138,25 @@ export class ConversationService {
         conversation.messages = [...messages];
       }
     });
+  }
+
+  async loadCons(): Promise<void> {
+    try {
+      const querySnapshot = await getDocs(this.getConversationRef());
+
+      this.conversations = querySnapshot.docs.map(docSnapshot => {
+        const data = docSnapshot.data();
+        return this.setConversationObject(docSnapshot.id, data);
+      });
+
+      console.log('conversations:', this.conversations);
+    } catch (error) {
+      console.error('Error loading conversations:', error);
+    }
+  }
+
+  async loadConversation(id: string): Promise<void> {
+    this.subscribeToDirectMessages(id);
   }
 
 }

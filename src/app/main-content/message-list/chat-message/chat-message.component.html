@@ -1,4 +1,4 @@
-@if (isChannelMessage || isThreadTitle || isThreadMessage) {
+@if (isChannelMessage || isThreadTitle || isThreadMessage || isDirectMessage) {
     <section 
         class="app-message"
         [style.padding]="'20px ' + paddingHorizontal + 'px'"
@@ -101,13 +101,18 @@
                 'right': !checkifOwnMessage(),
                 'shown': hoverMessage
             }">
-                @for (item of menuBar; track item) {
-                    @if (isThreadMessage) {
+                @for (item of menuBar; track item; let index = $index) {
+                    @if (isThreadMessage || isDirectMessage) {
                         @if (item.shownInThread) {
                             <img (click)="item.clickFunction()" [src]="item.imgSrc" alt="">
                         }
-                    } @else if (isChannelMessage) {
-                        <img (click)="item.clickFunction()" [src]="item.imgSrc" alt="">
+                    } @else {
+                        @if (index === menuBar.length -1 && !checkifOwnMessage()) {
+                            <!-- hide element -->
+                        }
+                        @else {
+                            <img (click)="item.clickFunction()" [src]="item.imgSrc" alt="">
+                        }
                     }
                 }
             </nav>

@@ -12,6 +12,7 @@ import { ChannelInterface } from '../../interfaces/channel.interface';
 import { UsersService } from '../../services/users.service';
 import { CommonModule } from '@angular/common';
 import { AuthenticationService } from '../../services/authentication.service';
+import { ConversationService } from '../../services/conversations.service';
 
 @Component({
   selector: 'app-create-message',
@@ -30,6 +31,7 @@ export class CreateMessageComponent implements AfterViewChecked {
 
   @Input() isChannelMessage: boolean = false;
   @Input() isThreadMessage: boolean = false;
+  @Input() isConversation: boolean = false;
   @ViewChild('messageInput') messageInputRef!: ElementRef<HTMLTextAreaElement>;
   mentionTrigger: '@' | '#' | null = null;
   messageText: string = '';
@@ -73,23 +75,33 @@ export class CreateMessageComponent implements AfterViewChecked {
     if (!form.valid) return;
     this.signalService.sendingMessage.set(true);
     const currentChannel = localStorage.getItem('currentChannel');
-    const message: ChannelMessageInterface = { 
-      text: this.messageText,
-      createdAt: Timestamp.now(),
-      senderId: this.authService.userId,
-      reactions: []
-    };
-    if (this.isChannelMessage) {
-      this.messageService.postMessage(message);
-    } else {
-      this.messageService.postThreadMessage(message);
-    }
+    const message: ChannelMessageInterface = this.messageObject();
+    this.sortAndSendMessage(message);
     this.channelService.loadChannel(currentChannel!);
     form.resetForm();
     this.onFocus();
     setTimeout(() => {
       this.signalService.sendingMessage.set(false);
     }, 1000);
+  }
+
+  messageObject() {
+    return { 
+      text: this.messageText,
+      createdAt: Timestamp.now(),
+      senderId: this.authService.userId,
+      reactions: []
+    };
+  }
+
+  sortAndSendMessage(message: any) {
+    if (this.isChannelMessage) {
+      this.messageService.postMessage(message);
+    } else if (this.isThreadMessage) {
+      this.messageService.postThreadMessage(message);
+    } else if(this.isConversation) {
+      this.messageService.postDirectMessage(this.signalService.activeConId(),message);
+    }
   }
 
   onEmojiSelect(event: any) {

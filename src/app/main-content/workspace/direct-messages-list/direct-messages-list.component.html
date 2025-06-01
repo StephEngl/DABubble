@@ -8,14 +8,24 @@
     </header>
     <div [class]="{'close-list': !directMessageListOpened}" class="direct-messages">
         <ul>
-            @for (element of tempArrayItemCount; track element) {
+            <!-- @for (element of tempArrayItemCount; track element) {
             <li>
                 <div class="user-icon">
                     <img [src]="'./../../../../assets/icons/user/user_' + element +'.png'" alt="">
                 </div>
                 <h5>User Name</h5>
             </li>
-            }
+            } -->
+    @if (authService.userId) {
+        @for (conversation of filteredConversations; track conversation) {
+            <li (click)="openConversation(conversation.id!)"> 
+                <div class="user-icon">
+                    <img [src]="userService.getAvatar(participant(conversation))" alt="">
+                </div>
+                <h5>{{ userService.findName(participant(conversation)) }}</h5>
+            </li>
+        }
+    }
         </ul>
     </div>
 </section>

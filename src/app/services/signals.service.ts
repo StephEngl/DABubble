@@ -16,6 +16,10 @@ export class SignalsService {
   startConversation = signal<boolean>(false);
   sendingMessage = signal<boolean>(false);
 
+  channelActive = signal<boolean>(true);
+  conversationActive = signal<boolean>(false);
+  activeConId = signal<string>('');
+
   showWorkspace = signal<boolean>(true);
   showThread = signal<boolean>(false);
   showCreateChannel = signal<boolean>(false);

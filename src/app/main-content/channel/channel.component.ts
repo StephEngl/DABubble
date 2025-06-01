@@ -1,7 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { ChannelHeaderComponent } from './channel-header/channel-header.component';
 import { CreateMessageComponent } from '../create-message/create-message.component';
 import { MessageListComponent } from '../message-list/message-list.component';
+import { SignalsService } from '../../services/signals.service';
 
 @Component({
   selector: 'app-channel',
@@ -12,4 +13,7 @@ import { MessageListComponent } from '../message-list/message-list.component';
 })
 export class ChannelComponent {
 
+  signalService = inject(SignalsService);
+  isChannel = this.signalService.channelActive();
+  isConversation = this.signalService.conversationActive();
 }

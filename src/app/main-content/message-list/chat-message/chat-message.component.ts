@@ -87,7 +87,7 @@ export class ChatMessageComponent {
   }
 
   checkifOwnMessage() {
-    return ((this.message.senderId || this.threadMessage.senderId) === this.authService.userId);
+    return ((this.message.senderId || this.threadMessage.senderId || this.directMessage.senderId) === this.authService.userId);
   }
 
   openThread() {
@@ -169,7 +169,7 @@ export class ChatMessageComponent {
     } else if (this.isThreadMessage && this.threadMessage?.senderId) {
       return this.usersService.findName(this.threadMessage.senderId);
     } else if (this.isDirectMessage && this.directMessage?.senderId) {
-      return this.usersService.findName(this.threadMessage.senderId);
+      return this.usersService.findName(this.directMessage.senderId);
     } else if (this.isThreadTitle && this.threadTitle.senderId) {
       return this.usersService.findName(this.threadTitle.senderId);
     }
@@ -182,7 +182,7 @@ export class ChatMessageComponent {
     } else if (this.isThreadMessage && this.threadMessage?.senderId) {
       return this.usersService.getAvatar(this.threadMessage.senderId);
     } else if (this.isDirectMessage && this.directMessage?.senderId) {
-      return this.usersService.getAvatar(this.threadMessage.senderId);
+      return this.usersService.getAvatar(this.directMessage.senderId);
     }else if (this.isThreadTitle && this.threadTitle.senderId) {
       return this.usersService.getAvatar(this.threadTitle.senderId);
     }
@@ -200,6 +200,8 @@ export class ChatMessageComponent {
             this.isChannelMessage
           )
       } else {
+        console.log(this.singleMessageId())
+        
         this.messageService.postDirectMessageReaction
           (
             this.singleMessageId(),

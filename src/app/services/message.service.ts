@@ -10,6 +10,7 @@ import {
 } from '@angular/fire/firestore';
 import { AuthenticationService } from './authentication.service';
 import { ConversationService } from './conversations.service';
+import { SignalsService } from './signals.service';
 
 @Injectable({
   providedIn: 'root'
@@ -20,7 +21,8 @@ export class MessageService {
 
   firestore: Firestore = inject(Firestore);
   channelService = inject(ChannelsService);
-  conversationService = inject(ConversationService)
+  conversationService = inject(ConversationService);
+  signalService = inject(SignalsService);
   authService = inject(AuthenticationService);
 
   async postMessage(message: ChannelMessageInterface) {
@@ -116,7 +118,7 @@ export class MessageService {
 
   async updateDirectMessage(id: string, message: Partial<DirectMessageInterface>) {
     try {
-      let docRef = doc(this.conversationService.getDirectMessagesRef(id), id)
+      let docRef = doc(this.conversationService.getDirectMessagesRef(this.signalService.activeConId()), id)
       await updateDoc(docRef, message);
     } catch (error) {
       console.error("Failed to update message:", error);

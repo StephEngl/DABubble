@@ -32,5 +32,6 @@ export interface DirectMessageInterface {
     text: string;
     reactions: ReactionInterface[];
     mentions?: string[];
+    replyTo?: string;
 }
 
