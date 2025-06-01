@@ -8,10 +8,10 @@ import data from '@emoji-mart/data';
 import { EmojiMartData } from '@emoji-mart/data';
 import { MessageService } from '../../services/message.service';
 import { SignalsService } from '../../services/signals.service';
-import { ChannelInterface } from '../../interfaces/channel.interface';
 import { UsersService } from '../../services/users.service';
 import { CommonModule } from '@angular/common';
 import { AuthenticationService } from '../../services/authentication.service';
+import { ConversationService } from '../../services/conversations.service';
 
 @Component({
   selector: 'app-create-message',
@@ -24,16 +24,17 @@ export class CreateMessageComponent implements AfterViewChecked {
 
   channelService = inject(ChannelsService);
   messageService = inject(MessageService);
+  conService = inject (ConversationService);
   signalService = inject(SignalsService);
   usersService = inject(UsersService);
   authService = inject(AuthenticationService);
 
   @Input() isChannelMessage: boolean = false;
   @Input() isThreadMessage: boolean = false;
+  @Input() isConversation: boolean = false;
   @ViewChild('messageInput') messageInputRef!: ElementRef<HTMLTextAreaElement>;
   mentionTrigger: '@' | '#' | null = null;
   messageText: string = '';
-  
 
   emojiData: EmojiMartData = data as EmojiMartData;
   emojiBar: boolean = false;
@@ -61,6 +62,9 @@ export class CreateMessageComponent implements AfterViewChecked {
     if(this.isThreadMessage && this.signalService.focusThread()) {
       this.onFocus();
     }
+    if(this.isConversation && this.signalService.focusConversation()) {
+      this.onFocus();
+    }
   }
 
   getMenuIcon(index: number): string {
@@ -73,23 +77,39 @@ export class CreateMessageComponent implements AfterViewChecked {
     if (!form.valid) return;
     this.signalService.sendingMessage.set(true);
     const currentChannel = localStorage.getItem('currentChannel');
-    const message: ChannelMessageInterface = { 
-      text: this.messageText,
-      createdAt: Timestamp.now(),
-      senderId: this.authService.userId,
-      reactions: []
-    };
-    if (this.isChannelMessage) {
-      this.messageService.postMessage(message);
-    } else {
-      this.messageService.postThreadMessage(message);
-    }
+    const message = this.messageObject();
+    this.sortAndSendMessage(message);
     this.channelService.loadChannel(currentChannel!);
     form.resetForm();
+    this.signalService.activeReplyToId.set('');
     this.onFocus();
     setTimeout(() => {
       this.signalService.sendingMessage.set(false);
     }, 1000);
+  }
+
+  messageObject(): ChannelMessageInterface {
+    return { 
+      text: this.messageText,
+      createdAt: Timestamp.now(),
+      senderId: this.authService.userId,
+      reactions: [],
+    }
+  }
+
+  sortAndSendMessage(message: any) {
+    if (this.isChannelMessage) {
+      this.messageService.postMessage(message);
+    } else if (this.isThreadMessage) {
+      this.messageService.postThreadMessage(message);
+    } else if(this.isConversation) {
+      if (this.signalService.activeReplyToId() !== '') {
+        const messageWithReplyTo = { ...message, replyTo: this.signalService.activeReplyToId() };
+        this.messageService.postDirectMessage(this.signalService.activeConId(),messageWithReplyTo);
+      } else {
+        this.messageService.postDirectMessage(this.signalService.activeConId(),message);
+      }
+    }
   }
 
   onEmojiSelect(event: any) {
@@ -172,6 +192,12 @@ export class CreateMessageComponent implements AfterViewChecked {
     } else {
       this.showList = false;
     }
+  }
+
+  get replyToInfo() {
+    const conversationId = this.signalService.activeConId();
+    const replyToId = this.signalService.activeReplyToId();
+    return this.conService.getMessageById(conversationId, replyToId);
   }
 
 }

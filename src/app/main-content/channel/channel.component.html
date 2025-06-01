@@ -1,5 +1,10 @@
 <section class="channel">
     <app-channel-header></app-channel-header>
-    <app-message-list [isChannel]="true"></app-message-list>
-    <app-create-message [isChannelMessage]="true"></app-create-message>
+    @if(signalService.conversationActive()) {
+        <app-message-list [isConversation]="true"></app-message-list>
+        <app-create-message [isConversation]="true"></app-create-message>
+    } @else {
+        <app-message-list [isChannel]="true" [isConversation]="isConversation"></app-message-list>
+        <app-create-message [isChannelMessage]="true"></app-create-message>
+    }
 </section>

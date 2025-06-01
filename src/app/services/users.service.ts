@@ -103,7 +103,6 @@ export class UsersService implements OnDestroy {
     }
   }
 
-
   findName(id: string): string {
     const searchedUser = this.users.find(user => user.id === id);
     return searchedUser?.name ?? 'Unknown';

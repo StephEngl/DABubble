@@ -5,6 +5,7 @@ import {
     collection,
     doc,
     onSnapshot,
+    getDocs,
     addDoc,
     updateDoc,
     deleteDoc,
@@ -14,11 +15,13 @@ import {
 } from '@angular/fire/firestore';
 import { DirectMessageInterface } from '../interfaces/message.interface';
 import { ConversationInterface } from '../interfaces/conversation.interface';
+import { AuthenticationService } from './authentication.service';
 @Injectable({
   providedIn: 'root'
 })
 export class ConversationService {
   firestore: Firestore = inject(Firestore);
+  authService = inject(AuthenticationService);
   conversations: ConversationInterface[] = [];
   unsubscribeDirectMessages;
 
@@ -110,10 +113,10 @@ export class ConversationService {
     return this.conversations.find(conversation => conversation.id === id);
   }
 
-  getMessageById(id: string) {
+  getMessageById(id: string, messageId: string) {
     const conversation = this.getConversationById(id);
     if (!conversation || !conversation.messages) return;
-    return conversation.messages.find((message : DirectMessageInterface ) => message.id === id);
+    return conversation.messages.find((message : DirectMessageInterface ) => message.id === messageId);
   }
 
   subscribeToDirectMessages(conversationId: string) {
@@ -129,6 +132,7 @@ export class ConversationService {
           createdAt: data.createdAt,
           senderId: data.senderId,
           reactions: data.reactions,
+          replyTo: data.replyTo
         });
       });
 
@@ -139,4 +143,26 @@ export class ConversationService {
     });
   }
 
+  async loadCons(): Promise<void> {
+    try {
+      const querySnapshot = await getDocs(this.getConversationRef());
+
+      this.conversations = querySnapshot.docs.map(docSnapshot => {
+        const data = docSnapshot.data();
+        return this.setConversationObject(docSnapshot.id, data);
+      });
+
+      console.log('conversations:', this.conversations);
+    } catch (error) {
+      console.error('Error loading conversations:', error);
+    }
+  }
+
+  async loadConversation(id: string): Promise<void> {
+    this.subscribeToDirectMessages(id);
+  }
+
+  participant(conversation: any): any  {
+    return conversation.participants.find((id: string) => id !== this.authService.userId)
+  }
 }

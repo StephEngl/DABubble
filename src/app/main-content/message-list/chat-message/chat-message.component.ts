@@ -11,6 +11,7 @@ import { ReactionInterface } from '../../../interfaces/message.interface';
 import { MessageService } from '../../../services/message.service';
 import { AuthenticationService } from '../../../services/authentication.service';
 import { TimeService } from '../../../services/time.service';
+import { ConversationService } from '../../../services/conversations.service';
 
 @Component({
   selector: 'app-chat-message',
@@ -24,6 +25,7 @@ export class ChatMessageComponent {
 
   channelService = inject(ChannelsService);
   messageService = inject(MessageService);
+  conService = inject(ConversationService);
   signalService = inject(SignalsService);
   usersService = inject(UsersService);
   authService = inject(AuthenticationService);
@@ -53,7 +55,7 @@ export class ChatMessageComponent {
   reactionHovered: boolean = false;
 
 
-  menuBar: {imgSrc: string, shownInThread: boolean, clickFunction: () => void}[] = [
+  menuBar: {imgSrc: string, shownInThread: boolean, shownIfOwnMessage?: boolean, clickFunction: () => void}[] = [
     { 
       imgSrc: './../../../../assets/icons/message/emoji_laughing.png',
       shownInThread: false,
@@ -77,6 +79,7 @@ export class ChatMessageComponent {
     { 
       imgSrc: './../../../../assets/icons/message/more_options_black.svg',
       shownInThread: true,
+      shownIfOwnMessage: true,
       clickFunction: () => this.editMode = true
     },
   ];
@@ -86,11 +89,16 @@ export class ChatMessageComponent {
     this.checkifOwnMessage();
   }
 
-  checkifOwnMessage() {
-    return ((this.message.senderId || this.threadMessage.senderId) === this.authService.userId);
+
+  messageExist():boolean {
+    return this.isChannelMessage || this.isThreadTitle || this.isThreadMessage || this.isDirectMessage
   }
 
-  openThread() {
+  checkifOwnMessage():boolean {
+    return ((this.message.senderId || this.threadMessage.senderId || this.directMessage.senderId) === this.authService.userId);
+  }
+
+  openThread():void {
     localStorage.setItem('currentThread', this.message.id);
     const currentThreadId = localStorage.getItem('currentThread');
     const currentChannelId = localStorage.getItem('currentChannel');
@@ -101,6 +109,20 @@ export class ChatMessageComponent {
     this.signalService.focusThread.set(true);
   }
 
+  replyTo() {
+    this.signalService.activeReplyToId.set(this.directMessage.id);
+    this.signalService.focusConversation.set(true);
+  }
+
+replyMessageInfo() {
+  if (this.isDirectMessage) {
+    const conId = this.signalService.activeConId();
+    const messageId = this.directMessage.replyTo;
+    return this.conService.getMessageById(conId, messageId);
+  } else {
+    return null;
+  }
+}
 
   createdAt():string {
     if (this.isChannelMessage) {
@@ -169,7 +191,7 @@ export class ChatMessageComponent {
     } else if (this.isThreadMessage && this.threadMessage?.senderId) {
       return this.usersService.findName(this.threadMessage.senderId);
     } else if (this.isDirectMessage && this.directMessage?.senderId) {
-      return this.usersService.findName(this.threadMessage.senderId);
+      return this.usersService.findName(this.directMessage.senderId);
     } else if (this.isThreadTitle && this.threadTitle.senderId) {
       return this.usersService.findName(this.threadTitle.senderId);
     }
@@ -182,7 +204,7 @@ export class ChatMessageComponent {
     } else if (this.isThreadMessage && this.threadMessage?.senderId) {
       return this.usersService.getAvatar(this.threadMessage.senderId);
     } else if (this.isDirectMessage && this.directMessage?.senderId) {
-      return this.usersService.getAvatar(this.threadMessage.senderId);
+      return this.usersService.getAvatar(this.directMessage.senderId);
     }else if (this.isThreadTitle && this.threadTitle.senderId) {
       return this.usersService.getAvatar(this.threadTitle.senderId);
     }
@@ -200,6 +222,8 @@ export class ChatMessageComponent {
             this.isChannelMessage
           )
       } else {
+        console.log(this.singleMessageId())
+        
         this.messageService.postDirectMessageReaction
           (
             this.singleMessageId(),

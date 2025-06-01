@@ -76,6 +76,20 @@
     }
 }
 
+.reply-text {
+    padding: 10px 20px;
+    background-color: var(--col-bg-secondary) !important;
+    border: 1px solid var(--col-stroke-main);
+    .reply-title {
+        @include dFlex($jc: flex-start, $gap: 6px);
+        >img {
+            height: 24px;
+            width: 24px;
+            border-radius: 50%;
+        }
+    }
+}
+
 .edit-message {
     @include dFlex($fd: column);
     border-radius: 20px;
