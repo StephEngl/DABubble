@@ -20,12 +20,21 @@ export class PasswordResetDialogComponent {
   passwordInput: string = '';
   confirmPasswordInput: string = '';
 
-  onSubmit(ngForm: NgForm) {
-
-  }
+  onSubmit(ngForm: NgForm) {}
 
   setNewPassword(password: string) {
+    this.signalService.triggerToast('Password reset', 'update');
+      setTimeout(() => {
+        this.signalService.backToLogin();
+      }, 2500);
+  }
 
+  get passwordsMatch(): boolean {
+    if (this.passwordInput) {
+      return (this.passwordInput === this.confirmPasswordInput);
+    } else {
+      return false;
+    }
   }
 
   /** Toggles the visibility of the password input field. */
@@ -37,5 +46,4 @@ export class PasswordResetDialogComponent {
   toggleConfirmPasswordVisibility() {
     this.confirmPasswordVisible = !this.confirmPasswordVisible;
   }
-
 }

@@ -1,0 +1,10 @@
+@if (signalService.toast().isOpen) {
+<div class="toast"
+  [ngClass]="[signalService.toast().isAnimated ? 'show' : '',
+    signalService.toast().type]">
+  @if (signalService.toast().icon !== '') {
+  <img [src]="signalService.toast().icon" alt="Toast Icon" class="toast-icon" />
+  }
+  <span>{{ signalService.toast().message }}</span>
+</div>
+}
