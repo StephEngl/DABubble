@@ -126,7 +126,7 @@ header {
     .dropdown-wrapper{
          z-index: 99;
         top: 123%;
-        right: 1%;
+        right: 0%;
         width: 30%;
         height: 200px; 
         @include dFlex($fd: column, $gap: 15px, $pos: absolute);
@@ -142,10 +142,11 @@ header {
             font-weight: bold;
             font-size: 24px;
             transition: background-color 0.125s ease-in-out;
-            border: 1px solid #797ef3;
+            // border: 1px solid #797ef3;
             border-radius: 25px;
+            
             &:hover{
-                background-color:var(--col-btn-hover-light) ;
+                background-color:var(--col-btn-hover-secondary) ;
                 color:var(--col-font-href)
             }
         }

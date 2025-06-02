@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, HostListener, ViewChild, ElementRef } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { AuthenticationService } from '../../services/authentication.service';
 import { UsersService } from '../../services/users.service';
@@ -21,7 +21,7 @@ export class HeaderComponent {
   searchInput: string = '';
   hoverMenu: boolean = false;
   dropdownOpen: boolean = false;
-
+  @ViewChild('dropdownContainer') dropdownRef!: ElementRef;
 
   /** Logs out the current user and closes the logout popup. */
   logout() {
@@ -58,6 +58,14 @@ export class HeaderComponent {
 
   toggleDropdown(){
     this.dropdownOpen = !this.dropdownOpen
+  }
+
+  @HostListener('document:click', ['$event'])
+  onDocumentClick(event: MouseEvent) {
+    const clickedInside = this.dropdownRef?.nativeElement.contains(event.target);
+    if (!clickedInside) {
+      this.dropdownOpen = false;
+    }
   }
 
 }
