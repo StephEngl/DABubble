@@ -5,6 +5,8 @@ import { UsersService } from '../../../services/users.service';
 import { SignalsService } from '../../../services/signals.service';
 import { FormsModule } from '@angular/forms';
 import { ConversationService } from '../../../services/conversations.service';
+import { AuthenticationService } from '../../../services/authentication.service';
+import { ConversationInterface } from '../../../interfaces/conversation.interface';
 
 @Component({
   selector: 'app-channel-header',
@@ -19,6 +21,7 @@ export class ChannelHeaderComponent {
   usersService = inject(UsersService);
   conService = inject(ConversationService);
   signalService = inject(SignalsService);
+  authService = inject(AuthenticationService);
   @ViewChild('messageInput') messageInputRef!: ElementRef<HTMLTextAreaElement>;
 
   addMembersHovered: boolean = false;
@@ -39,8 +42,17 @@ export class ChannelHeaderComponent {
     this.onFocus();
   }
 
-  startConversationWithUser(name: string) {
-    console.log('started conversation');
+  startConversationWithUser(id: string) {
+    const currentUser = this.authService.userId;
+    const conversation: ConversationInterface = {
+      participants: [currentUser, id]
+    }
+    const exists =this.conService.conversations.some((conversation) => {
+      conversation.participants.includes(currentUser) && conversation.participants.includes(id)
+    })
+    if (exists) return;
+    this.conService.addConversation(conversation);
+    this.conService.loadCons();
   }
 
   tagChannel(id: string) {

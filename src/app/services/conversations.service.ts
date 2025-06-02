@@ -69,9 +69,9 @@ export class ConversationService {
     };
   }
 
-  async addConversation(channel: ConversationInterface): Promise<void | DocumentReference> {
+  async addConversation(conversation: ConversationInterface): Promise<void | DocumentReference> {
     try {
-      const conversationRef = await addDoc(this.getConversationRef(), channel);
+      const conversationRef = await addDoc(this.getConversationRef(), conversation);
       return conversationRef;
     } catch (err) {
       console.error(err);

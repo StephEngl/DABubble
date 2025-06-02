@@ -21,10 +21,11 @@ header {
 ul {
     @include dFlex($fd:column, $ai:flex-start, $gap: 16px);
     >li {
-        @include dFlex($gap: 10px);
+        @include dFlex($gap: 10px, $jc: flex-start);
         cursor:pointer;
         border-radius: 100px;
-        padding: 5px 12px;
+        padding: 12px 16px 10px 16px;
+        min-width: 220px;
         &:hover {
             color: var(--col-font-btn-hover);
             background-color: var(--col-bg-main);
@@ -34,6 +35,15 @@ ul {
                 border-radius: 50%;
                 width: 45px;
                 height: 45px;
+            }
+            .user-status {
+                border-radius: 50%;
+                position: absolute;
+                bottom: 8px;
+                left: 40px;
+                height: 25px;
+                width: 25px;
+                border: 3px solid var(--col-bg-secondary);
             }
         }
         >img {

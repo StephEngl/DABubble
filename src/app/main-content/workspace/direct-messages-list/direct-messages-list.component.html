@@ -21,6 +21,7 @@
             <li (click)="openConversation(conversation.id!)"> 
                 <div class="user-icon">
                     <img [src]="userService.getAvatar(conService.participant(conversation))" alt="">
+                    <img class="user-status" [src]="'./../../../assets/icons/user/status_' + userService.getStatus(conService.participant(conversation)) + '.svg'" alt="">
                 </div>
                 <h5>{{ userService.findName(conService.participant(conversation)) }}</h5>
             </li>

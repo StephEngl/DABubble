@@ -25,7 +25,7 @@ export class SignalsService {
   scrollChannelToBottom = signal<boolean>(false);
 
   // Signals for intro animation
-  showIntro = signal<boolean>(true);
+  showIntro = signal<boolean>(false);
   slideOut = signal<boolean>(false);
   moveUp = signal<boolean>(false);
   fadeOut = signal<boolean>(false);

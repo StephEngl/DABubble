@@ -111,6 +111,11 @@ export class UsersService implements OnDestroy {
     return searchedUser?.name ?? 'Unknown';
   }
 
+  getStatus(id:string):string {
+    const searchedUser = this.users.find((user) => user.id === id);
+    return searchedUser?.status ?? 'offline';
+  }
+
   getAvatar(id: string): string {
     const searchedUser = this.users.find((user) => user.id === id);
     if (searchedUser?.avatarId !== undefined) {
