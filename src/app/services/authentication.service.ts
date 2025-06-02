@@ -278,6 +278,30 @@ export class AuthenticationService {
       }
     }
 
+    /**
+   * Checks, if password-reset-code (out of reset-email) is valid.
+   * Returns the belonging mail-address.
+   */
+  async verifyPasswordResetCode(oobCode: string): Promise<string> {
+    try {
+      const email = await verifyPasswordResetCode(this.auth, oobCode);
+      return email; // Mail-adress of the account
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  /**
+   * Reset password with oobCode and the new password.
+   */
+  async confirmPasswordReset(oobCode: string, newPassword: string): Promise<void> {
+    try {
+      await confirmPasswordReset(this.auth, oobCode, newPassword);
+    } catch (error) {
+      throw error;
+    }
+  }
+
 }
 
 

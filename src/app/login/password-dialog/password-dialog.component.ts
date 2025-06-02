@@ -1,7 +1,7 @@
 import { Component, inject } from '@angular/core';
 import { FormsModule, NgForm } from '@angular/forms';
 import { SignalsService } from '../../services/signals.service';
-import { getAuth, sendPasswordResetEmail } from '@angular/fire/auth';
+import { getAuth } from '@angular/fire/auth';
 import { AuthenticationService } from '../../services/authentication.service';
 
 @Component({
