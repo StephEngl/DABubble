@@ -43,6 +43,9 @@
             pattern=".{8,}"
             placeholder="Password"
           />
+          @if (password.touched && password.invalid) {
+            <span class="error-message">Please enter at least 8 characters</span>
+          } @else {<span class="error-message-placeholder"></span> }
 
           @if (!passwordInput) {
           <div class="icon">
