@@ -41,7 +41,7 @@ export class ChooseAvatarDialogComponent {
       this.currentUser.id!,
       this.currentUser.avatarId
     );
-    this.signalService.triggerToast('Account created', 'create');
+    this.signalService.triggerToast('Account created', 'confirm');
 
     this.backToLogin();
   }

@@ -94,7 +94,7 @@ export class SignalsService {
   // Signals for toasts
   toast = signal<ToastInterface>({
     message: '',
-    type: 'create',
+    type: 'confirm',
     isOpen: false,
     isAnimated: false,
     icon: '',

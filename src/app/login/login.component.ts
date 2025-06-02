@@ -36,6 +36,6 @@ ngOnInit() {
   }
 
   showTestToast() {
-    this.signalService.triggerToast('Zeig mal her', 'create')
+    this.signalService.triggerToast('Zeig mal her', 'confirm')
   }
 }
