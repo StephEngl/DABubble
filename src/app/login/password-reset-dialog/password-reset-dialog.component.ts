@@ -2,6 +2,8 @@ import { Component, inject } from '@angular/core';
 import { SignalsService } from '../../services/signals.service';
 import { FormsModule, NgForm } from '@angular/forms';
 import { AuthenticationService } from '../../services/authentication.service';
+import { UsersService } from '../../services/users.service';
+import { UserInterface } from '../../interfaces/user.interface';
 
 @Component({
   selector: 'app-password-reset-dialog',
@@ -13,6 +15,7 @@ import { AuthenticationService } from '../../services/authentication.service';
 export class PasswordResetDialogComponent {
   authService = inject(AuthenticationService);
   signalService = inject(SignalsService);
+  userService = inject(UsersService);
 
   formSubmitted = false;
   passwordVisible: Boolean = false;
@@ -20,18 +23,35 @@ export class PasswordResetDialogComponent {
   passwordInput: string = '';
   confirmPasswordInput: string = '';
 
+  currentUser?: UserInterface;
+
+  ngOnInit() {
+    this.getCurrentUser();
+  }
+
+  async getCurrentUser() {
+    const uid = this.signalService.currentUid();
+    console.log(uid);
+
+    if (!uid) return;
+
+    this.currentUser = await this.userService.getUserByUid(uid);
+  }
+
   onSubmit(ngForm: NgForm) {}
 
   setNewPassword(password: string) {
-    this.signalService.triggerToast('Password reset', 'update');
-      setTimeout(() => {
-        this.signalService.backToLogin();
-      }, 2500);
+    if (!this.currentUser) return;
+    
+    this.signalService.triggerToast('Password reset', 'confirm');
+    setTimeout(() => {
+      this.signalService.backToLogin();
+    }, 2500);
   }
 
   get passwordsMatch(): boolean {
     if (this.passwordInput) {
-      return (this.passwordInput === this.confirmPasswordInput);
+      return this.passwordInput === this.confirmPasswordInput;
     } else {
       return false;
     }

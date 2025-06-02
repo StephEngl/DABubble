@@ -15,10 +15,12 @@ import {
   signInWithPopup,
   signInWithRedirect,
   getRedirectResult,
+  sendPasswordResetEmail,
   verifyPasswordResetCode,
   confirmPasswordReset,
 } from '@angular/fire/auth';
 import { UsersService } from './users.service';
+import { SignalsService } from './signals.service';
 
 /**
  * Provides authentication functionality using Firebase Auth. This includes creating users, signing users in and out,
@@ -29,8 +31,10 @@ import { UsersService } from './users.service';
   providedIn: 'root',
 })
 export class AuthenticationService {
-  isAuthenticated = signal<boolean>(false);
   usersService = inject(UsersService);
+  signalService = inject(SignalsService);
+  
+  isAuthenticated = signal<boolean>(false);
   activeUserName: string = '';
   userId: string = '';
   provider = new GoogleAuthProvider();
@@ -257,6 +261,22 @@ export class AuthenticationService {
     const user = this.usersService.users.find(user => user.id === currentUserId);
     return user;
   }
+
+  async sendMailForNewPassword(email: string) {
+      try {
+        await sendPasswordResetEmail(this.auth, email, {
+          // Optional: use of a continueUrl
+          url: 'http://localhost:4200/login',
+          handleCodeInApp: true,
+        });
+        this.signalService.triggerToast('Email sent', 'confirm', '/assets/icons/login/send.svg');
+        setTimeout(() => {
+          this.signalService.backToLogin();
+        }, 2500);
+      } catch (error: any) {
+        this.signalService.triggerToast("Error", error)
+      }
+    }
 
 }
 
