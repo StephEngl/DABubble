@@ -13,7 +13,7 @@
                 @if(isChannelMember(channel)) {
                 <li (mouseenter)="hoveredIndex = index" (mouseleave)="hoveredIndex = null" (click)="showChannelId(channel.id!)">
                     <img [src]="'./../../../../assets/icons/general/tag_' + imageColor(hoveredIndex === index) + '.svg'" alt="">
-                    <p>{{ channel.channelName }}</p>
+                    <p [style.color]="hoveredIndex === index ? 'var(--col-font-btn-hover)':''">{{ showMaxLetters(channel.channelName) }}</p>
                 </li>
                 }
             }
@@ -24,7 +24,7 @@
             (mouseenter)="addChannelHovered = true"
             (mouseleave)="addChannelHovered = false">
             <img [src]="'./../../../../assets/icons/menu/add_circle_' + imageColor(addChannelHovered) + '.svg'" alt="">
-            <h5>Add Channel</h5>
+            <h5 [style.color]="addChannelHovered ? 'var(--col-font-btn-hover)' : ''">Add Channel</h5>
         </button>
     </div>
 </section>

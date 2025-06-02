@@ -32,12 +32,12 @@ ul {
         border-radius: 20px;
         padding: 5px 12px;
         &:hover {
-            color: var(--col-font-btn-hover);
             background-color: var(--col-bg-main);
         }
         >p {
             font-size: 22px;
             font-weight: 700;
+            overflow-x: hidden;
         }
         >img {
             width: 26px;
@@ -49,8 +49,8 @@ ul {
 .add-channel {
     @include dFlex($gap: 10px);
     padding: 0;
-    &:hover {
-        color: var(--col-font-btn-hover);
+    >img {
+        height: 24px;
     }
 }
 

@@ -44,4 +44,15 @@ export class ChannelListComponent {
     return channel.members!.includes(this.authService.userId);
   }
   
+  showMaxLetters(name: string):string {
+    const max = 10;
+    let nameLength = name.length;
+    if (nameLength > max) {
+      nameLength = max;
+      return name.substring(0, nameLength) + '...';
+    } else {
+      return name
+    }
+  }
+
 }
