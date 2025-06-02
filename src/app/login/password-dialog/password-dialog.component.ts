@@ -23,10 +23,10 @@ export class PasswordDialogComponent {
   auth = getAuth();
 
   async checkIfUserExists() {
-    this.isUserExisting = false;
-    const currentUser = await this.authService.currentUser();
-    if (!currentUser) return;
     this.isUserExisting = true;
+    // const currentUser = await this.authService.currentUser();
+    // if (!currentUser) return;
+    // this.isUserExisting = true;
   }
 
   async sendMailForNewPassword(email: string) {

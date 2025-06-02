@@ -34,11 +34,13 @@ export class PasswordResetDialogComponent {
 
   async ngOnInit() {
     // Extraxts oobCode out of URL
-    this.route.queryParams.subscribe(async params => {
+    this.route.queryParams.subscribe(async (params) => {
       this.oobCode = params['oobCode'] || '';
       if (this.oobCode) {
         try {
-          this.email = await this.authService.verifyPasswordResetCode(this.oobCode);
+          this.email = await this.authService.verifyPasswordResetCode(
+            this.oobCode
+          );
         } catch (err: any) {
           this.error = 'This Link is invalid or expired.';
         }
@@ -46,34 +48,40 @@ export class PasswordResetDialogComponent {
     });
   }
 
-  // ngOnInit() {
-  //   this.getCurrentUser();
-  // }
-
-  // async getCurrentUser() {
-  //   const uid = this.signalService.currentUid();
-  //   console.log(uid);
-  //   if (!uid) return;
-
-  //   this.currentUser = await this.userService.getUserByUid(uid);
-  // }
-
-  onSubmit(ngForm: NgForm) {}
-
-  setNewPassword(password: string) {
-    if (!this.currentUser) return;
-
-    this.signalService.triggerToast('Password reset', 'confirm');
-    setTimeout(() => {
-      this.signalService.backToLogin();
-    }, 2500);
-  }
-
   get passwordsMatch(): boolean {
     if (this.passwordInput) {
       return this.passwordInput === this.confirmPasswordInput;
     } else {
       return false;
+    }
+  }
+
+  async onSubmit(ngForm: NgForm) {
+  //   this.formSubmitted = true;
+  //   if (!this.passwordsMatch || !this.oobCode) return;
+  //   try {
+  //     this.setNewPassword();
+  //   } catch (err: any) {
+  //     this.error = 'Resetting password failed!';
+  //     this.signalService.triggerToast(this.error, 'error');
+  //   }
+  }
+
+  async setNewPassword() {
+    this.formSubmitted = true;
+    if (!this.passwordsMatch || !this.oobCode) return;
+    try {
+    await this.authService.confirmPasswordReset(
+      this.oobCode,
+      this.passwordInput
+    );
+    this.signalService.triggerToast('Passwort reset!', 'confirm');
+    setTimeout(() => {
+      this.signalService.backToLogin();
+    }, 2500);
+    } catch (err: any) {
+      this.error = 'Resetting password failed!';
+      this.signalService.triggerToast(this.error, 'error');
     }
   }
 
