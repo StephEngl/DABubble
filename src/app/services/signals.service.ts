@@ -36,9 +36,9 @@ export class SignalsService {
       // Animate complete logo to the upper left after 2,2s
       setTimeout(() => this.moveUp.set(true), 2500);
       // Fade out intro after 3s
-      setTimeout(() => this.fadeOut.set(true), 3200);
+      setTimeout(() => this.fadeOut.set(true), 3500);
       // End intro and delete from DOM
-      setTimeout(() => this.showIntro.set(false), 3900);
+      setTimeout(() => this.showIntro.set(false), 4200);
     }
 
   // Signal for current User-ID
