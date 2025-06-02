@@ -140,7 +140,12 @@
     padding: $dialog-padding-mobile;
   }
 
+  .input-wrapper {
+    gap: 6px;
+  }
+
   button {
+    margin-top: 6px;
     padding: 12px 22px;
     font-size: 16px;
   }

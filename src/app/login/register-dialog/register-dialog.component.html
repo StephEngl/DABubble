@@ -27,7 +27,7 @@
             id="name"
             name="name"
             required
-            pattern=""
+            pattern="^[^\s][\p{L}\p{M}'-]*\s+[\p{L}\p{M}'-]+(\s+[\p{L}\p{M}'-]+)*[^\s]$"
             placeholder="First and last name"
           />
           <div class="icon">
@@ -67,7 +67,7 @@
             id="password"
             name="password"
             required
-            pattern=".{8,}"
+            pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,}$"
             placeholder="Password"
           />
 
@@ -90,9 +90,11 @@
           </div>
           } @if (password.touched && password.invalid) {
           <span class="error-message"
-            >Please enter a valid password with at least 8 letters</span
+            >Please enter at least 8 characters, including uppercase, lowercase,
+            number, and special character.</span
           >
-          } @else {<span class="error-message-placeholder"></span> }
+          } @else {<span class="error-message-placeholder"></span>
+          }
         </div>
 
         <div class="privacy-policy-wrapper">
@@ -106,10 +108,12 @@
               required
             />
             <span class="checkmark"></span>
-            <span class="checkbox-text">I accept the
-              <a routerLink="/privacy-policy" class="privacy-policy-link">Privacy Policy</a>
-            </span
-            >
+            <span class="checkbox-text"
+              >I accept the
+              <a routerLink="/privacy-policy" class="privacy-policy-link"
+                >Privacy Policy</a
+              >
+            </span>
           </label>
         </div>
 
@@ -124,11 +128,7 @@
               !privacyPolicyAccepted
             "
             (click)="
-              createUser(
-                this.nameInput,
-                this.emailInput,
-                this.passwordInput
-              )
+              createUser(this.nameInput, this.emailInput, this.passwordInput)
             "
           >
             Apply
