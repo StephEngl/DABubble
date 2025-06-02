@@ -1,7 +1,7 @@
 import { Injectable, inject } from '@angular/core';
 import { ChannelsService } from './channels.service';
 import { Timestamp } from '@angular/fire/firestore';
-import { ChannelMessageInterface, ReactionInterface, ThreadMessageInterface } from '../interfaces/message.interface';
+import { ChannelMessageInterface, DirectMessageInterface, ReactionInterface, ThreadMessageInterface } from '../interfaces/message.interface';
 import {
     Firestore,
     addDoc,
@@ -9,6 +9,8 @@ import {
     updateDoc,
 } from '@angular/fire/firestore';
 import { AuthenticationService } from './authentication.service';
+import { ConversationService } from './conversations.service';
+import { SignalsService } from './signals.service';
 
 @Injectable({
   providedIn: 'root'
@@ -19,6 +21,8 @@ export class MessageService {
 
   firestore: Firestore = inject(Firestore);
   channelService = inject(ChannelsService);
+  conversationService = inject(ConversationService);
+  signalService = inject(SignalsService);
   authService = inject(AuthenticationService);
 
   async postMessage(message: ChannelMessageInterface) {
@@ -98,6 +102,49 @@ export class MessageService {
       this.updateMessage(id, { reactions: reactions }, { isThread: true });
     }
   }
+
+  async postDirectMessage (id: string, message: DirectMessageInterface) {
+    try {
+      await addDoc(this.conversationService.getDirectMessagesRef(id), {
+        text: message.text,
+        createdAt: Timestamp.now(),
+        senderId: message.senderId || 'Unknown',
+        reactions: [],
+        replyTo: message.replyTo
+      });
+    } catch (error) {
+      console.error("Failed to post message:", error);
+    }
+  }
+
+  async updateDirectMessage(id: string, message: Partial<DirectMessageInterface>) {
+    try {
+      let docRef = doc(this.conversationService.getDirectMessagesRef(this.signalService.activeConId()), id)
+      await updateDoc(docRef, message);
+    } catch (error) {
+      console.error("Failed to update message:", error);
+    }
+  }
+
+  postDirectMessageReaction(id: string, code: string, targetArray: ReactionInterface[]): void {
+    const user = this.authService.userId;
+    let reactions = targetArray;
+    const existingReaction = reactions.find((reaction: { emojiCode: string; }) => reaction.emojiCode === code);
+    if (existingReaction) {
+      if (!existingReaction.postedBy.includes(user)) {
+        existingReaction.postedBy.push(user);
+        existingReaction.count += 1;
+      }
+    } else {
+      reactions.push({
+        emojiCode: code,
+        postedBy: [user],
+        count: 1
+      });
+    }
+    this.updateDirectMessage(id, { reactions: reactions });
+  }
+  
 
   // optional -->
 

@@ -42,7 +42,7 @@
         <div class="user-menu" (mouseover)="hoverMenu = true" (mouseleave)="hoverMenu = false">
             <h3 [style.color]="hoverMenu ?'var(--col-font-btn-hover)' : '' ">{{ authService.currentUser()!.name }}</h3>
             <div class="user-icon">
-                <div class="user-picture" [style.backgroundImage] ="'url(./../../../assets/icons/user/user_' + authService.currentUser()!.avatarId + '.svg)'"></div>
+                <div class="user-picture" [style.backgroundImage] ="'url(./../../../assets/icons/user/user_' + authService.currentUser()!.avatarId + '.png)'"></div>
                 <img class="user-status" [src]="'./../../../assets/icons/user/status_' + authService.currentUser()!.status + '.svg'" alt="">
             </div>
             <button (click)="toggleDropdown()" >

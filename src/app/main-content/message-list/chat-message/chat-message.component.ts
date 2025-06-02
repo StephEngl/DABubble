@@ -11,6 +11,7 @@ import { ReactionInterface } from '../../../interfaces/message.interface';
 import { MessageService } from '../../../services/message.service';
 import { AuthenticationService } from '../../../services/authentication.service';
 import { TimeService } from '../../../services/time.service';
+import { ConversationService } from '../../../services/conversations.service';
 
 @Component({
   selector: 'app-chat-message',
@@ -24,6 +25,7 @@ export class ChatMessageComponent {
 
   channelService = inject(ChannelsService);
   messageService = inject(MessageService);
+  conService = inject(ConversationService);
   signalService = inject(SignalsService);
   usersService = inject(UsersService);
   authService = inject(AuthenticationService);
@@ -34,9 +36,12 @@ export class ChatMessageComponent {
   @Input() paddingHorizontal: string = '';
   @Input() message: any = {};
   @Input() threadMessage: any = {};
+  @Input() directMessage: any = {};
   @Input() threadTitle: any = {};
+
   @Input() isChannelMessage: boolean = false;
   @Input() isThreadMessage: boolean = false;
+  @Input() isDirectMessage: boolean = false;
   @Input() isThreadTitle: boolean = false;
 
   editMode: boolean = false;
@@ -50,7 +55,7 @@ export class ChatMessageComponent {
   reactionHovered: boolean = false;
 
 
-  menuBar: {imgSrc: string, shownInThread: boolean, clickFunction: () => void}[] = [
+  menuBar: {imgSrc: string, shownInThread: boolean, shownIfOwnMessage?: boolean, clickFunction: () => void}[] = [
     { 
       imgSrc: './../../../../assets/icons/message/emoji_laughing.png',
       shownInThread: false,
@@ -74,6 +79,7 @@ export class ChatMessageComponent {
     { 
       imgSrc: './../../../../assets/icons/message/more_options_black.svg',
       shownInThread: true,
+      shownIfOwnMessage: true,
       clickFunction: () => this.editMode = true
     },
   ];
@@ -83,11 +89,16 @@ export class ChatMessageComponent {
     this.checkifOwnMessage();
   }
 
-  checkifOwnMessage() {
-    return ((this.message.senderId || this.threadMessage.senderId) === this.authService.userId);
+
+  messageExist():boolean {
+    return this.isChannelMessage || this.isThreadTitle || this.isThreadMessage || this.isDirectMessage
   }
 
-  openThread() {
+  checkifOwnMessage():boolean {
+    return ((this.message.senderId || this.threadMessage.senderId || this.directMessage.senderId) === this.authService.userId);
+  }
+
+  openThread():void {
     localStorage.setItem('currentThread', this.message.id);
     const currentThreadId = localStorage.getItem('currentThread');
     const currentChannelId = localStorage.getItem('currentChannel');
@@ -98,6 +109,20 @@ export class ChatMessageComponent {
     this.signalService.focusThread.set(true);
   }
 
+  replyTo() {
+    this.signalService.activeReplyToId.set(this.directMessage.id);
+    this.signalService.focusConversation.set(true);
+  }
+
+replyMessageInfo() {
+  if (this.isDirectMessage) {
+    const conId = this.signalService.activeConId();
+    const messageId = this.directMessage.replyTo;
+    return this.conService.getMessageById(conId, messageId);
+  } else {
+    return null;
+  }
+}
 
   createdAt():string {
     if (this.isChannelMessage) {
@@ -106,7 +131,9 @@ export class ChatMessageComponent {
         return this.timeService.getDate(this.threadMessage.createdAt.toDate(), 'hh-mm');
       } else if (this.isThreadTitle) {
         return this.timeService.getDate(this.threadTitle.createdAt.toDate(), 'hh-mm');
-      } else {
+      } else if (this.isDirectMessage) {
+        return this.timeService.getDate(this.directMessage.createdAt.toDate(), 'hh-mm');
+      }else {
       return '';
     }
   }
@@ -118,7 +145,9 @@ export class ChatMessageComponent {
       return this.threadMessage.text;
     } else if (this.isThreadTitle) {
       return this.threadTitle.text;
-    } else {
+    } else if (this.isDirectMessage) {
+      return this.directMessage.text;
+    }else {
       return '';
     }
   }
@@ -126,6 +155,8 @@ export class ChatMessageComponent {
   reactions() {
     if (this.isChannelMessage) {
       return this.message.reactions;
+    } if (this.isDirectMessage) {
+      return this.directMessage.reactions;
     } else if (this.isThreadMessage) {
       return this.threadMessage.reactions;
     }
@@ -136,7 +167,9 @@ export class ChatMessageComponent {
       return this.message.id;
     } else if (this.isThreadMessage) {
       return this.threadMessage.id;
-    } else {
+    } else if (this.isDirectMessage) {
+      return this.directMessage.id;
+    }else {
       return 'unknown';
     }
   }
@@ -145,6 +178,8 @@ export class ChatMessageComponent {
     const message = this.messageEditText;
     if(this.isChannelMessage) {
       this.messageService.updateMessage(id, { text: message }, {});
+    } else if(this.isDirectMessage) {
+      this.messageService.updateDirectMessage(id, { text: message });
     } else {
       this.messageService.updateMessage(id, { text: message }, { isThread: true });
     }
@@ -155,6 +190,8 @@ export class ChatMessageComponent {
       return this.usersService.findName(this.message.senderId);
     } else if (this.isThreadMessage && this.threadMessage?.senderId) {
       return this.usersService.findName(this.threadMessage.senderId);
+    } else if (this.isDirectMessage && this.directMessage?.senderId) {
+      return this.usersService.findName(this.directMessage.senderId);
     } else if (this.isThreadTitle && this.threadTitle.senderId) {
       return this.usersService.findName(this.threadTitle.senderId);
     }
@@ -166,21 +203,35 @@ export class ChatMessageComponent {
       return this.usersService.getAvatar(this.message.senderId)
     } else if (this.isThreadMessage && this.threadMessage?.senderId) {
       return this.usersService.getAvatar(this.threadMessage.senderId);
-    } else if (this.isThreadTitle && this.threadTitle.senderId) {
+    } else if (this.isDirectMessage && this.directMessage?.senderId) {
+      return this.usersService.getAvatar(this.directMessage.senderId);
+    }else if (this.isThreadTitle && this.threadTitle.senderId) {
       return this.usersService.getAvatar(this.threadTitle.senderId);
     }
-    return './../../../../assets/icons/user/user_0.svg';
+    return './../../../../assets/icons/user/user_0.png';
   }
 
   onEmojiSelect(event: any):void {
     if(this.emojiBar) {
-      this.messageService.postReaction
-        (
-          this.singleMessageId(),
-          event.emoji.native,
-          this.reactions(),
-          this.isChannelMessage
-        )
+      if(!this.isDirectMessage) {
+        this.messageService.postReaction
+          (
+            this.singleMessageId(),
+            event.emoji.native,
+            this.reactions(),
+            this.isChannelMessage
+          )
+      } else {
+        console.log(this.singleMessageId())
+        
+        this.messageService.postDirectMessageReaction
+          (
+            this.singleMessageId(),
+            event.emoji.native,
+            this.reactions()
+          )
+      }
+
     } else {
       console.log("post in edit mode");
       this.messageEditText += " " + event.emoji.native;

@@ -12,7 +12,7 @@
   // font & href colors
     --col-font-main: #000000;
     --col-font-secondary: #ffffff;
-    --col-font-info: rgb(104, 104, 104);
+    --col-font-info: #686868;
     --col-font-mail: #1381ff;
     --col-font-href: #797ef3;
     --col-font-btn-hover: #535af1;
@@ -27,3 +27,29 @@
   // transparency
     --col-transparent-shadow: rgba(0, 0, 0, 0.1);
 }
+
+// dark mode, work in progress
+// :root {
+//   --col-bg-main: #121212;
+//   --col-bg-secondary: #1e1e1e;
+//   --col-bg-btn-main: #3f51b5;
+//   --col-bg-btn-hover: #2c2c2c;
+//   --col-bg-btn-disabled: #555555;
+
+//   --col-stroke-main: #44475a;
+
+//   --col-font-main: #f5f5f5;
+//   --col-font-secondary: #1a1a1a;
+//   --col-font-info: #bbbbbb;
+//   --col-font-mail: #66b2ff;
+//   --col-font-href: #9296f9;
+//   --col-font-btn-hover: #c5c8ff;
+//   --col-font-error: #ff4f87;
+
+//   --col-btn-hover-light: #5c62db;
+//   --col-btn-hover-dark: #444bd1;
+//   --col-btn-hover-secondary: #3a3d5e;
+
+//   --col-transparent-shadow: rgba(0, 0, 0, 0.4);
+// }
+

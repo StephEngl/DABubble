@@ -2,8 +2,6 @@ import { Component, inject } from '@angular/core';
 import { FormsModule, NgForm } from '@angular/forms';
 import { SignalsService } from '../../services/signals.service';
 import { getAuth, sendPasswordResetEmail } from '@angular/fire/auth';
-import { ToastService } from '../../services/toast.service';
-import { environment } from '../../../environments/environments';
 
 @Component({
   selector: 'app-password-dialog',
@@ -14,7 +12,6 @@ import { environment } from '../../../environments/environments';
 })
 export class PasswordDialogComponent {
   signalService = inject(SignalsService);
-  toastService = inject(ToastService);
   emailInput: string = '';
   infoMessage: string = '';
   errorMessage: string = '';
@@ -34,13 +31,12 @@ export class PasswordDialogComponent {
         url: 'http://localhost:4200/login',
         handleCodeInApp: true,
       });
-      this.toastService.triggerToast('Password reset', 'update');
+      this.signalService.triggerToast('Email sent', 'update', '/assets/icons/login/send.svg');
       setTimeout(() => {
         this.signalService.backToLogin();
       }, 2500);
     } catch (error: any) {
-      this.toastService.triggerToast("Error", error)
-      // this.errorMessage = 'Error: ' + (error.message || 'Unknown Error');
+      this.signalService.triggerToast("Error", error)
     }
   }
 }

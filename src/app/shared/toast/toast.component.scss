@@ -1,0 +1,52 @@
+@import "../../../assets/styles/mixins.scss";
+@import "../../../assets/styles/font-types.scss";
+
+.toast {
+  @include dFlex($gap: 20px, $pos: fixed);
+  bottom: 16px;
+  right: 16px;
+  transform: translateX(120%);
+  background-color: var(--col-bg-btn-main);
+  color: white;
+  font-size: 22px;
+  padding: 20px 30px;
+  border-radius: 30px 30px 0 30px;
+  z-index: 99;
+  box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.15);
+  transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.3s;
+  opacity: 0;
+  pointer-events: none;
+
+  .toast-icon {
+    width: 24px;
+    height: 24px;
+  }
+
+  &.show {
+    transform: translateX(0);
+    opacity: 1;
+  }
+
+  &.error {
+    background-color: var(--col-font-error);
+  }
+}
+
+// @media screen and (max-width: 800px) {
+//   .toast {
+//     left: 50%;
+//     right: auto;
+//     transform: translate(-50%, 100%);
+
+//     &.show {
+//       transform: translate(-50%, 0);
+//     }
+//   }
+// }
+
+@media screen and (max-width: 500px) {
+  .toast {
+    font-size: 18px;
+    padding: 12px 24px;
+  }
+}

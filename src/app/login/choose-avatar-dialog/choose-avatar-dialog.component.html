@@ -18,7 +18,15 @@
 
     <span> Please, choose your Avatar from the following list: </span>
     <div class="avatar-list">
+      @for (avatar of avatarIds; track avatar ) {
       <img
+        class="avatar-image"
+        [src]="'/assets/icons/user/user_' + avatar + '.png'"
+        alt=""
+        (click)="selectAvatarId(avatar)"
+      />
+      }
+      <!-- <img
         class="avatar-image"
         src="/assets/icons/user/user_1.svg"
         alt=""
@@ -53,7 +61,7 @@
         src="/assets/icons/user/user_6.svg"
         alt=""
         (click)="selectAvatarId('6')"
-      />
+      /> -->
     </div>
 
     <div class="apply-button-wrapper">

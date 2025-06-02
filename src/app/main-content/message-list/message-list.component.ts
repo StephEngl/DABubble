@@ -9,11 +9,12 @@ import {
 } from '@angular/core';
 import { ChatMessageComponent } from './chat-message/chat-message.component';
 import { ChannelsService } from '../../services/channels.service';
-import { ChannelMessageInterface } from '../../interfaces/message.interface';
+import { ChannelMessageInterface, DirectMessageInterface } from '../../interfaces/message.interface';
 import { ThreadMessageInterface } from '../../interfaces/message.interface';
 import { Timestamp } from '@angular/fire/firestore';
 import { SignalsService } from '../../services/signals.service';
 import { TimeService } from '../../services/time.service';
+import { ConversationService } from '../../services/conversations.service';
 
 interface Message {
   text: string;
@@ -34,9 +35,11 @@ export class MessageListComponent implements AfterViewChecked {
   
   channelService = inject(ChannelsService);
   signalService = inject(SignalsService);
+  conService = inject(ConversationService);
   timeService = inject(TimeService);
   
   @Input() isChannel: boolean = false;
+  @Input() isConversation: boolean = false;
   @Input() isThread: boolean = false;
   @ViewChild('messageContainer') messageContainer?: ElementRef<HTMLDivElement>;
   shouldScroll = true;
@@ -118,6 +121,17 @@ export class MessageListComponent implements AfterViewChecked {
 
   getCurrentThreadMessage(): ThreadMessageInterface | undefined {
     return this.channelService.getMessageById(this.currentThread());
+  }
+
+  getDirectMessages(id:string): DirectMessageInterface[] {
+    const conversation = this.conService.getConversationById(id);
+    if (conversation) {
+      // console.log(conversation);
+      
+      return conversation.messages!;
+    } else {
+      return [];
+    }
   }
 
   hasThreadMessages(): boolean {

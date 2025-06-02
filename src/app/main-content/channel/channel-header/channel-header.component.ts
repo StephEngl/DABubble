@@ -4,6 +4,7 @@ import { ChannelInterface } from '../../../interfaces/channel.interface';
 import { UsersService } from '../../../services/users.service';
 import { SignalsService } from '../../../services/signals.service';
 import { FormsModule } from '@angular/forms';
+import { ConversationService } from '../../../services/conversations.service';
 
 @Component({
   selector: 'app-channel-header',
@@ -16,6 +17,7 @@ export class ChannelHeaderComponent {
 
   channelService = inject(ChannelsService);
   usersService = inject(UsersService);
+  conService = inject(ConversationService);
   signalService = inject(SignalsService);
   @ViewChild('messageInput') messageInputRef!: ElementRef<HTMLTextAreaElement>;
 
@@ -86,6 +88,13 @@ export class ChannelHeaderComponent {
     } else {
       this.showList = false;
     }
+  }
+
+  get directMessageContact() {
+    const currentConId = this.signalService.activeConId();
+    const currentConversation = this.conService.getConversationById(currentConId);
+    const participant = this.conService.participant(currentConversation);
+    return participant;
   }
 
 }

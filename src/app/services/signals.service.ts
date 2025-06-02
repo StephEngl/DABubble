@@ -1,4 +1,5 @@
 import { Injectable, signal } from '@angular/core';
+import { ToastInterface } from '../interfaces/toast.interface';
 
 @Injectable({
   providedIn: 'root',
@@ -6,15 +7,16 @@ import { Injectable, signal } from '@angular/core';
 export class SignalsService {
   constructor() {}
 
-  isLoginDialog = signal<boolean>(true);
-  isRegisterDialog = signal<boolean>(false);
-  isChoosingAvatarDialog = signal<boolean>(false);
-  isPasswordForgottenDialog = signal<boolean>(false);
-  isPasswordResetDialog = signal<boolean>(false);
+  // signals for controlling various channel & message statuses
   focusChat = signal<boolean>(false);
   focusThread = signal<boolean>(false);
+  focusConversation = signal<boolean>(false);
   startConversation = signal<boolean>(false);
   sendingMessage = signal<boolean>(false);
+  channelActive = signal<boolean>(true);
+  conversationActive = signal<boolean>(false);
+  activeConId = signal<string>('');
+  activeReplyToId = signal<string>('');
 
   showWorkspace = signal<boolean>(true);
   showThread = signal<boolean>(false);
@@ -22,8 +24,32 @@ export class SignalsService {
 
   scrollChannelToBottom = signal<boolean>(false);
 
+  // Signals for intro animation
+  showIntro = signal<boolean>(true);
+  slideOut = signal<boolean>(false);
+  moveUp = signal<boolean>(false);
+  fadeOut = signal<boolean>(false);
+
+  startIntroAnimation() {
+      // Slide out title logo after 1,3s
+      setTimeout(() => this.slideOut.set(true), 1300);
+      // Animate complete logo to the upper left after 2,2s
+      setTimeout(() => this.moveUp.set(true), 2500);
+      // Fade out intro after 3s
+      setTimeout(() => this.fadeOut.set(true), 3500);
+      // End intro and delete from DOM
+      setTimeout(() => this.showIntro.set(false), 4200);
+    }
+
   // Signal for current User-ID
   currentUid = signal<string>('');
+
+  // Signalmethods for showing the different dialogs at login-section
+  isLoginDialog = signal<boolean>(true);
+  isRegisterDialog = signal<boolean>(false);
+  isChoosingAvatarDialog = signal<boolean>(false);
+  isPasswordForgottenDialog = signal<boolean>(false);
+  isPasswordResetDialog = signal<boolean>(false);
 
   backToLogin() {
     this.isLoginDialog.set(true);
@@ -64,4 +90,45 @@ export class SignalsService {
     this.isPasswordForgottenDialog.set(false);
     this.isPasswordResetDialog.set(true);
   }
+
+  // Signals for toasts
+  toast = signal<ToastInterface>({
+    message: '',
+    type: 'create',
+    isOpen: false,
+    isAnimated: false,
+    icon: '',
+  });
+
+  triggerToast(message: string,type: ToastInterface['type'],icon: string = '') {
+    this.toast.set({
+      message,
+      type,
+      icon,
+      isOpen: true,
+      isAnimated: false,
+    });
+    setTimeout(() => this.toast.update((t) => ({ ...t, isAnimated: true })),10);
+    setTimeout(() => this.toast.update((t) => ({ ...t, isAnimated: false })),3000);
+    setTimeout(() => this.toast.update((t) => ({ ...t, isOpen: false })), 3500);
+  }
+
+  // signal methods for triggering the different chat channels
+  setChannelSignals(id:string):void {
+    this.activeReplyToId.set('');
+    this.conversationActive.set(false);
+    this.scrollChannelToBottom.set(true);
+    this.focusChat.set(true);
+    this.startConversation.set(false);
+  }
+
+  setConversationSignals(id:string):void {
+    this.activeReplyToId.set('');
+    this.channelActive.set(false);
+    this.conversationActive.set(true);
+    this.activeConId.set(id);
+    this.showThread.set(false);
+    this.startConversation.set(false);
+  }
+
 }

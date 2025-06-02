@@ -1,6 +1,7 @@
 @import "../styles/colors.scss";
 
 h1 {
+    color: var(--col-font-main);
     font-weight: 700;
     font-size: clamp(30px, 2.556rem, 46px);
 }
@@ -13,21 +14,25 @@ h2 {
 }
 
 h3 {
+    color: var(--col-font-main);
     font-weight: 700;
     font-size: clamp(22px, 1.778rem, 32px);
 }
 
 h4 {
+    color: var(--col-font-main);
     font-weight: 400;
     font-size: clamp(18px, 1.444rem, 26px);
 }
 
 h5 {
+    color: var(--col-font-main);
     font-weight: 400;
     font-size: clamp(18px, 1.222rem, 22px);
 }
 
 p, a {
+    color: var(--col-font-main);
     font-weight: 400;
     font-size: clamp(16px, 1rem, 18px);
     text-decoration: none;
@@ -36,11 +41,23 @@ p, a {
 input,
 textarea,
 label {
+    color: var(--col-font-secondary);
     font-family: 'Nunito';
     resize: none;
     &:focus {
         outline: none;
         box-shadow: none;
     }
+}
+
+label {
+    color: var(--col-font-main);
+}
+
+input,
+textarea {
+    background-color: var(--col-bg-secondary);
+    color: var(--col-font-main);
+
 }
 

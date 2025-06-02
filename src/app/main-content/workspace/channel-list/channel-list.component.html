@@ -3,7 +3,7 @@
         <button (click)="toggleChannelList()" (mouseenter)="channelListHovered = true" (mouseleave)="channelListHovered = false">
             <img [src]="'./../../../../assets/icons/menu/dropdown_'+ imageColor(channelListHovered) +'.svg'" alt="" [style.transform]="channelListOpened ? 'rotate(0deg)' : 'rotate(-90deg)'">
             <img [src]="'./../../../../assets/icons/general/workspace_icon_' + imageColor(channelListHovered) + '.svg'" alt="">
-            <h4 [style.color]="channelListHovered ? 'var(--col-font-btn-hover)' : 'black'">Channels</h4>
+            <h4 [style.color]="channelListHovered ? 'var(--col-font-btn-hover)' : 'var(--col-font-main)'">Channels</h4>
         </button>
         <img (click)="signalService.showCreateChannel.set(true)" src="./../../../../assets/icons/menu/add_black.svg" alt="">
     </header>

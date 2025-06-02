@@ -103,7 +103,6 @@ export class UsersService implements OnDestroy {
     }
   }
 
-
   findName(id: string): string {
     const searchedUser = this.users.find(user => user.id === id);
     return searchedUser?.name ?? 'Unknown';
@@ -112,9 +111,9 @@ export class UsersService implements OnDestroy {
   getAvatar(id: string): string {
     const searchedUser = this.users.find(user => user.id === id);
     if (searchedUser?.avatarId !== undefined) {
-      return `./../../../../assets/icons/user/user_${searchedUser.avatarId}.svg`;
+      return `./../../../../assets/icons/user/user_${searchedUser.avatarId}.png`;
     }
-    return './../../../../assets/icons/user/user_0.svg';
+    return './../../../../assets/icons/user/user_0.png';
   }
 
   async updateUserStatus(userId: string, status: 'online' | 'offline' | 'afk') {

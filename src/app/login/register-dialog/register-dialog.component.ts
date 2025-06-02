@@ -6,7 +6,6 @@ import { SignalsService } from '../../services/signals.service';
 import { RouterLink } from '@angular/router';
 import { Auth } from '@angular/fire/auth';
 import { UsersService } from '../../services/users.service';
-import { ToastService } from '../../services/toast.service';
 
 @Component({
   selector: 'app-register-dialog',
@@ -20,7 +19,6 @@ export class RegisterDialogComponent {
   authService = inject(AuthenticationService);
   signalService = inject(SignalsService);
   usersService = inject(UsersService);
-  toastService = inject(ToastService);
 
   formSubmitted = false;
   passwordVisible: Boolean = false;
