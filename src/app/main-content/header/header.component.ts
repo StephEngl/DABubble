@@ -5,11 +5,12 @@ import { UsersService } from '../../services/users.service';
 import { FormsModule } from '@angular/forms';
 import { ChannelsService } from '../../services/channels.service';
 import { SignalsService } from '../../services/signals.service';
+import { NgClass } from '@angular/common';
 
 @Component({
   selector: 'app-header',
   standalone: true,
-  imports: [RouterLink, FormsModule],
+  imports: [RouterLink, FormsModule, NgClass],
   templateUrl: './header.component.html',
   styleUrl: './header.component.scss',
 })

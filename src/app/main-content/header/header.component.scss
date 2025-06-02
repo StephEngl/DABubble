@@ -120,6 +120,11 @@ header {
     .menu-icon {
         width: 16px;
     }
+    .reverse{
+        transition: transform 0.3s ease-in-out;
+        transform: rotate(180deg);
+
+    }
 }
 
      
@@ -142,7 +147,6 @@ header {
             font-weight: bold;
             font-size: 24px;
             transition: background-color 0.125s ease-in-out;
-            // border: 1px solid #797ef3;
             border-radius: 25px;
             
             &:hover{
