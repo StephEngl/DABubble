@@ -96,4 +96,18 @@ export class ChannelHeaderComponent {
     return participant;
   }
 
+  darkModeTest() {
+    const currentMode = localStorage.getItem('theme');
+    if (currentMode === 'dark-theme') {
+      localStorage.setItem('theme', 'light');
+    } else {
+      localStorage.setItem('theme', 'dark-theme');
+    }
+    this.refreshPage();
+  }
+
+  refreshPage() {
+    window.location.reload();
+  }
+
 }

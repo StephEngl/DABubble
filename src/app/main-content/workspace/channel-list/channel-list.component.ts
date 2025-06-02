@@ -25,7 +25,7 @@ export class ChannelListComponent {
 
   hoveredIndex: number | null = null;
 
-  toggleChannelList() {
+  toggleChannelList():void {
     this.channelListOpened = !this.channelListOpened;
   }
 
@@ -34,7 +34,7 @@ export class ChannelListComponent {
     return color; 
   }
 
-  showChannelId(id: string) {
+  showChannelId(id: string):void {
     localStorage.setItem("currentChannel", id);
     this.channelService.subscribeToChannelMessages(id);
     this.signalService.setChannelSignals(id);

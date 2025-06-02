@@ -1,7 +1,7 @@
 @import "../../assets/styles/mixins.scss";
 
 :host {
-  background-color: var(--col-bg-btn-hover);
+  background-color: var(--col-bg-main);
   display: flex;
   flex-direction: column;
   height: 100vh;

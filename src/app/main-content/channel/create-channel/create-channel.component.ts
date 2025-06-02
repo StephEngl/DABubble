@@ -40,7 +40,7 @@ export class CreateChannelComponent {
     }
   }
 
-  channelAlreadyExists() {
+  channelAlreadyExists():boolean {
     const channel = this.channelService.channels.find(
       (channel) =>
         channel.channelName.toLowerCase() ===

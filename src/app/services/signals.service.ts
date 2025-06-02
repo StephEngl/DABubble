@@ -24,6 +24,9 @@ export class SignalsService {
 
   scrollChannelToBottom = signal<boolean>(false);
 
+  // signal to toggle icon colors
+  themeColorMain = signal<string>('black');
+
   // Signals for intro animation
   showIntro = signal<boolean>(false);
   slideOut = signal<boolean>(false);
