@@ -168,7 +168,7 @@ export class ConversationService {
     return conversation.participants.find((id: string) => id !== this.authService.userId)
   }
 
-  async startConversationWithUser(id: string): Promise<void> {
+  async startNewConversation(id: string): Promise<void> {
     const currentUser = this.authService.userId;
     const existingConversation = this.conversations.find(con =>
       con.participants.includes(currentUser) && con.participants.includes(id)

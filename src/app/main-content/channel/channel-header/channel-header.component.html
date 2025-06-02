@@ -20,7 +20,7 @@
                         }
                         }
                         @if (currentChannel?.members!.length > 4) {
-                        <p class="member-overflow"> {{ currentChannel?.members!.length - 4 }}</p>
+                        <p class="member-overflow"> +{{ currentChannel?.members!.length - 4 }}</p>
                         } @else { <p class="member-overflow"></p> }
                 </div>
 
@@ -47,7 +47,7 @@
             <div>No users found</div>
             }
             @for(user of searchResultsUser; track user) {
-            <div class="result" (click)="conService.startConversationWithUser(user.id!)">
+            <div class="result" (click)="conService.startNewConversation(user.id!)">
                 <img [src]="usersService.getAvatar(user.id!)" alt="">
                 <p>{{ user.name}}</p>
             </div>
