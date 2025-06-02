@@ -45,9 +45,20 @@
                 <div class="user-picture" [style.backgroundImage] ="'url(./../../../assets/icons/user/user_' + authService.currentUser()!.avatarId + '.png)'"></div>
                 <img class="user-status" [src]="'./../../../assets/icons/user/status_' + authService.currentUser()!.status + '.svg'" alt="">
             </div>
-            <button (click)="logout()">
+            <button (click)="toggleDropdown(); $event.stopPropagation()" >
                 <img class="menu-icon" [src]="hoverMenu ? './../../../assets/icons/menu/dropdown_blue.svg' : './../../../assets/icons/menu/dropdown_black.svg'" alt="">
             </button>
         </div>
     }
+    <!-- dropdown menu -->
+    @if(dropdownOpen){
+    <div class="dropdown-wrapper"  #dropdownContainer>
+        <button>Messages</button>
+        <button>Profile</button>
+        <button (click)="logout()">Log out</button>
+    </div>
+}
 </header>
+
+
+
