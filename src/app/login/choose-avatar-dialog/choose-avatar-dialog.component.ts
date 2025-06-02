@@ -58,18 +58,6 @@ export class ChooseAvatarDialogComponent {
     return `/assets/icons/user/user_${this.currentUser.avatarId}.png`;
   }
 
-  // getAvatarFileName(avatarId: string): string {
-  //   const mapping: Record<string, string> = {
-  //     '1': '_1',
-  //     '2': '_2',
-  //     '3': '_3',
-  //     '4': '_4',
-  //     '5': '_5',
-  //     '6': '_6',
-  //   };
-  //   return mapping[avatarId] ?? 'default';
-  // }
-
   backToLogin() {
     this.signalService.isLoginDialog.set(true);
     this.signalService.isRegisterDialog.set(false);
