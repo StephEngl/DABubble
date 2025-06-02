@@ -109,7 +109,9 @@
   }
 
   .error-message-placeholder {
-    height: 24px;
+    min-height: 24px;
+    height: auto;
+    color: transparent;
   }
 
   .mb-12 {
@@ -166,6 +168,10 @@ button {
 @media screen and (max-width: 450px) {
   .login-dialog {
     padding: $dialog-padding-mobile;
+  }
+
+  .login-button-wrapper {
+    gap: 20px;
   }
 
   .google-login-btn {
