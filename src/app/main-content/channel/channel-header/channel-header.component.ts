@@ -42,19 +42,6 @@ export class ChannelHeaderComponent {
     this.onFocus();
   }
 
-  startConversationWithUser(id: string) {
-    const currentUser = this.authService.userId;
-    const conversation: ConversationInterface = {
-      participants: [currentUser, id]
-    }
-    const exists =this.conService.conversations.some((conversation) => {
-      conversation.participants.includes(currentUser) && conversation.participants.includes(id)
-    })
-    if (exists) return;
-    this.conService.addConversation(conversation);
-    this.conService.loadCons();
-  }
-
   tagChannel(id: string) {
     this.inputText = "";
     this.showList = false;
@@ -105,7 +92,7 @@ export class ChannelHeaderComponent {
   get directMessageContact() {
     const currentConId = this.signalService.activeConId();
     const currentConversation = this.conService.getConversationById(currentConId);
-    const participant = this.conService.participant(currentConversation);
+    const participant = this.conService.participant(currentConversation!);
     return participant;
   }
 

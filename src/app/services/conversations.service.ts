@@ -16,12 +16,14 @@ import {
 import { DirectMessageInterface } from '../interfaces/message.interface';
 import { ConversationInterface } from '../interfaces/conversation.interface';
 import { AuthenticationService } from './authentication.service';
+import { SignalsService } from './signals.service';
 @Injectable({
   providedIn: 'root'
 })
 export class ConversationService {
   firestore: Firestore = inject(Firestore);
   authService = inject(AuthenticationService);
+  signalService = inject(SignalsService);
   conversations: ConversationInterface[] = [];
   unsubscribeDirectMessages;
 
@@ -162,7 +164,40 @@ export class ConversationService {
     this.subscribeToDirectMessages(id);
   }
 
-  participant(conversation: any): any  {
+  participant(conversation: ConversationInterface): any  {
     return conversation.participants.find((id: string) => id !== this.authService.userId)
   }
+
+  async startConversationWithUser(id: string): Promise<void> {
+    const currentUser = this.authService.userId;
+    const existingConversation = this.conversations.find(con =>
+      con.participants.includes(currentUser) && con.participants.includes(id)
+    );
+
+    if (existingConversation?.id) {
+      await this.openConversation(existingConversation.id);
+      return;
+    }
+
+    const newConversation: ConversationInterface = {
+      participants: [currentUser, id]
+    };
+
+    await this.addConversation(newConversation);
+    await this.loadCons();
+
+    const createdConversation = this.conversations.find(con =>
+      con.participants.includes(currentUser) && con.participants.includes(id)
+    );
+
+    if (createdConversation?.id) {
+      await this.openConversation(createdConversation.id);
+    } 
+  }
+
+  async openConversation(id: string): Promise<void> {
+    await this.loadConversation(id);
+    this.signalService.setConversationSignals(id);
+  }
+
 }

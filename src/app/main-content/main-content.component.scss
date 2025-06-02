@@ -55,6 +55,7 @@ app-thread {
     height: 100%;
     margin: auto;
     background-color: var(--col-transparent-shadow);
+    z-index: 4;
 }
 
 .workspace-btn {
