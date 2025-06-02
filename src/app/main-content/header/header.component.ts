@@ -20,6 +20,7 @@ export class HeaderComponent {
   signalService = inject(SignalsService);
   searchInput: string = '';
   hoverMenu: boolean = false;
+  dropdownOpen: boolean = false;
 
 
   /** Logs out the current user and closes the logout popup. */
@@ -53,6 +54,10 @@ export class HeaderComponent {
     localStorage.setItem("currentChannel", id);
     this.channelsService.subscribeToChannelMessages(id);
     this.signalService.scrollChannelToBottom.set(true);
+  }
+
+  toggleDropdown(){
+    this.dropdownOpen = !this.dropdownOpen
   }
 
 }

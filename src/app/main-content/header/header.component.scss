@@ -122,6 +122,36 @@ header {
     }
 }
 
+     
+    .dropdown-wrapper{
+         z-index: 99;
+        top: 123%;
+        right: 1%;
+        width: 30%;
+        height: 200px; 
+        @include dFlex($fd: column, $gap: 15px, $pos: absolute);
+        border-radius: 30px 0 30px 30px;
+        background-color: white;
+        border-radius: 30px 0 30px 30px;
+        box-shadow: 0px 6px 10px 0px rgba(0, 0, 0, 0.2);
+        
+        >button{
+            height: 60px;
+            width:  fit-content;
+            color: var(--col-font-main);
+            font-weight: bold;
+            font-size: 24px;
+            transition: background-color 0.125s ease-in-out;
+            border: 1px solid #797ef3;
+            border-radius: 25px;
+            &:hover{
+                background-color:var(--col-btn-hover-light) ;
+                color:var(--col-font-href)
+            }
+        }
+    }
+
+
 @media screen and (max-width: 960px ) {
     .search-app {
         display: none;
