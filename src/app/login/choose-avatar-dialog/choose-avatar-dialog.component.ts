@@ -17,10 +17,18 @@ export class ChooseAvatarDialogComponent {
 
   currentUser?: UserInterface;
 
+  /**
+ * Lifecycle hook that is called after data-bound properties are initialized.
+ * Fetches the current user information.
+ */
   ngOnInit() {
     this.getCurrentUser();
   }
 
+  /**
+ * Retrieves the current user based on the UID from the signal service.
+ * Sets the currentUser property if the user is found.
+ */
   async getCurrentUser() {
     const uid = this.signalService.currentUid();
     if (!uid) return;
@@ -28,13 +36,10 @@ export class ChooseAvatarDialogComponent {
     this.currentUser = await this.userService.getUserByUid(uid);
   }
 
-  backToRegister() {
-    this.signalService.isLoginDialog.set(false);
-    this.signalService.isRegisterDialog.set(true);
-    this.signalService.isChoosingAvatarDialog.set(false);
-    this.signalService.isPasswordForgottenDialog.set(false);
-  }
-
+  /**
+ * Creates a user account by updating the user's avatar.
+ * Shows a confirmation toast and navigates back to the login dialog.
+ */
   async createAccount() {
     if (!this.currentUser) return;
     await this.userService.updateUserAvatar(
@@ -43,25 +48,27 @@ export class ChooseAvatarDialogComponent {
     );
     this.signalService.triggerToast('Account created', 'confirm');
 
-    this.backToLogin();
+    this.signalService.backToLogin();
   }
 
+  /**
+ * Sets the avatar ID for the current user.
+ * @param avatarId - The selected avatar ID.
+ */
   selectAvatarId(avatarId: string) {
     if (!this.currentUser) return;
     this.currentUser.avatarId = avatarId;
   }
 
+  /**
+ * Returns the image path for the current user's avatar.
+ * If no avatar is selected, returns the default avatar image path.
+ * @returns The file path to the avatar image.
+ */
   getAvatarImagePath() {
     if (!this.currentUser || this.currentUser.avatarId === '0') {
       return '/assets/icons/user/user_0.png';
     }
     return `/assets/icons/user/user_${this.currentUser.avatarId}.png`;
-  }
-
-  backToLogin() {
-    this.signalService.isLoginDialog.set(true);
-    this.signalService.isRegisterDialog.set(false);
-    this.signalService.isChoosingAvatarDialog.set(false);
-    this.signalService.isPasswordForgottenDialog.set(false);
   }
 }
