@@ -153,8 +153,6 @@ export class ConversationService {
         const data = docSnapshot.data();
         return this.setConversationObject(docSnapshot.id, data);
       });
-
-      console.log('conversations:', this.conversations);
     } catch (error) {
       console.error('Error loading conversations:', error);
     }

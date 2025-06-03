@@ -8,4 +8,5 @@ export interface ChannelInterface {
     channelName: string;
     channelDescription?: string;
     channelMessages?: ChannelMessageInterface[];
+    createdBy: string;
 }

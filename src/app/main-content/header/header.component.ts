@@ -21,7 +21,10 @@ export class HeaderComponent {
   searchInput: string = '';
   hoverMenu: boolean = false;
   dropdownOpen: boolean = false;
-  @ViewChild('dropdownContainer') dropdownRef!: ElementRef;
+  showProfileInfo: boolean = false;
+  editProfile: boolean = false;
+  editName: string = "";
+  //@ViewChild('dropdownContainer') dropdownRef!: ElementRef;
 
   /** Logs out the current user and closes the logout popup. */
   logout() {
@@ -57,15 +60,26 @@ export class HeaderComponent {
   }
 
   toggleDropdown(){
-    this.dropdownOpen = !this.dropdownOpen
+    this.dropdownOpen = !this.dropdownOpen;
+    this.showProfileInfo = false;
   }
 
-  @HostListener('document:click', ['$event'])
-  onDocumentClick(event: MouseEvent) {
-    const clickedInside = this.dropdownRef?.nativeElement.contains(event.target);
-    if (!clickedInside) {
-      this.dropdownOpen = false;
+  showProfile() {
+    this.showProfileInfo = true;
+    this.dropdownOpen = true;
+    this.editName = this.authService.currentUser()!.name;
+  }
+
+  sendTest() {
+    if(this.editName != this.authService.currentUser()!.name) {
+      this.usersService.updateUserName(
+        this.authService.userId,
+        this.editName
+      );
+      this.editProfile = false;
+      //trigger Toast
+    } else {
+      this.editProfile = false;
     }
   }
-
 }

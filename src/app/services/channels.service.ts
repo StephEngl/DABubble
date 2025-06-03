@@ -62,6 +62,7 @@ export class ChannelsService {
     return {
       id: id,
       createdAt: channelData.createdAt.toDate().toLocaleString(),
+      createdBy: channelData.createdBy,
       members: channelData.members,
       channelName: channelData.channelName,
       channelMessages: channelData.channelMessages,

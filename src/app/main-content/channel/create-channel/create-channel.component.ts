@@ -37,6 +37,7 @@ export class CreateChannelComponent {
       channelName: this.channelNameInput,
       channelDescription: this.channelDescriptionInput,
       members: [this.authService.userId],
+      createdBy: this.authService.userId
     }
   }
 

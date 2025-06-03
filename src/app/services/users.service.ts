@@ -42,7 +42,6 @@ export class UsersService implements OnDestroy {
           const user = element.data();
           this.users.push(this.setObjectData(element.id, user));
         });
-        console.log('User', this.users);
       },
       (error) => {
         console.error('Firestore Error', error.message);
@@ -96,6 +95,19 @@ export class UsersService implements OnDestroy {
       status: obj.status,
     };
   }
+
+async updateUserName(uid: string, name: string): Promise<void> {
+  try {
+    const userRef = doc(this.getUsersRef(), uid);
+    await updateDoc(userRef, { name });
+    const user = this.users.find(u => u.id === uid);
+    if (user) {
+      user.name = name;
+    }
+  } catch (err) {
+    console.error('Error updating user name/email:', err);
+  }
+}
 
   async updateUserAvatar(uid: string, avatarId: string): Promise<void> {
     try {
