@@ -100,3 +100,35 @@ span {
         }
     }
 }
+
+.search-results {
+    position: absolute;
+    align-self: flex-start;
+    padding: 16px;
+    max-height: 250px;
+    overflow-y: auto;
+    width: 260px;
+    background-color: var(--col-bg-secondary);
+    border: 1px solid var(--col-stroke-main);
+    border-radius: 0 20px 20px 20px;
+    top: 60px;
+    left: 20px;
+    .search-result {
+        @include dFlex($jc: flex-start, $gap:10px);
+        width: 100%;
+        padding: 10px;
+        margin: 6px 0;
+        border-radius: 20px;
+        cursor:pointer;
+        &:hover {
+            background-color: var(--col-bg-main);
+        }
+        >img {
+            height: 30px;
+            border-radius: 50%;
+        }
+    }
+    >p {
+        font-size: 16px;
+    }
+}

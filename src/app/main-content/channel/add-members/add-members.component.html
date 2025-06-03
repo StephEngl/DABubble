@@ -22,14 +22,24 @@
         <p class="active-channel">
             Name: <span>#{{ channelService.getChannelById(currentChannelId!)!.channelName }}</span></p>
         <div class="input-area">
-            @for(member of selectedMembers; track member) {
+            @for(member of selectedMembers; track member.id) {
                 <div class="selection">
-                    <img src="./../../../../assets/icons/user/user_2.png" alt="">
-                    <p> User Name</p>
-                    <button (click)="removeMember(member)">X</button>
+                    <img [src]="'./../../../../assets/icons/user/user_'+ member.avatarId +'.png'" alt="">
+                    <p> {{member.name}}</p>
+                    <button (click)="removeMember(member.id!)">X</button>
                 </div>
             }
-            <input type="text">
+            <input [(ngModel)]="textInput" #searchInput="ngModel" type="text">
+            @if (searchResultsUser.length > 0) {
+                <div class="search-results">
+                    @for(member of searchResultsUser; track member.id) {
+                        <div class="search-result" (click)="addMember(member)">
+                            <img [src]="'./../../../../assets/icons/user/user_'+ member.avatarId +'.png'" alt="">
+                            <p> {{member.name}}</p>
+                        </div>
+                    }
+                </div>
+            }
         </div>
 
         <footer class="button-wrapper">
@@ -37,3 +47,4 @@
         </footer>
     }
 </section>
+
