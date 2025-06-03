@@ -24,6 +24,7 @@ export class SignalsService {
   showCreateChannel = signal<boolean>(false);
   showChannelMembers = signal<boolean>(false);
   showUserInfo = signal<boolean>(false);
+  showAddMembers = signal<boolean>(true);
 
   scrollChannelToBottom = signal<boolean>(false);
 

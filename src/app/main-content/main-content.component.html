@@ -22,3 +22,9 @@
         <app-user-info (click)="$event.stopPropagation()"></app-user-info>
     </section>
 }
+
+@if (signalService.showAddMembers()) {
+    <section class="transparency" (click)="signalService.showUserInfo.set(false)">
+        <app-add-members (click)="$event.stopPropagation()"></app-add-members>
+    </section>
+}

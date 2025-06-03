@@ -1,0 +1,39 @@
+<section class="add-members">
+    <header class="add-title">
+        <h3>Add Members to Channel</h3>
+        <button class="close-button" (click)="signalService.showAddMembers.set(false)">X</button>
+    </header>
+
+    @if (!userSelectionActive) {
+        <ul>
+            <li class="add-option" (click)="toggleAddAllMembers()">
+                <img [src]="allMembersCheckStatus" alt="">
+                <p>Add <span>all members</span> of your organization to the channel</p>
+            </li>
+            <li class="add-option" (click)="toggleAddSpecificMembers()">
+                <img [src]="specificMembersCheckStatus" alt="">
+                <p>Select <span>specific users</span> from your organization</p>
+            </li>
+        </ul>
+        <footer class="button-wrapper">
+            <button (click)="selectUsers()" type="button" [disabled]="!addSpecificMembers && !addAllMembers">Create</button>
+        </footer>
+    } @else {
+        <p class="active-channel">
+            Name: <span>#{{ channelService.getChannelById(currentChannelId!)!.channelName }}</span></p>
+        <div class="input-area">
+            @for(member of selectedMembers; track member) {
+                <div class="selection">
+                    <img src="./../../../../assets/icons/user/user_2.png" alt="">
+                    <p> User Name</p>
+                    <button (click)="removeMember(member)">X</button>
+                </div>
+            }
+            <input type="text">
+        </div>
+
+        <footer class="button-wrapper">
+            <button (click)="selectUsers()" type="button">Create</button>
+        </footer>
+    }
+</section>

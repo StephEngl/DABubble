@@ -20,15 +20,38 @@ export class CreateChannelComponent {
   channelNameInput: string = '';
   channelDescriptionInput: string = '';
 
-  submitForm(ngForm: NgForm) {
+  async submitForm(ngForm: NgForm) {
     if (!ngForm.valid) return;
-    const channelData = this.getChannelData();
+      const channelData = this.getChannelData();
     if (!this.channelAlreadyExists()) {
-      this.channelService.addChannel(channelData);
+      await this.channelService.addChannel(channelData);
+      this.openChannelAndAddMembers();
       ngForm.reset();
     } else {
       console.log('Channel already exists!'); // trigger toast or error message
     }
+  }
+
+  openChannelAndAddMembers() {
+    const id = this.getChannelIdByName();
+    this.showChannelId(id);
+    this.signalService.showAddMembers.set(true);
+    this.signalService.showCreateChannel.set(false);
+  }
+
+  getChannelIdByName():string {
+    const channel = this.channelService.channels.find(c => c.channelName === this.channelNameInput);
+    if (channel && channel.id) {
+      return channel.id;
+    } else {
+      return "";
+    }
+  }
+
+  showChannelId(id: string):void {
+    localStorage.setItem("currentChannel", id);
+    this.channelService.subscribeToChannelMessages(id);
+    this.signalService.setChannelSignals(id);
   }
 
   getChannelData(): ChannelInterface {

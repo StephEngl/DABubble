@@ -25,7 +25,7 @@
                         } @else { <p class="member-overflow"></p> }
                 </div>
 
-                <div class="add-members" (mouseenter)="addMembersHovered = true; signalService.showChannelMembers.set(false)" (mouseleave)="addMembersHovered = false">
+                <div class="add-members" (click)="signalService.showAddMembers.set(true)" (mouseenter)="addMembersHovered = true; signalService.showChannelMembers.set(false)" (mouseleave)="addMembersHovered = false">
                     <img [src]="addMembersHovered ? './../../../../assets/icons/menu/person_add_blue.svg' : './../../../../assets/icons/menu/person_add_black.svg'"
                         alt="">
                 </div>
@@ -83,7 +83,7 @@
                     }
                 </div>
             </div>
-            <button class="add-member">
+            <button class="add-member" (click)="signalService.showAddMembers.set(true)">
                 <img src="./../../../../assets/icons/menu/person_add_black.svg" alt="">
                 <p>add members</p>
             </button>
