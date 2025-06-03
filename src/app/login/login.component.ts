@@ -26,6 +26,10 @@ export class LoginComponent {
   route = inject(ActivatedRoute);
   signalService = inject(SignalsService);
 
+  /**
+   * Angular lifecycle hook that is called after component initialization.
+   * Subscribes to query parameters and handles password reset dialog display if appropriate.
+   */
   ngOnInit() {
     this.handlePasswordResetDialogFromQueryParams();
   }
