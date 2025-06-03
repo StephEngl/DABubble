@@ -26,16 +26,29 @@ export class LoginComponent {
   route = inject(ActivatedRoute);
   signalService = inject(SignalsService);
 
-ngOnInit() {
-  // Show Password-Reset-Dialog, after clicking link in password forgotten mail!
-    this.route.queryParams.subscribe(params => {
-      if (params['mode'] === 'resetPassword' && params['oobCode']) {
+  ngOnInit() {
+    this.handlePasswordResetDialogFromQueryParams();
+  }
+
+  /**
+   * Checks the URL query parameters for a password reset request.
+   * If the mode is 'resetPassword' and an oobCode is present,
+   * shows the password reset dialog.
+   */
+  private handlePasswordResetDialogFromQueryParams(): void {
+    this.route.queryParams.subscribe((params) => {
+      if (this.isPasswordResetRequest(params)) {
         this.signalService.showPasswordResetDialog();
       }
     });
   }
 
-  showTestToast() {
-    this.signalService.triggerToast('Zeig mal her', 'confirm')
+  /**
+   * Determines whether the query parameters indicate a password reset request.
+   * @param params - The query parameters from the route.
+   * @returns True if the mode is 'resetPassword' and an oobCode is present; otherwise, false.
+   */
+  private isPasswordResetRequest(params: { [key: string]: any }): boolean {
+    return params['mode'] === 'resetPassword' && !!params['oobCode'];
   }
 }
