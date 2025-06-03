@@ -39,14 +39,6 @@ export class LoginDialogComponent {
     this.passwordVisible = !this.passwordVisible;
   }
 
-  openPasswordForgottenDialog() {
-    this.signalService.isPasswordForgottenDialog.set(true);
-    this.signalService.isLoginDialog.set(false);
-    this.signalService.isRegisterDialog.set(false);
-    this.signalService.isChoosingAvatarDialog.set(false);
-    this.signalService.isPasswordResetDialog.set(false);
-  }
-
   /**
    * Called when the login form is submitted.
    * Sets the submission flag if the login is not a guest login.
@@ -91,6 +83,9 @@ export class LoginDialogComponent {
     setTimeout(() => (this.isGuestLogin = false), 100);
   }
 
+  /**
+ * Initiates the login process using Google authentication.
+ */
   async loginWithGoogle() {
     // const returnUrl = this.route.snapshot.queryParamMap.get('returnUrl') || '/';
     // localStorage.setItem('returnUrl', returnUrl);
