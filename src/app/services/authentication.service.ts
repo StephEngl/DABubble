@@ -18,6 +18,7 @@ import {
   sendPasswordResetEmail,
   verifyPasswordResetCode,
   confirmPasswordReset,
+  fetchSignInMethodsForEmail,
 } from '@angular/fire/auth';
 import { UsersService } from './users.service';
 import { SignalsService } from './signals.service';
@@ -171,7 +172,6 @@ export class AuthenticationService {
     if (!this.auth.currentUser) {
       throw new Error('No user is currently logged in.');
     }
-
     try {
       await updateProfile(this.auth.currentUser, {
         displayName: name,
@@ -223,7 +223,7 @@ export class AuthenticationService {
       await signOut(this.auth);
       this.isAuthenticated.set(false);
       this.router.navigate(['/login']);
-      console.log('User logged out');
+      this.signalService.triggerToast('Logged out', 'confirm')
     } catch (error) {
       console.error('Sign out error:', error);
     }
@@ -240,6 +240,7 @@ export class AuthenticationService {
     try {
       await deleteUser(user);
       this.isAuthenticated.set(false);
+      this.signalService.triggerToast('User deleted', 'confirm')
       this.router.navigate(['/login']).then(() => location.reload());
     } catch (error) {
       console.error('Deleting active user failed', error);
@@ -269,7 +270,7 @@ export class AuthenticationService {
           url: 'http://localhost:4200/login',
           handleCodeInApp: true,
         });
-        this.signalService.triggerToast('Email sent', 'confirm', '/assets/icons/login/send.svg');
+        this.signalService.triggerToast('Email sent, please also check your spam-folder', 'confirm', '/assets/icons/login/send.svg');
         setTimeout(() => {
           this.signalService.backToLogin();
         }, 2500);

@@ -96,6 +96,5 @@ export class LoginDialogComponent {
     // localStorage.setItem('returnUrl', returnUrl);
     // this.authService.signInWithGoogleRedirect();
     this.authService.signInWithGooglePopup();
-    
   }
 }
