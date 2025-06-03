@@ -110,4 +110,10 @@ export class ChannelHeaderComponent {
     window.location.reload();
   }
 
+  startConversation(id: string):void {
+    this.conService.startNewConversation(id);
+    this.inputText = "";
+    this.showList = false;
+  }
+
 }

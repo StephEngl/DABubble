@@ -5,6 +5,7 @@ import { UsersService } from '../../services/users.service';
 import { FormsModule } from '@angular/forms';
 import { ChannelsService } from '../../services/channels.service';
 import { SignalsService } from '../../services/signals.service';
+import { ChannelInterface } from '../../interfaces/channel.interface';
 
 @Component({
   selector: 'app-header',
@@ -82,4 +83,9 @@ export class HeaderComponent {
       this.editProfile = false;
     }
   }
+
+  isChannelMember(channel: ChannelInterface):boolean {
+    return channel.members!.includes(this.authService.userId);
+  }
+
 }

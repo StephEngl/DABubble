@@ -48,7 +48,7 @@
             <div>No users found</div>
             }
             @for(user of searchResultsUser; track user) {
-            <div class="result" (click)="conService.startNewConversation(user.id!)">
+            <div class="result" (click)="startConversation(user.id!)">
                 <img [src]="usersService.getAvatar(user.id!)" alt="">
                 <p>{{ user.name}}</p>
             </div>

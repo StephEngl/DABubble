@@ -163,20 +163,22 @@ export class ConversationService {
   }
 
   participant(conversation: ConversationInterface): any  {
-    return conversation.participants.find((id: string) => id !== this.authService.userId)
+      const [a, b] = conversation.participants;
+      const currentUser = this.authService.userId;
+      return (a === b) ? a : (a === currentUser ? b : a);
   }
 
   async startNewConversation(id: string): Promise<void> {
     const currentUser = this.authService.userId;
-    const existingConversation = this.conversations.find(con =>
-      con.participants.includes(currentUser) && con.participants.includes(id)
-    );
+    const existingConversation = this.conversations.find(con => {
+      const [a, b] = con.participants;
+      return (a === currentUser && b === id) || (a === id && b === currentUser);
+    });
 
     if (existingConversation?.id) {
       await this.openConversation(existingConversation.id);
       return;
     }
-
     const newConversation: ConversationInterface = {
       participants: [currentUser, id]
     };

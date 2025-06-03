@@ -123,28 +123,12 @@ header {
 }
 
 .dropdown-wrapper {
-    position: fixed;
-    width: 100%;
-    height: 100vh;
-    background-color: var(--col-transparent-shadow);
-    top: 0;
-    left: 0;
-    z-index: 3;
+    @include transparentBackground();
     transition: opacity 0.4s linear;
 }
 
 .dropdown-menu {
-    z-index: 4;
-    top: 124px;
-    right: 16px;
-    width: 370px;
-    height: auto;
-    @include dFlex($fd: column, $gap: 15px, $pos: absolute);
-    border-radius: 30px 0 30px 30px;
-    background-color: white;
-    border-radius: 30px 0 30px 30px;
-    box-shadow: 0px 6px 10px 0px rgba(0, 0, 0, 0.2);
-    padding: 24px;
+    @include dialogWrapper($width: 370px, $top: 124px, $right: 16px);
     transition: all 0.4s linear;
     
     >button{

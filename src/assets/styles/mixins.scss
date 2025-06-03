@@ -20,3 +20,27 @@
     border-radius: 20px;
     transform: translateX(-50%);
 }
+
+@mixin transparentBackground() {
+    position: fixed;
+    width: 100%;
+    height: 100vh;
+    background-color: var(--col-transparent-shadow);
+    top: 0;
+    left: 0;
+    z-index: 3;
+}
+
+@mixin dialogWrapper($width: 370px, $top, $right) {
+    z-index: 4;
+    top: $top;
+    right: $right;
+    width: $width;
+    height: auto;
+    @include dFlex($fd: column, $gap: 15px, $pos: absolute);
+    border-radius: 30px 0 30px 30px;
+    background-color: var(--col-bg-secondary);
+    border-radius: 30px 0 30px 30px;
+    box-shadow: 0px 6px 10px 0px rgba(0, 0, 0, 0.2);
+    padding: 24px;
+}
