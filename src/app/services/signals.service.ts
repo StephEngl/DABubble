@@ -21,6 +21,7 @@ export class SignalsService {
   showWorkspace = signal<boolean>(true);
   showThread = signal<boolean>(false);
   showCreateChannel = signal<boolean>(false);
+  showChannelMembers = signal<boolean>(false);
 
   scrollChannelToBottom = signal<boolean>(false);
 
