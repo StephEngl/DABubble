@@ -1,4 +1,4 @@
-<header>
+<header (mouseleave)="signalService.showChannelMembers.set(false)">
     @if(!signalService.startConversation()) {
         
         @if(signalService.conversationActive()) {
@@ -7,7 +7,7 @@
                 <h3> {{usersService.findName(directMessageContact)}} </h3>
             </nav>
         } @else {
-            <nav>
+            <nav (mouseenter)="signalService.showChannelMembers.set(false)">
                 <img src="./../../../assets/icons/general/tag_black.svg" alt="">
                 <h3 (click)="darkModeTest()">{{currentChannel?.channelName}}</h3>
                 <img src="./../../../assets/icons/menu/dropdown_black.svg" alt="">
@@ -25,7 +25,7 @@
                         } @else { <p class="member-overflow"></p> }
                 </div>
 
-                <div class="add-members" (mouseenter)="addMembersHovered = true" (mouseleave)="addMembersHovered = false">
+                <div class="add-members" (mouseenter)="addMembersHovered = true; signalService.showChannelMembers.set(false)" (mouseleave)="addMembersHovered = false">
                     <img [src]="addMembersHovered ? './../../../../assets/icons/menu/person_add_blue.svg' : './../../../../assets/icons/menu/person_add_black.svg'"
                         alt="">
                 </div>
@@ -76,7 +76,7 @@
             <div class="scroll-wrapper-members">
                 <div class="list-members">
                     @for (member of currentChannel?.members; track member; let index = $index) {
-                        <div class="member-entry">
+                        <div class="member-entry" (click)="showUserInfo(member)">
                             <img [src]="usersService.getAvatar(member)">
                             <p>{{ usersService.findName(member) }}</p>
                         </div>

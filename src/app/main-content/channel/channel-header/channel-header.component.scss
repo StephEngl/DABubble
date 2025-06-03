@@ -122,7 +122,7 @@ header {
 
 
 .dropdown-menu {
-    @include dialogWrapper($width: 320px, $top: 16px, $right: 84px);
+    @include dialogWrapper($width: 320px, $top: 66px, $right: 84px);
     border: 1px solid var(--col-stroke-main);
     .list-members {
         @include dFlex($fd: column);

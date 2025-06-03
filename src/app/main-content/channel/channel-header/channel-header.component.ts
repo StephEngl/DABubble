@@ -117,4 +117,9 @@ export class ChannelHeaderComponent {
     this.showList = false;
   }
 
+  showUserInfo(id: string) {
+    this.signalService.userInfoId.set(id);
+    this.signalService.showUserInfo.set(true)
+  }
+
 }

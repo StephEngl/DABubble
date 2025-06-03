@@ -12,7 +12,13 @@
 </nav>
 
 @if (signalService.showCreateChannel()) {
-    <section class="create-channel" (click)="signalService.showCreateChannel.set(false)">
+    <section class="transparency" (click)="signalService.showCreateChannel.set(false)">
         <app-create-channel (click)="$event.stopPropagation()"></app-create-channel>
+    </section>
+}
+
+@if (signalService.showUserInfo()) {
+    <section class="transparency" (click)="signalService.showUserInfo.set(false)">
+        <app-user-info (click)="$event.stopPropagation()"></app-user-info>
     </section>
 }
