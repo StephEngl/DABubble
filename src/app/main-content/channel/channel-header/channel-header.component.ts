@@ -25,6 +25,7 @@ export class ChannelHeaderComponent {
   @ViewChild('messageInput') messageInputRef!: ElementRef<HTMLTextAreaElement>;
 
   addMembersHovered: boolean = false;
+  dropdownMembers: boolean = true;
   inputText: string = '';
   mentionTrigger: '@' | '#' | null = null;
   showList: boolean = false;
@@ -114,6 +115,11 @@ export class ChannelHeaderComponent {
     this.conService.startNewConversation(id);
     this.inputText = "";
     this.showList = false;
+  }
+
+  showUserInfo(id: string) {
+    this.signalService.userInfoId.set(id);
+    this.signalService.showUserInfo.set(true)
   }
 
 }

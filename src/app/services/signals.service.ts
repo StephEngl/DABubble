@@ -17,10 +17,13 @@ export class SignalsService {
   conversationActive = signal<boolean>(false);
   activeConId = signal<string>('');
   activeReplyToId = signal<string>('');
+  userInfoId = signal<string>('');
 
   showWorkspace = signal<boolean>(true);
   showThread = signal<boolean>(false);
   showCreateChannel = signal<boolean>(false);
+  showChannelMembers = signal<boolean>(false);
+  showUserInfo = signal<boolean>(false);
 
   scrollChannelToBottom = signal<boolean>(false);
 

@@ -24,11 +24,22 @@
 @mixin transparentBackground() {
     position: fixed;
     width: 100%;
+    max-width: 1920px;
     height: 100vh;
-    background-color: var(--col-transparent-shadow);
     top: 0;
-    left: 0;
+    left: 50%;
+    transform: translateX(-50%);
     z-index: 3;
+    &::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 100vw;
+        height: 100vh;
+        background-color: var(--col-transparent-shadow);
+    }
 }
 
 @mixin dialogWrapper($width: 370px, $top, $right) {

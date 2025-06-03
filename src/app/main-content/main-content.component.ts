@@ -9,6 +9,7 @@ import { SignalsService } from '../services/signals.service';
 import { AuthenticationService } from '../services/authentication.service';
 import { UsersService } from '../services/users.service';
 import { ConversationService } from '../services/conversations.service';
+import { UserInfoComponent } from './user-info/user-info.component';
 
 @Component({
   selector: 'app-main-content',
@@ -18,7 +19,8 @@ import { ConversationService } from '../services/conversations.service';
     ThreadComponent,
     ChannelComponent,
     WorkspaceComponent,
-    CreateChannelComponent
+    CreateChannelComponent,
+    UserInfoComponent
   ],
   templateUrl: './main-content.component.html',
   styleUrl: './main-content.component.scss'
