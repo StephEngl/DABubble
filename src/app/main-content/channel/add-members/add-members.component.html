@@ -43,7 +43,7 @@
         </div>
 
         <footer class="button-wrapper">
-            <button (click)="selectUsers()" type="button">Create</button>
+            <button (click)="addSpecificToChannel()" type="button" [disabled]="!selectedMembers.length">Create</button>
         </footer>
     }
 </section>

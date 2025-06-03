@@ -4,6 +4,7 @@ import { ChannelsService } from '../../../services/channels.service';
 import { FormsModule } from '@angular/forms';
 import { UsersService } from '../../../services/users.service';
 import { UserInterface } from '../../../interfaces/user.interface';
+import { ChannelInterface } from '../../../interfaces/channel.interface';
 
 
 @Component({
@@ -52,6 +53,20 @@ export class AddMembersComponent {
       console.log("all members selected");
     }
   }
+
+async addSpecificToChannel() {
+  // const members = this.selectedMembers.map(m => m.id!);
+  // const currentChannelId = localStorage.getItem('currentChannel');
+  // const currentChannel = this.channelService.getChannelById(currentChannelId!);
+
+  // if (!currentChannel) return;
+
+  // const updatedChannel: ChannelInterface = {
+  //   ...currentChannel,
+  //   members: [...currentChannel.members!, ...members]
+  // };
+  // await this.channelService.updateChannel(updatedChannel);
+}
 
   get currentChannelId() {
     return localStorage.getItem('currentChannel')
