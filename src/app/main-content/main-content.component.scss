@@ -82,7 +82,7 @@ app-thread {
     }
 }
 
-@media screen and (max-width: 950px) {
+@media screen and (max-width: 850px) {
     .main-content {
         gap: 0px;
     }
@@ -91,7 +91,8 @@ app-thread {
         transition: none;
     }
     app-workspace,
-    app-thread {
+    app-thread,
+    app-channel {
         width: calc(100% - 32px);
     }
 

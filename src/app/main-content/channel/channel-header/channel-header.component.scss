@@ -79,7 +79,7 @@ header {
 }
 
 .channel-members-mobile {
-    @include dFlex($gap: 10px);
+    display: none;
     cursor: pointer;
 }
 
@@ -198,13 +198,15 @@ header {
     }
     nav,
     .channel-members,
-    .add-members,
-    .header-right {
+    .add-members {
         @include dFlex($gap: 5px !important);
     }
     .add-members,
     .channel-members-mobile  {
-        width: 35px;
-        height: 35px;
+        width: 40px;
+        height: 40px;
+    }
+    .channel-members-mobile {
+        @include dFlex($gap: 10px);
     }
 }

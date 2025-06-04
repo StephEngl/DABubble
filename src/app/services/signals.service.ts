@@ -149,10 +149,7 @@ export class SignalsService {
   showOnlyThreadOnMobile():void {
     if (window.innerWidth < 850) {
       this.showChannel.set(false);
-      console.log("850");
-      
-    } else 
-    if (window.innerWidth < 1500) {
+    } else if (window.innerWidth < 1500) {
       this.showWorkspace.set(false);
     }
   }

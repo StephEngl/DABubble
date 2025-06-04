@@ -3,6 +3,7 @@
 .channel {
     position: relative;
     height: 100%;
+    width: 100%;
 }
 
 app-create-message {
@@ -10,7 +11,7 @@ app-create-message {
     background-color: var(--col-bg-secondary);
 }
 
-@media screen and (max-width: 850) {
+@media screen and (max-width: 850px) {
     app-create-message {
         @include createMessage($width: calc(100% - 48px) !important);
     }
