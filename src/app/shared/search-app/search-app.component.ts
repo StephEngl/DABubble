@@ -21,7 +21,7 @@ export class SearchAppComponent {
   searchInput: string = '';
   editName: string = "";
 
-  get searchResultsChannel() {
+  get searchResultsChannel():ChannelInterface[] {
     const searchTerm = this.searchInput.trim().toLowerCase();
     if (!searchTerm) return [];
 
@@ -60,10 +60,11 @@ export class SearchAppComponent {
   }
 
   showChannel(id: string) {
+    this.signalService.conversationActive.set(false);
     localStorage.setItem("currentChannel", id);
     this.channelService.subscribeToChannelMessages(id);
-    this.signalService.scrollChannelToBottom.set(true);
     this.signalService.hideWorkspaceOnMobile();
+    this.signalService.scrollChannelToBottom.set(true);
     this.searchInput = '';
   }
 

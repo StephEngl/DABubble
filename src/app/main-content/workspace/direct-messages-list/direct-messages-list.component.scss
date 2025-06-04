@@ -56,13 +56,16 @@ ul {
 .close-list {
     max-height: 0px !important;
     padding-bottom: 0 !important;
+    padding-top: 0 !important;
+    overflow: hidden;
 }
 
 .direct-messages {
     @include dFlex($fd:column, $ai:flex-start, $gap: 16px);
     width: 100%;
-    overflow: hidden;
+    overflow: auto;
     max-height: 500px;
     transition: all 0.5s ease;
-    padding: 0 0 20px 30px;
+    padding: 40px 0 20px 30px;
 }
+

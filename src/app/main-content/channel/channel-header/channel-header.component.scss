@@ -83,6 +83,8 @@ header {
     border-radius: 20px;
     border: 1px solid var(--col-stroke-main);
     top: 110px;
+    width: 300px;
+    box-sizing: border-box;
     background-color: var(--col-bg-secondary);
     filter: drop-shadow(4px 4px 4px var(--col-transparent-shadow));
     .result {
@@ -100,7 +102,6 @@ header {
             border-radius: 100%;
         }
         &:hover {
-            transform: scale(1.05);
             background-color: var(--col-bg-main);
             cursor: pointer;
         }

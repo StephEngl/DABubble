@@ -20,8 +20,9 @@ export class WorkspaceComponent {
   ngOnInit() {
     this.checkSize();
   }
-  
+
   newConversation() {
+    this.signalService.hideWorkspaceOnMobile();
     this.signalService.startConversation.set(true);
   }
 

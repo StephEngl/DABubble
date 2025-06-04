@@ -62,9 +62,15 @@ export class ChannelHeaderComponent {
   get searchResultsChannel(): ChannelInterface[] {
     const match = this.inputText.match(/#(\w*)$/);
     const searchTerm = match?.[1]?.toLowerCase() ?? 'no results';
-    return this.channelService.channels.filter(channel =>
-      channel.channelName.toLowerCase().includes(searchTerm)
-    );
+    return this.channelService.channels
+      .filter(channel =>
+        channel.channelName.toLowerCase().includes(searchTerm) &&
+        this.isChannelMember(channel)
+      );
+  }
+
+  isChannelMember(channel: ChannelInterface):boolean {
+    return channel.members!.includes(this.authService.userId);
   }
 
   get searchResultsUser(): UserInterface[] {
