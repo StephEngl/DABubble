@@ -35,10 +35,12 @@ export class HeaderComponent {
   get searchResultsChannel() {
     const searchTerm = this.searchInput.trim().toLowerCase();
     if (!searchTerm) return [];
-    const matches = this.channelsService.channels.filter(channel =>
-      channel.channelName.toLowerCase().includes(searchTerm)
-    );
-    return matches.length > 0 ? matches : [];
+
+    return this.channelsService.channels
+      .filter(channel =>
+        channel.channelName.toLowerCase().includes(searchTerm) &&
+        this.isChannelMember(channel)
+      );
   }
 
   get searchResultsUser() {
@@ -58,6 +60,7 @@ export class HeaderComponent {
     localStorage.setItem("currentChannel", id);
     this.channelsService.subscribeToChannelMessages(id);
     this.signalService.scrollChannelToBottom.set(true);
+    this.searchInput = '';
   }
 
   toggleDropdown(){
@@ -72,7 +75,7 @@ export class HeaderComponent {
     this.editName = this.authService.currentUser()!.name;
   }
 
-  sendTest() {
+  changeUserName() {
     if(this.editName != this.authService.currentUser()!.name) {
       this.usersService.updateUserName(
         this.authService.userId,
@@ -93,9 +96,10 @@ export class HeaderComponent {
     return this.editName == this.authService.currentUser()!.name;
   }
 
-  closeDropdown() {
-    this.dropdownOpen = false;
-    this.editProfile = false;
+  showUserInfo(id: string) {
+    this.signalService.userInfoId.set(id);
+    this.signalService.showUserInfo.set(true)
+    this.searchInput = '';
   }
 
 }
