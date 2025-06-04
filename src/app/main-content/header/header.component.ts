@@ -63,6 +63,7 @@ export class HeaderComponent {
   toggleDropdown(){
     this.dropdownOpen = !this.dropdownOpen;
     this.showProfileInfo = false;
+    this.editProfile = false;
   }
 
   showProfile() {
@@ -86,6 +87,15 @@ export class HeaderComponent {
 
   isChannelMember(channel: ChannelInterface):boolean {
     return channel.members!.includes(this.authService.userId);
+  }
+
+  noChangesToName() {
+    return this.editName == this.authService.currentUser()!.name;
+  }
+
+  closeDropdown() {
+    this.dropdownOpen = false;
+    this.editProfile = false;
   }
 
 }

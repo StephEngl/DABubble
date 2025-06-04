@@ -61,7 +61,7 @@
     }
     
     <!-- dropdown menu -->
-        <section class="dropdown-wrapper" (click)="dropdownOpen = false" [class]="dropdownOpen ? 'open' : 'close'">
+        <section class="dropdown-wrapper" (click)="toggleDropdown()" [class]="dropdownOpen ? 'open' : 'close'">
             <div class="dropdown-menu" [class]="dropdownOpen ? 'open' : 'close'" (click)="$event.stopPropagation()">
                 @if (showProfileInfo) {
                     <div class="profile-title">
@@ -92,8 +92,8 @@
                         </div>
                         <input #editNameInput="ngModel" [(ngModel)]="editName" type="text">
                         <div class="edit-menu">
-                            <button (click)="editProfile = false">Cancel</button>
-                            <button (click)="sendTest()">Save</button>
+                            <button class="edit-button" (click)="editProfile = false">Cancel</button>
+                            <button class="edit-button" (click)="sendTest()" [disabled]="noChangesToName()">Save</button>
                         </div>
                     }
                 } @else {
