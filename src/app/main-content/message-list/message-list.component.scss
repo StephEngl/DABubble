@@ -46,3 +46,14 @@
         color: var(--col-font-href);
     }
 }
+
+.channel-info {
+    padding: 0 20px;
+    >p {
+        color: var(--col-font-info);
+    }
+    >p>span {
+        font-weight: 700;
+        color: var(--col-font-href);
+    }
+}

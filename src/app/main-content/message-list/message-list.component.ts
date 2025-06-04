@@ -160,4 +160,25 @@ export class MessageListComponent implements AfterViewChecked {
     this.signalService.showUserInfo.set(true);
   }
 
+  get channelCreator() {
+    const currentChannel = this.channelService.getChannelById(this.currentChannel());
+    if (currentChannel?.members) {
+      return currentChannel.members?.[0]
+    } return "Unknown";
+  }
+
+  get channelTitle() {
+    const currentChannel = this.channelService.getChannelById(this.currentChannel());
+    if (currentChannel?.channelName) {
+      return currentChannel.channelName
+    } return "Unknown";
+  }
+
+  get channelCreatedAt() {
+        const currentChannel = this.channelService.getChannelById(this.currentChannel())?.createdAt;
+    if (currentChannel) {
+      return this.timeService.getDate(currentChannel.toDate(), 'dd-mm-yyyy'); 
+    } return "Unknown";
+  }
+
 }

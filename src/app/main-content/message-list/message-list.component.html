@@ -1,5 +1,17 @@
 <section class="message-list" #messageContainer>
     @if (isChannel && getChannelMessages()) {
+        @if(getChannelMessages().length === 0 ) {
+            <section class="channel-info">
+                <h3># {{channelTitle}}</h3>
+                <p>
+                    This Channel was created by 
+                    <span>{{ userService.findName(channelCreator) }}</span> on 
+                    <span>{{ channelCreatedAt }}</span>.
+                    <br>
+                    This is the beginning of the channel.
+                </p>
+            </section>
+        } @else {
         @for (message of getChannelMessages(); track message; let index = $index) {
             @if (shouldShowDateSeparator(index, getChannelMessages())){
                 <div class="date-separator">
@@ -14,6 +26,8 @@
                 </app-chat-message>
             }
         }
+        }
+
     } @else if (isThread && getThreadMessages()) {
         @if (currentThreadActive()) {
             <app-chat-message
