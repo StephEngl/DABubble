@@ -32,7 +32,7 @@ export class SignalsService {
   themeColorMain = signal<string>('black');
 
   // Signals for intro animation
-  showIntro = signal<boolean>(false);
+  showIntro = signal<boolean>(true);
   slideOut = signal<boolean>(false);
   moveUp = signal<boolean>(false);
   fadeOut = signal<boolean>(false);
@@ -40,11 +40,11 @@ export class SignalsService {
   startIntroAnimation() {
       // Slide out title logo after 1,3s
       setTimeout(() => this.slideOut.set(true), 1300);
-      // Animate complete logo to the upper left after 2,2s
+      // Animate complete logo to the upper left after 2,5s
       setTimeout(() => this.moveUp.set(true), 2500);
-      // Fade out intro after 3s
+      // // Fade out intro after 3,5s
       setTimeout(() => this.fadeOut.set(true), 3500);
-      // End intro and delete from DOM
+      // // End intro and delete from DOM after 4,2s
       setTimeout(() => this.showIntro.set(false), 4200);
     }
 
