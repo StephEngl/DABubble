@@ -6,7 +6,7 @@
             <div class="search-result">
                 @if (searchResultsChannel.length > 0 ) {
                     @for (result of searchResultsChannel; track result) {
-                        <div class="single-result" (click)="showThread(result.id!)">
+                        <div class="single-result" (click)="showChannel(result.id!)">
                             <p>Channel:</p>
                             <p class="result-info">#{{ result.channelName }}</p>
                         </div>

@@ -42,6 +42,7 @@ export class MainContentComponent implements OnInit {
 
   constructor() {
     this.setInitialChannel();
+    this.handleResize();
   }
 
   async ngOnInit() {
@@ -53,12 +54,21 @@ export class MainContentComponent implements OnInit {
     }
     await this.authService.getActiveUserId();
     this.listenToActivity();
+    
   }
 
   @HostListener('window:resize', [])
   handleResize(): void {
     if (window.innerWidth < 1500) {
       this.toggleWorkspaceAndThread();
+    }
+    if (window.innerWidth < 850) {
+      this.signalService.showThread.set(false);
+      this.signalService.showChannel.set(false);
+      this.signalService.showWorkspace.set(true);
+    }
+    else {
+      this.signalService.showChannel.set(true);
     }
     console.log("resizing");
     

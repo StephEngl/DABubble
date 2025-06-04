@@ -59,10 +59,11 @@ export class SearchAppComponent {
     this.searchInput = '';
   }
 
-  showThread(id: string) {
+  showChannel(id: string) {
     localStorage.setItem("currentChannel", id);
     this.channelService.subscribeToChannelMessages(id);
     this.signalService.scrollChannelToBottom.set(true);
+    this.signalService.hideWorkspaceOnMobile();
     this.searchInput = '';
   }
 

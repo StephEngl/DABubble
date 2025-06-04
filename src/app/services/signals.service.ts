@@ -21,6 +21,7 @@ export class SignalsService {
 
   showWorkspace = signal<boolean>(true);
   showThread = signal<boolean>(false);
+  showChannel = signal<boolean>(true);
   showCreateChannel = signal<boolean>(false);
   showChannelMembers = signal<boolean>(false);
   showUserInfo = signal<boolean>(false);
@@ -136,6 +137,13 @@ export class SignalsService {
     this.activeConId.set(id);
     this.showThread.set(false);
     this.startConversation.set(false);
+  }
+
+  hideWorkspaceOnMobile():void {
+    if (window.innerWidth < 850) {
+      this.showChannel.set(true);
+      this.showWorkspace.set(false);
+    }
   }
 
 }
