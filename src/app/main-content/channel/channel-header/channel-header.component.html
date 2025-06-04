@@ -66,4 +66,21 @@
         </div>
     </div>
     }
+     <!-- dropdown menu -->
+    @if(dropdownOpen){
+    <div class="dropdown-wrapper" #dropdownContainer>
+        <div class="dropdown-header">
+            <p>Members</p>
+            <p>Χ</p>
+        </div>
+        <div class="member-list">
+            @for (member of currentChannel?.members; track member; let index = $index) {
+                <div class="single-member">
+                    <img [src]="usersService.getAvatar(member)" class="member-icon">
+                    <p>${{member}}</p>
+                </div>
+            }
+        </div>
+    </div>
+}
 </header>
