@@ -1,7 +1,7 @@
 <app-header></app-header>
 <section class="main-content">
     <app-workspace [class.hidden]="!signalService.showWorkspace()"></app-workspace>
-    <app-channel></app-channel>
+    <app-channel [class.hidden]="!signalService.showChannel()"></app-channel>
     <app-thread [class.hidden]="!signalService.showThread()"></app-thread>
 
 </section>

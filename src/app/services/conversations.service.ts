@@ -200,4 +200,16 @@ export class ConversationService {
     this.signalService.setConversationSignals(id);
   }
 
+  ownConversation(): boolean {
+    const currentConId = this.signalService.activeConId();
+    const currentUserId = this.authService.userId;
+    const currentConversation = this.getConversationById(currentConId);
+    const ownUser = this.participant(currentConversation!);
+    if(ownUser === currentUserId) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
 }

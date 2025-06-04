@@ -4,12 +4,16 @@
         @if(signalService.conversationActive()) {
             <nav>
                 <img class="participant-avatar" [src]="usersService.getAvatar(directMessageContact)" alt="">
-                <h3> {{usersService.findName(directMessageContact)}} </h3>
+                <h3> {{usersService.findName(directMessageContact)}} 
+                    @if (conService.ownConversation()) {
+                        (You)
+                    }
+                </h3>
             </nav>
         } @else {
             <nav (mouseenter)="signalService.showChannelMembers.set(false)">
                 <img src="./../../../assets/icons/general/tag_black.svg" alt="">
-                <h3 (click)="darkModeTest()">{{currentChannel?.channelName}}</h3>
+                    <h3>{{currentChannel?.channelName}} </h3>
                 <img src="./../../../assets/icons/menu/dropdown_black.svg" alt="">
             </nav>
 
@@ -68,24 +72,24 @@
     </div>
     }
 
-        <section
-            class="dropdown-menu"
-            [class]="signalService.showChannelMembers() ? 'open' : 'close'"
-            (click)="$event.stopPropagation()"
-            (mouseleave)="signalService.showChannelMembers.set(false)">
-            <div class="scroll-wrapper-members">
-                <div class="list-members">
-                    @for (member of currentChannel?.members; track member; let index = $index) {
-                        <div class="member-entry" (click)="showUserInfo(member)">
-                            <img [src]="usersService.getAvatar(member)">
-                            <p>{{ usersService.findName(member) }}</p>
-                        </div>
-                    }
-                </div>
+    <section
+        class="dropdown-menu"
+        [class]="signalService.showChannelMembers() ? 'open' : 'close'"
+        (click)="$event.stopPropagation()"
+        (mouseleave)="signalService.showChannelMembers.set(false)">
+        <div class="scroll-wrapper-members">
+            <div class="list-members">
+                @for (member of currentChannel?.members; track member; let index = $index) {
+                    <div class="member-entry" (click)="showUserInfo(member)">
+                        <img [src]="usersService.getAvatar(member)">
+                        <p>{{ usersService.findName(member) }}</p>
+                    </div>
+                }
             </div>
-            <button class="add-member" (click)="signalService.showAddMembers.set(true)">
-                <img src="./../../../../assets/icons/menu/person_add_black.svg" alt="">
-                <p>add members</p>
-            </button>
-        </section>
+        </div>
+        <button class="add-member" (click)="signalService.showAddMembers.set(true)">
+            <img src="./../../../../assets/icons/menu/person_add_black.svg" alt="">
+            <p>add members</p>
+        </button>
+    </section>
 </header>

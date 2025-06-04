@@ -1,4 +1,4 @@
-import { Component, inject, Input, ViewChild, ElementRef, AfterViewChecked } from '@angular/core';
+import { Component, inject, Input, ViewChild, ElementRef, AfterViewChecked, HostListener } from '@angular/core';
 import { Timestamp } from '@angular/fire/firestore';
 import { ChannelsService } from '../../services/channels.service';
 import { FormsModule, NgForm } from '@angular/forms';
@@ -80,12 +80,25 @@ export class CreateMessageComponent implements AfterViewChecked {
     const message = this.messageObject();
     this.sortAndSendMessage(message);
     this.channelService.loadChannel(currentChannel!);
-    form.resetForm();
+    this.resetFormData(form);
     this.signalService.activeReplyToId.set('');
     this.onFocus();
     setTimeout(() => {
       this.signalService.sendingMessage.set(false);
     }, 1000);
+  }
+
+  resetFormData(form: NgForm) {
+    form.resetForm();
+    this.messageInputRef.nativeElement.value = '';
+    this.messageText = '';
+  }
+
+  onKeyDown(event: KeyboardEvent, form: NgForm): void {
+    if (event.key === 'Enter' && !event.shiftKey) {
+      event.preventDefault();
+      this.sendMessage(form);
+    }
   }
 
   messageObject(): ChannelMessageInterface {

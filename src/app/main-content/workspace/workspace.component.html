@@ -1,14 +1,29 @@
 <section class="workspace">
     <header>
-        <div class="workspace-title">
-            <img src="./../../../assets/icons/general/devspace_logo.svg" alt="">
-            <h3>Devspace</h3>
-        </div>
-        <img [src]="startConversationHovered ? './../../../assets/icons/general/edit_blue.svg' : './../../../assets/icons/general/edit_black.svg'"
+        @if (showSearchBar) {
+            <div class="column">
+
+                <div 
+                    class="start-conversation"
+                    (click)="newConversation()"
+                    (mouseenter)="startConversationHovered = true"
+                    (mouseleave)="startConversationHovered = false">
+                    <img [src]="startConversationHovered ? './../../../assets/icons/general/edit_blue.svg' : './../../../assets/icons/general/edit_black.svg'" alt="Edit Icon">
+                    <p>new Conversation</p>
+                </div>
+                                <app-search-app></app-search-app>
+            </div>
+        } @else {
+            <div class="workspace-title">
+                <img src="./../../../assets/icons/general/devspace_logo.svg" alt="">
+                <h3>Devspace</h3>
+            </div>
+            <img [src]="startConversationHovered ? './../../../assets/icons/general/edit_blue.svg' : './../../../assets/icons/general/edit_black.svg'"
             (click)="newConversation()"
             (mouseenter)="startConversationHovered = true"
             (mouseleave)="startConversationHovered = false"
             alt="Edit Icon">
+        }
     </header>
 
     <section class="workspace-lists">

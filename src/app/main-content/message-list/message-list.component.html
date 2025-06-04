@@ -1,5 +1,17 @@
 <section class="message-list" #messageContainer>
     @if (isChannel && getChannelMessages()) {
+        @if(getChannelMessages().length === 0 ) {
+            <section class="channel-info">
+                <h3># {{channelTitle}}</h3>
+                <p>
+                    This Channel was created by 
+                    <span>{{ userService.findName(channelCreator) }}</span> on 
+                    <span>{{ channelCreatedAt }}</span>.
+                    <br>
+                    This is the beginning of the channel.
+                </p>
+            </section>
+        } @else {
         @for (message of getChannelMessages(); track message; let index = $index) {
             @if (shouldShowDateSeparator(index, getChannelMessages())){
                 <div class="date-separator">
@@ -14,6 +26,8 @@
                 </app-chat-message>
             }
         }
+        }
+
     } @else if (isThread && getThreadMessages()) {
         @if (currentThreadActive()) {
             <app-chat-message
@@ -44,19 +58,34 @@
             </div>
         }
     } @else if (isConversation){
-        @for (message of getDirectMessages(this.signalService.activeConId()); track message; let index = $index) {
-            @if (shouldShowDateSeparator(index, getDirectMessages(this.signalService.activeConId()))) {
-                <div class="date-separator">
-                    <p>{{ timeService.getDate(message.createdAt.toDate(), 'dd-mm-yyyy') }}</p>
-                </div>
+        @if (hasNoMessages) {
+            @if(conService.ownConversation()) {
+                <section class="no-message-info">
+                    <h3> Your Notes </h3>
+                    <p>This space is just for you. Take notes, list your to-dos, or keep links within easy reach. You're also welcome to use it to reflect or talk things through with yourself.</p>
+                </section>
+            } @else {
+                <section class="no-message-info">
+                    <h3>Start Conversation </h3>
+                    <p>This conversation is just between you and <span (click)="userInfo()">&#64;{{userService.findName(conversationPartner)}}</span>.</p>
+                </section>
             }
-            @if (message) {
-            <app-chat-message
-                [directMessage]="message"
-                [paddingHorizontal]="'65'"
-                [isDirectMessage]="true">
-            </app-chat-message>
-            }
-        } 
+        } @else {
+            @for (message of getDirectMessages(this.signalService.activeConId()); track message; let index = $index) {
+                @if (shouldShowDateSeparator(index, getDirectMessages(this.signalService.activeConId()))) {
+                    <div class="date-separator">
+                        <p>{{ timeService.getDate(message.createdAt.toDate(), 'dd-mm-yyyy') }}</p>
+                    </div>
+                }
+                @if (message) {
+                <app-chat-message
+                    [directMessage]="message"
+                    [paddingHorizontal]="'65'"
+                    [isDirectMessage]="true">
+                </app-chat-message>
+                }
+            } 
+        }
+
     }
 </section>

@@ -7,6 +7,7 @@ import { FormsModule } from '@angular/forms';
 import { ConversationService } from '../../../services/conversations.service';
 import { AuthenticationService } from '../../../services/authentication.service';
 import { ConversationInterface } from '../../../interfaces/conversation.interface';
+import { UserInterface } from '../../../interfaces/user.interface';
 
 @Component({
   selector: 'app-channel-header',
@@ -36,14 +37,14 @@ export class ChannelHeaderComponent {
     return this.channelService.getChannelById(currentId);
   }
 
-  onMentionSelect() {
+  onMentionSelect(): void {
     if (this.inputText?.slice(-1) === "@") return;
     this.inputText += "@";
     this.triggerUserOrChannelList();
     this.onFocus();
   }
 
-  tagChannel(id: string) {
+  tagChannel(id: string): void {
     this.inputText = "";
     this.showList = false;
     localStorage.setItem("currentChannel", id);
@@ -52,13 +53,13 @@ export class ChannelHeaderComponent {
     this.signalService.focusChat.set(true);
   }
 
-  onFocus() {
+  onFocus(): void {
     this.messageInputRef?.nativeElement.focus();
     this.signalService.focusChat.set(false);
     this.signalService.focusThread.set(false);
   }
 
-  get searchResultsChannel() {
+  get searchResultsChannel(): ChannelInterface[] {
     const match = this.inputText.match(/#(\w*)$/);
     const searchTerm = match?.[1]?.toLowerCase() ?? 'no results';
     return this.channelService.channels.filter(channel =>
@@ -66,7 +67,7 @@ export class ChannelHeaderComponent {
     );
   }
 
-  get searchResultsUser() {
+  get searchResultsUser(): UserInterface[] {
     if (!this.messageInputRef) return [];
     const match = this.inputText.match(/@([^@]*)$/);
     const searchTerm = match?.[1]?.toLowerCase().trim() ?? 'no results';
@@ -76,7 +77,7 @@ export class ChannelHeaderComponent {
       );
   }
 
-  triggerUserOrChannelList() {
+  triggerUserOrChannelList(): void {
     const adressUser = this.inputText.match(/@([^@]*)$/);
     const adressChannel = this.inputText.match(/#(\w*)$/);
     if (adressUser) {
@@ -90,14 +91,14 @@ export class ChannelHeaderComponent {
     }
   }
 
-  get directMessageContact() {
+  get directMessageContact(): string {
     const currentConId = this.signalService.activeConId();
     const currentConversation = this.conService.getConversationById(currentConId);
     const participant = this.conService.participant(currentConversation!);
     return participant;
   }
 
-  darkModeTest():void {
+  darkModeTest(): void {
     const currentMode = localStorage.getItem('theme');
     if (currentMode === 'dark-theme') {
       localStorage.setItem('theme', 'light');
@@ -107,17 +108,17 @@ export class ChannelHeaderComponent {
     this.refreshPage();
   }
 
-  refreshPage():void {
+  refreshPage(): void {
     window.location.reload();
   }
 
-  startConversation(id: string):void {
+  startConversation(id: string): void {
     this.conService.startNewConversation(id);
     this.inputText = "";
     this.showList = false;
   }
 
-  showUserInfo(id: string):void {
+  showUserInfo(id: string): void {
     this.signalService.userInfoId.set(id);
     this.signalService.showUserInfo.set(true)
   }

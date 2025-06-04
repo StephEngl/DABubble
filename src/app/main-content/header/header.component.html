@@ -5,37 +5,7 @@
         <img src="./../../../assets/icons/general/dabubble_logo_title.svg" alt="">
     </div>
 
-    <section class="search-app">
-        <input type="text" placeholder="Search Devspace" #searchBar [(ngModel)]="searchInput" >
-        <img src="./../../../assets/icons/general/search_grey.svg" alt="" routerLink='/login'>
-
-        @if (searchInput.length > 0) {
-            <div class="search-result">
-                @if (searchResultsChannel.length > 0 ) {
-                    @for (result of searchResultsChannel; track result) {
-                        <div class="single-result" (click)="showThread(result.id!)">
-                            <p>Channel:</p>
-                            <p class="result-info">#{{ result.channelName }}</p>
-                        </div>
-                    }
-                } @else {
-                    <div>no results for Channels</div>
-                }
-                @if (searchInput.length > 0 && searchResultsUser.length === 0) {
-                    <div>no results for Users</div>
-                } @else if (searchInput.length > 0) {
-                    @for (result of searchResultsUser; track result) {
-                        <div class="single-result" (click)="showUserInfo(result.id!)">
-                            <p>User:</p>
-                            <img [src]="usersService.getAvatar(result.id!)" alt="">
-                            <p class="result-info">{{ result.name }}</p>
-                        </div>
-                    }
-                }
-                <!-- results direct messages -->
-            </div>
-        }
-    </section>
+    <app-search-app></app-search-app>
 
     @if (authService.currentUser()) {
         <div
@@ -55,50 +25,49 @@
         </div>
     }
     
-    <!-- dropdown menu -->
-        <section class="dropdown-wrapper" (click)="toggleDropdown()" [class]="dropdownOpen ? 'open' : 'close'">
-            <div class="dropdown-menu" [class]="dropdownOpen ? 'open' : 'close'" (click)="$event.stopPropagation()">
-                @if (showProfileInfo) {
-                    <div class="profile-title">
-                        <h4>Profile</h4>
-                        <button class="close-button" (click)="toggleDropdown()">X</button>
+    <section class="dropdown-wrapper" (click)="toggleDropdown()" [class]="dropdownOpen ? 'open' : 'close'">
+        <div class="dropdown-menu" [class]="dropdownOpen ? 'open' : 'close'" (click)="$event.stopPropagation()">
+            @if (showProfileInfo) {
+                <div class="profile-title">
+                    <h4>Profile</h4>
+                    <button class="close-button" (click)="toggleDropdown()">X</button>
+                </div>
+                <img [src]="'./../../../assets/icons/user/user_' + authService.currentUser()!.avatarId + '.png'" alt="">
+                @if (!editProfile) {
+                    <div class="profile-name">
+                        <h3>{{authService.currentUser()!.name}}</h3>
+                        @if(authService.currentUser()!.name != "Guest") {
+                            <button class="edit-button" (click)="editProfile = true">edit</button>
+                        }
                     </div>
-                    <img [src]="'./../../../assets/icons/user/user_' + authService.currentUser()!.avatarId + '.png'" alt="">
-                    @if (!editProfile) {
-                        <div class="profile-name">
-                            <h3>{{authService.currentUser()!.name}}</h3>
-                            @if(authService.currentUser()!.name != "Guest") {
-                                <button class="edit-button" (click)="editProfile = true">edit</button>
-                            }
-                        </div>
 
-                        <div class="status">
-                            <img class="user-status" [src]="'./../../../assets/icons/user/status_' + authService.currentUser()!.status + '.svg'" alt="">
-                            <p>{{authService.currentUser()!.status}}</p>
-                        </div>
-                        <div class="contact">
-                            <img src="./../../../assets/icons/login/mail_black.svg" alt="">
-                            <p>{{authService.currentUser()!.email}}</p>
-                        </div>
-                    } @else {
-                        <div class="edit-title">
-                            <img src="./../../../assets/icons/general/account_circle_black.svg" alt="">
-                            <p>Change your profile name:</p>
-                        </div>
-                        <input #editNameInput="ngModel" [(ngModel)]="editName" type="text">
-                        <div class="edit-menu">
-                            <button (click)="editProfile = false">Cancel</button>
-                            <button (click)="changeUserName()" [disabled]="noChangesToName()">Save</button>
-                        </div>
-                    }
+                    <div class="status">
+                        <img class="user-status" [src]="'./../../../assets/icons/user/status_' + authService.currentUser()!.status + '.svg'" alt="">
+                        <p>{{authService.currentUser()!.status}}</p>
+                    </div>
+                    <div class="contact">
+                        <img src="./../../../assets/icons/login/mail_black.svg" alt="">
+                        <p>{{authService.currentUser()!.email}}</p>
+                    </div>
                 } @else {
-                    <button (click)="showProfile()" >Profile</button>
-                    <button>Legal Notice</button>
-                    <button>Privacy Policy</button>
-                    <button (click)="logout()">Log out</button> 
+                    <div class="edit-title">
+                        <img src="./../../../assets/icons/general/account_circle_black.svg" alt="">
+                        <p>Change your profile name:</p>
+                    </div>
+                    <input #editNameInput="ngModel" [(ngModel)]="editName" type="text">
+                    <div class="edit-menu">
+                        <button (click)="editProfile = false">Cancel</button>
+                        <button (click)="changeUserName()" [disabled]="noChangesToName()">Save</button>
+                    </div>
                 }
-            </div>
-        </section>
+            } @else {
+                <button (click)="showProfile()" >Profile</button>
+                <button>Legal Notice</button>
+                <button>Privacy Policy</button>
+                <button (click)="logout()">Log out</button> 
+            }
+        </div>
+    </section>
 </header>
 
 

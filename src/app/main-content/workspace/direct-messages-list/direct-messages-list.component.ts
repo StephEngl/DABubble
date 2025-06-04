@@ -37,6 +37,7 @@ export class DirectMessagesListComponent {
   async openConversation(id: string) {
     await this.conService.loadConversation(id);
     this.signalService.setConversationSignals(id);
+    this.signalService.hideWorkspaceOnMobile();
   }
 
 }

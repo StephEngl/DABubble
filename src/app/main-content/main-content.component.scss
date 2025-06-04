@@ -75,3 +75,23 @@ app-thread {
         transform: rotate(90deg);
     }
 }
+
+@media screen and (max-width: 1200px) {
+    app-thread {
+        width: 385px;
+    }
+}
+
+@media screen and (max-width: 950px) {
+    app-workspace,
+    app-thread {
+        transition: none;
+    }
+    app-workspace {
+        width: calc(100% - 32px);
+    }
+}
+
+@media screen and (max-width: 450px)  {
+    
+}

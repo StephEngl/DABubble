@@ -6,11 +6,12 @@ import { FormsModule } from '@angular/forms';
 import { ChannelsService } from '../../services/channels.service';
 import { SignalsService } from '../../services/signals.service';
 import { ChannelInterface } from '../../interfaces/channel.interface';
+import { SearchAppComponent } from '../../shared/search-app/search-app.component';
 
 @Component({
   selector: 'app-header',
   standalone: true,
-  imports: [RouterLink, FormsModule],
+  imports: [FormsModule, SearchAppComponent],
   templateUrl: './header.component.html',
   styleUrl: './header.component.scss',
 })
@@ -30,37 +31,6 @@ export class HeaderComponent {
   /** Logs out the current user and closes the logout popup. */
   logout() {
     this.authService.signOutUser();
-  }
-
-  get searchResultsChannel() {
-    const searchTerm = this.searchInput.trim().toLowerCase();
-    if (!searchTerm) return [];
-
-    return this.channelsService.channels
-      .filter(channel =>
-        channel.channelName.toLowerCase().includes(searchTerm) &&
-        this.isChannelMember(channel)
-      );
-  }
-
-  get searchResultsUser() {
-    const searchTerm = this.searchInput.trim().toLowerCase();
-    if (!searchTerm) return [];
-    const matches = this.usersService.users.filter(user =>
-      user.name.toLowerCase().includes(searchTerm)
-    );
-    return matches.length > 0 ? matches : [];
-  }
-
-  get searchResultsDirectMessages() {
-    return '';
-  }
-
-  showThread(id: string) {
-    localStorage.setItem("currentChannel", id);
-    this.channelsService.subscribeToChannelMessages(id);
-    this.signalService.scrollChannelToBottom.set(true);
-    this.searchInput = '';
   }
 
   toggleDropdown(){
@@ -86,10 +56,6 @@ export class HeaderComponent {
     } else {
       this.editProfile = false;
     }
-  }
-
-  isChannelMember(channel: ChannelInterface):boolean {
-    return channel.members!.includes(this.authService.userId);
   }
 
   noChangesToName() {
