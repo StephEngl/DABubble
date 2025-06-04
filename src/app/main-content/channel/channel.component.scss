@@ -9,3 +9,9 @@ app-create-message {
     @include createMessage();
     background-color: var(--col-bg-secondary);
 }
+
+@media screen and (max-width: 850) {
+    app-create-message {
+        @include createMessage($width: calc(100% - 48px) !important);
+    }
+}

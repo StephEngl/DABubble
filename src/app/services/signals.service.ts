@@ -33,7 +33,7 @@ export class SignalsService {
   themeColorMain = signal<string>('black');
 
   // Signals for intro animation
-  showIntro = signal<boolean>(true);
+  showIntro = signal<boolean>(false);
   slideOut = signal<boolean>(false);
   moveUp = signal<boolean>(false);
   fadeOut = signal<boolean>(false);
@@ -142,6 +142,17 @@ export class SignalsService {
   hideWorkspaceOnMobile():void {
     if (window.innerWidth < 850) {
       this.showChannel.set(true);
+      this.showWorkspace.set(false);
+    }
+  }
+
+  showOnlyThreadOnMobile():void {
+    if (window.innerWidth < 850) {
+      this.showChannel.set(false);
+      console.log("850");
+      
+    } else 
+    if (window.innerWidth < 1500) {
       this.showWorkspace.set(false);
     }
   }

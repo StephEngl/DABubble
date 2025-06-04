@@ -29,10 +29,15 @@
                         } @else { <p class="member-overflow"></p> }
                 </div>
 
+                <div (click)="signalService.showChannelMembers.set(true)" class="channel-members-mobile" (mouseenter)="showMembersHovered = true" (mouseleave)="showMembersHovered = false">
+                    <img [src]="showMembersHovered ? './../../../../assets/icons/menu/group_blue.svg' : './../../../../assets/icons/menu/group_black.svg'" alt="">
+                </div>
+
                 <div class="add-members" (click)="signalService.showAddMembers.set(true)" (mouseenter)="addMembersHovered = true; signalService.showChannelMembers.set(false)" (mouseleave)="addMembersHovered = false">
                     <img [src]="addMembersHovered ? './../../../../assets/icons/menu/person_add_blue.svg' : './../../../../assets/icons/menu/person_add_black.svg'"
                         alt="">
                 </div>
+
             </section>
         }
     } @else {

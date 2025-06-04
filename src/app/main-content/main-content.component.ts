@@ -110,6 +110,9 @@ export class MainContentComponent implements OnInit {
   
   toggleWorkspaceMenu():void {
     if (this.signalService.showWorkspace()) {
+      if(window.innerWidth < 850) {
+        this.signalService.showChannel.set(true);
+      }
       this.signalService.showWorkspace.set(false);
       this.workspaceStatus = 'Close'
     } else {

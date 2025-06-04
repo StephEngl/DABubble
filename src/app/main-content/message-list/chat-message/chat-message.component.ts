@@ -107,9 +107,7 @@ export class ChatMessageComponent {
     }
     this.signalService.showThread.set(true);
     this.signalService.focusThread.set(true);
-    if (window.innerWidth < 1500) {
-      this.signalService.showWorkspace.set(false);
-    }
+    this.signalService.showOnlyThreadOnMobile();
   }
 
   replyTo() {

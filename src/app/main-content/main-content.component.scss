@@ -83,15 +83,29 @@ app-thread {
 }
 
 @media screen and (max-width: 950px) {
+    .main-content {
+        gap: 0px;
+    }
     app-workspace,
     app-thread {
         transition: none;
     }
-    app-workspace {
+    app-workspace,
+    app-thread {
         width: calc(100% - 32px);
+    }
+
+    .workspace-btn {
+        height: 40px;
+        width: 280px;
+        left: calc(16px + 40px);
+    }
+    app-channel {
+        height: calc(100% - 6px);
+        margin: 0 16px;
     }
 }
 
 @media screen and (max-width: 450px)  {
-    
+
 }

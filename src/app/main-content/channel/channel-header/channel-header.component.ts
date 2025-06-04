@@ -26,6 +26,7 @@ export class ChannelHeaderComponent {
   @ViewChild('messageInput') messageInputRef!: ElementRef<HTMLTextAreaElement>;
 
   addMembersHovered: boolean = false;
+  showMembersHovered: boolean = false;
   dropdownMembers: boolean = true;
   inputText: string = '';
   mentionTrigger: '@' | '#' | null = null;
