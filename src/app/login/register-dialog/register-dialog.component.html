@@ -12,10 +12,7 @@
       Get your own DABubble-account with your name and mail-address
     </span>
 
-    <form
-      #contactForm="ngForm"
-      class="form-login"
-    >
+    <form #contactForm="ngForm" class="form-login">
       <div class="input-wrapper">
         <div class="name-input-wrapper">
           <input
@@ -57,7 +54,7 @@
           } @else {<span class="error-message-placeholder"></span> }
         </div>
 
-        <div class="password-input-wrapper">
+        <!-- <div class="password-input-wrapper">
           <input
             #password="ngModel"
             [(ngModel)]="passwordInput"
@@ -134,7 +131,8 @@
           number, and special character.</span
         >
         }
-      </div>
+      </div> -->
+        <app-passwords></app-passwords>
 
         <div class="privacy-policy-wrapper">
           <label for="privacy-policy-checkbox">
@@ -160,14 +158,13 @@
           <button
             class="apply-button"
             type="submit"
-            [disabled]="
-              !name.valid ||
-              !email.valid ||
-              !password.valid ||
-              !privacyPolicyAccepted
-            "
+            [disabled]="!name.valid || !email.valid || !privacyPolicyAccepted"
             (click)="
-              createUser(this.nameInput, this.emailInput, this.confirmPasswordInput)
+              createUser(
+                this.nameInput,
+                this.emailInput,
+                this.confirmPasswordInput
+              )
             "
           >
             Apply

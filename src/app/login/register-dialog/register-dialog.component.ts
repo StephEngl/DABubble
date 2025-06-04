@@ -7,11 +7,12 @@ import { RouterLink } from '@angular/router';
 import { Auth } from '@angular/fire/auth';
 import { UsersService } from '../../services/users.service';
 import { PasswordService } from '../../services/password.service';
+import { PasswordsComponent } from '../passwords/passwords.component';
 
 @Component({
   selector: 'app-register-dialog',
   standalone: true,
-  imports: [FormsModule, RouterLink],
+  imports: [FormsModule, RouterLink, PasswordsComponent],
   templateUrl: './register-dialog.component.html',
   styleUrl: './register-dialog.component.scss',
 })
