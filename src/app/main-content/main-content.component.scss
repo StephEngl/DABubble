@@ -75,3 +75,9 @@ app-thread {
         transform: rotate(90deg);
     }
 }
+
+@media screen and (max-width: 1200px) {
+    app-thread {
+        width: 385px;
+    }
+}
