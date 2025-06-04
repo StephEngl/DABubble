@@ -61,7 +61,7 @@ export class ChannelsService {
   setChannelObject(id: string, channelData: any): ChannelInterface {
     return {
       id: id,
-      createdAt: channelData.createdAt.toDate().toLocaleString(),
+      createdAt: channelData.createdAt,
       createdBy: channelData.createdBy,
       members: channelData.members,
       channelName: channelData.channelName,

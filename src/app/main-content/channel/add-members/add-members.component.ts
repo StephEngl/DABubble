@@ -28,7 +28,6 @@ export class AddMembersComponent {
   selectedMembers: UserInterface[] = [];
   textInput: string = '';
 
-
   toggleAddAllMembers():void {
     this.addSpecificMembers = false;
     this.addAllMembers = !this.addAllMembers;
@@ -50,23 +49,29 @@ export class AddMembersComponent {
     if (this.addSpecificMembers) {
       this.userSelectionActive = true;
     } else {
-      console.log("all members selected");
+      this.addMembersToChannel(this.otherUsers);
     }
   }
 
-async addSpecificToChannel() {
-  // const members = this.selectedMembers.map(m => m.id!);
-  // const currentChannelId = localStorage.getItem('currentChannel');
-  // const currentChannel = this.channelService.getChannelById(currentChannelId!);
+  async addMembersToChannel(users: Array<string>) {
+    const collectedMembers = users;
+    const currentChannelId = localStorage.getItem('currentChannel');
+    if (!currentChannelId) return;
+    const currentChannel = this.channelService.getChannelById(currentChannelId);
+    if (!currentChannel) return;
+    const currentMembers = currentChannel.members;
+    if(!currentMembers) return;
 
-  // if (!currentChannel) return;
+    currentMembers.push(...collectedMembers);
+    
+    if (!currentChannel) return;
+    await this.channelService.updateChannel(currentChannel);
+    this.signalService.showAddMembers.set(false)
+  }
 
-  // const updatedChannel: ChannelInterface = {
-  //   ...currentChannel,
-  //   members: [...currentChannel.members!, ...members]
-  // };
-  // await this.channelService.updateChannel(updatedChannel);
-}
+  get selectedMemberIds() {
+    return this.selectedMembers.map(m => m.id!);
+  }
 
   get currentChannelId() {
     return localStorage.getItem('currentChannel')
@@ -92,6 +97,16 @@ async addSpecificToChannel() {
         !currentMembers.includes(user.id!) &&
         !selectedIds.includes(user.id!)
       );
+  }
+
+  get otherUsers(): string[] {
+    const currentChannelId = localStorage.getItem('currentChannel');
+    const currentChannel = this.channelService.getChannelById(currentChannelId!);
+    const currentMembers = currentChannel?.members ?? [];
+
+    return this.userService.users
+      .filter(user => user.id && !currentMembers.includes(user.id))
+      .map(user => user.id!);
   }
 
   addMember(member: UserInterface):void {

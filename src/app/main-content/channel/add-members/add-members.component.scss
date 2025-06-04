@@ -83,6 +83,7 @@ span {
     padding: 10px;
     border: 1px solid var(--col-stroke-main);
     border-radius: 20px;
+    flex-wrap: wrap;
     >input {
         flex: 1;
         font-size: 18px;
