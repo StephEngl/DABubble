@@ -6,11 +6,12 @@ import { FormsModule } from '@angular/forms';
 import { ChannelsService } from '../../services/channels.service';
 import { SignalsService } from '../../services/signals.service';
 import { ChannelInterface } from '../../interfaces/channel.interface';
+import { SearchAppComponent } from '../../shared/search-app/search-app.component';
 
 @Component({
   selector: 'app-header',
   standalone: true,
-  imports: [RouterLink, FormsModule],
+  imports: [FormsModule, SearchAppComponent],
   templateUrl: './header.component.html',
   styleUrl: './header.component.scss',
 })
