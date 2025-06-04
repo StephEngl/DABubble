@@ -270,7 +270,7 @@ export class AuthenticationService {
           url: 'http://localhost:4200/login',
           handleCodeInApp: true,
         });
-        this.signalService.triggerToast('Email sent, please also check your spam-folder', 'confirm', '/assets/icons/login/send.svg');
+        this.signalService.triggerToast('Email sent, if account exists. Please, also check your spam-folder', 'confirm', '/assets/icons/login/send.svg');
         setTimeout(() => {
           this.signalService.backToLogin();
         }, 2500);
