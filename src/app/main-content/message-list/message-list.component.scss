@@ -34,3 +34,15 @@
     color: var(--col-font-info);
     padding-bottom: 10px;
 }
+
+.no-message-info {
+    padding: 0 20px;
+    >p {
+        color: var(--col-font-info);
+    }
+    >p>span {
+        cursor: pointer;
+        font-weight: 700;
+        color: var(--col-font-href);
+    }
+}

@@ -42,7 +42,6 @@ export class MainContentComponent implements OnInit {
 
   constructor() {
     this.setInitialChannel();
-    
   }
 
   async ngOnInit() {
@@ -54,7 +53,6 @@ export class MainContentComponent implements OnInit {
     }
     await this.authService.getActiveUserId();
     this.listenToActivity();
-    
   }
 
   // @HostListener('document:click')
@@ -82,7 +80,7 @@ export class MainContentComponent implements OnInit {
     this.afkTimeoutId = setTimeout(() => {
       this.userInactive = true;
       this.usersService.updateUserStatus(this.authService.userId, 'afk');
-    }, 30000); // => 5min 300000
+    }, 300000); // => 5min 300000
   }
 
   setInitialChannel() {

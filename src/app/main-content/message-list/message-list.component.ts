@@ -15,6 +15,7 @@ import { Timestamp } from '@angular/fire/firestore';
 import { SignalsService } from '../../services/signals.service';
 import { TimeService } from '../../services/time.service';
 import { ConversationService } from '../../services/conversations.service';
+import { UsersService } from '../../services/users.service';
 
 interface Message {
   text: string;
@@ -36,6 +37,7 @@ export class MessageListComponent implements AfterViewChecked {
   channelService = inject(ChannelsService);
   signalService = inject(SignalsService);
   conService = inject(ConversationService);
+  userService = inject(UsersService);
   timeService = inject(TimeService);
   
   @Input() isChannel: boolean = false;
@@ -125,13 +127,16 @@ export class MessageListComponent implements AfterViewChecked {
 
   getDirectMessages(id:string): DirectMessageInterface[] {
     const conversation = this.conService.getConversationById(id);
-    if (conversation) {
-      // console.log(conversation);
-      
-      return conversation.messages!;
+    if (conversation?.messages) {
+      return conversation.messages;
     } else {
       return [];
     }
+  }
+
+  get hasNoMessages(): boolean {
+    const messages = this.getDirectMessages(this.signalService.activeConId());
+    return messages.length === 0;
   }
 
   hasThreadMessages(): boolean {
@@ -140,6 +145,19 @@ export class MessageListComponent implements AfterViewChecked {
   
   currentThreadActive() {
     return this.getCurrentThreadMessage()?.id === localStorage.getItem('currentThread');
+  }
+
+  get conversationPartner() {
+    const activeCon = this.conService.getConversationById(this.signalService.activeConId());
+    if (!activeCon) return;
+    const participant = this.conService.participant(activeCon);
+    if (!participant) return;
+    return participant;
+  }
+
+  userInfo() {
+    this.signalService.userInfoId.set(this.conversationPartner);
+    this.signalService.showUserInfo.set(true);
   }
 
 }
