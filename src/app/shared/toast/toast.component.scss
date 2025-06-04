@@ -33,25 +33,24 @@
   }
 }
 
-// 
 // Toast slide in from bottom on mobile devices?????
-// 
 
-// @media screen and (max-width: 800px) {
-//   .toast {
-//     left: 50%;
-//     right: auto;
-//     transform: translate(-50%, 100%);
-
-//     &.show {
-//       transform: translate(-50%, 0);
-//     }
-//   }
-// }
-
-@media screen and (max-width: 500px) {
+@media screen and (max-width: 800px) {
   .toast {
-    max-width: 250px;
+    left: 50%;
+    right: auto;
+    transform: translate(-50%, 100%);
+    border-radius: 30px;
+
+    &.show {
+      transform: translate(-50%, 0);
+    }
+  }
+}
+
+@media screen and (max-width: 550px) {
+  .toast {
+    max-width: 300px;
     font-size: 18px;
     padding: 12px 24px;
   }
@@ -59,6 +58,7 @@
 
 @media screen and (max-width: 380px) {
   .toast {
+    max-width: 250px;
     font-size: 16px;
     padding: 12px 16px;
   }
