@@ -116,6 +116,7 @@ span {
     left: 20px;
     .search-result {
         @include dFlex($jc: flex-start, $gap:10px);
+        z-index: 4;
         width: 100%;
         padding: 10px;
         margin: 6px 0;

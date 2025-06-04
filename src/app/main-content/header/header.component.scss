@@ -184,8 +184,36 @@ header {
     width: 100%;
 }
 
-.edit-button {
-    @include dFlex($gap:10px);
+.edit-menu {
+    @include dFlex($gap: 20px);
+    width: 100%;
+    >button {
+        padding: 8px 16px;
+        border-radius: 20px;
+        font-size: 18px;
+        font-weight: 700;
+    }
+    >button:first-child {
+        color: var(--col-font-info);
+        border: 1px solid var(--col-font-info);
+        &:hover {
+            background-color: var(--col-bg-main);
+        }
+    }
+    >button:last-child {
+        color: var(--col-bg-btn-main);
+        border: 1px solid var(--col-stroke-main);
+        &:hover {
+            color: var(--col-bg-secondary);
+            background-color: var(--col-bg-btn-main);
+            border: 1px solid var(--col-bg-btn-main);
+        }
+        &:disabled {
+            color: var(--col-bg-btn-disabled);
+            border: 1px solid var(--col-bg-btn-disabled);
+            background-color: var(--col-bg-secondary);
+        }
+    }
 }
 
 .close {
