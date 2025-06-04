@@ -1,4 +1,4 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, Host, HostListener, inject, OnInit } from '@angular/core';
 import { HeaderComponent } from './header/header.component';
 import { ThreadComponent } from './thread/thread.component';
 import { ChannelComponent } from './channel/channel.component';
@@ -57,6 +57,14 @@ export class MainContentComponent implements OnInit {
     
   }
 
+  // @HostListener('document:click')
+  // @HostListener('document:mousemove')
+  // @HostListener('document:keydown')
+  // @HostListener('window:scroll')
+  // handleDocumentClick(): void {
+  //   this.setStatus();
+  // }
+
   listenToActivity(): void {
     const events = ['click', 'mousemove', 'keydown', 'scroll'];
     for (let i = 0; i < events.length; i++) {
@@ -74,7 +82,7 @@ export class MainContentComponent implements OnInit {
     this.afkTimeoutId = setTimeout(() => {
       this.userInactive = true;
       this.usersService.updateUserStatus(this.authService.userId, 'afk');
-    }, 300000); // => 5min
+    }, 30000); // => 5min 300000
   }
 
   setInitialChannel() {
