@@ -33,7 +33,7 @@ export class SignalsService {
   themeColorMain = signal<string>('black');
 
   // Signals for intro animation
-  showIntro = signal<boolean>(true);
+  showIntro = signal<boolean>(false);
   slideOut = signal<boolean>(false);
   moveUp = signal<boolean>(false);
   fadeOut = signal<boolean>(false);

@@ -26,97 +26,97 @@
   width: 100%;
   @include dFlex($gap: 32px);
   flex-direction: column;
+}
 
-  .input-wrapper,
-  .mail-input-wrapper,
-  .password-input-wrapper {
-    display: flex;
-    flex-direction: column;
-    position: relative;
-    width: 100%;
+.input-wrapper,
+.mail-input-wrapper,
+.password-input-wrapper {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  width: 100%;
 
-    .icon {
-      @include dFlex();
-      position: absolute;
-      left: 20px;
-      top: 16px;
-      height: 21px;
-    }
-
-    input[type="text"],
-    input[type="email"],
-    input[type="password"] {
-      width: 100%;
-      border-radius: 100px;
-      padding: 18px 32px 18px 60px;
-      background-color: var(--col-bg-main);
-
-      &:focus {
-        outline: none;
-        border-color: var(--col-font-href);
-      }
-    }
+  .icon {
+    @include dFlex();
+    position: absolute;
+    left: 20px;
+    top: 16px;
+    height: 21px;
   }
 
-  .forgotten-password {
-    cursor: pointer;
-    font-family: "Figtree", sans-serif;
-    font-size: 18px;
-    color: var(--col-font-href);
-    padding: 5px 15px;
-    border-radius: 25px;
-    border: 1px solid transparent;
-    transition: background-color 0.125s ease-in-out;
-
-    &:hover {
-      background-color: var(--col-bg-btn-hover);
-    }
-  }
-
-  .seperator {
+  input[type="text"],
+  input[type="email"],
+  input[type="password"] {
     width: 100%;
-    height: 1px;
-    background-color: var(--col-stroke-main);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-
-    span {
-      background-color: var(--col-bg-secondary);
-      padding: 10px 20px;
-    }
-  }
-
-  .google-login-btn {
-    @include dFlex($gap: 20px);
-    width: 100%;
-    color: var(--col-bg-btn-main);
     border-radius: 100px;
-    background-color: var(--col-bg-btn-hover);
-    border: unset;
-    transition: all 0.125s ease-in-out;
+    padding: 18px 32px 18px 60px;
+    background-color: var(--col-bg-main);
 
-    &:hover {
-      transform: scale(1.02);
+    &:focus {
+      outline: none;
+      border-color: var(--col-font-href);
     }
   }
+}
 
-  .error-message {
-    color: var(--col-font-error);
-    font-size: 12px;
-    text-align: left;
-    padding: 8px 20px 0px;
-  }
+.forgotten-password {
+  cursor: pointer;
+  font-family: "Figtree", sans-serif;
+  font-size: 18px;
+  color: var(--col-font-href);
+  padding: 5px 15px;
+  border-radius: 25px;
+  border: 1px solid transparent;
+  transition: background-color 0.125s ease-in-out;
 
-  .error-message-placeholder {
-    min-height: 24px;
-    height: auto;
-    color: transparent;
+  &:hover {
+    background-color: var(--col-bg-btn-hover);
   }
+}
 
-  .mb-12 {
-    margin-bottom: -12px;
+.seperator {
+  width: 100%;
+  height: 1px;
+  background-color: var(--col-stroke-main);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  span {
+    background-color: var(--col-bg-secondary);
+    padding: 10px 20px;
   }
+}
+
+.google-login-btn {
+  @include dFlex($gap: 20px);
+  width: 100%;
+  color: var(--col-bg-btn-main);
+  border-radius: 100px;
+  background-color: var(--col-bg-btn-hover);
+  border: unset;
+  transition: all 0.125s ease-in-out;
+
+  &:hover {
+    transform: scale(1.02);
+  }
+}
+
+.error-message {
+  color: var(--col-font-error);
+  font-size: 12px;
+  text-align: left;
+  padding: 8px 20px 0px;
+}
+
+.error-message-placeholder {
+  min-height: 24px;
+  height: auto;
+  color: transparent;
+}
+
+.mb-12 {
+  margin-bottom: -12px;
 }
 
 button {

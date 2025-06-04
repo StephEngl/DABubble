@@ -6,11 +6,12 @@ import { UsersService } from '../../services/users.service';
 import { UserInterface } from '../../interfaces/user.interface';
 import { ActivatedRoute } from '@angular/router';
 import { PasswordService } from '../../services/password.service';
+import { PasswordsComponent } from '../passwords/passwords.component';
 
 @Component({
   selector: 'app-password-reset-dialog',
   standalone: true,
-  imports: [FormsModule],
+  imports: [FormsModule, PasswordsComponent],
   templateUrl: './password-reset-dialog.component.html',
   styleUrl: './password-reset-dialog.component.scss',
 })
