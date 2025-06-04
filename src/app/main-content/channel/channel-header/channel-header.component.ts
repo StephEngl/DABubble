@@ -97,7 +97,7 @@ export class ChannelHeaderComponent {
     return participant;
   }
 
-  darkModeTest() {
+  darkModeTest():void {
     const currentMode = localStorage.getItem('theme');
     if (currentMode === 'dark-theme') {
       localStorage.setItem('theme', 'light');
@@ -107,7 +107,7 @@ export class ChannelHeaderComponent {
     this.refreshPage();
   }
 
-  refreshPage() {
+  refreshPage():void {
     window.location.reload();
   }
 
@@ -117,7 +117,7 @@ export class ChannelHeaderComponent {
     this.showList = false;
   }
 
-  showUserInfo(id: string) {
+  showUserInfo(id: string):void {
     this.signalService.userInfoId.set(id);
     this.signalService.showUserInfo.set(true)
   }
