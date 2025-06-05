@@ -44,6 +44,7 @@ app-search-app {
     }
     &:hover {
         background-color: var(--col-bg-main);
+        transform: scale(1.04);
         >p {
             color: var(--col-font-href);
         } 
@@ -51,7 +52,7 @@ app-search-app {
 }
 
 
-.con-btn-right {
+.con-btn {
     @include dFlex($jc: center, $gap: 12px);
     >p {
         font-size: 18px;
@@ -60,6 +61,11 @@ app-search-app {
     >img {
         height: 35px;
         width: 35px;
+    }
+    &:hover {
+        >p {
+            color: var(--col-font-btn-hover);
+        }
     }
 }
 
