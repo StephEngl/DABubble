@@ -29,30 +29,37 @@ app-search-app {
     border-radius: 20px;
 }
 
-.column {
-    @include dFlex($fd: column, $gap: 16px,);
-    width: 100%;
-    .start-conversation {
-        @include dFlex($jc: center, $gap: 16px);
-        padding: 12px 16px;
-        border-radius: 20px;
-        border: 1px solid var(--col-stroke-main);
-        width: 100%;
-        cursor: pointer;
+.start-conversation {
+    @include dFlex($pos: absolute, $jc: space-between, $gap: 16px);
+    padding: 12px 16px;
+    border-radius: 20px;
+    border: 1px solid var(--col-stroke-main);
+    width: 210px;
+    bottom: 20px;
+    right: 20px;
+    cursor: pointer;
+    >img {
+        height: 25px;
+        width: 25px;
+    }
+    &:hover {
+        background-color: var(--col-bg-main);
         >p {
-            font-size: 18px;
-            font-weight: 700;
-        }
-        >img {
-            height: 25px;
-            width: 25px;
-        }
-        &:hover {
-            background-color: var(--col-bg-main);
-            >p {
-                color: var(--col-font-href);
-            } 
-        }
+            color: var(--col-font-href);
+        } 
+    }
+}
+
+
+.con-btn-right {
+    @include dFlex($jc: center, $gap: 12px);
+    >p {
+        font-size: 18px;
+        font-weight: 700;
+    }
+    >img {
+        height: 35px;
+        width: 35px;
     }
 }
 

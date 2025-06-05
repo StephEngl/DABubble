@@ -1,17 +1,7 @@
 <section class="workspace">
     <header>
         @if (showSearchBar) {
-            <div class="column">
-                <div 
-                    class="start-conversation"
-                    (click)="newConversation()"
-                    (mouseenter)="startConversationHovered = true"
-                    (mouseleave)="startConversationHovered = false">
-                    <img [src]="startConversationHovered ? './../../../assets/icons/general/edit_blue.svg' : './../../../assets/icons/general/edit_black.svg'" alt="Edit Icon">
-                    <p>new Conversation</p>
-                </div>
-                                <app-search-app></app-search-app>
-            </div>
+            <app-search-app></app-search-app>
         } @else {
             <div class="workspace-title">
                 <img src="./../../../assets/icons/general/devspace_logo.svg" alt="">
@@ -29,4 +19,17 @@
         <app-channel-list></app-channel-list>
         <app-direct-messages-list></app-direct-messages-list>
     </section>
+    @if(showSearchBar) {
+        <div 
+            class="start-conversation"
+            (click)="newConversation()"
+            (mouseenter)="startConversationHovered = true"
+            (mouseleave)="startConversationHovered = false">
+            <div class="con-btn-right">
+                <img src="./../../../assets/icons/general/devspace_logo.svg" alt="">
+                <p >start Chat</p>
+            </div>
+            <img [src]="startConversationHovered ? './../../../assets/icons/general/edit_blue.svg' : './../../../assets/icons/general/edit_black.svg'" alt="Edit Icon">
+        </div>
+    }
 </section>
