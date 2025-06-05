@@ -70,7 +70,6 @@
 
 .reply-to {
     @include dFlex($gap: 8px);
-    height: 40px;
     position: absolute;
     background-color: var(--col-bg-btn-main);
     padding: 8px 16px;
@@ -86,9 +85,11 @@
     }
     .profile-img {
         border-radius: 50%;
+        border: 1px solid var(--col-bg-secondary);
     }
     >p {
         color: var(--col-font-secondary);
+        word-break: break-all;
     }
 }
 
@@ -97,4 +98,26 @@ emoji-mart {
     bottom: 30px;
     left: -10px;
     filter: drop-shadow(4px 4px 4px var(--col-transparent-shadow));
+}
+
+@media screen and (max-width: 1000px) {
+    p>span,
+    .reply-to-text {
+        display: none !important;
+    }
+}
+
+@media screen and (max-width: 450px) {
+    .reply-to {
+        height: 60px;
+        width: 220px;
+        padding: 4px 8px;
+        border-radius: 20px;
+        top: -65px;
+        left: 10px;
+        >img {
+            height: 20px;
+            width: 20px;
+        }
+    }
 }

@@ -17,7 +17,6 @@ textarea {
     padding: 20px;
     border-radius: 20px;
     background-color: var(--col-bg-secondary);
-
 }
 
 form {
@@ -63,5 +62,17 @@ textarea {
     cursor: pointer;
     &:hover {
         background-color: var(--col-bg-main);
+    }
+}
+
+@media screen and (max-width: 450px) {
+    .create-channel {
+        width: 90%;
+        border: 1px solid var(--col-stroke-main);
+    }
+    input,
+    textarea {
+        padding: 16px;
+        font-size: 16px;
     }
 }

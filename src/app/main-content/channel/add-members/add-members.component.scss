@@ -5,7 +5,6 @@ section {
     padding: 30px;
     border-radius: 20px;
     background-color: var(--col-bg-secondary);
-    width: auto;
     width: 710px;
     height:auto;
 }
@@ -114,6 +113,7 @@ span {
     border-radius: 0 20px 20px 20px;
     top: 60px;
     left: 20px;
+    z-index: 4;
     .search-result {
         @include dFlex($jc: flex-start, $gap:10px);
         z-index: 4;
@@ -132,5 +132,17 @@ span {
     }
     >p {
         font-size: 16px;
+    }
+}
+
+@media screen and (max-width: 850px) {
+    section {
+        padding: 24px;
+        width: auto;
+        height:auto;
+        margin: auto 5%;
+    }
+    .search-results {
+        max-height: 200px;
     }
 }

@@ -91,7 +91,6 @@ export class ChatMessageComponent {
     this.messageEditText = this.text();
     this.checkifOwnMessage();
     this.maxEmoji = this.setMaxEmojiLength();
-
   }
 
   messageExist():boolean {

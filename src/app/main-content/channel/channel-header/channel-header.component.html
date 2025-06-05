@@ -2,7 +2,7 @@
     @if(!signalService.startConversation()) {
         
         @if(signalService.conversationActive()) {
-            <nav>
+            <nav (click)="showUserInfo(directMessageContact)">
                 <img class="participant-avatar" [src]="usersService.getAvatar(directMessageContact)" alt="">
                 <h3> {{usersService.findName(directMessageContact)}} 
                     @if (conService.ownConversation()) {

@@ -213,4 +213,15 @@ export class CreateMessageComponent implements AfterViewChecked {
     return this.conService.getMessageById(conversationId, replyToId);
   }
 
+  showMaxLetters(name: string):string {
+    const max = 15;
+    let nameLength = name.length;
+    if (nameLength > max) {
+      nameLength = max;
+      return name.substring(0, nameLength) + '...';
+    } else {
+      return name
+    }
+  }
+
 }

@@ -1,7 +1,7 @@
 @import './../../../../assets/styles/mixins.scss';
 
 .direct-messages-list {
-    @include dFlex($fd:column, $ai:flex-start, $gap: 16px);
+    @include dFlex($fd:column, $ai:flex-start, $gap: 16px); 
 }
 
 header {
@@ -64,11 +64,10 @@ ul {
 .direct-messages {
     @include dFlex($fd:column, $ai:flex-start, $gap: 16px);
     width: 100%;
-    overflow-y: auto;
-    overflow-x: hidden;
-    max-height: 500px;
+    height: auto;
+    overflow: hidden;
     transition: all 0.5s ease;
-    padding: 40px 0 20px 30px;
+    padding: 10px 0 40px 30px;
 }
 
 @media screen and (max-width: 850px) {
@@ -79,11 +78,9 @@ ul {
 
 @media screen and (max-width: 450px) {
     .direct-messages {
-        padding: 40px 0 20px 8px;
+        padding: 10px 0 20px 8px;
     }
     .user-status {
-        border-radius: 50%;
-        position: absolute;
         bottom: 8px;
         left: 54px;
         height: 18px !important;
