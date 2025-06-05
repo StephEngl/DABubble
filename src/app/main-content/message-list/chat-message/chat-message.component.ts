@@ -1,4 +1,4 @@
-import { Component, Input, NgModule, inject } from '@angular/core';
+import { Component, HostListener, Input, inject } from '@angular/core';
 import { ChannelsService } from '../../../services/channels.service';
 import { NgClass } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -7,7 +7,6 @@ import { UsersService } from '../../../services/users.service';
 import { PickerModule } from '@ctrl/ngx-emoji-mart';
 import data from '@emoji-mart/data';
 import { EmojiMartData } from '@emoji-mart/data';
-import { ReactionInterface } from '../../../interfaces/message.interface';
 import { MessageService } from '../../../services/message.service';
 import { AuthenticationService } from '../../../services/authentication.service';
 import { TimeService } from '../../../services/time.service';
@@ -92,6 +91,12 @@ export class ChatMessageComponent {
     this.checkifOwnMessage();
     this.maxEmoji = this.setMaxEmojiLength();
   }
+
+  @HostListener('window: resize')
+    setPadding() {
+      this.paddingValue = this.getPadding();
+    }
+
 
   messageExist():boolean {
     return this.isChannelMessage || this.isThreadTitle || this.isThreadMessage || this.isDirectMessage
