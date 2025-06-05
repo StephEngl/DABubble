@@ -7,7 +7,8 @@ header {
     justify-content: space-between;
     width: 100%;
     height: $header-height;
-    padding: 16px 16px 30px 16px;
+    padding: 16px 16px 0px 16px;
+    margin-bottom: 16px;
 }
 
 .header-logo {
@@ -15,10 +16,10 @@ header {
     cursor: pointer;
     gap: 20px;
     >img:first-child {
-        height: 70px;
+        height: 55px;
     }
     >img:nth-child(2) {
-        height: 24px;
+        height: 22px;
     }
 }
 
@@ -177,6 +178,7 @@ app-search-app {
     header {
         height: 60px;
         padding: 16px;
+        margin-bottom: 0px;
     }
     .dropdown-menu {
         top: 74px;
