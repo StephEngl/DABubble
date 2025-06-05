@@ -21,7 +21,7 @@
             @if (message.threadMessages) {
                 <app-chat-message
                     [message]="message"
-                    [paddingHorizontal]="'65'"
+                    [paddingHorizontal]="isMobileView() ? '45':'65'"
                     [isChannelMessage]="isChannel">
                 </app-chat-message>
             }
@@ -32,7 +32,7 @@
         @if (currentThreadActive()) {
             <app-chat-message
                 [threadTitle]="getCurrentThreadMessage()"
-                [paddingHorizontal]="'16'"
+                [paddingHorizontal]="isMobileView() ? '45':'16'"
                 [isThreadTitle]="true">
             </app-chat-message>
             <div class="answers-seperator">
@@ -47,7 +47,7 @@
                 @if (message) {
                 <app-chat-message
                     [threadMessage]="message"
-                    [paddingHorizontal]="'16'"
+                    [paddingHorizontal]="isMobileView() ? '45':'16'"
                     [isThreadMessage]="isThread">
                 </app-chat-message>
                 }
@@ -80,7 +80,7 @@
                 @if (message) {
                 <app-chat-message
                     [directMessage]="message"
-                    [paddingHorizontal]="'65'"
+                    [paddingHorizontal]="isMobileView() ? '45':'65'"
                     [isDirectMessage]="true">
                 </app-chat-message>
                 }

@@ -13,6 +13,8 @@ app-create-message {
 
 @media screen and (max-width: 850px) {
     app-create-message {
-        @include createMessage($width: calc(100% - 48px) !important);
+        @include createMessage($width: calc(100% - 74px) !important);
+        padding: 10px !important;
+        margin-left: 9px;
     }
 }

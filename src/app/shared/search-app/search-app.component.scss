@@ -63,3 +63,14 @@
         }
     }
 }
+
+@media screen and (max-width: 450px) {
+    input,
+    p {
+        font-size: 16px !important;
+    }
+    .search-result {
+        border: 1px solid var(--col-stroke-main);
+        width: 260px;
+    }
+}

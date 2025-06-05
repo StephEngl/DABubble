@@ -4,15 +4,13 @@
     @include dFlex($gap:20px, $ai:flex-start);
     width: 100%; 
     transition: all 0.3s ease;
+    border: 1px solid var(--col-bg-secondary);
 }
 
 .user-avatar {
-    width: 70px; height: 70px;
-    >img {
-        width: 100%;
-        aspect-ratio: 1/1;
-        border-radius: 50%;
-    }
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
 }
 
 .chat-message {
@@ -233,4 +231,29 @@ nav {
 .emoji-mart-edit-mode {
     position: absolute;
     bottom: 30px;
+}
+
+@media screen and (max-width: 950px) {
+    .user-avatar {
+        width: 46px;
+        height: 46px;
+    }
+    .answers>p {
+        font-size: 14px;
+    }
+
+    .left,
+    .right {
+        transform: translateX(-50%);
+        border-radius: 20px;
+        left: 50%;
+        right: auto;
+    }
+    .shown {
+        top: -40px;
+    }
+    h5,
+    p {
+        font-size: 16px;
+    }
 }

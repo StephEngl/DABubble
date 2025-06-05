@@ -3,7 +3,6 @@ import {
   inject, 
   Input,   
   AfterViewChecked,
-  AfterViewInit,
   ViewChild,
   ElementRef,
 } from '@angular/core';
@@ -23,7 +22,6 @@ interface Message {
   postedBy: string;
   hasReplies: boolean;
 }
-
 @Component({
   selector: 'app-message-list',
   standalone: true,
@@ -46,6 +44,8 @@ export class MessageListComponent implements AfterViewChecked {
   @ViewChild('messageContainer') messageContainer?: ElementRef<HTMLDivElement>;
   shouldScroll = true;
   scrollOnInit = false;
+  paddingChannelMessage: string = '';
+  paddingThreadMessage: string = '';
 
   ngOnInit(): void {
     this.scrollOnInit = true;
@@ -143,7 +143,7 @@ export class MessageListComponent implements AfterViewChecked {
     return this.getThreadMessages().length > 0;
   }
   
-  currentThreadActive() {
+  currentThreadActive(): boolean {
     return this.getCurrentThreadMessage()?.id === localStorage.getItem('currentThread');
   }
 
@@ -155,7 +155,7 @@ export class MessageListComponent implements AfterViewChecked {
     return participant;
   }
 
-  userInfo() {
+  userInfo():void {
     this.signalService.userInfoId.set(this.conversationPartner);
     this.signalService.showUserInfo.set(true);
   }
@@ -179,6 +179,10 @@ export class MessageListComponent implements AfterViewChecked {
     if (currentChannel) {
       return this.timeService.getDate(currentChannel.toDate(), 'dd-mm-yyyy'); 
     } return "Unknown";
+  }
+
+  isMobileView():boolean {
+    return window.innerWidth < 850;
   }
 
 }

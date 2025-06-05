@@ -101,12 +101,25 @@ app-thread {
         width: 280px;
         left: calc(16px + 40px);
     }
-    app-channel {
+    app-channel,
+    app-thread {
         height: calc(100% - 6px);
         margin: 0 16px;
     }
 }
 
 @media screen and (max-width: 450px)  {
-
+    :host {
+        height: 100vh;
+    }
+    app-workspace,
+    app-thread,
+    app-channel {
+        width: 100%;
+        height: 100%;
+        margin: 0;
+    }
+    .workspace-btn {
+        left: 40px;
+    }
 }
