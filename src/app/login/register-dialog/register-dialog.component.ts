@@ -23,11 +23,7 @@ export class RegisterDialogComponent {
   usersService = inject(UsersService);
   passwordService = inject(PasswordService);
 
-  passwordVisible: boolean = false;
-  confirmPasswordVisible: boolean = false;
-
-  passwordInput: string = '';
-  confirmPasswordInput: string = '';
+  passwordInput:string = this.signalService.confirmPasswordInput();
   nameInput: string = '';
   emailInput: string = '';
   privacyPolicyAccepted: boolean = false;
@@ -54,6 +50,7 @@ export class RegisterDialogComponent {
     const uid = userCredential.user.uid;
     this.usersService.addUser(uid, user);
     this.signalService.currentUid.set(uid);
+    this.signalService.confirmPasswordInput.set('');
 
     this.signalService.goToAvatarChoice();
   }
@@ -68,14 +65,4 @@ export class RegisterDialogComponent {
       (user) => user.email.trim().toLowerCase() === mail.trim().toLowerCase()
     );
   }
-
-  // /** Toggles the visibility of the password input field. */
-  // togglePasswordVisibility() {
-  //   this.passwordVisible = !this.passwordVisible;
-  // }
-
-  // /** Toggles the visibility of the confirmation password input field. */
-  // toggleConfirmPasswordVisibility() {
-  //   this.confirmPasswordVisible = !this.confirmPasswordVisible;
-  // }
 }
