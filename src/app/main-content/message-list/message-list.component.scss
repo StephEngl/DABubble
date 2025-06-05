@@ -57,3 +57,15 @@
         color: var(--col-font-href);
     }
 }
+
+@media screen and (max-width: 850px) {
+    .message-list {
+        padding: 20px 0 40px 0;
+    }
+}
+
+@media screen and (max-width: 450px) {
+    .message-list {
+        padding: 20px 0 20px 0;
+    }
+}

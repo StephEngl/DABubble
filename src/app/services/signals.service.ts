@@ -158,4 +158,13 @@ export class SignalsService {
     }
   }
 
+  backToChannelOnMobile():void {
+    if (window.innerWidth < 850) {
+      this.showChannel.set(true);
+      this.showThread.set(false);
+    } else {
+      this.showThread.set(false);
+    }
+  }
+
 }

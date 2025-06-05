@@ -2,7 +2,6 @@
 
 :host {
     @include dFlex($fd: column);
-    gap: 24px;
     height: calc(100vh - 16px);
 }
 
@@ -83,9 +82,7 @@ app-thread {
 }
 
 @media screen and (max-width: 850px) {
-    .main-content {
-        gap: 0px;
-    }
+
     app-workspace,
     app-thread {
         transition: none;
@@ -112,11 +109,15 @@ app-thread {
     :host {
         height: 100vh;
     }
+    .main-content {
+        gap: 0px;
+    }
     app-workspace,
     app-thread,
     app-channel {
         width: 100%;
         height: 100%;
+        max-height: calc(100vh - 60px);
         margin: 0;
         border-radius: 0px;
     }

@@ -7,7 +7,7 @@ header {
     justify-content: space-between;
     width: 100%;
     height: $header-height;
-    padding: 16px 16px 0 16px;
+    padding: 16px 16px 30px 16px;
 }
 
 .header-logo {
@@ -175,7 +175,8 @@ app-search-app {
 
 @media screen and (max-width: 850px) {
     header {
-        height: 50px;
+        height: 60px;
+        padding: 16px;
     }
     .dropdown-menu {
         top: 74px;
