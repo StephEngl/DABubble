@@ -52,6 +52,10 @@ export class SignalsService {
   // Signal for current User-ID
   currentUid = signal<string>('');
 
+  // Signals for password match of confirming password
+  passwordsMatch = signal<boolean>(false)
+  confirmPasswordInput = signal<string>('');
+
   // Signalmethods for showing the different dialogs at login-section
   isLoginDialog = signal<boolean>(true);
   isRegisterDialog = signal<boolean>(false);

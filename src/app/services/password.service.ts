@@ -17,18 +17,6 @@ export class PasswordService {
   confirmPasswordInput: string = '';
 
   /**
-   * Checks whether the password and confirmation password inputs match.
-   * @returns True if both passwords match and are not empty; otherwise, false.
-   */
-  get passwordsMatch(): boolean {
-    if (this.passwordInput) {
-      return this.passwordInput === this.confirmPasswordInput;
-    } else {
-      return false;
-    }
-  }
-
-  /**
    * Handles form submission: validates input and handles errors.
    */
   async setNewPassword(oobCode:string, passwordInput:string) {
@@ -56,6 +44,7 @@ export class PasswordService {
     this.signalService.triggerToast('Passwort reset!', 'confirm');
     setTimeout(() => {
       this.signalService.backToLogin();
+      this.signalService.passwordsMatch.set(false);
     }, 2500);
   }
 
@@ -66,15 +55,5 @@ export class PasswordService {
   handlePasswordResetError(error: any) {
     this.signalService.triggerToast('Resetting password failed!', 'error');
     console.error(error);
-  }
-
-  /** Toggles the visibility of the password input field. */
-  togglePasswordVisibility(passwordVisible:boolean) {
-    passwordVisible = !passwordVisible;
-  }
-
-  /** Toggles the visibility of the confirmation password input field. */
-  toggleConfirmPasswordVisibility(confirmPasswordVisible:boolean) {
-    confirmPasswordVisible = !confirmPasswordVisible;
   }
 }

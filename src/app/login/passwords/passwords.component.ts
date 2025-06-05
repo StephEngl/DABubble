@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, Output, EventEmitter } from '@angular/core';
 import { PasswordService } from '../../services/password.service';
 import { FormsModule } from '@angular/forms';
 import { SignalsService } from '../../services/signals.service';
@@ -22,7 +22,7 @@ export class PasswordsComponent {
   passwordVisible: boolean = false;
   confirmPasswordVisible: boolean = false;
   passwordInput: string = '';
-  confirmPasswordInput: string = '';  
+  // confirmPasswordInput: string = '';  
   
   
     /**
@@ -31,11 +31,17 @@ export class PasswordsComponent {
      */
     get passwordsMatch(): boolean {
       if (this.passwordInput) {
-        return this.passwordInput === this.confirmPasswordInput;
+        return this.passwordInput === this.signalService.confirmPasswordInput();
       } else {
         return false;
       }
     }
+
+onPasswordInputChange() {
+  const confirmPassword = this.signalService.confirmPasswordInput();
+  const match = !!this.passwordInput && this.passwordInput === confirmPassword;
+  this.signalService.passwordsMatch.set(match);
+}
   
     /**
      * Handles form submission: validates input and handles errors.
