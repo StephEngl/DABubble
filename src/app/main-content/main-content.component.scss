@@ -82,7 +82,9 @@ app-thread {
 }
 
 @media screen and (max-width: 850px) {
-
+    .main-content {
+        gap: 0px;
+    }
     app-workspace,
     app-thread {
         transition: none;
@@ -108,9 +110,6 @@ app-thread {
 @media screen and (max-width: 450px)  {
     :host {
         height: 100vh;
-    }
-    .main-content {
-        gap: 0px;
     }
     app-workspace,
     app-thread,
