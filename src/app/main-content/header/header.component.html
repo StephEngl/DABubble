@@ -86,8 +86,8 @@
                 }
             } @else {
                 <button (click)="showProfile()" >Profile</button>
-                <button (click)="navigateTo('/legal-notice')">Legal Notice</button>
-                <button (click)="navigateTo('/privacy-policy')">Privacy Policy</button>
+                <button routerLink="/legal-notice">Legal Notice</button>
+                <button routerLink="/privacy-policy">Privacy Policy</button>
                 <button (click)="logout()">Log out</button> 
             }
         </div>

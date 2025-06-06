@@ -1,5 +1,5 @@
 import { Component, inject } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { AuthenticationService } from '../../services/authentication.service';
 import { UsersService } from '../../services/users.service';
 import { FormsModule } from '@angular/forms';
@@ -11,7 +11,7 @@ import { NgClass } from '@angular/common';
 @Component({
   selector: 'app-header',
   standalone: true,
-  imports: [FormsModule, SearchAppComponent, NgClass],
+  imports: [FormsModule, SearchAppComponent, NgClass, RouterLink],
   templateUrl: './header.component.html',
   styleUrl: './header.component.scss',
 })
@@ -20,7 +20,7 @@ export class HeaderComponent {
   usersService = inject(UsersService);
   channelsService = inject(ChannelsService);
   signalService = inject(SignalsService);
-  router = inject(Router);
+  // router = inject(Router);
   searchInput: string = '';
   hoverMenu: boolean = false;
   dropdownOpen: boolean = false;
@@ -32,7 +32,7 @@ export class HeaderComponent {
 
   avatarList: string[] = ['1', '2', '3', '4', '5', '6', '7', '8', '9'];
 
-  constructor(router: Router) {}
+  // constructor(router: Router) {}
 
   /** Logs out the current user and closes the logout popup. */
   logout() {
@@ -93,9 +93,9 @@ export class HeaderComponent {
     }
   }
 
-  navigateTo(path: string) {
-    this.router.navigate([path]);
-    this.toggleDropdown();
-  }
+  // navigateTo(path: string) {
+  //   this.router.navigate([path]);
+  //   this.toggleDropdown();
+  // }
 
 }
