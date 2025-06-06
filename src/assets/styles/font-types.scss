@@ -16,19 +16,19 @@ h2 {
 h3 {
     color: var(--col-font-main);
     font-weight: 700;
-    font-size: clamp(22px, 1.778rem, 32px);
+    font-size: clamp(22px, 1.2552rem + 0.8234vw, 32px);
 }
 
 h4 {
     color: var(--col-font-main);
     font-weight: 400;
-    font-size: clamp(18px, 1.444rem, 26px);
+    font-size: clamp(18px, 1.0292rem + 0.5389vw, 26px);
 }
 
 h5 {
     color: var(--col-font-main);
     font-weight: 400;
-    font-size: clamp(18px, 1.222rem, 22px);
+    font-size: clamp(16px, 0.9281rem + 0.3593vw, 22px);
 }
 
 p, a {
