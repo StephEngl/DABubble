@@ -46,7 +46,8 @@ section {
   }
 
   span,
-  p {
+  p,
+  li {
     font-size: 20px;
   }
 
@@ -72,7 +73,8 @@ section {
 @media screen and (max-width=600px) {
   section {
     span,
-    p {
+    p,
+    li {
       font-size: 18px;
     }
   }
@@ -82,7 +84,7 @@ section {
   :host {
     padding: 16px;
   }
-  
+
   section {
     padding: $dialog-padding-mobile;
 
@@ -91,7 +93,8 @@ section {
     }
 
     span,
-    p {
+    p,
+    li {
       font-size: 16px;
     }
   }
