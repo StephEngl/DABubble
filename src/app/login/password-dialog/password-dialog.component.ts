@@ -1,7 +1,8 @@
 import { Component, inject } from '@angular/core';
-import { FormsModule, NgForm } from '@angular/forms';
+import { FormsModule } from '@angular/forms';
 import { SignalsService } from '../../services/signals.service';
-import { getAuth, sendPasswordResetEmail } from '@angular/fire/auth';
+import { AuthenticationService } from '../../services/authentication.service';
+import { getAuth } from '@angular/fire/auth';
 
 @Component({
   selector: 'app-password-dialog',
@@ -12,31 +13,23 @@ import { getAuth, sendPasswordResetEmail } from '@angular/fire/auth';
 })
 export class PasswordDialogComponent {
   signalService = inject(SignalsService);
-  emailInput: string = '';
-  infoMessage: string = '';
+  authService = inject(AuthenticationService);
+
   errorMessage: string = '';
+  emailInput: string = '';
   auth = getAuth();
 
   /**
-   * Called when the login form is submitted.
-   * Sets the submission flag if the login is not a guest login.
-   * @param ngForm - The Angular form instance.
+   * Sends a password reset email to the specified address.
+   * Displays an error toast if the operation fails.
+   *
+   * @param email - The email address to which the password reset email should be sent.
    */
-  onSubmit(ngForm: NgForm) {}
-
   async sendMailForNewPassword(email: string) {
     try {
-      await sendPasswordResetEmail(this.auth, email, {
-        // Optional: use of a continueUrl
-        url: 'http://localhost:4200/login',
-        handleCodeInApp: true,
-      });
-      this.signalService.triggerToast('Email sent', 'update', '/assets/icons/login/send.svg');
-      setTimeout(() => {
-        this.signalService.backToLogin();
-      }, 2500);
-    } catch (error: any) {
-      this.signalService.triggerToast("Error", error)
+      await this.authService.sendMailForNewPassword(email);
+    } catch (error) {
+      this.signalService.triggerToast('Something went wrong', 'error');
     }
   }
 }

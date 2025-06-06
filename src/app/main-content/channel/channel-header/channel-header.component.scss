@@ -20,6 +20,7 @@ header {
         .participant-avatar {
             height: 60px;
             width: 60px;
+            border-radius: 50%;
         }
     }
 }
@@ -106,8 +107,75 @@ header {
     }
 }
 
-.scroll-content {
+.scroll-wrapper {
     padding: 16px 20px; 
     overflow-y: auto;
     max-height: 300px;
 }
+
+.scroll-wrapper-members {
+    padding: 16px 0px; 
+    overflow-y: auto;
+    max-height: 240px;
+    width: 100%;
+}
+
+
+.dropdown-menu {
+    @include dialogWrapper($width: 320px, $top: 66px, $right: 84px);
+    border: 1px solid var(--col-stroke-main);
+    .list-members {
+        @include dFlex($fd: column);
+        width: 100%;
+        gap: 10px;
+        >div:hover {
+            background-color: var(--col-bg-main);
+            >p {
+                font-weight: 700;
+            }
+        }
+    }
+    .add-member {
+        @include dFlex($jc:center, $gap: 10px);
+        padding: 10px 20px;
+        border-radius: 20px;
+        >img {
+            background-color: var(--col-bg-main);
+            height: 30px;
+            width: 30px;
+            border-radius: 50%;
+            padding: 5px;
+            overflow: visible;
+        }
+        &:hover {
+            background-color: var(--col-bg-btn-main);
+            >p {
+                color: var(--col-font-secondary);
+            }
+        }
+    }
+}
+
+.member-entry {
+    @include dFlex($jc:flex-start, $gap: 10px);
+    border-radius: 20px;
+    padding: 6px 12px;
+    width: 100%;
+    cursor: pointer;
+    >img {
+        height: 50px;
+        border-radius: 50%;
+    }
+}
+
+.close {
+    height: 0;
+    overflow: hidden;
+    padding: 0;
+    opacity: 0;
+}
+
+.open {
+    opacity: 1;
+}
+

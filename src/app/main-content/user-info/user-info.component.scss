@@ -1,0 +1,44 @@
+@import './../../../assets/styles/mixins.scss';
+
+section {
+    @include dFlex($fd: column, $gap:20px);  
+    padding: 30px;
+    border-radius: 20px;
+    background-color: var(--col-bg-secondary);
+    width: 300px;
+    height:auto;
+    >img {
+        border-radius: 50%;
+        width: 80%;
+    }
+}
+
+.profile-title,
+.profile-name {
+    @include dFlex($jc: space-between);
+    width: 100%;
+    >button {
+        font-weight: 700;
+    }
+    .close-button {
+        padding: 10px;
+        border-radius: 40px;
+        &:hover {
+            background-color: var(--col-bg-main);
+        }
+    }
+    .edit-button {
+        font-size: 18px;
+        color: var(--col-font-href);
+        &:hover {
+            color: var(--col-font-btn-hover);
+        }
+    }
+}
+
+.status,
+.contact,
+.edit-title {
+    @include dFlex($jc: flex-start, $gap: 10px);
+    width: 100%;
+}

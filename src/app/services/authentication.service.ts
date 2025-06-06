@@ -15,10 +15,13 @@ import {
   signInWithPopup,
   signInWithRedirect,
   getRedirectResult,
+  sendPasswordResetEmail,
   verifyPasswordResetCode,
   confirmPasswordReset,
+  fetchSignInMethodsForEmail,
 } from '@angular/fire/auth';
 import { UsersService } from './users.service';
+import { SignalsService } from './signals.service';
 
 /**
  * Provides authentication functionality using Firebase Auth. This includes creating users, signing users in and out,
@@ -29,8 +32,10 @@ import { UsersService } from './users.service';
   providedIn: 'root',
 })
 export class AuthenticationService {
-  isAuthenticated = signal<boolean>(false);
   usersService = inject(UsersService);
+  signalService = inject(SignalsService);
+  
+  isAuthenticated = signal<boolean>(false);
   activeUserName: string = '';
   userId: string = '';
   provider = new GoogleAuthProvider();
@@ -167,7 +172,6 @@ export class AuthenticationService {
     if (!this.auth.currentUser) {
       throw new Error('No user is currently logged in.');
     }
-
     try {
       await updateProfile(this.auth.currentUser, {
         displayName: name,
@@ -219,7 +223,7 @@ export class AuthenticationService {
       await signOut(this.auth);
       this.isAuthenticated.set(false);
       this.router.navigate(['/login']);
-      console.log('User logged out');
+      this.signalService.triggerToast('Logged out', 'confirm')
     } catch (error) {
       console.error('Sign out error:', error);
     }
@@ -236,6 +240,7 @@ export class AuthenticationService {
     try {
       await deleteUser(user);
       this.isAuthenticated.set(false);
+      this.signalService.triggerToast('User deleted', 'confirm')
       this.router.navigate(['/login']).then(() => location.reload());
     } catch (error) {
       console.error('Deleting active user failed', error);
@@ -256,6 +261,46 @@ export class AuthenticationService {
     const currentUserId = this.userId;
     const user = this.usersService.users.find(user => user.id === currentUserId);
     return user;
+  }
+
+  async sendMailForNewPassword(email: string) {
+      try {
+        await sendPasswordResetEmail(this.auth, email, {
+          // Optional: use of a continueUrl
+          url: 'http://localhost:4200/login',
+          handleCodeInApp: true,
+        });
+        this.signalService.triggerToast('Email sent, please also check your spam-folder', 'confirm', '/assets/icons/login/send.svg');
+        setTimeout(() => {
+          this.signalService.backToLogin();
+        }, 2500);
+      } catch (error: any) {
+        this.signalService.triggerToast("Error", error)
+      }
+    }
+
+    /**
+   * Checks, if password-reset-code (out of reset-email) is valid.
+   * Returns the belonging mail-address.
+   */
+  async verifyPasswordResetCode(oobCode: string): Promise<string> {
+    try {
+      const email = await verifyPasswordResetCode(this.auth, oobCode);
+      return email; // Mail-adress of the account
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  /**
+   * Reset password with oobCode and the new password.
+   */
+  async confirmPasswordReset(oobCode: string, newPassword: string): Promise<void> {
+    try {
+      await confirmPasswordReset(this.auth, oobCode, newPassword);
+    } catch (error) {
+      throw error;
+    }
   }
 
 }

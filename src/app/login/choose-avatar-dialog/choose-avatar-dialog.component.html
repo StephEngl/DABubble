@@ -4,7 +4,7 @@
       src="/assets/icons/login/arrow-back-black.svg"
       alt="Arrow back"
       class="back-to-register"
-      (click)="backToRegister()"
+      (click)="signalService.showRegisterDialog()"
     />
     <h2>Choose Avatar</h2>
 
@@ -26,42 +26,6 @@
         (click)="selectAvatarId(avatar)"
       />
       }
-      <!-- <img
-        class="avatar-image"
-        src="/assets/icons/user/user_1.svg"
-        alt=""
-        (click)="selectAvatarId('1')"
-      />
-      <img
-        class="avatar-image"
-        src="/assets/icons/user/user_2.svg"
-        alt=""
-        (click)="selectAvatarId('2')"
-      />
-      <img
-        class="avatar-image"
-        src="/assets/icons/user/user_3.svg"
-        alt=""
-        (click)="selectAvatarId('3')"
-      />
-      <img
-        class="avatar-image"
-        src="/assets/icons/user/user_4.svg"
-        alt=""
-        (click)="selectAvatarId('4')"
-      />
-      <img
-        class="avatar-image"
-        src="/assets/icons/user/user_5.svg"
-        alt=""
-        (click)="selectAvatarId('5')"
-      />
-      <img
-        class="avatar-image"
-        src="/assets/icons/user/user_6.svg"
-        alt=""
-        (click)="selectAvatarId('6')"
-      /> -->
     </div>
 
     <div class="apply-button-wrapper">

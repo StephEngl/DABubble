@@ -1,0 +1,50 @@
+<section class="add-members">
+    <header class="add-title">
+        <h3>Add Members to Channel</h3>
+        <button class="close-button" (click)="signalService.showAddMembers.set(false)">X</button>
+    </header>
+
+    @if (!userSelectionActive) {
+        <ul>
+            <li class="add-option" (click)="toggleAddAllMembers()">
+                <img [src]="allMembersCheckStatus" alt="">
+                <p>Add <span>all members</span> of your organization to the channel</p>
+            </li>
+            <li class="add-option" (click)="toggleAddSpecificMembers()">
+                <img [src]="specificMembersCheckStatus" alt="">
+                <p>Select <span>specific users</span> from your organization</p>
+            </li>
+        </ul>
+        <footer class="button-wrapper">
+            <button (click)="selectUsers()" type="button" [disabled]="!addSpecificMembers && !addAllMembers">Create</button>
+        </footer>
+    } @else {
+        <p class="active-channel">
+            Name: <span>#{{ channelService.getChannelById(currentChannelId!)!.channelName }}</span></p>
+        <div class="input-area">
+            @for(member of selectedMembers; track member.id) {
+                <div class="selection">
+                    <img [src]="'./../../../../assets/icons/user/user_'+ member.avatarId +'.png'" alt="">
+                    <p> {{member.name}}</p>
+                    <button (click)="removeMember(member.id!)">X</button>
+                </div>
+            }
+            <input [(ngModel)]="textInput" #searchInput="ngModel" type="text">
+            @if (searchResultsUser.length > 0) {
+                <div class="search-results">
+                    @for(member of searchResultsUser; track member.id) {
+                        <div class="search-result" (click)="addMember(member)">
+                            <img [src]="'./../../../../assets/icons/user/user_'+ member.avatarId +'.png'" alt="">
+                            <p> {{member.name}}</p>
+                        </div>
+                    }
+                </div>
+            }
+        </div>
+
+        <footer class="button-wrapper">
+            <button (click)="addMembersToChannel(selectedMemberIds)" type="button" [disabled]="!selectedMembers.length">Create</button>
+        </footer>
+    }
+</section>
+

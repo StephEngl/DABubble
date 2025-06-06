@@ -17,15 +17,23 @@ export class SignalsService {
   conversationActive = signal<boolean>(false);
   activeConId = signal<string>('');
   activeReplyToId = signal<string>('');
+  userInfoId = signal<string>('');
 
   showWorkspace = signal<boolean>(true);
   showThread = signal<boolean>(false);
   showCreateChannel = signal<boolean>(false);
+  showChannelMembers = signal<boolean>(false);
+  showUserInfo = signal<boolean>(false);
+  showAddMembers = signal<boolean>(false);
+  showEditChannel = signal<boolean>(true);
 
   scrollChannelToBottom = signal<boolean>(false);
 
+  // signal to toggle icon colors
+  themeColorMain = signal<string>('black');
+
   // Signals for intro animation
-  showIntro = signal<boolean>(true);
+  showIntro = signal<boolean>(false);
   slideOut = signal<boolean>(false);
   moveUp = signal<boolean>(false);
   fadeOut = signal<boolean>(false);
@@ -94,7 +102,7 @@ export class SignalsService {
   // Signals for toasts
   toast = signal<ToastInterface>({
     message: '',
-    type: 'create',
+    type: 'confirm',
     isOpen: false,
     isAnimated: false,
     icon: '',

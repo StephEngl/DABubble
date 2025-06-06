@@ -42,7 +42,6 @@ export class UsersService implements OnDestroy {
           const user = element.data();
           this.users.push(this.setObjectData(element.id, user));
         });
-        console.log('User', this.users);
       },
       (error) => {
         console.error('Firestore Error', error.message);
@@ -56,7 +55,10 @@ export class UsersService implements OnDestroy {
    * @param user The user data to be added
    * @returns A promise that resolves with the document reference of the newly added user
    */
-  async addUser(uid: string, user: UserInterface): Promise<void | DocumentReference> {
+  async addUser(
+    uid: string,
+    user: UserInterface
+  ): Promise<void | DocumentReference> {
     try {
       const userRef = doc(this.getUsersRef(), uid);
       await setDoc(userRef, user);
@@ -75,8 +77,8 @@ export class UsersService implements OnDestroy {
         const data = userSnap.data();
         return this.setObjectData(userSnap.id, data);
       } else {
-        console.warn("User not found");
-        return
+        console.warn('User not found');
+        return;
       }
     } catch (err) {
       console.error(err);
@@ -94,6 +96,19 @@ export class UsersService implements OnDestroy {
     };
   }
 
+async updateUserName(uid: string, name: string): Promise<void> {
+  try {
+    const userRef = doc(this.getUsersRef(), uid);
+    await updateDoc(userRef, { name });
+    const user = this.users.find(u => u.id === uid);
+    if (user) {
+      user.name = name;
+    }
+  } catch (err) {
+    console.error('Error updating user name/email:', err);
+  }
+}
+
   async updateUserAvatar(uid: string, avatarId: string): Promise<void> {
     try {
       const userRef = doc(this.getUsersRef(), uid);
@@ -104,12 +119,17 @@ export class UsersService implements OnDestroy {
   }
 
   findName(id: string): string {
-    const searchedUser = this.users.find(user => user.id === id);
+    const searchedUser = this.users.find((user) => user.id === id);
     return searchedUser?.name ?? 'Unknown';
   }
 
+  getStatus(id:string):string {
+    const searchedUser = this.users.find((user) => user.id === id);
+    return searchedUser?.status ?? 'offline';
+  }
+
   getAvatar(id: string): string {
-    const searchedUser = this.users.find(user => user.id === id);
+    const searchedUser = this.users.find((user) => user.id === id);
     if (searchedUser?.avatarId !== undefined) {
       return `./../../../../assets/icons/user/user_${searchedUser.avatarId}.png`;
     }
@@ -120,12 +140,20 @@ export class UsersService implements OnDestroy {
     try {
       const userDocRef = doc(this.firestore, 'users', userId);
       await updateDoc(userDocRef, { status });
-      const user = this.users.find(u => u.id === userId);
+      const user = this.users.find((u) => u.id === userId);
       if (user) user.status = status;
     } catch (error) {
       console.error('Error updating user status:', error);
     }
   }
 
-
+  // async updateUserPassword(uid: string, password: string) {
+  //   try {
+  //     const userDocRef = doc(this.firestore, 'users', uid);
+  //     await updateDoc(userDocRef, { password });
+  //     console.log('PW updated in FB');
+  //   } catch (error) {
+  //     console.error('Error updating password:', error);
+  //   }
+  // }
 }

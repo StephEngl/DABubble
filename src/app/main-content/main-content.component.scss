@@ -49,12 +49,13 @@ app-thread {
     transition: all 0.3s ease;
 }
 
-.create-channel {
+.transparency {
     @include dFlex($pos:fixed);
     width: 100%;
     height: 100%;
     margin: auto;
     background-color: var(--col-transparent-shadow);
+    z-index: 4;
 }
 
 .workspace-btn {

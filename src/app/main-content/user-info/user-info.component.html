@@ -1,0 +1,26 @@
+<section class="user-info">
+    <div class="profile-title">
+        <h4>Profile</h4>
+        <button class="close-button" (click)="signalService.showUserInfo.set(false)" >X</button>
+    </div>
+    <img [src]="'./../../../assets/icons/user/user_' + user.avatarId + '.png'" alt="">
+    <div class="profile-name">
+        <h3>{{user.name}}</h3>
+    </div>
+    <div class="status">
+        <img class="user-status" [src]="'./../../../assets/icons/user/status_' + user.status + '.svg'" alt="">
+        <p>{{user.status}}</p>
+    </div>
+    <div class="contact">
+        <img src="./../../../assets/icons/login/mail_black.svg" alt="">
+        <p>{{user.email}}</p>
+    </div>
+</section>
+
+
+
+
+
+
+
+

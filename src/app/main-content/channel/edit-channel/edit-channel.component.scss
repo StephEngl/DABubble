@@ -1,0 +1,67 @@
+@import './../../../../assets/styles/mixins.scss';
+
+.create-channel,
+form,
+form>div,
+input,
+textarea {
+    width: 100%;
+}
+
+.create-channel {
+    @include dFlex($fd:column, $ai:flex-start, $gap: 2rem);
+    height: auto;
+    max-width: 500px;
+    max-height: 900px;
+    margin: auto;
+    padding: 20px;
+    border-radius: 20px;
+    background-color: var(--col-bg-secondary);
+
+}
+
+form {
+    @include dFlex($fd:column, $ai:flex-start, $gap: 10px);
+    >label {
+        margin-top: 15px;
+        font-weight: 700;
+    }
+    >button {
+        align-self: flex-end;
+        font-size: 18px;
+        font-weight: 700;
+        border-radius: 20px;
+        padding: 16px;
+        color: var(--col-font-secondary);
+        background-color: var(--col-bg-btn-main);
+        &:disabled {
+            background-color: var(--col-bg-btn-disabled);
+        }
+    }
+}
+
+.error-message {
+    color: var(--col-font-error);
+}
+
+input,
+textarea {
+    border: 1px solid var(--col-stroke-main);
+    padding: 18px;
+    font-size: 18px;
+    margin-bottom: 10px;
+}
+
+.close-create-channel {
+    position: absolute;
+    width: 30px;
+    height: 30px;
+    padding: 8px;
+    top: 20px;
+    right: 20px;
+    border-radius: 50%;
+    cursor: pointer;
+    &:hover {
+        background-color: var(--col-bg-main);
+    }
+}

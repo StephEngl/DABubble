@@ -12,7 +12,25 @@
 </nav>
 
 @if (signalService.showCreateChannel()) {
-    <section class="create-channel" (click)="signalService.showCreateChannel.set(false)">
+    <section class="transparency" (click)="signalService.showCreateChannel.set(false)">
         <app-create-channel (click)="$event.stopPropagation()"></app-create-channel>
+    </section>
+}
+
+@if (signalService.showUserInfo()) {
+    <section class="transparency" (click)="signalService.showUserInfo.set(false)">
+        <app-user-info (click)="$event.stopPropagation()"></app-user-info>
+    </section>
+}
+
+@if (signalService.showAddMembers()) {
+    <section class="transparency" (click)="signalService.showUserInfo.set(false)">
+        <app-add-members (click)="$event.stopPropagation()"></app-add-members>
+    </section>
+}
+
+@if (signalService.showEditChannel()) {
+    <section class="transparency" (click)="signalService.showEditChannel.set(false)">
+        <app-edit-channel (click)="$event.stopPropagation()"></app-edit-channel>
     </section>
 }

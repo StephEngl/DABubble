@@ -16,12 +16,14 @@ import {
 import { DirectMessageInterface } from '../interfaces/message.interface';
 import { ConversationInterface } from '../interfaces/conversation.interface';
 import { AuthenticationService } from './authentication.service';
+import { SignalsService } from './signals.service';
 @Injectable({
   providedIn: 'root'
 })
 export class ConversationService {
   firestore: Firestore = inject(Firestore);
   authService = inject(AuthenticationService);
+  signalService = inject(SignalsService);
   conversations: ConversationInterface[] = [];
   unsubscribeDirectMessages;
 
@@ -69,9 +71,9 @@ export class ConversationService {
     };
   }
 
-  async addConversation(channel: ConversationInterface): Promise<void | DocumentReference> {
+  async addConversation(conversation: ConversationInterface): Promise<void | DocumentReference> {
     try {
-      const conversationRef = await addDoc(this.getConversationRef(), channel);
+      const conversationRef = await addDoc(this.getConversationRef(), conversation);
       return conversationRef;
     } catch (err) {
       console.error(err);
@@ -151,8 +153,6 @@ export class ConversationService {
         const data = docSnapshot.data();
         return this.setConversationObject(docSnapshot.id, data);
       });
-
-      console.log('conversations:', this.conversations);
     } catch (error) {
       console.error('Error loading conversations:', error);
     }
@@ -162,7 +162,42 @@ export class ConversationService {
     this.subscribeToDirectMessages(id);
   }
 
-  participant(conversation: any): any  {
-    return conversation.participants.find((id: string) => id !== this.authService.userId)
+  participant(conversation: ConversationInterface): any  {
+      const [a, b] = conversation.participants;
+      const currentUser = this.authService.userId;
+      return (a === b) ? a : (a === currentUser ? b : a);
   }
+
+  async startNewConversation(id: string): Promise<void> {
+    const currentUser = this.authService.userId;
+    const existingConversation = this.conversations.find(con => {
+      const [a, b] = con.participants;
+      return (a === currentUser && b === id) || (a === id && b === currentUser);
+    });
+
+    if (existingConversation?.id) {
+      await this.openConversation(existingConversation.id);
+      return;
+    }
+    const newConversation: ConversationInterface = {
+      participants: [currentUser, id]
+    };
+
+    await this.addConversation(newConversation);
+    await this.loadCons();
+
+    const createdConversation = this.conversations.find(con =>
+      con.participants.includes(currentUser) && con.participants.includes(id)
+    );
+
+    if (createdConversation?.id) {
+      await this.openConversation(createdConversation.id);
+    } 
+  }
+
+  async openConversation(id: string): Promise<void> {
+    await this.loadConversation(id);
+    this.signalService.setConversationSignals(id);
+  }
+
 }
