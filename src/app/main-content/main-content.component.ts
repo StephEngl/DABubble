@@ -11,7 +11,7 @@ import { UsersService } from '../services/users.service';
 import { ConversationService } from '../services/conversations.service';
 import { UserInfoComponent } from './user-info/user-info.component';
 import { AddMembersComponent } from './channel/add-members/add-members.component';
-import { ChannelInfoComponent } from './channel/edit-channel/channel-info.component';
+import { ChannelInfoComponent } from './channel/channel-info/channel-info.component';
 
 @Component({
   selector: 'app-main-content',

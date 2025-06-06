@@ -7,11 +7,12 @@ import { ChannelsService } from '../../services/channels.service';
 import { SignalsService } from '../../services/signals.service';
 import { ChannelInterface } from '../../interfaces/channel.interface';
 import { SearchAppComponent } from '../../shared/search-app/search-app.component';
+import { NgClass } from '@angular/common';
 
 @Component({
   selector: 'app-header',
   standalone: true,
-  imports: [FormsModule, SearchAppComponent],
+  imports: [FormsModule, SearchAppComponent, NgClass],
   templateUrl: './header.component.html',
   styleUrl: './header.component.scss',
 })

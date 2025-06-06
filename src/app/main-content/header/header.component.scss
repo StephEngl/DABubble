@@ -60,6 +60,11 @@ app-search-app {
     .menu-icon {
         width: 16px;
     }
+    .reverse{
+        transition: transform 0.3s ease-in-out;
+        transform: rotate(180deg);
+
+    }
 }
 
 .dropdown-wrapper {

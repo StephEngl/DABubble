@@ -32,6 +32,8 @@ export class ChannelHeaderComponent {
   mentionTrigger: '@' | '#' | null = null;
   showList: boolean = false;
 
+  dropdownOpen:boolean = false;
+
   get currentChannel(): ChannelInterface | undefined {
     const currentId = localStorage.getItem('currentChannel');
     if (!currentId) return undefined;

@@ -19,9 +19,10 @@
                 <div class="user-picture" [style.backgroundImage] ="'url(./../../../assets/icons/user/user_' + authService.currentUser()!.avatarId + '.png)'"></div>
                 <img class="user-status" [src]="'./../../../assets/icons/user/status_' + authService.currentUser()!.status + '.svg'" alt="">
             </div>
-            <button  >
-                <img class="menu-icon" [src]="hoverMenu ? './../../../assets/icons/menu/dropdown_blue.svg' : './../../../assets/icons/menu/dropdown_black.svg'" alt="">
-            </button>
+            <button (click)="toggleDropdown(); $event.stopPropagation()" >
+            <img [ngClass]="{'menu-icon': true, 'reverse': dropdownOpen}"
+     [src]="hoverMenu ? './../../../assets/icons/menu/dropdown_blue.svg' : './../../../assets/icons/menu/dropdown_black.svg'"
+     alt="">            </button>
         </div>
     }
     
