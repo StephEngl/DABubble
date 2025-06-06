@@ -19,7 +19,7 @@
         </div>
         <div class="channel-sub-body">
             <p>#</p>
-            <input name="" id="" [disabled]="channelNameEdit">
+            <input [appFocus]="channelNameEdit" name="" id="" [disabled]="!channelNameEdit">
         </div>
     </section>
 
@@ -36,7 +36,7 @@
             }
         </div>
         <div class="channel-sub-body">
-            <textarea name="" id=""></textarea>
+            <textarea #channelDescription name="" id=""></textarea>
         </div>
         <div class="channel-sub-footer">
             <h4>Created By</h4>
