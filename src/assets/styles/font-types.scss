@@ -3,13 +3,13 @@
 h1 {
     color: var(--col-bg-btn-main);
     font-weight: 700;
-    font-size: clamp(30px, 2.556rem, 46px);
+    font-size: clamp(30px, 1.6834rem + 1.9162vw, 46px);;
 }
 
 h2 {
     font-weight: 700;
     color: var(--col-bg-btn-main);
-    font-size: clamp(26px, 2.111rem, 38px);
+    font-size: clamp(26px, 1.4813rem + 1.1677vw, 38px);;
     width: 70%;
 }
 
