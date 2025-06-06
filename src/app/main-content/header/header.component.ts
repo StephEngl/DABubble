@@ -62,20 +62,6 @@ export class HeaderComponent {
     }
   }
 
-  //to be implemented
-  changeUserAvatar(avatar: string) {
-    if(this.editName != this.authService.currentUser()!.name) {
-      this.usersService.updateUserAvatar(
-        this.authService.userId,
-        avatar
-      );
-      this.editProfile = false;
-      this.signalService.triggerToast('User Avatar changed successfully','confirm');
-    } else {
-      this.editProfile = false;
-    }
-  }
-
   noChangesToName() {
     return this.editName == this.authService.currentUser()!.name;
   }
@@ -99,7 +85,8 @@ export class HeaderComponent {
   async changeAvatar() {
     if (this.chosenAvatar) {
       await this.usersService.updateUserAvatar(this.authService.userId, this.chosenAvatar);
-      this.cancelEdit();
+      this.editAvatar = false;
+      this.chosenAvatar = undefined;
       this.signalService.triggerToast('User Avatar changed successfully','confirm');
     }
   }

@@ -38,7 +38,7 @@
                 @if (!editAvatar) {
                     <img [src]="'./../../../assets/icons/user/user_' + authService.currentUser()!.avatarId + '.png'" alt="">
                     @if(editProfile) {
-                        <button id="changeAvatarBtn" (click)="editAvatar = true">change Avatar</button>
+                        <button id="changeAvatarBtn" (click)="editAvatar = true">Change Avatar</button>
                     }
                 } @else {
                     <p>Select new Avatar:</p>
@@ -49,7 +49,12 @@
                                 (click)="setChosenAvatarId(avatar)" [src]="'./../../../assets/icons/user/user_'+ avatar + '.png'" alt="">
                         }
                     </div>
-                    <button id="selectAvatarBtn" [disabled]="chosenAvatar === undefined" (click)="changeAvatar()">Change Avatar</button>
+                    @if(!chosenAvatar) {
+                        <button id="selectAvatarBtn" (click)="editAvatar = false">Cancel</button>
+                    } @else {
+                        <button id="selectAvatarBtn" [disabled]="chosenAvatar === undefined" (click)="changeAvatar()">Change Avatar</button>
+                    }
+                    
                 }
                 
                 @if (!editProfile) {
