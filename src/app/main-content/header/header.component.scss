@@ -76,13 +76,14 @@ app-search-app {
     @include dialogWrapper($width: 370px, $top: 124px, $right: 16px);
     transition: all 0.4s linear;
     
-    >button{
+    >button {
         padding: 12px 20px;
         color: var(--col-font-main);
-        font-weight: bold;
+        font-weight: 700;
         font-size: 24px;
         transition: background-color 0.125s ease-in-out;
         border-radius: 25px;
+        cursor: pointer;
         &:hover{
             background-color:var(--col-bg-main) ;
             color:var(--col-font-href)

@@ -1,11 +1,10 @@
-import { Component, inject, HostListener, ViewChild, ElementRef } from '@angular/core';
-import { RouterLink } from '@angular/router';
+import { Component, inject } from '@angular/core';
+import { Router } from '@angular/router';
 import { AuthenticationService } from '../../services/authentication.service';
 import { UsersService } from '../../services/users.service';
 import { FormsModule } from '@angular/forms';
 import { ChannelsService } from '../../services/channels.service';
 import { SignalsService } from '../../services/signals.service';
-import { ChannelInterface } from '../../interfaces/channel.interface';
 import { SearchAppComponent } from '../../shared/search-app/search-app.component';
 import { NgClass } from '@angular/common';
 
@@ -21,6 +20,7 @@ export class HeaderComponent {
   usersService = inject(UsersService);
   channelsService = inject(ChannelsService);
   signalService = inject(SignalsService);
+  router = inject(Router);
   searchInput: string = '';
   hoverMenu: boolean = false;
   dropdownOpen: boolean = false;
@@ -31,6 +31,8 @@ export class HeaderComponent {
   chosenAvatar: string | undefined = undefined;
 
   avatarList: string[] = ['1', '2', '3', '4', '5', '6', '7', '8', '9'];
+
+  constructor(router: Router) {}
 
   /** Logs out the current user and closes the logout popup. */
   logout() {
@@ -89,6 +91,11 @@ export class HeaderComponent {
       this.chosenAvatar = undefined;
       this.signalService.triggerToast('User Avatar changed successfully','confirm');
     }
+  }
+
+  navigateTo(path: string) {
+    this.router.navigate([path]);
+    this.toggleDropdown();
   }
 
 }
