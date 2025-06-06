@@ -23,7 +23,7 @@ export class SignalsService {
   showThread = signal<boolean>(false);
   showChannel = signal<boolean>(true);
   showCreateChannel = signal<boolean>(false);
-  showChannelInfo = signal<boolean>(true);
+  showChannelInfo = signal<boolean>(false);
   showChannelMembers = signal<boolean>(false);
   showUserInfo = signal<boolean>(false);
   showAddMembers = signal<boolean>(false);

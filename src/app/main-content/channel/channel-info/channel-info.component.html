@@ -19,7 +19,7 @@
         </div>
         <div class="channel-sub-body">
             <p>#</p>
-            <input [appFocus]="channelNameEdit" name="" id="" [disabled]="!channelNameEdit">
+            <input #editNameInput="ngModel" [(ngModel)]="channelName" [appFocus]="channelNameEdit" name="" id="" [disabled]="!channelNameEdit">
         </div>
     </section>
 
@@ -36,7 +36,7 @@
             }
         </div>
         <div class="channel-sub-body">
-            <textarea #channelDescription name="" id=""></textarea>
+            <textarea #editDescriptionInput="ngModel" [(ngModel)]="channelDescription" [appFocus]="channelDescriptionEdit" [disabled]="!channelDescriptionEdit" name="" id=""></textarea>
         </div>
         <div class="channel-sub-footer">
             <h4>Created By</h4>

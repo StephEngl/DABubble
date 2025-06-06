@@ -30,6 +30,20 @@ header,
     width: 100%;
 }
 
+.channel-sub-header >button {
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--col-font-href);
+    &:hover {
+        color: var(--col-bg-btn-main);
+    }
+}
+
+.channel-sub-body>p {
+    font-size: 18px;
+    font-weight: 700;
+}
+
 .channel-sub-footer {
     @include dFlex($fd:column, $gap:10px, $ai: flex-start);
     padding-top: 10px;
@@ -48,5 +62,9 @@ input {
     flex: 1;
     font-size: 18px;
     padding: 16px;
-    color: var(--col-font-info);
+    color: var(--col-font-main);
+    &:disabled {
+        color: var(--col-font-info);
+    }
 }
+

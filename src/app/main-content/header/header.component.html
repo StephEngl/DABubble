@@ -20,9 +20,11 @@
                 <img class="user-status" [src]="'./../../../assets/icons/user/status_' + authService.currentUser()!.status + '.svg'" alt="">
             </div>
             <button (click)="toggleDropdown(); $event.stopPropagation()" >
-            <img [ngClass]="{'menu-icon': true, 'reverse': dropdownOpen}"
-     [src]="hoverMenu ? './../../../assets/icons/menu/dropdown_blue.svg' : './../../../assets/icons/menu/dropdown_black.svg'"
-     alt="">            </button>
+            <img
+                [ngClass]="{'menu-icon': true, 'reverse': dropdownOpen}"
+                [src]="hoverMenu ? './../../../assets/icons/menu/dropdown_blue.svg' : './../../../assets/icons/menu/dropdown_black.svg'"
+                alt="">
+            </button>
         </div>
     }
     

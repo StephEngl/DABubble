@@ -18,7 +18,9 @@ export class FocusDirective implements OnChanges {
     const change = changes['appFocus'];
 
     if (change && change.currentValue === true) {
-      this.element.focus();
+      requestAnimationFrame(() => {
+        this.element.focus();
+      });
     }
   }
 }
