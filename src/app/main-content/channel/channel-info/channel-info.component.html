@@ -9,11 +9,11 @@
         <div class="channel-sub-header">
             <h4>Channel Name</h4>
             @if (!channelNameEdit) {
-                <button (click)="channelNameEdit = true">edit</button>
+                <button (click)="editName()" [disabled]="isGeneralChannel()">edit</button>
             } @else {
                 <div class="name-edit">
-                    <button (click)="channelNameEdit = false">cancel</button>
-                    <button>save</button>
+                    <button (click)="cancelEditName()">cancel</button>
+                    <button (click)="updateChannelName()" [disabled]="noChangesToName()">save</button>
                 </div>
             }
         </div>
@@ -27,11 +27,11 @@
         <div class="channel-sub-header">
             <h4>Channel Description</h4>
             @if (!channelDescriptionEdit) {
-                <button (click)="channelDescriptionEdit = true">edit</button>
+                <button (click)="editDescription()" [disabled]="isGeneralChannel()">edit</button>
             } @else {
                 <div class="name-edit">
-                    <button (click)="channelDescriptionEdit = false">cancel</button>
-                    <button>save</button>
+                    <button (click)="cancelEditDescription()">cancel</button>
+                    <button (click)="updateChannelDescription()" [disabled]="noChangesToDescription()">save</button>
                 </div>
             }
         </div>
@@ -40,9 +40,13 @@
         </div>
         <div class="channel-sub-footer">
             <h4>Created By</h4>
-            <p class="creator">Name</p>
+            @if (currentChannel) {
+                <p class="creator">{{ usersService.findName(currentChannel.createdBy ) }}</p>
+            }
         </div>
     </section>
+
+    <button class="leave-channel-btn" (click)="leaveChannel()" [disabled]="isGeneralChannel()">leave Channel</button>
 
 </section> 
 

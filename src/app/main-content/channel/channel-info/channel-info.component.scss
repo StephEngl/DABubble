@@ -37,11 +37,16 @@ header,
     &:hover {
         color: var(--col-bg-btn-main);
     }
+    &:disabled {
+        color: var(--col-font-info);
+        cursor: not-allowed;
+    }
 }
 
 .channel-sub-body>p {
     font-size: 18px;
     font-weight: 700;
+    margin-right: 5px;
 }
 
 .channel-sub-footer {
@@ -59,12 +64,33 @@ header,
 
 textarea,
 input {
-    flex: 1;
+    width: 100%;
     font-size: 18px;
-    padding: 16px;
+    padding: 16px 16px 16px 0;
     color: var(--col-font-main);
     &:disabled {
         color: var(--col-font-info);
+    }
+}
+
+.leave-channel-btn {
+    align-self: flex-end;
+    background-color: var(--col-bg-btn-main);
+    color: var(--col-font-secondary);
+    font-size: 18px;
+    padding: 10px 20px;
+    border-radius: 20px;
+    &:hover {
+        background-color: var(--col-font-btn-hover);
+        transform: scale(1.04);
+        &:disabled {
+            transform: none;
+            background-color: var(--col-bg-btn-disabled);
+        }
+    }
+    &:disabled {
+        cursor: not-allowed;
+        background-color: var(--col-bg-btn-disabled);
     }
 }
 

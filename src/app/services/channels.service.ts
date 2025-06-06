@@ -148,15 +148,15 @@ export class ChannelsService {
     });
 
     const channel = this.getChannelById(channelId);
-    if (channel) {
-      channel.channelMessages = [...messages];
+      if (channel) {
+        channel.channelMessages = [...messages];
 
-      messages.forEach(msg => {
-        this.subscribeToThreadMessages(channelId, msg.id!);
-      });
-    }
-  });
-}
+        messages.forEach(msg => {
+          this.subscribeToThreadMessages(channelId, msg.id!);
+        });
+      }
+    });
+  }
 
   subscribeToThreadMessages(channelId: string, messageId: string) {
     const q = query(this.getThreadMessagesRef(channelId, messageId), orderBy('createdAt'));

@@ -162,8 +162,8 @@ export class MessageListComponent implements AfterViewChecked {
 
   get channelCreator() {
     const currentChannel = this.channelService.getChannelById(this.currentChannel());
-    if (currentChannel?.members) {
-      return currentChannel.members?.[0]
+    if (currentChannel?.createdBy) {
+      return currentChannel.createdBy
     } return "Unknown";
   }
 
