@@ -41,8 +41,15 @@ section {
   }
 
   h1,
-  h2 {
+  h2,
+  h3,
+  h4 {
     padding-bottom: 12px;
+  }
+
+  ul {
+    list-style-type: disclosure-closed;
+    margin-left: 20px;
   }
 
   span,
