@@ -72,8 +72,6 @@ export class MainContentComponent implements OnInit {
     else {
       this.signalService.showChannel.set(true);
     }
-    console.log("resizing");
-    
   }
 
   toggleWorkspaceAndThread() {

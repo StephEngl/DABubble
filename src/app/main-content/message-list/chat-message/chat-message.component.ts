@@ -29,7 +29,6 @@ export class ChatMessageComponent {
   usersService = inject(UsersService);
   authService = inject(AuthenticationService);
   timeService = inject(TimeService);
-
   emojiData: EmojiMartData = data as EmojiMartData;
 
   @Input() paddingHorizontal: string = '';
@@ -53,7 +52,6 @@ export class ChatMessageComponent {
   showAll: boolean = false;
   reactionHovered: boolean = false;
   paddingValue: string = '';
-
 
   menuBar: {imgSrc: string, shownInThread: boolean, shownIfOwnMessage?: boolean, clickFunction: () => void}[] = [
     { 
@@ -85,7 +83,6 @@ export class ChatMessageComponent {
   ];
 
   ngOnInit() {
-    console.log(this.paddingHorizontal);
     this.paddingValue = this.getPadding();
     this.messageEditText = this.text();
     this.checkifOwnMessage();
@@ -96,7 +93,6 @@ export class ChatMessageComponent {
     setPadding() {
       this.paddingValue = this.getPadding();
     }
-
 
   messageExist():boolean {
     return this.isChannelMessage || this.isThreadTitle || this.isThreadMessage || this.isDirectMessage
@@ -239,8 +235,6 @@ export class ChatMessageComponent {
             this.isChannelMessage
           )
       } else {
-        console.log(this.singleMessageId())
-        
         this.messageService.postDirectMessageReaction
           (
             this.singleMessageId(),
@@ -250,7 +244,6 @@ export class ChatMessageComponent {
       }
 
     } else {
-      console.log("post in edit mode");
       this.messageEditText += " " + event.emoji.native;
       this.emojiBarEditMode = false;
     }
@@ -258,7 +251,6 @@ export class ChatMessageComponent {
 
   toggleShownEmojis() {
     this.showAll = !this.showAll;
-
     const totalEmojis = this.reactions()?.length || 0;
 
     if (this.showAll) {
