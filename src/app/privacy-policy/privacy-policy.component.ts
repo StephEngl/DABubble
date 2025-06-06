@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
+import { SignalsService } from '../services/signals.service';
 
 @Component({
   selector: 'app-privacy-policy',
@@ -8,5 +9,5 @@ import { Component } from '@angular/core';
   styleUrl: './privacy-policy.component.scss'
 })
 export class PrivacyPolicyComponent {
-
+signalService = inject(SignalsService)
 }

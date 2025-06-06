@@ -1,15 +1,15 @@
 @import "../styles/colors.scss";
 
 h1 {
-    color: var(--col-font-main);
+    color: var(--col-bg-btn-main);
     font-weight: 700;
     font-size: clamp(30px, 2.556rem, 46px);
 }
 
 h2 {
     font-weight: 700;
-    font-size: clamp(26px, 2.111rem, 38px);
     color: var(--col-bg-btn-main);
+    font-size: clamp(26px, 2.111rem, 38px);
     width: 70%;
 }
 
