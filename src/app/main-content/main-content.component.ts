@@ -11,6 +11,7 @@ import { UsersService } from '../services/users.service';
 import { ConversationService } from '../services/conversations.service';
 import { UserInfoComponent } from './user-info/user-info.component';
 import { AddMembersComponent } from './channel/add-members/add-members.component';
+import { ChannelInfoComponent } from './channel/edit-channel/channel-info.component';
 
 @Component({
   selector: 'app-main-content',
@@ -22,7 +23,8 @@ import { AddMembersComponent } from './channel/add-members/add-members.component
     WorkspaceComponent,
     CreateChannelComponent,
     UserInfoComponent,
-    AddMembersComponent
+    AddMembersComponent,
+    ChannelInfoComponent
   ],
   templateUrl: './main-content.component.html',
   styleUrl: './main-content.component.scss'

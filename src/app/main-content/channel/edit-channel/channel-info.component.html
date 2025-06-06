@@ -1,0 +1,48 @@
+<section class="channel-info">
+
+    <header>
+        <h3>Channel Info</h3>
+        <button (click)="signalService.showEditChannel.set(false)">X</button>
+    </header>
+
+    <section class="channel-sub-container">
+        <div class="channel-sub-header">
+            <h4>Channel Name</h4>
+            @if (!channelNameEdit) {
+                <button (click)="channelNameEdit = true">edit</button>
+            } @else {
+                <div class="name-edit">
+                    <button (click)="channelNameEdit = false">cancel</button>
+                    <button>save</button>
+                </div>
+            }
+        </div>
+        <div class="channel-sub-body">
+            <p>#</p>
+            <input name="" id="">
+        </div>
+    </section>
+
+    <section class="channel-sub-container">
+        <div class="channel-sub-header">
+            <h4>Channel Description</h4>
+            @if (!channelDescriptionEdit) {
+                <button (click)="channelDescriptionEdit = true">edit</button>
+            } @else {
+                <div class="name-edit">
+                    <button (click)="channelDescriptionEdit = false">cancel</button>
+                    <button>save</button>
+                </div>
+            }
+        </div>
+        <div class="channel-sub-body">
+            <textarea name="" id=""></textarea>
+        </div>
+        <div class="channel-sub-footer">
+            <h4>Created By</h4>
+            <p class="creator">Name</p>
+        </div>
+    </section>
+
+</section> 
+

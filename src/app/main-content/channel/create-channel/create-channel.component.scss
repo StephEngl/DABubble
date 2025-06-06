@@ -14,7 +14,7 @@ textarea {
     max-width: 500px;
     max-height: 900px;
     margin: auto;
-    padding: 20px;
+    padding: 30px;
     border-radius: 20px;
     background-color: var(--col-bg-secondary);
 }
@@ -68,6 +68,7 @@ textarea {
 @media screen and (max-width: 450px) {
     .create-channel {
         width: 90%;
+        padding: 20px;
         border: 1px solid var(--col-stroke-main);
     }
     input,

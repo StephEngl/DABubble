@@ -1,0 +1,54 @@
+@import './../../../../assets/styles/mixins.scss';
+
+.channel-info {
+    @include dFlex($fd:column, $gap:20px);
+    background-color: var(--col-bg-secondary);
+    border: 1px solid var(--col-stroke-main);
+    width: 90vw;
+    max-width: 800px;
+    padding: 30px;
+    border-radius: 20px;
+}
+
+h4 {
+    font-size: 20px;
+    font-weight: 700;
+}
+
+.channel-sub-container {
+    @include dFlex($fd:column);
+    width: 100%;
+    padding: 16px;
+    border-radius: 20px;
+    border: 1px solid var(--col-stroke-main);
+}
+
+header,
+.channel-sub-header,
+.channel-sub-body {
+    @include dFlex($jc: space-between);
+    width: 100%;
+}
+
+.channel-sub-footer {
+    @include dFlex($fd:column, $gap:10px, $ai: flex-start);
+    padding-top: 10px;
+    border-top: 1px solid var(--col-stroke-main);
+    margin-top: 10px;
+    width: 100%;
+    .creator {
+        font-size: 20px;
+        font-weight: 700;
+        color: var(--col-font-href);
+    }
+}
+
+
+
+textarea,
+input {
+    flex: 1;
+    font-size: 18px;
+    padding: 16px;
+    color: var(--col-font-info);
+}

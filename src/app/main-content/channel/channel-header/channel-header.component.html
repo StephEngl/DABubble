@@ -11,7 +11,7 @@
                 </h3>
             </nav>
         } @else {
-            <nav (mouseenter)="signalService.showChannelMembers.set(false)">
+            <nav (click)="signalService.showEditChannel.set(true)" (mouseenter)="signalService.showChannelMembers.set(false)">
                 <img src="./../../../assets/icons/general/tag_black.svg" alt="">
                     <h3>{{currentChannel?.channelName}} </h3>
                 <img src="./../../../assets/icons/menu/dropdown_black.svg" alt="">

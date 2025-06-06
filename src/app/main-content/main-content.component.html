@@ -16,6 +16,12 @@
     </section>
 }
 
+@if (signalService.showEditChannel()) {
+    <section class="transparency" (click)="signalService.showEditChannel.set(false)">
+        <app-channel-info (click)="$event.stopPropagation()"></app-channel-info>
+    </section>
+}
+
 @if (signalService.showUserInfo()) {
     <section class="transparency" (click)="signalService.showUserInfo.set(false)">
         <app-user-info (click)="$event.stopPropagation()"></app-user-info>
