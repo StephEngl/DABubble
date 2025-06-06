@@ -66,7 +66,16 @@ export class AddMembersComponent {
     
     if (!currentChannel) return;
     await this.channelService.updateChannel(currentChannel);
-    this.signalService.showAddMembers.set(false)
+    this.signalService.showAddMembers.set(false);
+    this.triggerToast(collectedMembers);
+  }
+
+  triggerToast(array: Array<string>):void {
+    if(array.length === 1) {
+      this.signalService.triggerToast('Member added to channel','confirm');
+    } else {
+      this.signalService.triggerToast('Members added to channel','confirm');
+    }
   }
 
   get selectedMemberIds() {

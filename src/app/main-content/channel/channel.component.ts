@@ -16,4 +16,5 @@ export class ChannelComponent {
   signalService = inject(SignalsService);
   isChannel = this.signalService.channelActive();
   isConversation = this.signalService.conversationActive();
+  
 }

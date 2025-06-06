@@ -26,8 +26,11 @@ export class HeaderComponent {
   dropdownOpen: boolean = false;
   showProfileInfo: boolean = false;
   editProfile: boolean = false;
+  editAvatar: boolean = false;
   editName: string = "";
-  //@ViewChild('dropdownContainer') dropdownRef!: ElementRef;
+  chosenAvatar: string | undefined = undefined;
+
+  avatarList: string[] = ['1', '2', '3', '4', '5', '6', '7', '8', '9'];
 
   /** Logs out the current user and closes the logout popup. */
   logout() {
@@ -53,7 +56,21 @@ export class HeaderComponent {
         this.editName
       );
       this.editProfile = false;
-      //trigger Toast
+      this.signalService.triggerToast('User Name changed successfully','confirm');
+    } else {
+      this.editProfile = false;
+    }
+  }
+
+  //to be implemented
+  changeUserAvatar(avatar: string) {
+    if(this.editName != this.authService.currentUser()!.name) {
+      this.usersService.updateUserAvatar(
+        this.authService.userId,
+        avatar
+      );
+      this.editProfile = false;
+      this.signalService.triggerToast('User Avatar changed successfully','confirm');
     } else {
       this.editProfile = false;
     }
@@ -67,6 +84,24 @@ export class HeaderComponent {
     this.signalService.userInfoId.set(id);
     this.signalService.showUserInfo.set(true)
     this.searchInput = '';
+  }
+
+  cancelEdit() {
+    this.editProfile = false;
+    this.editAvatar = false;
+    this.chosenAvatar = undefined;
+  }
+  
+  setChosenAvatarId(avatar: string) {
+    this.chosenAvatar = avatar;
+  }
+
+  async changeAvatar() {
+    if (this.chosenAvatar) {
+      await this.usersService.updateUserAvatar(this.authService.userId, this.chosenAvatar);
+      this.cancelEdit();
+      this.signalService.triggerToast('User Avatar changed successfully','confirm');
+    }
   }
 
 }

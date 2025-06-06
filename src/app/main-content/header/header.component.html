@@ -35,7 +35,23 @@
                     <h4>Profile</h4>
                     <button class="close-button" (click)="toggleDropdown()">X</button>
                 </div>
-                <img [src]="'./../../../assets/icons/user/user_' + authService.currentUser()!.avatarId + '.png'" alt="">
+                @if (!editAvatar) {
+                    <img [src]="'./../../../assets/icons/user/user_' + authService.currentUser()!.avatarId + '.png'" alt="">
+                    @if(editProfile) {
+                        <button id="changeAvatarBtn" (click)="editAvatar = true">change Avatar</button>
+                    }
+                } @else {
+                    <p>Select new Avatar:</p>
+                    <div class="avatar-list">
+                        @for (avatar of avatarList; track avatar) {
+                            <img 
+                                [ngClass]="{ 'selected-avatar': chosenAvatar === avatar }"
+                                (click)="setChosenAvatarId(avatar)" [src]="'./../../../assets/icons/user/user_'+ avatar + '.png'" alt="">
+                        }
+                    </div>
+                    <button id="selectAvatarBtn" [disabled]="chosenAvatar === undefined" (click)="changeAvatar()">Change Avatar</button>
+                }
+                
                 @if (!editProfile) {
                     <div class="profile-name">
                         <h3>{{authService.currentUser()!.name}}</h3>
@@ -59,7 +75,7 @@
                     </div>
                     <input #editNameInput="ngModel" [(ngModel)]="editName" type="text">
                     <div class="edit-menu">
-                        <button (click)="editProfile = false">Cancel</button>
+                        <button (click)="cancelEdit()">Cancel</button>
                         <button (click)="changeUserName()" [disabled]="noChangesToName()">Save</button>
                     </div>
                 }

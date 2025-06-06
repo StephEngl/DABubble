@@ -28,7 +28,7 @@ export class CreateChannelComponent {
       this.openChannelAndAddMembers();
       ngForm.reset();
     } else {
-      console.log('Channel already exists!'); // trigger toast or error message
+      this.signalService.triggerToast('This channel already exists!','error') 
     }
   }
 
@@ -37,6 +37,7 @@ export class CreateChannelComponent {
     this.showChannelId(id);
     this.signalService.showAddMembers.set(true);
     this.signalService.showCreateChannel.set(false);
+    this.signalService.triggerToast('Channel created successfully','confirm');
   }
 
   getChannelIdByName():string {
