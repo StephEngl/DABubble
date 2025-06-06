@@ -1,9 +1,8 @@
 <app-header></app-header>
 <section class="main-content">
     <app-workspace [class.hidden]="!signalService.showWorkspace()"></app-workspace>
-    <app-channel></app-channel>
+    <app-channel [class.hidden]="!signalService.showChannel()"></app-channel>
     <app-thread [class.hidden]="!signalService.showThread()"></app-thread>
-
 </section>
 
 <nav class="workspace-btn" (click)="toggleWorkspaceMenu()" (mouseenter)="workspaceHovered = true" (mouseleave)="workspaceHovered = false">
@@ -24,7 +23,7 @@
 }
 
 @if (signalService.showAddMembers()) {
-    <section class="transparency" (click)="signalService.showUserInfo.set(false)">
+    <section class="transparency" (click)="signalService.showAddMembers.set(false)">
         <app-add-members (click)="$event.stopPropagation()"></app-add-members>
     </section>
 }

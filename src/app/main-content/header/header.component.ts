@@ -6,12 +6,13 @@ import { FormsModule } from '@angular/forms';
 import { ChannelsService } from '../../services/channels.service';
 import { SignalsService } from '../../services/signals.service';
 import { ChannelInterface } from '../../interfaces/channel.interface';
+import { SearchAppComponent } from '../../shared/search-app/search-app.component';
 import { NgClass } from '@angular/common';
 
 @Component({
   selector: 'app-header',
   standalone: true,
-  imports: [RouterLink, FormsModule, NgClass],
+  imports: [FormsModule, SearchAppComponent, NgClass],
   templateUrl: './header.component.html',
   styleUrl: './header.component.scss',
 })
@@ -33,37 +34,10 @@ export class HeaderComponent {
     this.authService.signOutUser();
   }
 
-  get searchResultsChannel() {
-    const searchTerm = this.searchInput.trim().toLowerCase();
-    if (!searchTerm) return [];
-    const matches = this.channelsService.channels.filter(channel =>
-      channel.channelName.toLowerCase().includes(searchTerm)
-    );
-    return matches.length > 0 ? matches : [];
-  }
-
-  get searchResultsUser() {
-    const searchTerm = this.searchInput.trim().toLowerCase();
-    if (!searchTerm) return [];
-    const matches = this.usersService.users.filter(user =>
-      user.name.toLowerCase().includes(searchTerm)
-    );
-    return matches.length > 0 ? matches : [];
-  }
-
-  get searchResultsDirectMessages() {
-    return '';
-  }
-
-  showThread(id: string) {
-    localStorage.setItem("currentChannel", id);
-    this.channelsService.subscribeToChannelMessages(id);
-    this.signalService.scrollChannelToBottom.set(true);
-  }
-
   toggleDropdown(){
     this.dropdownOpen = !this.dropdownOpen;
     this.showProfileInfo = false;
+    this.editProfile = false;
   }
 
   showProfile() {
@@ -72,7 +46,7 @@ export class HeaderComponent {
     this.editName = this.authService.currentUser()!.name;
   }
 
-  sendTest() {
+  changeUserName() {
     if(this.editName != this.authService.currentUser()!.name) {
       this.usersService.updateUserName(
         this.authService.userId,
@@ -85,8 +59,14 @@ export class HeaderComponent {
     }
   }
 
-  isChannelMember(channel: ChannelInterface):boolean {
-    return channel.members!.includes(this.authService.userId);
+  noChangesToName() {
+    return this.editName == this.authService.currentUser()!.name;
+  }
+
+  showUserInfo(id: string) {
+    this.signalService.userInfoId.set(id);
+    this.signalService.showUserInfo.set(true)
+    this.searchInput = '';
   }
 
 }

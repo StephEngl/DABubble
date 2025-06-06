@@ -5,7 +5,7 @@
             <img src="./../../../assets/icons/general/tag_blue.svg" alt="">
             <p>{{getChannelMessages()}}</p>
         </div>
-        <button (click)="signalService.showThread.set(false)" class="close-thread">X</button>
+        <button (click)="signalService.backToChannelOnMobile()" class="close-thread">X</button>
     </header>
     <app-message-list [isThread]="true"></app-message-list>
     <app-create-message [isThreadMessage]="true"></app-create-message>

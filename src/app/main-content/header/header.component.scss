@@ -7,7 +7,8 @@ header {
     justify-content: space-between;
     width: 100%;
     height: $header-height;
-    padding: 16px 16px 0 16px;
+    padding: 16px 16px 0px 16px;
+    margin-bottom: 16px;
 }
 
 .header-logo {
@@ -15,76 +16,15 @@ header {
     cursor: pointer;
     gap: 20px;
     >img:first-child {
-        height: 70px;
+        height: 55px;
     }
     >img:nth-child(2) {
-        height: 24px;
+        height: 22px;
     }
 }
 
-.search-app {
-    position: relative;
-    align-self: center;
-    height: 50px;
+app-search-app {
     width: 40%;
-
-    >input {
-        padding-left: 16px;
-        height: 100%;
-        min-width: 100%;
-        font-size: clamp(18px, 1.444rem, 26px);
-    }
-
-    >img {
-        border-radius: 50%;
-        position: absolute;
-        width: 30px;
-        height: 30px;
-        padding: 5px;
-        top: 0;
-        right: 0;
-        margin: 10px;
-        &:hover {
-            cursor: pointer;
-            background-color: var(--col-bg-btn-hover);
-        }
-    }
-}
-
-.search-result {
-    @include dFlex($fd: column, $pos:absolute, $ai: flex-start, $jc: flex-start, $gap: 10px);
-    z-index: 2;
-    top: 60px;
-    padding: 18px;
-    left: 0;
-    height: auto;
-    max-height: 300px;
-    width: 320px;
-    overflow-y: auto;
-    border-radius: 20px;
-    background-color: var(--col-bg-secondary);
-    filter: drop-shadow(4px 4px 4px var(--col-transparent-shadow));
-
-    .single-result {
-        @include dFlex($jc: flex-start, $gap: 6px);
-        width: 100%;
-        padding: 6px;
-        border-radius: 10px;
-        cursor: pointer;
-        &:hover {
-            background-color: var(--col-bg-main);
-            color: var(--col-font-href);
-        }
-        >img { 
-            border-radius: 50%;
-            height: 35px;
-            width: 35px;
-        }
-        .result-info {
-            font-weight: 700;
-            font-size: 18px;
-        }
-    }
 }
 
 .user-menu {
@@ -189,8 +129,36 @@ header {
     width: 100%;
 }
 
-.edit-button {
-    @include dFlex($gap:10px);
+.edit-menu {
+    @include dFlex($gap: 20px);
+    width: 100%;
+    >button {
+        padding: 8px 16px;
+        border-radius: 20px;
+        font-size: 18px;
+        font-weight: 700;
+    }
+    >button:first-child {
+        color: var(--col-font-info);
+        border: 1px solid var(--col-font-info);
+        &:hover {
+            background-color: var(--col-bg-main);
+        }
+    }
+    >button:last-child {
+        color: var(--col-bg-btn-main);
+        border: 1px solid var(--col-stroke-main);
+        &:hover {
+            color: var(--col-bg-secondary);
+            background-color: var(--col-bg-btn-main);
+            border: 1px solid var(--col-bg-btn-main);
+        }
+        &:disabled {
+            color: var(--col-bg-btn-disabled);
+            border: 1px solid var(--col-bg-btn-disabled);
+            background-color: var(--col-bg-secondary);
+        }
+    }
 }
 
 .close {
@@ -206,7 +174,63 @@ header {
 
 
 @media screen and (max-width: 960px ) {
-    .search-app {
+    app-search-app {
         display: none;
     }
+}
+
+@media screen and (max-width: 850px) {
+    header {
+        height: 60px;
+        padding: 16px;
+        margin-bottom: 0px;
+    }
+    .dropdown-menu {
+        top: 74px;
+    }
+    .header-logo {
+        gap: 5px;
+        >img:first-child {
+            height: 35px;
+        }
+        >img:nth-child(2) {
+            height: 14px;
+        }
+    }
+    .user-menu {
+        gap: 5px;
+        .user-icon {
+            .user-picture {
+                height: 45px;
+            }
+            .user-status {
+                bottom: -10px;
+                height: 20px;
+                width: 20px;
+            }
+        }
+    }
+    h3 {
+        font-size: 20px;
+    }
+}
+
+@media screen and (max-width: 450px) {
+    .user-menu {
+        h3,
+        button {
+            display: none;
+        }
+    }
+    .dropdown-menu {
+        width: 90%;
+        right: 50%;
+        transform: translateX(50%);
+        border-radius: 20px;
+        border: 1px solid var(--col-stroke-main);
+        >button{
+            font-size: 18px;
+        }
+    }
+
 }

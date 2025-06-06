@@ -38,6 +38,7 @@ export class ChannelListComponent {
     localStorage.setItem("currentChannel", id);
     this.channelService.subscribeToChannelMessages(id);
     this.signalService.setChannelSignals(id);
+    this.signalService.hideWorkspaceOnMobile();
   }
 
   isChannelMember(channel: ChannelInterface):boolean {

@@ -39,3 +39,16 @@ header {
         background-color: var(--col-bg-main);
     }
 }
+
+@media screen and (max-width: 850px) {
+    app-create-message {
+        @include createMessage($width: calc(100% - 74px) !important);
+        margin-left: 10px;
+    }
+}
+
+@media screen and (max-width: 450px) {
+    app-create-message {
+        margin: 0 0 9px 9px;
+    }
+}

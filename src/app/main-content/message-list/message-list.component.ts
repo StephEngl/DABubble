@@ -3,7 +3,6 @@ import {
   inject, 
   Input,   
   AfterViewChecked,
-  AfterViewInit,
   ViewChild,
   ElementRef,
 } from '@angular/core';
@@ -15,6 +14,7 @@ import { Timestamp } from '@angular/fire/firestore';
 import { SignalsService } from '../../services/signals.service';
 import { TimeService } from '../../services/time.service';
 import { ConversationService } from '../../services/conversations.service';
+import { UsersService } from '../../services/users.service';
 
 interface Message {
   text: string;
@@ -22,7 +22,6 @@ interface Message {
   postedBy: string;
   hasReplies: boolean;
 }
-
 @Component({
   selector: 'app-message-list',
   standalone: true,
@@ -36,6 +35,7 @@ export class MessageListComponent implements AfterViewChecked {
   channelService = inject(ChannelsService);
   signalService = inject(SignalsService);
   conService = inject(ConversationService);
+  userService = inject(UsersService);
   timeService = inject(TimeService);
   
   @Input() isChannel: boolean = false;
@@ -44,6 +44,8 @@ export class MessageListComponent implements AfterViewChecked {
   @ViewChild('messageContainer') messageContainer?: ElementRef<HTMLDivElement>;
   shouldScroll = true;
   scrollOnInit = false;
+  paddingChannelMessage: string = '';
+  paddingThreadMessage: string = '';
 
   ngOnInit(): void {
     this.scrollOnInit = true;
@@ -125,21 +127,62 @@ export class MessageListComponent implements AfterViewChecked {
 
   getDirectMessages(id:string): DirectMessageInterface[] {
     const conversation = this.conService.getConversationById(id);
-    if (conversation) {
-      // console.log(conversation);
-      
-      return conversation.messages!;
+    if (conversation?.messages) {
+      return conversation.messages;
     } else {
       return [];
     }
+  }
+
+  get hasNoMessages(): boolean {
+    const messages = this.getDirectMessages(this.signalService.activeConId());
+    return messages.length === 0;
   }
 
   hasThreadMessages(): boolean {
     return this.getThreadMessages().length > 0;
   }
   
-  currentThreadActive() {
+  currentThreadActive(): boolean {
     return this.getCurrentThreadMessage()?.id === localStorage.getItem('currentThread');
+  }
+
+  get conversationPartner() {
+    const activeCon = this.conService.getConversationById(this.signalService.activeConId());
+    if (!activeCon) return;
+    const participant = this.conService.participant(activeCon);
+    if (!participant) return;
+    return participant;
+  }
+
+  userInfo():void {
+    this.signalService.userInfoId.set(this.conversationPartner);
+    this.signalService.showUserInfo.set(true);
+  }
+
+  get channelCreator() {
+    const currentChannel = this.channelService.getChannelById(this.currentChannel());
+    if (currentChannel?.members) {
+      return currentChannel.members?.[0]
+    } return "Unknown";
+  }
+
+  get channelTitle() {
+    const currentChannel = this.channelService.getChannelById(this.currentChannel());
+    if (currentChannel?.channelName) {
+      return currentChannel.channelName
+    } return "Unknown";
+  }
+
+  get channelCreatedAt() {
+        const currentChannel = this.channelService.getChannelById(this.currentChannel())?.createdAt;
+    if (currentChannel) {
+      return this.timeService.getDate(currentChannel.toDate(), 'dd-mm-yyyy'); 
+    } return "Unknown";
+  }
+
+  isMobileView():boolean {
+    return window.innerWidth < 850;
   }
 
 }

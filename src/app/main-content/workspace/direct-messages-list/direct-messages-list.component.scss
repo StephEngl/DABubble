@@ -1,7 +1,7 @@
 @import './../../../../assets/styles/mixins.scss';
 
 .direct-messages-list {
-    @include dFlex($fd:column, $ai:flex-start, $gap: 16px);
+    @include dFlex($fd:column, $ai:flex-start, $gap: 16px); 
 }
 
 header {
@@ -30,22 +30,6 @@ ul {
             color: var(--col-font-btn-hover);
             background-color: var(--col-bg-main);
         }
-        .user-icon {
-            >img {
-                border-radius: 50%;
-                width: 45px;
-                height: 45px;
-            }
-            .user-status {
-                border-radius: 50%;
-                position: absolute;
-                bottom: 8px;
-                left: 40px;
-                height: 25px;
-                width: 25px;
-                border: 3px solid var(--col-bg-secondary);
-            }
-        }
         >img {
             width: 26px;
             height: 26px;
@@ -53,16 +37,53 @@ ul {
     }
 }
 
+.user-icon {
+    >img {
+        border-radius: 50%;
+        width: 45px;
+        height: 45px;
+    }
+    .user-status {
+        border-radius: 50%;
+        position: absolute;
+        bottom: 8px;
+        left: 40px;
+        height: 25px;
+        width: 25px;
+        border: 3px solid var(--col-bg-secondary);
+    }
+}
+
 .close-list {
     max-height: 0px !important;
     padding-bottom: 0 !important;
+    padding-top: 0 !important;
+    overflow: hidden;
 }
 
 .direct-messages {
     @include dFlex($fd:column, $ai:flex-start, $gap: 16px);
     width: 100%;
+    height: auto;
     overflow: hidden;
-    max-height: 500px;
     transition: all 0.5s ease;
-    padding: 0 0 20px 30px;
+    padding: 10px 0 40px 30px;
 }
+
+@media screen and (max-width: 850px) {
+    h5 {
+        font-size: 16px;
+    }
+}
+
+@media screen and (max-width: 450px) {
+    .direct-messages {
+        padding: 10px 0 20px 8px;
+    }
+    .user-status {
+        bottom: 8px;
+        left: 54px;
+        height: 18px !important;
+        width: 18px !important;
+    }
+} 

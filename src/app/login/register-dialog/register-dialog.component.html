@@ -12,11 +12,7 @@
       Get your own DABubble-account with your name and mail-address
     </span>
 
-    <form
-      (ngSubmit)="onSubmit(contactForm)"
-      #contactForm="ngForm"
-      class="form-login"
-    >
+    <form #contactForm="ngForm" class="form-login">
       <div class="input-wrapper">
         <div class="name-input-wrapper">
           <input
@@ -27,7 +23,7 @@
             id="name"
             name="name"
             required
-            pattern="^[^\s][\p{L}\p{M}'-]*\s+[\p{L}\p{M}'-]+(\s+[\p{L}\p{M}'-]+)*[^\s]$"
+            pattern="^[A-Za-zÄÖÜäöüß]+(?:\s+[A-Za-zÄÖÜäöüß]+)+$"
             placeholder="First and last name"
           />
           <div class="icon">
@@ -58,44 +54,7 @@
           } @else {<span class="error-message-placeholder"></span> }
         </div>
 
-        <div class="password-input-wrapper">
-          <input
-            #password="ngModel"
-            [(ngModel)]="passwordInput"
-            [type]="passwordVisible ? 'text' : 'password'"
-            class="input"
-            id="password"
-            name="password"
-            required
-            pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,}$"
-            placeholder="Password"
-          />
-
-          @if (!passwordInput) {
-          <div class="icon">
-            <img
-              src="./assets/icons/login/lock_black.svg"
-              alt="Password Icon"
-            />
-          </div>
-          } @if (passwordInput) {
-          <div class="icon" (click)="togglePasswordVisibility()">
-            <img
-              [src]="
-                passwordVisible
-                  ? './assets/icons/login/visibility.svg'
-                  : './assets/icons/login/visibility_off.svg'
-              "
-            />
-          </div>
-          } @if (password.touched && password.invalid) {
-          <span class="error-message"
-            >Please enter at least 8 characters, including uppercase, lowercase,
-            number, and special character.</span
-          >
-          } @else {<span class="error-message-placeholder"></span>
-          }
-        </div>
+        <app-passwords class="form-login"></app-passwords>
 
         <div class="privacy-policy-wrapper">
           <label for="privacy-policy-checkbox">
@@ -121,14 +80,13 @@
           <button
             class="apply-button"
             type="submit"
-            [disabled]="
-              !name.valid ||
-              !email.valid ||
-              !password.valid ||
-              !privacyPolicyAccepted
-            "
+            [disabled]="!name.valid || !email.valid || !signalService.confirmPasswordInput() || !privacyPolicyAccepted"
             (click)="
-              createUser(this.nameInput, this.emailInput, this.passwordInput)
+              createUser(
+                nameInput,
+                emailInput,
+                signalService.confirmPasswordInput()
+              )
             "
           >
             Apply

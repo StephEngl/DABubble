@@ -1,14 +1,14 @@
 @if (messageExist()) {
     <section 
         class="app-message"
-        [style.padding]="'20px ' + paddingHorizontal + 'px'"
+        [style.padding]="paddingValue"
         [style.flexDirection]="checkifOwnMessage() ? 'row-reverse' : 'row'"
         (mouseenter)="hoverMessage = true"
         (mouseleave)="hoverMessage = false"
     >
 
-        <aside class="user-avatar">
-            <img [src]="showAvatar()" alt="">
+        <aside >
+            <img class="user-avatar" [src]="showAvatar()" alt="">
         </aside>
 
         <section class="chat-message" [style.alignItems]="checkifOwnMessage() ? 'flex-end' : 'flex-start'">
@@ -26,7 +26,6 @@
                         <img [src]="usersService.getAvatar(replyMessageInfo()?.senderId!)" alt="">
                         <p>:</p>
                     </div>
-
                     <p>{{ replyMessageInfo()?.text }}</p>
                 </div>
                 }
@@ -75,7 +74,7 @@
                     <div class="answers">
                         @if (message.threadMessages.length > 0) {
                             <button (click)="openThread()">{{ message.threadMessages.length }} Replies</button>
-                            <p>last on {{ timeService.getDate(message.threadMessages[message.threadMessages.length -1 ].createdAt.toDate(), 'last-thread') }}</p>
+                            <p>last on {{ lastReply}}</p>
                         } @else {
                             <button (click)="openThread()">Reply</button>
                         }

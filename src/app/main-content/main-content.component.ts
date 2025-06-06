@@ -1,4 +1,4 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, Host, HostListener, inject, OnInit } from '@angular/core';
 import { HeaderComponent } from './header/header.component';
 import { ThreadComponent } from './thread/thread.component';
 import { ChannelComponent } from './channel/channel.component';
@@ -36,7 +36,7 @@ export class MainContentComponent implements OnInit {
   authService = inject(AuthenticationService);
   usersService = inject(UsersService);
   conService = inject(ConversationService);
-  workspaceOpened: boolean = true;
+  workspaceOpened: boolean = false;
   workspaceHovered: boolean = false;
   workspaceStatus:  "Open" | "Close" = "Open";
   userInactive: boolean = true;
@@ -44,7 +44,7 @@ export class MainContentComponent implements OnInit {
 
   constructor() {
     this.setInitialChannel();
-    
+    this.handleResize();
   }
 
   async ngOnInit() {
@@ -57,6 +57,31 @@ export class MainContentComponent implements OnInit {
     await this.authService.getActiveUserId();
     this.listenToActivity();
     
+  }
+
+  @HostListener('window:resize', [])
+  handleResize(): void {
+    if (window.innerWidth < 1500) {
+      this.toggleWorkspaceAndThread();
+    }
+    if (window.innerWidth < 850) {
+      this.signalService.showThread.set(false);
+      this.signalService.showChannel.set(false);
+      this.signalService.showWorkspace.set(true);
+    }
+    else {
+      this.signalService.showChannel.set(true);
+    }
+    console.log("resizing");
+    
+  }
+
+  toggleWorkspaceAndThread() {
+    if (this.signalService.showThread()) {
+      this.signalService.showWorkspace.set(false);
+    } else if (this.signalService.showWorkspace()) {
+      this.signalService.showThread.set(false);
+    }
   }
 
   listenToActivity(): void {
@@ -76,7 +101,7 @@ export class MainContentComponent implements OnInit {
     this.afkTimeoutId = setTimeout(() => {
       this.userInactive = true;
       this.usersService.updateUserStatus(this.authService.userId, 'afk');
-    }, 300000); // => 5min
+    }, 300000); // => 5min 300000
   }
 
   setInitialChannel() {
@@ -86,9 +111,19 @@ export class MainContentComponent implements OnInit {
   };
   
   toggleWorkspaceMenu():void {
-    this.workspaceOpened = !this.workspaceOpened;
-    this.workspaceStatus = this.workspaceOpened ? 'Close' : 'Open';
-    this.workspaceOpened ? this.signalService.showWorkspace.set(true) : this.signalService.showWorkspace.set(false);
+    if (this.signalService.showWorkspace()) {
+      if(window.innerWidth < 850) {
+        this.signalService.showChannel.set(true);
+      }
+      this.signalService.showWorkspace.set(false);
+      this.workspaceStatus = 'Close'
+    } else {
+      if(window.innerWidth < 1500) {
+        this.signalService.showThread.set(false);
+      }
+      this.signalService.showWorkspace.set(true);
+      this.workspaceStatus = 'Open'
+    }
   }
 
   getWorkspaceIcon(): string {

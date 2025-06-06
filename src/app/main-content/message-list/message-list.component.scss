@@ -34,3 +34,32 @@
     color: var(--col-font-info);
     padding-bottom: 10px;
 }
+
+.no-message-info {
+    padding: 0 20px;
+    >p {
+        color: var(--col-font-info);
+    }
+    >p>span {
+        cursor: pointer;
+        font-weight: 700;
+        color: var(--col-font-href);
+    }
+}
+
+.channel-info {
+    padding: 0 20px;
+    >p {
+        color: var(--col-font-info);
+    }
+    >p>span {
+        font-weight: 700;
+        color: var(--col-font-href);
+    }
+}
+
+@media screen and (max-width: 850px) {
+    .message-list {
+        padding: 20px 0 50px 0;
+    }
+}

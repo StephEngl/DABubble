@@ -1,4 +1,4 @@
-import { Component, Input, NgModule, inject } from '@angular/core';
+import { Component, HostListener, Input, inject } from '@angular/core';
 import { ChannelsService } from '../../../services/channels.service';
 import { NgClass } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -7,7 +7,6 @@ import { UsersService } from '../../../services/users.service';
 import { PickerModule } from '@ctrl/ngx-emoji-mart';
 import data from '@emoji-mart/data';
 import { EmojiMartData } from '@emoji-mart/data';
-import { ReactionInterface } from '../../../interfaces/message.interface';
 import { MessageService } from '../../../services/message.service';
 import { AuthenticationService } from '../../../services/authentication.service';
 import { TimeService } from '../../../services/time.service';
@@ -53,6 +52,7 @@ export class ChatMessageComponent {
   maxEmoji: number = 7;
   showAll: boolean = false;
   reactionHovered: boolean = false;
+  paddingValue: string = '';
 
 
   menuBar: {imgSrc: string, shownInThread: boolean, shownIfOwnMessage?: boolean, clickFunction: () => void}[] = [
@@ -85,9 +85,17 @@ export class ChatMessageComponent {
   ];
 
   ngOnInit() {
+    console.log(this.paddingHorizontal);
+    this.paddingValue = this.getPadding();
     this.messageEditText = this.text();
     this.checkifOwnMessage();
+    this.maxEmoji = this.setMaxEmojiLength();
   }
+
+  @HostListener('window: resize')
+    setPadding() {
+      this.paddingValue = this.getPadding();
+    }
 
 
   messageExist():boolean {
@@ -107,6 +115,7 @@ export class ChatMessageComponent {
     }
     this.signalService.showThread.set(true);
     this.signalService.focusThread.set(true);
+    this.signalService.showOnlyThreadOnMobile();
   }
 
   replyTo() {
@@ -114,15 +123,23 @@ export class ChatMessageComponent {
     this.signalService.focusConversation.set(true);
   }
 
-replyMessageInfo() {
-  if (this.isDirectMessage) {
-    const conId = this.signalService.activeConId();
-    const messageId = this.directMessage.replyTo;
-    return this.conService.getMessageById(conId, messageId);
-  } else {
-    return null;
+  replyMessageInfo() {
+    if (this.isDirectMessage) {
+      const conId = this.signalService.activeConId();
+      const messageId = this.directMessage.replyTo;
+      return this.conService.getMessageById(conId, messageId);
+    } else {
+      return null;
+    }
   }
-}
+
+  get lastReply():any {
+    if (window.innerWidth > 950) {
+      return this.timeService.getDate(this.message.threadMessages[this.message.threadMessages.length -1 ].createdAt.toDate(), 'last-thread')
+    } else {
+      return this.timeService.getDate(this.message.threadMessages[this.message.threadMessages.length -1 ].createdAt.toDate(), 'dd-mm-yyyy')
+    }
+  }
 
   createdAt():string {
     if (this.isChannelMessage) {
@@ -239,9 +256,24 @@ replyMessageInfo() {
     }
   }
 
-  toggleShownEmojis():void {
+  toggleShownEmojis() {
     this.showAll = !this.showAll;
-    this.maxEmoji = this.showAll ? this.reactions()?.length || 0 : 7;
+
+    const totalEmojis = this.reactions()?.length || 0;
+
+    if (this.showAll) {
+      this.maxEmoji = totalEmojis;
+    } else {
+      this.maxEmoji = this.setMaxEmojiLength();
+    }
+  }
+
+  setMaxEmojiLength():number {
+    if(window.innerWidth < 850) {
+      return  3;
+    } else {
+      return 7;
+    }
   }
 
   showUserName(id: string):string {
@@ -254,6 +286,14 @@ replyMessageInfo() {
 
   hideReactionInfos() {
     this.hoveredReactionIndex = null;
+  }
+
+  getPadding(): string {
+    if (window.innerWidth < 850) {
+      return '20px 16px 20px ' + this.paddingHorizontal + 'px';
+    } else {
+      return '20px ' + this.paddingHorizontal + 'px';
+    }
   }
 
 }

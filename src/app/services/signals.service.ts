@@ -21,6 +21,7 @@ export class SignalsService {
 
   showWorkspace = signal<boolean>(true);
   showThread = signal<boolean>(false);
+  showChannel = signal<boolean>(true);
   showCreateChannel = signal<boolean>(false);
   showChannelMembers = signal<boolean>(false);
   showUserInfo = signal<boolean>(false);
@@ -41,16 +42,20 @@ export class SignalsService {
   startIntroAnimation() {
       // Slide out title logo after 1,3s
       setTimeout(() => this.slideOut.set(true), 1300);
-      // Animate complete logo to the upper left after 2,2s
+      // Animate complete logo to the upper left after 2,5s
       setTimeout(() => this.moveUp.set(true), 2500);
-      // Fade out intro after 3s
+      // // Fade out intro after 3,5s
       setTimeout(() => this.fadeOut.set(true), 3500);
-      // End intro and delete from DOM
+      // // End intro and delete from DOM after 4,2s
       setTimeout(() => this.showIntro.set(false), 4200);
     }
 
   // Signal for current User-ID
   currentUid = signal<string>('');
+
+  // Signals for password match of confirming password
+  passwordsMatch = signal<boolean>(false)
+  confirmPasswordInput = signal<string>('');
 
   // Signalmethods for showing the different dialogs at login-section
   isLoginDialog = signal<boolean>(true);
@@ -137,6 +142,30 @@ export class SignalsService {
     this.activeConId.set(id);
     this.showThread.set(false);
     this.startConversation.set(false);
+  }
+
+  hideWorkspaceOnMobile():void {
+    if (window.innerWidth < 850) {
+      this.showChannel.set(true);
+      this.showWorkspace.set(false);
+    }
+  }
+
+  showOnlyThreadOnMobile():void {
+    if (window.innerWidth < 850) {
+      this.showChannel.set(false);
+    } else if (window.innerWidth < 1500) {
+      this.showWorkspace.set(false);
+    }
+  }
+
+  backToChannelOnMobile():void {
+    if (window.innerWidth < 850) {
+      this.showChannel.set(true);
+      this.showThread.set(false);
+    } else {
+      this.showThread.set(false);
+    }
   }
 
 }
