@@ -125,7 +125,7 @@ export class MainContentComponent implements OnInit {
   }
 
   getWorkspaceIcon(): string {
-    const color = this.workspaceHovered ? 'blue' : 'black';
+    const color = this.workspaceHovered ? 'blue' : ''+ this.signalService.themeColorMain() +'';
     const status = this.workspaceStatus === 'Open' ? 'workspace_open' : 'workspace_close';
     return `./../../assets/icons/menu/${status}_${color}.svg`;
   }

@@ -7,7 +7,7 @@
                 <img src="./../../../assets/icons/general/devspace_logo.svg" alt="">
                 <h3>Devspace</h3>
             </div>
-            <img [src]="startConversationHovered ? './../../../assets/icons/general/edit_blue.svg' : './../../../assets/icons/general/edit_black.svg'"
+            <img [src]="startConversationHovered ? './../../../assets/icons/general/edit_blue.svg' : './../../../assets/icons/general/edit_'+ signalService.themeColorMain() + '.svg'"
             (click)="newConversation()"
             (mouseenter)="startConversationHovered = true"
             (mouseleave)="startConversationHovered = false"
@@ -30,7 +30,7 @@
             <img src="./../../../assets/icons/general/devspace_logo.svg" alt="">
             <p >Start Chat</p>
         </div>
-        <img [src]="startConversationHovered ? './../../../assets/icons/general/edit_blue.svg' : './../../../assets/icons/general/edit_black.svg'" alt="Edit Icon">
+        <img [src]="startConversationHovered ? './../../../assets/icons/general/edit_blue.svg' : './../../../assets/icons/general/edit_'+ signalService.themeColorMain() + '.svg'" alt="Edit Icon">
     </div>
     }
 

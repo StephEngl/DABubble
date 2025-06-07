@@ -24,7 +24,7 @@
             placeholder="Email"
           />
           <div class="icon">
-            <img src="./assets/icons/login/mail_black.svg" alt="Mail Icon" />
+            <img [src]="'./assets/icons/login/mail_'+ signalService.themeColorMain() +'.svg'" alt="Mail Icon" />
           </div>
           @if (email.touched && email.invalid) {
           <span class="error-message">Please enter a valid mail address</span>
@@ -50,7 +50,7 @@
           @if (!passwordInput) {
           <div class="icon">
             <img
-              src="./assets/icons/login/lock_black.svg"
+              [src]="'./assets/icons/login/lock_'+ signalService.themeColorMain() +'.svg'"
               alt="Password Icon"
             />
           </div>

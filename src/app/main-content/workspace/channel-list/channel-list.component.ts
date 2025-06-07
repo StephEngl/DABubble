@@ -30,7 +30,7 @@ export class ChannelListComponent {
   }
 
   imageColor(input: boolean):string {
-    const color = input ? 'blue' : 'black';
+    const color = input ? 'blue' : ''+ this.signalService.themeColorMain() +'';
     return color; 
   }
 

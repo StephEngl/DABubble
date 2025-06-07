@@ -68,4 +68,17 @@ export class SearchAppComponent {
     this.searchInput = '';
   }
 
+
+  darkModeTest(): void {
+    const currentMode = localStorage.getItem('theme');
+    if (currentMode === 'dark-theme') {
+      localStorage.setItem('theme', 'light');
+      this.signalService.themeColorMain.set('black');
+    } else {
+      localStorage.setItem('theme', 'dark-theme');
+      this.signalService.themeColorMain.set('white');
+    }
+    window.location.reload()
+  }
+
 }

@@ -21,7 +21,7 @@
                 @if(directMessage.replyTo && replyMessageInfo()) {
                 <div class="reply-text" [class]="checkifOwnMessage() ? 'own-message':'normal-message'">
                     <div class="reply-title">
-                        <img src="./../../../../assets/icons/message/answer_arrow_black.svg" alt="">
+                        <img [src]="'./../../../../assets/icons/message/answer_arrow_'+ signalService.themeColorMain() + '.svg'" alt="">
                         <p>{{ usersService.findName(replyMessageInfo()?.senderId!) }}</p>
                         <img [src]="usersService.getAvatar(replyMessageInfo()?.senderId!)" alt="">
                         <p>:</p>

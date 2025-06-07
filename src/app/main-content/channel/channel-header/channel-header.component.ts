@@ -107,20 +107,6 @@ export class ChannelHeaderComponent {
     return participant;
   }
 
-  darkModeTest(): void {
-    const currentMode = localStorage.getItem('theme');
-    if (currentMode === 'dark-theme') {
-      localStorage.setItem('theme', 'light');
-    } else {
-      localStorage.setItem('theme', 'dark-theme');
-    }
-    this.refreshPage();
-  }
-
-  refreshPage(): void {
-    window.location.reload();
-  }
-
   startConversation(id: string): void {
     this.conService.startNewConversation(id);
     this.inputText = "";

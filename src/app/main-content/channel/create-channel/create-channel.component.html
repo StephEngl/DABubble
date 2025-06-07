@@ -42,7 +42,7 @@
     </form>
 
     <button class="close-create-channel" (click)="signalService.showCreateChannel.set(false)">
-        <img src="./../../../../assets/icons/menu/close_black.svg" alt="">
+        <img [src]="'./../../../../assets/icons/menu/close_'+ signalService.themeColorMain() + '.svg'" alt="">
     </button>
 
 </section> 

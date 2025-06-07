@@ -12,7 +12,7 @@
         <p>{{user.status}}</p>
     </div>
     <div class="contact">
-        <img src="./../../../assets/icons/login/mail_black.svg" alt="">
+        <img [src]="'./../../../assets/icons/login/mail_'+ signalService.themeColorMain() + '.svg'" alt="">
         <p>{{user.email}}</p>
     </div>
     <button class="send-message" (click)="sendMessage(user.id)">

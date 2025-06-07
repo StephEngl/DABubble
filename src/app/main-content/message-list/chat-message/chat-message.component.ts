@@ -65,17 +65,17 @@ export class ChatMessageComponent {
       clickFunction: () => this.messageService.postReaction(this.singleMessageId(), '👍', this.reactions(), this.isChannelMessage)
     },
     { 
-      imgSrc: './../../../../assets/icons/message/add_reaction_black.svg',
+      imgSrc: './../../../../assets/icons/message/add_reaction_'+ this.signalService.themeColorMain() + '.svg',
       shownInThread: true,
       clickFunction: () => this.emojiBar = true
     },
     { 
-      imgSrc: './../../../../assets/icons/message/comment_black.svg',
+      imgSrc: './../../../../assets/icons/message/comment_'+ this.signalService.themeColorMain() + '.svg',
       shownInThread: false,
       clickFunction: () => this.openThread()
     },
     { 
-      imgSrc: './../../../../assets/icons/message/more_options_black.svg',
+      imgSrc: './../../../../assets/icons/message/more_options_'+ this.signalService.themeColorMain() + '.svg',
       shownInThread: true,
       shownIfOwnMessage: true,
       clickFunction: () => this.editMode = true

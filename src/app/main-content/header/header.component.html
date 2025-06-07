@@ -2,7 +2,7 @@
 
     <div class="header-logo">
         <img src="./../../../assets/icons/general/dabubble_logo.svg" alt="">
-        <img src="./../../../assets/icons/general/dabubble_logo_title.svg" alt="">
+        <img [src]="'./../../../assets/icons/general/dabubble_logo_title_'+ signalService.themeColorMain() +'.svg'" alt="">
     </div>
 
     <app-search-app></app-search-app>
@@ -22,7 +22,7 @@
             <button (click)="toggleDropdown(); $event.stopPropagation()" >
             <img
                 [ngClass]="{'menu-icon': true, 'reverse': dropdownOpen}"
-                [src]="hoverMenu ? './../../../assets/icons/menu/dropdown_blue.svg' : './../../../assets/icons/menu/dropdown_black.svg'"
+                [src]="hoverMenu ? './../../../assets/icons/menu/dropdown_blue.svg' : './../../../assets/icons/menu/dropdown_'+ signalService.themeColorMain() + '.svg'"
                 alt="">
             </button>
         </div>
@@ -70,12 +70,12 @@
                         <p>{{authService.currentUser()!.status}}</p>
                     </div>
                     <div class="contact">
-                        <img src="./../../../assets/icons/login/mail_black.svg" alt="">
+                        <img [src]="'./../../../assets/icons/login/mail_'+ signalService.themeColorMain() + '.svg'" alt="">
                         <p>{{authService.currentUser()!.email}}</p>
                     </div>
                 } @else {
                     <div class="edit-title">
-                        <img src="./../../../assets/icons/general/account_circle_black.svg" alt="">
+                        <img [src]="'./../../../assets/icons/general/account_circle_'+ signalService.themeColorMain() + '.svg'" alt="">
                         <p>Change your profile name:</p>
                     </div>
                     <input #editNameInput="ngModel" [(ngModel)]="editName" type="text">

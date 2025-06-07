@@ -19,6 +19,7 @@
   .recommendation {
     font-family: "Nunito";
     font-size: 20px;
+    color: var(--col-font-main);
   }
 }
 
@@ -84,6 +85,7 @@
 
   span {
     background-color: var(--col-bg-secondary);
+    color: var(--col-font-main);
     padding: 10px 20px;
   }
 }

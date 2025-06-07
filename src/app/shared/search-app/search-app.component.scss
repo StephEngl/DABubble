@@ -4,6 +4,8 @@
     position: relative;
     align-self: center;
     height: 50px;
+    background-color: var(--col-bg-secondary);
+    border-radius: 20px;
 
     >input {
         padding-left: 16px;

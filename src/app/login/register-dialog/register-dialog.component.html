@@ -1,7 +1,7 @@
 <section class="register-dialog">
   <div class="register-content">
     <img
-      src="/assets/icons/login/arrow-back-black.svg"
+      [src]="'./../../../assets/icons/login/arrow_back_'+ signalService.themeColorMain() +'.svg'"
       alt="Arrow back"
       class="back-to-login"
       (click)="signalService.backToLogin()"
@@ -27,7 +27,7 @@
             placeholder="First and last name"
           />
           <div class="icon">
-            <img src="./assets/icons/login/name_black.svg" alt="User Icon" />
+            <img [src]="'./assets/icons/login/name_'+ signalService.themeColorMain() +'.svg'" alt="User Icon" />
           </div>
           @if (name.touched && name.invalid) {
           <span class="error-message">Please enter a first and last name</span>
@@ -47,7 +47,7 @@
             placeholder="Email"
           />
           <div class="icon">
-            <img src="./assets/icons/login/mail_black.svg" alt="Mail Icon" />
+            <img [src]="'./assets/icons/login/mail_'+ signalService.themeColorMain() +'.svg'" alt="Mail Icon" />
           </div>
           @if (email.touched && email.invalid) {
           <span class="error-message">Please enter a valid mail address</span>
