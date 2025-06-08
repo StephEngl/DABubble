@@ -1,3 +1,7 @@
+/**
+ * Root component of the application that
+ * initializes theme and displays global components like router, toast, and intro.
+ */
 import { Component, inject } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { ToastComponent } from './shared/toast/toast.component';
@@ -15,14 +19,17 @@ export class AppComponent {
   title = 'dabubble';
   signalService = inject(SignalsService);
 
+  /** Lifecycle hook that runs on component init and sets the theme. */
   ngOnInit() {
     this.setTheme();
   }
 
+  /** Lifecycle hook that runs on input changes and sets the theme. */
   ngOnChanges() {
     this.setTheme();
   }
 
+  /** Sets the theme based on local storage and updates theme color signals. */
   setTheme() {
     const theme = localStorage.getItem('theme');
     if(theme) {

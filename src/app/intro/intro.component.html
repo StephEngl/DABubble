@@ -8,7 +8,7 @@
       [class.slide-out]="signalService.slideOut()"
     />
     <img
-      src="./../../../assets/icons/general/dabubble_logo_title_white.svg"
+      [src]="'./../../../assets/icons/general/dabubble_logo_title_'+ signalService.themeColorMain() +'.svg'"
       alt="Logo Title"
       class="logo-title"
       [class.slide-out]="signalService.slideOut()"

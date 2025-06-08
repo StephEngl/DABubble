@@ -103,7 +103,7 @@
                                 previewPosition="none"
                                 [exclude]="['recent']"
                                 [i18n]="{ categories: { people: 'Smileys' } }"
-                                (emojiSelect)="onEmojiSelect($event)">
+                                (emojiSelect)="emojiSelect($event)">
                             </emoji-mart>
                         }
                     </div>            
@@ -144,7 +144,7 @@
                     previewPosition="none"
                     [exclude]="['recent']"
                     [i18n]="{ categories: { people: 'Smileys' } }"
-                    (emojiSelect)="onEmojiSelect($event)">
+                    (emojiSelect)="emojiSelect($event)">
                 </emoji-mart>
             </div>
         }

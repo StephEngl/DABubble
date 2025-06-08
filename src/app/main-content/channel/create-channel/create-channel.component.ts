@@ -1,3 +1,7 @@
+/**
+ * Handles channel creation logic including name/description input,
+ * validation, creation in backend, and UI signal updates.
+ */
 import { Component, inject } from '@angular/core';
 import { FormsModule, NgForm } from '@angular/forms';
 import { ChannelInterface } from '../../../interfaces/channel.interface';
@@ -13,6 +17,7 @@ import { AuthenticationService } from '../../../services/authentication.service'
   templateUrl: './create-channel.component.html',
   styleUrl: './create-channel.component.scss',
 })
+
 export class CreateChannelComponent {
   signalService = inject(SignalsService);
   channelService = inject(ChannelsService);
@@ -20,6 +25,10 @@ export class CreateChannelComponent {
   channelNameInput: string = '';
   channelDescriptionInput: string = '';
 
+  /**
+   * Handles form submission: validates, creates channel if not exists, and updates UI.
+   * @param ngForm Angular form reference
+   */
   async submitForm(ngForm: NgForm) {
     if (!ngForm.valid) return;
       const channelData = this.getChannelData();
@@ -32,6 +41,7 @@ export class CreateChannelComponent {
     }
   }
 
+  /** Opens the new channel and toggles UI for member adding */
   openChannelAndAddMembers() {
     const id = this.getChannelIdByName();
     this.showChannelId(id);
@@ -40,21 +50,23 @@ export class CreateChannelComponent {
     this.signalService.triggerToast('Channel created successfully','confirm');
   }
 
+  /** Returns channel ID by name if it exists */
   getChannelIdByName():string {
     const channel = this.channelService.channels.find(c => c.channelName === this.channelNameInput);
-    if (channel && channel.id) {
-      return channel.id;
-    } else {
-      return "";
-    }
+    return channel && channel.id ? channel.id : "";
   }
-
+  
+  /**
+   * Sets the current channel, subscribes to its messages, and updates signals.
+   * @param id - The ID of the channel to activate.
+   */
   showChannelId(id: string):void {
     localStorage.setItem("currentChannel", id);
     this.channelService.subscribeToChannelMessages(id);
     this.signalService.setChannelSignals(id);
   }
 
+  /** Returns a ChannelInterface object with input values and metadata */
   getChannelData(): ChannelInterface {
     return {
       createdAt: Timestamp.fromDate(new Date()),
@@ -65,17 +77,14 @@ export class CreateChannelComponent {
     }
   }
 
+  /** Checks if a channel with the same name already exists */
   channelAlreadyExists():boolean {
     const channel = this.channelService.channels.find(
       (channel) =>
         channel.channelName.toLowerCase() ===
         this.channelNameInput.toLowerCase()
     );
-    if (channel) {
-      return true;
-    } else {
-      return false;
-    }
+    return channel ? true : false;
   }
 
 }

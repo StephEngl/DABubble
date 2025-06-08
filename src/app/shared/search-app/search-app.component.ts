@@ -1,3 +1,7 @@
+/**
+ * SearchAppComponent provides a unified search interface for users,
+ * channels, and direct messages.
+ */
 import { Component, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ChannelsService } from '../../services/channels.service';
@@ -21,6 +25,7 @@ export class SearchAppComponent {
   searchInput: string = '';
   editName: string = "";
 
+  /** Returns channel search results that the current user is a member of. */
   get searchResultsChannel():ChannelInterface[] {
     const searchTerm = this.searchInput.trim().toLowerCase();
     if (!searchTerm) return [];
@@ -32,6 +37,7 @@ export class SearchAppComponent {
       );
   }
 
+  /** Returns matching users based on the search input. */
   get searchResultsUser() {
     const searchTerm = this.searchInput.trim().toLowerCase();
     if (!searchTerm) return [];
@@ -41,24 +47,39 @@ export class SearchAppComponent {
     return matches.length > 0 ? matches : [];
   }
 
+  /** Placeholder for direct message search results. */
   get searchResultsDirectMessages() {
     return '';
   }
 
+  /**
+   * Checks whether the current user is a member of the specified channel.
+   * @param channel - The channel to check membership for.
+   * @returns True if the user is a member of the channel.
+   */
   isChannelMember(channel: ChannelInterface):boolean {
     return channel.members!.includes(this.authService.userId);
   }
   
+  /** Returns true if the edited name equals the current user's name. */
   noChangesToName() {
     return this.editName == this.authService.currentUser()!.name;
   }
 
+  /**
+   * Opens the user info panel for the given user ID.
+   * @param id - The ID of the user whose info should be displayed.
+   */
   showUserInfo(id: string) {
     this.signalService.userInfoId.set(id);
     this.signalService.showUserInfo.set(true)
     this.searchInput = '';
   }
 
+  /**
+   * Displays the selected channel and prepares the UI accordingly.
+   * @param id - The ID of the channel to be shown.
+   */
   showChannel(id: string) {
     this.signalService.conversationActive.set(false);
     localStorage.setItem("currentChannel", id);
@@ -68,8 +89,8 @@ export class SearchAppComponent {
     this.searchInput = '';
   }
 
-
-  darkModeTest(): void {
+  /** Toggles between light and dark themes and reloads the page. */
+  toggleDarkMode(): void {
     const currentMode = localStorage.getItem('theme');
     if (currentMode === 'dark-theme') {
       localStorage.setItem('theme', 'light');

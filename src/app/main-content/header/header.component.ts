@@ -1,5 +1,9 @@
+/**
+ * Header component that provides user interaction controls like
+ * profile viewing/editing, avatar selection, logout, and user search.
+ */
 import { Component, inject } from '@angular/core';
-import { Router, RouterLink } from '@angular/router';
+import { RouterLink } from '@angular/router';
 import { AuthenticationService } from '../../services/authentication.service';
 import { UsersService } from '../../services/users.service';
 import { FormsModule } from '@angular/forms';
@@ -15,12 +19,12 @@ import { NgClass } from '@angular/common';
   templateUrl: './header.component.html',
   styleUrl: './header.component.scss',
 })
+
 export class HeaderComponent {
   authService = inject(AuthenticationService);
   usersService = inject(UsersService);
   channelsService = inject(ChannelsService);
   signalService = inject(SignalsService);
-  // router = inject(Router);
   searchInput: string = '';
   hoverMenu: boolean = false;
   dropdownOpen: boolean = false;
@@ -32,25 +36,26 @@ export class HeaderComponent {
 
   avatarList: string[] = ['1', '2', '3', '4', '5', '6', '7', '8', '9'];
 
-  // constructor(router: Router) {}
-
   /** Logs out the current user and closes the logout popup. */
   logout() {
     this.authService.signOutUser();
   }
 
+  /** Toggles the profile dropdown visibility. */
   toggleDropdown(){
     this.dropdownOpen = !this.dropdownOpen;
     this.showProfileInfo = false;
     this.editProfile = false;
   }
 
+  /** Displays the user's profile info and opens dropdown. */
   showProfile() {
     this.showProfileInfo = true;
     this.dropdownOpen = true;
     this.editName = this.authService.currentUser()!.name;
   }
 
+  /** Changes the user's name if it's different from the current one. */
   changeUserName() {
     if(this.editName != this.authService.currentUser()!.name) {
       this.usersService.updateUserName(
@@ -64,26 +69,40 @@ export class HeaderComponent {
     }
   }
 
+  /** Returns true if the edited name equals the current name. */
   noChangesToName() {
     return this.editName == this.authService.currentUser()!.name;
   }
 
+  /**
+   * Opens the user info panel for the given user ID.
+   * @param id - The ID of the user whose info should be displayed.
+   */
   showUserInfo(id: string) {
     this.signalService.userInfoId.set(id);
     this.signalService.showUserInfo.set(true)
     this.searchInput = '';
   }
 
+  /** Cancels any ongoing profile or avatar edit. */
   cancelEdit() {
     this.editProfile = false;
     this.editAvatar = false;
     this.chosenAvatar = undefined;
   }
   
+  /**
+   * Sets the currently selected avatar ID.
+   * @param avatar - The ID of the avatar to set.
+   */
   setChosenAvatarId(avatar: string) {
     this.chosenAvatar = avatar;
   }
 
+  /**
+   * Updates the user avatar if one was selected.
+   * @returns A promise that resolves after the avatar is updated.
+   */
   async changeAvatar() {
     if (this.chosenAvatar) {
       await this.usersService.updateUserAvatar(this.authService.userId, this.chosenAvatar);
@@ -92,10 +111,5 @@ export class HeaderComponent {
       this.signalService.triggerToast('User Avatar changed successfully','confirm');
     }
   }
-
-  // navigateTo(path: string) {
-  //   this.router.navigate([path]);
-  //   this.toggleDropdown();
-  // }
 
 }

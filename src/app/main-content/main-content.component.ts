@@ -1,3 +1,7 @@
+/**
+ * MainContentComponent manages the primary layout areas of the app, including channels, threads, workspace,
+ * and user status tracking (e.g. AFK detection, responsive behavior).
+ */
 import { Component, Host, HostListener, inject, OnInit } from '@angular/core';
 import { HeaderComponent } from './header/header.component';
 import { ThreadComponent } from './thread/thread.component';
@@ -47,6 +51,7 @@ export class MainContentComponent implements OnInit {
     this.handleResize();
   }
 
+  /** Initializes services and sets initial channel on component load. */
   async ngOnInit() {
     const currentChannelId = localStorage.getItem('currentChannel');
     await this.conService.loadCons();
@@ -59,6 +64,7 @@ export class MainContentComponent implements OnInit {
     
   }
 
+  /** Handles window resize and adjusts layout display. */
   @HostListener('window:resize', [])
   handleResize(): void {
     if (window.innerWidth < 1500) {
@@ -74,6 +80,7 @@ export class MainContentComponent implements OnInit {
     }
   }
 
+  /** Toggles visibility between workspace and thread on smaller screens. */
   toggleWorkspaceAndThread() {
     if (this.signalService.showThread()) {
       this.signalService.showWorkspace.set(false);
@@ -82,6 +89,7 @@ export class MainContentComponent implements OnInit {
     }
   }
 
+  /** Adds event listeners to track user activity for AFK status. */
   listenToActivity(): void {
     const events = ['click', 'mousemove', 'keydown', 'scroll'];
     for (let i = 0; i < events.length; i++) {
@@ -90,6 +98,10 @@ export class MainContentComponent implements OnInit {
     this.setStatus();
   }
 
+  /** 
+   * Sets or resets the AFK status of the current user.
+   * Sends 'online' if activity is detected and 'afk' after 5 min of inactivity.
+   */
   setStatus(): void {
     clearTimeout(this.afkTimeoutId);
     if (this.userInactive) {
@@ -102,12 +114,14 @@ export class MainContentComponent implements OnInit {
     }, 300000); // => 5min 300000
   }
 
+  /** Sets the initial channel from the channel list if none is stored. */
   setInitialChannel() {
     if (!localStorage.getItem('currentChannel') && this.channelService.channels.length > 0) {
       localStorage.setItem('currentChannel', this.channelService.channels[0].id!);
     }
   };
   
+  /** Toggles the workspace menu and adjusts thread/channel visibility. */
   toggleWorkspaceMenu():void {
     if (this.signalService.showWorkspace()) {
       if(window.innerWidth < 850) {
@@ -124,6 +138,7 @@ export class MainContentComponent implements OnInit {
     }
   }
 
+  /** Returns the correct workspace icon path based on current state. */
   getWorkspaceIcon(): string {
     const color = this.workspaceHovered ? 'blue' : ''+ this.signalService.themeColorMain() +'';
     const status = this.workspaceStatus === 'Open' ? 'workspace_open' : 'workspace_close';

@@ -1,4 +1,9 @@
-import { Component, inject, Input, ViewChild, ElementRef, AfterViewChecked, HostListener } from '@angular/core';
+/**
+ * Component for composing and sending messages in channels,
+ * threads, or direct conversations. Supports emoji picker,
+ * mentions, and dynamic user/channel tagging.
+ */
+import { Component, inject, Input, ViewChild, ElementRef, AfterViewChecked } from '@angular/core';
 import { Timestamp } from '@angular/fire/firestore';
 import { ChannelsService } from '../../services/channels.service';
 import { FormsModule, NgForm } from '@angular/forms';
@@ -40,6 +45,7 @@ export class CreateMessageComponent implements AfterViewChecked {
   emojiBar: boolean = false;
   showList: boolean = false;
 
+  /** Message input menu options with icons and click behavior */
   menuOptions: {name: string, src: string, hovered: boolean, clickFunction: () => void}[] = [
     {
       name: "add-reaction",
@@ -55,6 +61,7 @@ export class CreateMessageComponent implements AfterViewChecked {
     }
   ];
 
+  /** Checks focus state for chat, thread, or conversation after view update */
   ngAfterViewChecked() {
     if(this.isChannelMessage && this.signalService.focusChat()) {
       this.onFocus();
@@ -67,12 +74,21 @@ export class CreateMessageComponent implements AfterViewChecked {
     }
   }
 
+  /**
+   * Returns the icon path based on hover state.
+   * @param index - Index of the menu option.
+   * @returns Path to the appropriate icon.
+   */
   getMenuIcon(index: number): string {
     const color = this.menuOptions[index].hovered ? 'blue' : 'grey';
     const symbol = this.menuOptions[index].src;
     return `./../../../assets/icons/message/${symbol}_${color}.svg`;
   }
 
+  /**
+   * Sends a new message and resets the form.
+   * @param form - The message input form.
+   */
   sendMessage(form: NgForm) {
     if (!form.valid) return;
     this.signalService.sendingMessage.set(true);
@@ -88,12 +104,21 @@ export class CreateMessageComponent implements AfterViewChecked {
     }, 1000);
   }
 
+  /**
+   * Clears the form and resets local message state.
+   * @param form - The message input form.
+   */
   resetFormData(form: NgForm) {
     form.resetForm();
     this.messageInputRef.nativeElement.value = '';
     this.messageText = '';
   }
 
+  /**
+   * Intercepts Enter key for message sending.
+   * @param event - The keyboard event.
+   * @param form - The message input form.
+   */
   onKeyDown(event: KeyboardEvent, form: NgForm): void {
     if (event.key === 'Enter' && !event.shiftKey) {
       event.preventDefault();
@@ -101,6 +126,7 @@ export class CreateMessageComponent implements AfterViewChecked {
     }
   }
 
+  /** Creates the message object from current input */
   messageObject(): ChannelMessageInterface {
     return { 
       text: this.messageText,
@@ -110,6 +136,10 @@ export class CreateMessageComponent implements AfterViewChecked {
     }
   }
 
+  /**
+   * Routes the message to the correct service depending on context.
+   * @param message - The composed message object.
+   */
   sortAndSendMessage(message: any) {
     if (this.isChannelMessage) {
       this.messageService.postMessage(message);
@@ -125,11 +155,16 @@ export class CreateMessageComponent implements AfterViewChecked {
     }
   }
 
+  /**
+   * Handles emoji selection from picker.
+   * @param event - Emoji picker event object.
+   */
   onEmojiSelect(event: any) {
     this.messageText += " " + event.emoji.native;
     this.emojiBar = false;
   }
 
+  /** Appends mention trigger to input and focuses */
   onMentionSelect() {
     if (this.messageText?.slice(-1) === "@") return;
     this.messageText += "@";
@@ -137,6 +172,10 @@ export class CreateMessageComponent implements AfterViewChecked {
     this.onFocus();
   }
 
+  /**
+   * Inserts user mention at cursor.
+   * @param name - Username to mention.
+   */
   tagUser(name: string) {
     const mention = `@${name}`;
     if (this.messageText.includes(mention)) return;
@@ -152,6 +191,10 @@ export class CreateMessageComponent implements AfterViewChecked {
     this.showList = false;
   }
 
+  /**
+   * Changes to another channel by ID.
+   * @param id - Channel ID to switch to.
+   */
   tagChannel(id: string) {
     this.messageText = "";
     this.showList = false;
@@ -161,12 +204,14 @@ export class CreateMessageComponent implements AfterViewChecked {
     this.signalService.focusChat.set(true);
   }
 
+  /** Focuses the message input and clears focus states */
   onFocus() {
     this.messageInputRef?.nativeElement.focus();
     this.signalService.focusChat.set(false);
     this.signalService.focusThread.set(false);
   }
 
+  /** Returns filtered channel results for mention autocompletion */
   get searchResultsChannel() {
     const match = this.messageText.match(/#(\w*)$/);
     const searchTerm = match?.[1]?.toLowerCase() ?? 'no results';
@@ -176,12 +221,11 @@ export class CreateMessageComponent implements AfterViewChecked {
     );
   }
 
+  /** Returns filtered user results for mention autocompletion */
   get searchResultsUser() {
     if (!this.messageInputRef) return [];
-
     const match = this.messageText.match(/@([^@]*)$/);
     const searchTerm = match?.[1]?.toLowerCase().trim() ?? 'no results';
-
     const currentChannelId = localStorage.getItem("currentChannel");
     const currentChannel = this.channelService.getChannelById(currentChannelId!);
     if (!currentChannel) return [];
@@ -193,6 +237,7 @@ export class CreateMessageComponent implements AfterViewChecked {
       );
   }
 
+  /** Detects trigger characters and shows suggestion list */
   triggerUserOrChannelList() {
     const adressUser = this.messageText.match(/@([^@]*)$/);
     const adressChannel = this.messageText.match(/#(\w*)$/);
@@ -207,12 +252,18 @@ export class CreateMessageComponent implements AfterViewChecked {
     }
   }
 
+  /** Gets reply message info for direct conversation replies */
   get replyToInfo() {
     const conversationId = this.signalService.activeConId();
     const replyToId = this.signalService.activeReplyToId();
     return this.conService.getMessageById(conversationId, replyToId);
   }
 
+  /**
+   * Returns shortened version of a name for display.
+   * @param name - Name string to shorten.
+   * @returns The shortened name with ellipsis if needed.
+   */
   showMaxLetters(name: string):string {
     const max = 15;
     let nameLength = name.length;
