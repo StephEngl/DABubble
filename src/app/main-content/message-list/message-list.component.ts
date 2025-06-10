@@ -52,8 +52,10 @@ export class MessageListComponent implements AfterViewChecked {
 
   shouldScroll = true;
   scrollOnInit = false;
+  scrollY: number | null = null;
   paddingChannelMessage: string = '';
   paddingThreadMessage: string = '';
+
 
   ngOnInit(): void {
     this.scrollOnInit = true;
@@ -62,6 +64,7 @@ export class MessageListComponent implements AfterViewChecked {
     }, 1000);
   }
 
+  /** Checks sending states and adjusts scroll accordingly */
   ngAfterViewChecked(): void {
     if(this.signalService.sendingMessage()) {
       this.scrollToBottomInstant();
@@ -71,19 +74,26 @@ export class MessageListComponent implements AfterViewChecked {
     this.scrollToBottom();
   }
 
-  scrollY: number | null = null;
-
+  /** Updates scrollY on scroll event */
   onScroll(): void {
     if (this.messageContainer) {
       this.scrollY = this.messageContainer.nativeElement.scrollTop;
-      console.log(this.scrollY);
     }
   }
-  
+
+  /** Saves current scrollY to localStorage */
   setScrollY():void {
-      if (this.messageContainer) {
+    if (this.messageContainer) {
       localStorage.setItem('scrollPositionY', this.scrollY!.toString());
-      console.log('wda' + localStorage.getItem('scrollPositionY'));
+    }
+  }
+
+  /** Restores scroll position from localStorage */
+  restoreScrollPosition(): void {
+    const savedY = localStorage.getItem('scrollPositionY');
+    if (savedY && this.messageContainer) {
+      const y = parseInt(savedY);
+      this.messageContainer.nativeElement.scrollTop = y;
     }
   }
 
@@ -91,19 +101,6 @@ export class MessageListComponent implements AfterViewChecked {
   scrollToBottomInstant(): void {
   if (this.messageContainer) {
     this.messageContainer.nativeElement.scrollTop = this.messageContainer.nativeElement.scrollHeight;
-    }
-  }
-
-  updateMouseY(event: MouseEvent): void {
-    localStorage.setItem('scrollPositionY', event.clientY.toString());
-  }
-
-  restoreScrollPosition(): void {
-    const savedY = localStorage.getItem('scrollPositionY');
-    if (savedY && this.messageContainer) {
-      const y = parseInt(savedY);
-      this.messageContainer.nativeElement.scrollTop = y;
-      console.log('Restored scroll:', y);
     }
   }
 

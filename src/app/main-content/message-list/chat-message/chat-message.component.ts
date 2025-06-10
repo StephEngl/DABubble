@@ -224,7 +224,6 @@ export class ChatMessageComponent {
     if (!lastReactions) {
       localStorage.setItem('lastReactions', JSON.stringify(['😂','👍']));
     }
-    console.log(lastReactions);
   }
 
   /**
@@ -353,9 +352,8 @@ export class ChatMessageComponent {
     : '20px ' + this.paddingHorizontal + 'px';
   }
 
+  /** Temporarily disables scrolling by setting `sendingReaction` to true for 1 second. */
   disableScrolling() {
-    console.log("click clickclickclickclickclickclickclickclickclickclickclickclick");
-    
     this.signalService.sendingReaction.set(true);
     setTimeout(() => {
       this.signalService.sendingReaction.set(false);
