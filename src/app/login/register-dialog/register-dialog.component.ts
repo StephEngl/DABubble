@@ -50,12 +50,22 @@ export class RegisterDialogComponent {
     this.initChannelGeneral(uid);
   }
 
+  /**
+   * Sets initial signals for the user registration process.
+   * @param uid User ID to set in signal state.
+   */
   setSignals(uid: string):void {
     this.signalService.currentUid.set(uid);
     this.signalService.confirmPasswordInput.set('');
     this.signalService.goToAvatarChoice();
   }
 
+  /**
+   * Returns a user object from name and email inputs.
+   * @param nameInput The user's name.
+   * @param mailInput The user's email.
+   * @returns A new UserInterface object with default status and avatar.
+   */
   getUserData(nameInput: string, mailInput: string,): UserInterface {
     return {
       name: nameInput,
@@ -65,6 +75,10 @@ export class RegisterDialogComponent {
     };
   }
 
+  /**
+   * Initializes the "General" channel for the given user ID.
+   * @param uid The user ID to add to the "General" channel.
+   */
   async initChannelGeneral(uid:string): Promise<void> {
     const channel = this.channelService.getChannelByName('General');
     if(!channel || !channel.id) return;
