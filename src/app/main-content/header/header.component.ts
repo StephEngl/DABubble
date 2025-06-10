@@ -31,6 +31,7 @@ export class HeaderComponent {
   showProfileInfo: boolean = false;
   editProfile: boolean = false;
   editAvatar: boolean = false;
+  darkMode: boolean = false;
   editName: string = "";
   chosenAvatar: string | undefined = undefined;
 
@@ -110,6 +111,20 @@ export class HeaderComponent {
       this.chosenAvatar = undefined;
       this.signalService.triggerToast('User Avatar changed successfully','confirm');
     }
+  }
+
+  /** Toggles between light and dark themes and reloads the page. */
+  toggleDarkMode(): void {
+    this.darkMode = !this.darkMode;
+    const currentMode = localStorage.getItem('theme');
+    if (currentMode === 'dark-theme') {
+      localStorage.setItem('theme', 'light');
+      this.signalService.themeColorMain.set('black');
+    } else {
+      localStorage.setItem('theme', 'dark-theme');
+      this.signalService.themeColorMain.set('white');
+    }
+    window.location.reload()
   }
 
 }

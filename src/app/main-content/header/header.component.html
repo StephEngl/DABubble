@@ -85,6 +85,14 @@
                     </div>
                 }
             } @else {
+                <button (click)="toggleDarkMode()">
+                    <div [class]="darkMode ? 'white':'black'"></div>
+                    @if(darkMode) {
+                        Light Mode
+                    } @else {
+                        Dark Mode
+                    }
+                </button>
                 <button (click)="showProfile()" >Profile</button>
                 <button routerLink="/legal-notice">Legal Notice</button>
                 <button routerLink="/privacy-policy">Privacy Policy</button>
