@@ -259,6 +259,7 @@ export class ChatMessageComponent {
    */
   emojiSelect(event: any): void {
     if (this.emojiBar) {
+      this.disableScrolling();
       this.handleEmojiReaction(event.emoji.native);
     } else {
       this.appendEmojiToMessage(event.emoji.native);

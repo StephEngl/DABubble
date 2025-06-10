@@ -90,7 +90,7 @@ export class MainContentComponent implements OnInit {
 
   /** Adds event listeners to track user activity for AFK status. */
   listenToActivity(): void {
-    const events = ['click', 'mousemove', 'keydown', 'scroll'];
+    const events = ['click', 'mousemove', 'keydown'];
     for (let i = 0; i < events.length; i++) {
       document.addEventListener(events[i], this.setStatus.bind(this));
     }

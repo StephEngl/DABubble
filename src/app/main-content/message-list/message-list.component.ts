@@ -56,7 +56,6 @@ export class MessageListComponent implements AfterViewChecked {
   paddingChannelMessage: string = '';
   paddingThreadMessage: string = '';
 
-
   ngOnInit(): void {
     this.scrollOnInit = true;
     setTimeout(() => {
