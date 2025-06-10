@@ -1,4 +1,4 @@
-<section class="message-list" #messageContainer>
+<section class="message-list" #messageContainer (scroll)="onScroll()">
     @if (isChannel && getChannelMessages()) {
         @if(getChannelMessages().length === 0 ) {
             <section class="channel-info">
@@ -12,7 +12,7 @@
                 </p>
             </section>
         } @else {
-        @for (message of getChannelMessages(); track message; let index = $index) {
+        @for (message of getChannelMessages(); track message.id; let index = $index) {
             @if (shouldShowDateSeparator(index, getChannelMessages())){
                 <div class="date-separator">
                     <p>{{ timeService.getDate(message.createdAt.toDate(), 'dd-mm-yyyy') }}</p>
@@ -38,7 +38,7 @@
             <div class="answers-seperator">
                 {{getThreadMessages().length}} Answers
             </div>
-            @for (message of getThreadMessages(); track message; let index = $index) {
+            @for (message of getThreadMessages(); track message.id; let index = $index) {
                 @if (shouldShowDateSeparator(index, getThreadMessages())) {
                     <div class="date-separator">
                         <p>{{ timeService.getDate(message.createdAt.toDate(), 'dd-mm-yyyy') }}</p>
@@ -71,7 +71,7 @@
                 </section>
             }
         } @else {
-            @for (message of getDirectMessages(this.signalService.activeConId()); track message; let index = $index) {
+            @for (message of getDirectMessages(this.signalService.activeConId()); track message.id; let index = $index) {
                 @if (shouldShowDateSeparator(index, getDirectMessages(this.signalService.activeConId()))) {
                     <div class="date-separator">
                         <p>{{ timeService.getDate(message.createdAt.toDate(), 'dd-mm-yyyy') }}</p>

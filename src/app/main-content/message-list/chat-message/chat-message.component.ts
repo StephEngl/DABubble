@@ -62,16 +62,16 @@ export class ChatMessageComponent {
   paddingValue: string = '';
 
   /** Menu bar actions including reactions and thread actions */
-  menuBar: {imgSrc: string, shownInThread: boolean, shownIfOwnMessage?: boolean, clickFunction: () => void}[] = [
+  menuBar: {emoji?: string, imgSrc?: string, shownInThread: boolean, shownIfOwnMessage?: boolean, clickFunction: () => void}[] = [
     { 
-      imgSrc: './../../../../assets/icons/message/emoji_laughing.png',
+      emoji : this.lastReactions()[0],
       shownInThread: false,
-      clickFunction: () => this.messageService.postReaction(this.singleMessageId(), '😂', this.reactions(), this.isChannelMessage)
+      clickFunction: () => this.messageService.postReaction(this.singleMessageId(), this.lastReactions()[0], this.reactions(), this.isChannelMessage)
     },
     { 
-      imgSrc: './../../../../assets/icons/message/emoji_thumbs_up.png',
+      emoji : this.lastReactions()[1],
       shownInThread: false,
-      clickFunction: () => this.messageService.postReaction(this.singleMessageId(), '👍', this.reactions(), this.isChannelMessage)
+      clickFunction: () => this.messageService.postReaction(this.singleMessageId(), this.lastReactions()[1], this.reactions(), this.isChannelMessage)
     },
     { 
       imgSrc: './../../../../assets/icons/message/add_reaction_'+ this.signalService.themeColorMain() + '.svg',
@@ -93,6 +93,7 @@ export class ChatMessageComponent {
 
   ngOnInit() {
     this.setMessageSource();
+    this.setInitialReactionsToBar();
     this.paddingValue = this.getPadding();
     this.messageEditText = this.text();
     this.checkifOwnMessage();
@@ -217,6 +218,42 @@ export class ChatMessageComponent {
     : './../../../../assets/icons/user/user_0.png';
   }
 
+  /** Initializes the localStorage with default reactions if none exist. */
+  setInitialReactionsToBar():void {
+    const lastReactions = localStorage.getItem('lastReactions');
+    if (!lastReactions) {
+      localStorage.setItem('lastReactions', JSON.stringify(['😂','👍']));
+    }
+    console.log(lastReactions);
+  }
+
+  /**
+   * Returns the last used reactions from localStorage or initializes them.
+   * @returns An array of the last used emoji reactions.
+   */
+  lastReactions(): string[] {
+    const lastReactions = localStorage.getItem('lastReactions');
+    if (!lastReactions) {
+      this.setInitialReactionsToBar();
+      return ['😂', '👍'];
+    } else {
+      return JSON.parse(lastReactions);
+    }
+  }
+
+  /**
+   * Adds a new emoji to the recent reactions list.
+   * @param emoji The emoji to be added to the recent reactions.
+   */
+  addToLastReactions(emoji: string) {
+    let reactionsArray = this.lastReactions();
+    if (reactionsArray.includes(emoji)) return;
+    reactionsArray.unshift(emoji);
+    reactionsArray = reactionsArray.slice(0, 2);
+    localStorage.setItem('lastReactions', JSON.stringify(reactionsArray));
+    this.lastReactions();
+  }
+
   /**
    * Handles emoji selection from the picker.
    * @param event Emoji selection event
@@ -252,6 +289,7 @@ export class ChatMessageComponent {
       this.reactions(),
       this.isChannelMessage
     );
+    this.addToLastReactions(emoji);
   }
 
   /**

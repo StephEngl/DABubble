@@ -60,7 +60,6 @@ export class LoginDialogComponent {
     try {
       this.noUserFound = false;
       await this.authService.signInUser(mail, password);
-      console.log('logged in as: ', mail);
     } catch (error) {
       this.noUserFound = true;
       setTimeout(() => {

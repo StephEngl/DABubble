@@ -19,7 +19,7 @@
                         <div>No users found</div>
                     }
                     @for(user of searchResultsUser; track user) {
-                        <div class="result" (click)="tagUser(user.name)">
+                        <div class="result" (click)="tagChannelOrUser(user.name, true)">
                             <img [src]="usersService.getAvatar(user.id!)" alt="">
                             <p>{{ user.name}}</p>
                         </div>
@@ -30,7 +30,7 @@
                         <div>No results</div>
                     }
                     @for(channel of searchResultsChannel; track channel) {
-                        <div class="result" (click)="tagChannel(channel.id!)">
+                        <div class="result" (click)="tagChannelOrUser(channel.channelName, false)">
                             <p># {{ channel.channelName }}</p>
                         </div>
                     }

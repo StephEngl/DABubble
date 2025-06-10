@@ -124,7 +124,11 @@
                                 <img (click)="item.clickFunction()" [src]="item.imgSrc" alt="">
                             }
                         } @else {
-                            <img (click)="item.clickFunction()" [src]="item.imgSrc" alt="">
+                            @if (!item.imgSrc) {
+                                <span class="last-reaction" (click)="item.clickFunction()">{{ item.emoji }}</span>
+                            } @else {
+                                <img (click)="item.clickFunction()" [src]="item.imgSrc" alt="">
+                            }
                         }
                     } @else if(checkifOwnMessage()) {
                         <img (click)="menuBar[menuBar.length -1].clickFunction()" [src]="item.imgSrc" alt="">

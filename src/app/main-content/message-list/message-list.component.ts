@@ -68,6 +68,13 @@ export class MessageListComponent implements AfterViewChecked {
     this.scrollToBottom();
   }
 
+  onScroll() {
+    if (this.messageContainer) {
+      sessionStorage.setItem('scrollPositionY', this.messageContainer.nativeElement.scrollTop.toString());
+      console.log(sessionStorage.getItem('scrollPositionY'));
+    }
+  }
+
   /** Instantly scrolls to bottom of message container. */
   scrollToBottomInstant(): void {
   if (this.messageContainer) {

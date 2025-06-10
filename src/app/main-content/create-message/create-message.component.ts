@@ -91,7 +91,7 @@ export class CreateMessageComponent implements AfterViewChecked {
    */
   sendMessage(form: NgForm) {
     if (!form.valid) return;
-    this.signalService.sendingMessage.set(true);
+    this.disableScrolling();
     const currentChannel = localStorage.getItem('currentChannel');
     const message = this.messageObject();
     this.sortAndSendMessage(message);
@@ -99,9 +99,13 @@ export class CreateMessageComponent implements AfterViewChecked {
     this.resetFormData(form);
     this.signalService.activeReplyToId.set('');
     this.onFocus();
+  }
+
+  disableScrolling() {
+    this.signalService.sendingMessage.set(true);
     setTimeout(() => {
       this.signalService.sendingMessage.set(false);
-    }, 1000);
+    }, 2000);
   }
 
   /**
@@ -176,12 +180,12 @@ export class CreateMessageComponent implements AfterViewChecked {
    * Inserts user mention at cursor.
    * @param name - Username to mention.
    */
-  tagUser(name: string) {
-    const mention = `@${name}`;
+  tagChannelOrUser(name: string, tagUser: boolean) {
+    const mention = tagUser? `@${name}` : `#${name}`;
     if (this.messageText.includes(mention)) return;
 
     const text = this.messageText;
-    const atIndex = text.lastIndexOf('@');
+    const atIndex = tagUser? text.lastIndexOf('@') : text.lastIndexOf('#');
     if (atIndex === -1) return;
 
     const spaceIndex = text.lastIndexOf(' ', atIndex);
@@ -189,19 +193,6 @@ export class CreateMessageComponent implements AfterViewChecked {
 
     this.messageText = text.slice(0, start) + mention + ' ' + text.slice(atIndex + 1).replace(/^\S*/, '');
     this.showList = false;
-  }
-
-  /**
-   * Changes to another channel by ID.
-   * @param id - Channel ID to switch to.
-   */
-  tagChannel(id: string) {
-    this.messageText = "";
-    this.showList = false;
-    localStorage.setItem("currentChannel", id);
-    this.channelService.subscribeToChannelMessages(id);
-    this.signalService.scrollChannelToBottom.set(true);
-    this.signalService.focusChat.set(true);
   }
 
   /** Focuses the message input and clears focus states */

@@ -45,7 +45,6 @@ export class ChannelInfoComponent {
   /** Fetches channel data from service and updates local values */
   getChannelData(): void {
     const currentChannelId = localStorage.getItem('currentChannel');
-    console.log(currentChannelId);
 
     if (currentChannelId) {
       const foundChannel = this.channelService.getChannelById(currentChannelId);

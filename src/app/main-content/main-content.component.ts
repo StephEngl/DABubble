@@ -61,7 +61,6 @@ export class MainContentComponent implements OnInit {
     }
     await this.authService.getActiveUserId();
     this.listenToActivity();
-    
   }
 
   /** Handles window resize and adjusts layout display. */

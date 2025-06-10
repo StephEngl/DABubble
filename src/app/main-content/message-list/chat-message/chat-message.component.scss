@@ -200,6 +200,17 @@ nav {
             border: 1px solid var(--col-stroke-main);
         }
     }
+    .last-reaction:first-child {
+        padding-right: 3px;
+    }
+    .last-reaction {
+        cursor: pointer;
+        font-size: 18px;
+        &:hover {
+            transform: scale(1.1);
+            filter: brightness(1.2);
+        }
+    }
 }
 
 .left {
