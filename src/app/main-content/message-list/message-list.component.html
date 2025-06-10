@@ -20,6 +20,7 @@
             }
             @if (message.threadMessages) {
                 <app-chat-message
+                (click)="setScrollY()"
                     [message]="message"
                     [paddingHorizontal]="isMobileView() ? '45':'65'"
                     [isChannelMessage]="isChannel">

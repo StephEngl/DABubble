@@ -13,6 +13,7 @@ export class SignalsService {
   focusConversation = signal<boolean>(false);
   startConversation = signal<boolean>(false);
   sendingMessage = signal<boolean>(false);
+  sendingReaction = signal<boolean>(false);
   channelActive = signal<boolean>(true);
   conversationActive = signal<boolean>(false);
   activeConId = signal<string>('');
@@ -29,6 +30,7 @@ export class SignalsService {
   showAddMembers = signal<boolean>(false);
 
   scrollChannelToBottom = signal<boolean>(false);
+  posScrollY = signal<number>(0);
 
   // signal to toggle icon colors
   themeColorMain = signal<string>('black');

@@ -353,4 +353,13 @@ export class ChatMessageComponent {
     : '20px ' + this.paddingHorizontal + 'px';
   }
 
+  disableScrolling() {
+    console.log("click clickclickclickclickclickclickclickclickclickclickclickclick");
+    
+    this.signalService.sendingReaction.set(true);
+    setTimeout(() => {
+      this.signalService.sendingReaction.set(false);
+    }, 1000);
+  }
+
 }

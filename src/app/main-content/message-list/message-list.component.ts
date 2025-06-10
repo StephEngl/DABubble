@@ -10,6 +10,7 @@ import {
   AfterViewChecked,
   ViewChild,
   ElementRef,
+  HostListener,
 } from '@angular/core';
 import { ChatMessageComponent } from './chat-message/chat-message.component';
 import { ChannelsService } from '../../services/channels.service';
@@ -64,14 +65,25 @@ export class MessageListComponent implements AfterViewChecked {
   ngAfterViewChecked(): void {
     if(this.signalService.sendingMessage()) {
       this.scrollToBottomInstant();
+    } else if (this.signalService.sendingReaction()) {
+      this.restoreScrollPosition();
     }
     this.scrollToBottom();
   }
 
-  onScroll() {
+  scrollY: number | null = null;
+
+  onScroll(): void {
     if (this.messageContainer) {
-      sessionStorage.setItem('scrollPositionY', this.messageContainer.nativeElement.scrollTop.toString());
-      console.log(sessionStorage.getItem('scrollPositionY'));
+      this.scrollY = this.messageContainer.nativeElement.scrollTop;
+      console.log(this.scrollY);
+    }
+  }
+  
+  setScrollY():void {
+      if (this.messageContainer) {
+      localStorage.setItem('scrollPositionY', this.scrollY!.toString());
+      console.log('wda' + localStorage.getItem('scrollPositionY'));
     }
   }
 
@@ -82,9 +94,22 @@ export class MessageListComponent implements AfterViewChecked {
     }
   }
 
+  updateMouseY(event: MouseEvent): void {
+    localStorage.setItem('scrollPositionY', event.clientY.toString());
+  }
+
+  restoreScrollPosition(): void {
+    const savedY = localStorage.getItem('scrollPositionY');
+    if (savedY && this.messageContainer) {
+      const y = parseInt(savedY);
+      this.messageContainer.nativeElement.scrollTop = y;
+      console.log('Restored scroll:', y);
+    }
+  }
+
   /**  Smoothly scrolls to bottom of message container if conditions are met. */
   scrollToBottom(): void {
-    if ((this.signalService.scrollChannelToBottom() && !this.signalService.sendingMessage()) || this.scrollOnInit) {
+    if (this.signalService.scrollChannelToBottom() && (!this.signalService.sendingMessage() || !this.signalService.sendingReaction()) || this.scrollOnInit) {
     setTimeout(() => {
       this.messageContainer?.nativeElement.scrollTo({
         top: this.messageContainer.nativeElement.scrollHeight,
