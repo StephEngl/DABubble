@@ -43,7 +43,7 @@
         </div>
 
         <footer class="button-wrapper">
-            <button (click)="addMembersToChannel(selectedMemberIds)" type="button" [disabled]="!selectedMembers.length">Create</button>
+            <button (click)="channelService.addMembersToChannel(selectedMemberIds)" type="button" [disabled]="!selectedMembers.length">Create</button>
         </footer>
     }
 </section>

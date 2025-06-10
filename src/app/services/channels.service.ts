@@ -14,11 +14,13 @@ import {
 } from '@angular/fire/firestore';
 import { ChannelInterface } from '../interfaces/channel.interface';
 import { ChannelMessageInterface, ReactionInterface, ThreadMessageInterface } from '../interfaces/message.interface';
+import { SignalsService } from './signals.service';
 @Injectable({
   providedIn: 'root'
 })
 export class ChannelsService {
   firestore: Firestore = inject(Firestore);
+  signalService = inject(SignalsService);
   channels: ChannelInterface[] = [];
   unsubscribeChannels;
 
@@ -122,6 +124,10 @@ export class ChannelsService {
     return this.channels.find(channel => channel.id === id);
   }
 
+  getChannelByName(name: string) {
+    return this.channels.find(channel => channel.channelName === name);
+  }
+
   getMessageById(id: string) {
     const currentChannel = localStorage.getItem('currentChannel');
     if (!currentChannel) return;
@@ -186,6 +192,32 @@ export class ChannelsService {
   async loadChannel(id: string): Promise<void> {
     localStorage.setItem("currentChannel", id);
     this.subscribeToChannelMessages(id);
+  }
+
+    /**
+   * Adds selected users to the current channel.
+   * @param users Array of user IDs to add
+   */
+  async addMembersToChannel(users: Array<string>) {
+    const channelId = localStorage.getItem('currentChannel');
+    if (!channelId) return;
+    const channel = this.getChannelById(channelId);
+    if (!channel || !channel.members) return;
+
+    channel.members.push(...users);
+    await this.updateChannel(channel);
+    this.signalService.showAddMembers.set(false);
+    this.triggerToast(users);
+  }
+
+  /**
+   * Shows confirmation toast depending on number of users added.
+   * @param array Array of user IDs
+   */
+  triggerToast(array: Array<string>):void {
+    array.length === 1
+    ? this.signalService.triggerToast('Member added to channel','confirm')
+    : this.signalService.triggerToast('Members added to channel','confirm')
   }
 
 

@@ -8,6 +8,7 @@ import { Auth } from '@angular/fire/auth';
 import { UsersService } from '../../services/users.service';
 import { PasswordService } from '../../services/password.service';
 import { PasswordsComponent } from '../passwords/passwords.component';
+import { ChannelsService } from '../../services/channels.service';
 
 @Component({
   selector: 'app-register-dialog',
@@ -22,6 +23,7 @@ export class RegisterDialogComponent {
   signalService = inject(SignalsService);
   usersService = inject(UsersService);
   passwordService = inject(PasswordService);
+  channelService = inject(ChannelsService);
 
   passwordInput:string = this.signalService.confirmPasswordInput();
   nameInput: string = '';
@@ -35,12 +37,7 @@ export class RegisterDialogComponent {
    * @param password string - user's password
    */
   async createUser(nameInput: string, mailInput: string, password: string) {
-    const user: UserInterface = {
-      name: nameInput,
-      email: mailInput,
-      status: 'online',
-      avatarId: '',
-    };
+    const user = this.getUserData(nameInput, mailInput);
     if (this.userAlreadyExists(user.name)) return;
     const userCredential = await this.authService.createUser(
       user.email,
@@ -49,10 +46,30 @@ export class RegisterDialogComponent {
     );
     const uid = userCredential.user.uid;
     this.usersService.addUser(uid, user);
+    this.setSignals(uid);
+    this.initChannelGeneral(uid);
+  }
+
+  setSignals(uid: string):void {
     this.signalService.currentUid.set(uid);
     this.signalService.confirmPasswordInput.set('');
-
     this.signalService.goToAvatarChoice();
+  }
+
+  getUserData(nameInput: string, mailInput: string,): UserInterface {
+    return {
+      name: nameInput,
+      email: mailInput,
+      status: 'online',
+      avatarId: '',
+    };
+  }
+
+  async initChannelGeneral(uid:string): Promise<void> {
+    const channel = this.channelService.getChannelByName('General');
+    if(!channel || !channel.id) return;
+    localStorage.setItem('currentChannel', channel.id);
+    await this.channelService.addMembersToChannel([uid]);
   }
 
   /**

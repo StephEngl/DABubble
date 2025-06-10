@@ -58,34 +58,8 @@ export class AddMembersComponent {
     if (this.addSpecificMembers) {
       this.userSelectionActive = true;
     } else {
-      this.addMembersToChannel(this.otherUsers);
+      this.channelService.addMembersToChannel(this.otherUsers);
     }
-  }
-
-  /**
-   * Adds selected users to the current channel.
-   * @param users Array of user IDs to add
-   */
-  async addMembersToChannel(users: Array<string>) {
-    const channelId = localStorage.getItem('currentChannel');
-    if (!channelId) return;
-    const channel = this.channelService.getChannelById(channelId);
-    if (!channel || !channel.members) return;
-
-    channel.members.push(...users);
-    await this.channelService.updateChannel(channel);
-    this.signalService.showAddMembers.set(false);
-    this.triggerToast(users);
-  }
-
-  /**
-   * Shows confirmation toast depending on number of users added.
-   * @param array Array of user IDs
-   */
-  triggerToast(array: Array<string>):void {
-    array.length === 1
-    ? this.signalService.triggerToast('Member added to channel','confirm')
-    : this.signalService.triggerToast('Members added to channel','confirm')
   }
 
   /** Returns IDs of selected members. */
