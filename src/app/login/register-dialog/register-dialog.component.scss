@@ -69,7 +69,7 @@
     }
 
     input:checked ~ .checkmark {
-      background-image: url("./assets/icons/login/checkbox_checked.svg");
+      background-image: url("/assets/icons/login/checkbox_checked.svg");
     }
   }
 
@@ -85,7 +85,7 @@
     cursor: pointer;
     height: 24px;
     width: 24px;
-    background-image: url("./assets/icons/login/checkbox_blank.svg");
+    background-image: url("/assets/icons/login/checkbox_blank.svg");
     background-position: center;
     background-repeat: no-repeat;
     transition: background-color 0.3s ease;
