@@ -23,6 +23,19 @@ h4 {
     border: 1px solid var(--col-stroke-main);
 }
 
+header>button {
+    padding: 10px;
+    aspect-ratio: 1/1;
+    width: 40px;
+    font-weight: 700;
+    border-radius: 50px;
+    background-color: var(--col-bg-main);
+    &:hover {
+        background-color: var(--col-bg-btn-main);
+    }
+
+}
+
 header,
 .channel-sub-header,
 .channel-sub-body {

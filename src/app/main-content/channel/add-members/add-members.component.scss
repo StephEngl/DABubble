@@ -15,9 +15,10 @@ section {
     .close-button {
         @include dFlex();
         padding: 10px;
+        font-weight: 700;
         border-radius: 40px;
-        width: 30px;
-        height: 30px;
+        width: 40px;
+        height: 40px;
         background-color: var(--col-bg-main);
         &:hover {
             background-color: var(--col-bg-btn-main);
