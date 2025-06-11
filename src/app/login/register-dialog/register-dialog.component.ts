@@ -25,7 +25,7 @@ export class RegisterDialogComponent {
   passwordService = inject(PasswordService);
   channelService = inject(ChannelsService);
 
-  passwordInput:string = this.signalService.confirmPasswordInput();
+  passwordInput: string = this.signalService.confirmPasswordInput();
   nameInput: string = '';
   emailInput: string = '';
   privacyPolicyAccepted: boolean = false;
@@ -48,13 +48,16 @@ export class RegisterDialogComponent {
     this.usersService.addUser(uid, user);
     this.setSignals(uid);
     this.initChannelGeneral(uid);
+    setTimeout(() => {
+      this.signalService.passwordsMatch.set(false);
+    }, 1000);
   }
 
   /**
    * Sets initial signals for the user registration process.
    * @param uid User ID to set in signal state.
    */
-  setSignals(uid: string):void {
+  setSignals(uid: string): void {
     this.signalService.currentUid.set(uid);
     this.signalService.confirmPasswordInput.set('');
     this.signalService.goToAvatarChoice();
@@ -66,7 +69,7 @@ export class RegisterDialogComponent {
    * @param mailInput The user's email.
    * @returns A new UserInterface object with default status and avatar.
    */
-  getUserData(nameInput: string, mailInput: string,): UserInterface {
+  getUserData(nameInput: string, mailInput: string): UserInterface {
     return {
       name: nameInput,
       email: mailInput,
@@ -79,9 +82,9 @@ export class RegisterDialogComponent {
    * Initializes the "General" channel for the given user ID.
    * @param uid The user ID to add to the "General" channel.
    */
-  async initChannelGeneral(uid:string): Promise<void> {
+  async initChannelGeneral(uid: string): Promise<void> {
     const channel = this.channelService.getChannelByName('General');
-    if(!channel || !channel.id) return;
+    if (!channel || !channel.id) return;
     localStorage.setItem('currentChannel', channel.id);
     await this.channelService.addMembersToChannel([uid]);
   }
