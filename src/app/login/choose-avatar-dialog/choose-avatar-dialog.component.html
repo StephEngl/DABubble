@@ -1,7 +1,7 @@
 <section class="avatar-dialog">
   <div class="choose-avatar-content">
     <img
-      src="/assets/icons/login/arrow-back-black.svg"
+      src="./assets/icons/login/arrow-back-black.svg"
       alt="Arrow back"
       class="back-to-register"
       (click)="signalService.showRegisterDialog()"
@@ -21,7 +21,7 @@
       @for (avatar of avatarIds; track avatar ) {
       <img
         class="avatar-image"
-        [src]="'/assets/icons/user/user_' + avatar + '.png'"
+        [src]="'./assets/icons/user/user_' + avatar + '.png'"
         alt=""
         (click)="selectAvatarId(avatar)"
       />
