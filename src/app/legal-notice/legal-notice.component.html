@@ -1,6 +1,7 @@
 <section class="legal-notice">
   <div class="title-wrapper">
-    <a routerLink="/login">
+    <!-- Link to login if not logged in with auth guard -->
+    <a routerLink="/">
       <img
         [src]="'./../../../assets/icons/login/arrow_back_'+ signalService.themeColorMain() +'.svg'"
         alt="Arrow back"
