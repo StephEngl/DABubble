@@ -49,7 +49,7 @@
                 }
             </div>
             <button class="send-message" type="submit">
-                <img src="./../../../assets/icons/message/send_darkblue.svg" alt="">
+                <img src="./assets/icons/message/send_darkblue.svg" alt="">
             </button>
             
             @if(emojiBar) {
@@ -68,7 +68,7 @@
 
 @if (replyToInfo) {
     <section class="reply-to">
-        <img src="./../../../assets/icons/message/answer_arrow_white.svg" alt="">
+        <img src="./assets/icons/message/answer_arrow_white.svg" alt="">
         <p class="reply-to-text">reply to</p>
         <img class="profile-img" [src]="usersService.getAvatar(replyToInfo.senderId)" alt="">
         <p><span>{{ usersService.findName(replyToInfo.senderId) }}:</span> "{{ showMaxLetters(replyToInfo.text) }}" </p>

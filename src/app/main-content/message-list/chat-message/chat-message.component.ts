@@ -74,17 +74,17 @@ export class ChatMessageComponent {
       clickFunction: () => this.messageService.postReaction(this.singleMessageId(), this.lastReactions()[1], this.reactions(), this.isChannelMessage)
     },
     { 
-      imgSrc: './../../../../assets/icons/message/add_reaction_'+ this.signalService.themeColorMain() + '.svg',
+      imgSrc: './assets/icons/message/add_reaction_'+ this.signalService.themeColorMain() + '.svg',
       shownInThread: true,
       clickFunction: () => this.emojiBar = true
     },
     { 
-      imgSrc: './../../../../assets/icons/message/comment_'+ this.signalService.themeColorMain() + '.svg',
+      imgSrc: './assets/icons/message/comment_'+ this.signalService.themeColorMain() + '.svg',
       shownInThread: false,
       clickFunction: () => this.openThread()
     },
     { 
-      imgSrc: './../../../../assets/icons/message/more_options_'+ this.signalService.themeColorMain() + '.svg',
+      imgSrc: './assets/icons/message/more_options_'+ this.signalService.themeColorMain() + '.svg',
       shownInThread: true,
       shownIfOwnMessage: true,
       clickFunction: () => this.editMode = true
@@ -215,7 +215,7 @@ export class ChatMessageComponent {
   showAvatar(): string {
     return this.currentMessageType
     ? this.usersService.getAvatar(this.currentMessageType.senderId)
-    : './../../../../assets/icons/user/user_0.png';
+    : './assets/icons/user/user_0.png';
   }
 
   /** Initializes the localStorage with default reactions if none exist. */

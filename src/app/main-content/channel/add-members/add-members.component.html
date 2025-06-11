@@ -24,7 +24,7 @@
         <div class="input-area">
             @for(member of selectedMembers; track member.id) {
                 <div class="selection">
-                    <img [src]="'./../../../../assets/icons/user/user_'+ member.avatarId +'.png'" alt="">
+                    <img [src]="'./assets/icons/user/user_'+ member.avatarId +'.png'" alt="">
                     <p> {{member.name}}</p>
                     <button (click)="removeMember(member.id!)">X</button>
                 </div>
@@ -34,7 +34,7 @@
                 <div class="search-results">
                     @for(member of searchResultsUser; track member.id) {
                         <div class="search-result" (click)="addMember(member)">
-                            <img [src]="'./../../../../assets/icons/user/user_'+ member.avatarId +'.png'" alt="">
+                            <img [src]="'./assets/icons/user/user_'+ member.avatarId +'.png'" alt="">
                             <p> {{member.name}}</p>
                         </div>
                     }

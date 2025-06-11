@@ -21,7 +21,7 @@
                 @if(directMessage.replyTo && replyMessageInfo()) {
                 <div class="reply-text" [class]="checkifOwnMessage() ? 'own-message':'normal-message'">
                     <div class="reply-title">
-                        <img [src]="'./../../../../assets/icons/message/answer_arrow_'+ signalService.themeColorMain() + '.svg'" alt="">
+                        <img [src]="'./assets/icons/message/answer_arrow_'+ signalService.themeColorMain() + '.svg'" alt="">
                         <p>{{ usersService.findName(replyMessageInfo()?.senderId!) }}</p>
                         <img [src]="usersService.getAvatar(replyMessageInfo()?.senderId!)" alt="">
                         <p>:</p>
@@ -90,7 +90,7 @@
                 <section class="edit-message">
                     <textarea [(ngModel)]="messageEditText"></textarea>
                     <div class="edit-menu">
-                        <img (click)="emojiBarEditMode = true " src="./../../../../assets/icons/message/emoji_satisfied_grey.svg" alt="">
+                        <img (click)="emojiBarEditMode = true " src="./assets/icons/message/emoji_satisfied_grey.svg" alt="">
                         <div class="edit-buttons">
                             <button (click)="editMode = false">Cancel</button>
                             <button (click)="sendMessageUpdate(singleMessageId())">Save</button>

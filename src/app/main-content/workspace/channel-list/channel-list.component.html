@@ -1,18 +1,18 @@
 <section class="channel-list">
     <header>
         <button (click)="toggleChannelList()" (mouseenter)="channelListHovered = true" (mouseleave)="channelListHovered = false">
-            <img [src]="'./../../../../assets/icons/menu/dropdown_'+ imageColor(channelListHovered) +'.svg'" alt="" [style.transform]="channelListOpened ? 'rotate(0deg)' : 'rotate(-90deg)'">
-            <img [src]="'./../../../../assets/icons/general/workspace_icon_' + imageColor(channelListHovered) + '.svg'" alt="">
+            <img [src]="'./assets/icons/menu/dropdown_'+ imageColor(channelListHovered) +'.svg'" alt="" [style.transform]="channelListOpened ? 'rotate(0deg)' : 'rotate(-90deg)'">
+            <img [src]="'./assets/icons/general/workspace_icon_' + imageColor(channelListHovered) + '.svg'" alt="">
             <h4 [style.color]="channelListHovered ? 'var(--col-font-btn-hover)' : 'var(--col-font-main)'">Channels</h4>
         </button>
-        <img (click)="signalService.showCreateChannel.set(true)" [src]="'./../../../../assets/icons/menu/add_'+ signalService.themeColorMain() + '.svg'" alt="">
+        <img (click)="signalService.showCreateChannel.set(true)" [src]="'./assets/icons/menu/add_'+ signalService.themeColorMain() + '.svg'" alt="">
     </header>
     <div [class]="{'close-list': !channelListOpened}" class="channels">
         <ul>
             @for (channel of channelService.channels; track channel.id; let index = $index) {
                 @if(isChannelMember(channel)) {
                 <li (mouseenter)="hoveredIndex = index" (mouseleave)="hoveredIndex = null" (click)="showChannelId(channel.id!)">
-                    <img [src]="'./../../../../assets/icons/general/tag_' + imageColor(hoveredIndex === index) + '.svg'" alt="">
+                    <img [src]="'./assets/icons/general/tag_' + imageColor(hoveredIndex === index) + '.svg'" alt="">
                     <p [style.color]="hoveredIndex === index ? 'var(--col-font-btn-hover)':''">{{ showMaxLetters(channel.channelName) }}</p>
                 </li>
                 }
@@ -23,7 +23,7 @@
             (click)="signalService.showCreateChannel.set(true)"
             (mouseenter)="addChannelHovered = true"
             (mouseleave)="addChannelHovered = false">
-            <img [src]="'./../../../../assets/icons/menu/add_circle_' + imageColor(addChannelHovered) + '.svg'" alt="">
+            <img [src]="'./assets/icons/menu/add_circle_' + imageColor(addChannelHovered) + '.svg'" alt="">
             <h5 [style.color]="addChannelHovered ? 'var(--col-font-btn-hover)' : ''">Add Channel</h5>
         </button>
     </div>

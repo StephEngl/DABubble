@@ -1,8 +1,8 @@
 <header>
 
     <div class="header-logo">
-        <img src="./../../../assets/icons/general/dabubble_logo.svg" alt="">
-        <img [src]="'./../../../assets/icons/general/dabubble_logo_title_'+ signalService.themeColorMain() +'.svg'" alt="">
+        <img src="./assets/icons/general/dabubble_logo.svg" alt="">
+        <img [src]="'./assets/icons/general/dabubble_logo_title_'+ signalService.themeColorMain() +'.svg'" alt="">
     </div>
 
     <app-search-app></app-search-app>
@@ -16,13 +16,13 @@
             $event.stopPropagation()">
             <h3 [style.color]="hoverMenu ?'var(--col-font-btn-hover)' : '' ">{{ authService.currentUser()!.name }}</h3>
             <div class="user-icon">
-                <div class="user-picture" [style.backgroundImage] ="'url(./../../../assets/icons/user/user_' + authService.currentUser()!.avatarId + '.png)'"></div>
-                <img class="user-status" [src]="'./../../../assets/icons/user/status_' + authService.currentUser()!.status + '.svg'" alt="">
+                <div class="user-picture" [style.backgroundImage] ="'url(./assets/icons/user/user_' + authService.currentUser()!.avatarId + '.png)'"></div>
+                <img class="user-status" [src]="'./assets/icons/user/status_' + authService.currentUser()!.status + '.svg'" alt="">
             </div>
             <button (click)="toggleDropdown(); $event.stopPropagation()" >
             <img
                 [ngClass]="{'menu-icon': true, 'reverse': dropdownOpen}"
-                [src]="hoverMenu ? './../../../assets/icons/menu/dropdown_blue.svg' : './../../../assets/icons/menu/dropdown_'+ signalService.themeColorMain() + '.svg'"
+                [src]="hoverMenu ? './assets/icons/menu/dropdown_blue.svg' : './assets/icons/menu/dropdown_'+ signalService.themeColorMain() + '.svg'"
                 alt="">
             </button>
         </div>
@@ -36,7 +36,7 @@
                     <button class="close-button" (click)="toggleDropdown()">X</button>
                 </div>
                 @if (!editAvatar) {
-                    <img [src]="'./../../../assets/icons/user/user_' + authService.currentUser()!.avatarId + '.png'" alt="">
+                    <img [src]="'./assets/icons/user/user_' + authService.currentUser()!.avatarId + '.png'" alt="">
                     @if(editProfile) {
                         <button id="changeAvatarBtn" (click)="editAvatar = true">Change Avatar</button>
                     }
@@ -46,7 +46,7 @@
                         @for (avatar of avatarList; track avatar) {
                             <img 
                                 [ngClass]="{ 'selected-avatar': chosenAvatar === avatar }"
-                                (click)="setChosenAvatarId(avatar)" [src]="'./../../../assets/icons/user/user_'+ avatar + '.png'" alt="">
+                                (click)="setChosenAvatarId(avatar)" [src]="'./assets/icons/user/user_'+ avatar + '.png'" alt="">
                         }
                     </div>
                     @if(!chosenAvatar) {
@@ -66,16 +66,16 @@
                     </div>
 
                     <div class="status">
-                        <img class="user-status" [src]="'./../../../assets/icons/user/status_' + authService.currentUser()!.status + '.svg'" alt="">
+                        <img class="user-status" [src]="'./assets/icons/user/status_' + authService.currentUser()!.status + '.svg'" alt="">
                         <p>{{authService.currentUser()!.status}}</p>
                     </div>
                     <div class="contact">
-                        <img [src]="'./../../../assets/icons/login/mail_'+ signalService.themeColorMain() + '.svg'" alt="">
+                        <img [src]="'./assets/icons/login/mail_'+ signalService.themeColorMain() + '.svg'" alt="">
                         <p>{{authService.currentUser()!.email}}</p>
                     </div>
                 } @else {
                     <div class="edit-title">
-                        <img [src]="'./../../../assets/icons/general/account_circle_'+ signalService.themeColorMain() + '.svg'" alt="">
+                        <img [src]="'./assets/icons/general/account_circle_'+ signalService.themeColorMain() + '.svg'" alt="">
                         <p>Change your profile name:</p>
                     </div>
                     <input #editNameInput="ngModel" [(ngModel)]="editName" type="text">
@@ -93,8 +93,8 @@
                         (click)="toggleDarkMode()"
                         [class]="isDarkMode() ? 'mode-dark':'mode-light'" 
                         [src]="isDarkMode()
-                            ? './../../../assets/icons/general/mode_dark.svg'
-                            :'./../../../assets/icons/general/mode_light.svg'"
+                            ? './assets/icons/general/mode_dark.svg'
+                            :'./assets/icons/general/mode_light.svg'"
                         alt="">
                 </div>
                 <button (click)="showProfile()" >Profile</button>

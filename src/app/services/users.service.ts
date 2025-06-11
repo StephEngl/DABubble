@@ -131,9 +131,9 @@ async updateUserName(uid: string, name: string): Promise<void> {
   getAvatar(id: string): string {
     const searchedUser = this.users.find((user) => user.id === id);
     if (searchedUser?.avatarId !== undefined) {
-      return `./../../../../assets/icons/user/user_${searchedUser.avatarId}.png`;
+      return `./assets/icons/user/user_${searchedUser.avatarId}.png`;
     }
-    return './../../../../assets/icons/user/user_0.png';
+    return './assets/icons/user/user_0.png';
   }
 
   async updateUserStatus(userId: string, status: 'online' | 'offline' | 'afk') {

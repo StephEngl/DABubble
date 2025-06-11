@@ -24,8 +24,8 @@ export class AddMembersComponent {
   addAllMembers: boolean = false;
   addSpecificMembers: boolean = false;
   userSelectionActive: boolean = false;
-  allMembersCheckStatus: string = './../../../../assets/icons/menu/circle_blue.svg';
-  specificMembersCheckStatus: string = './../../../../assets/icons/menu/circle_blue.svg';
+  allMembersCheckStatus: string = './assets/icons/menu/circle_blue.svg';
+  specificMembersCheckStatus: string = './assets/icons/menu/circle_blue.svg';
   selectedMembers: UserInterface[] = [];
   textInput: string = '';
 
@@ -46,11 +46,11 @@ export class AddMembersComponent {
   /** Updates checkmark icons based on selected options. */
   toggleImages():void {
     this.allMembersCheckStatus = this.addAllMembers
-    ? './../../../../assets/icons/menu/check_circle_blue.svg'
-    : './../../../../assets/icons/menu/circle_blue.svg';
+    ? './/menu/check_circle_blue.svg'
+    : './assets/icons/menu/circle_blue.svg';
     this.specificMembersCheckStatus = this.addSpecificMembers
-    ? './../../../../assets/icons/menu/check_circle_blue.svg'
-    : './../../../../assets/icons/menu/circle_blue.svg';
+    ? './assets/icons/menu/check_circle_blue.svg'
+    : './assets/icons/menu/circle_blue.svg';
   }
 
   /** Triggers user selection or adds all users. */
