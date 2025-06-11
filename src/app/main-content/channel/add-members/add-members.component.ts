@@ -46,7 +46,7 @@ export class AddMembersComponent {
   /** Updates checkmark icons based on selected options. */
   toggleImages():void {
     this.allMembersCheckStatus = this.addAllMembers
-    ? './assets/menu/check_circle_blue.svg'
+    ? './assets/icons/menu/check_circle_blue.svg'
     : './assets/icons/menu/circle_blue.svg';
     this.specificMembersCheckStatus = this.addSpecificMembers
     ? './assets/icons/menu/check_circle_blue.svg'
@@ -118,6 +118,14 @@ export class AddMembersComponent {
       this.selectedMembers.push(member);
       this.textInput= '';
     }
+  }
+
+  listFull(): boolean {
+    const currentChannelId = localStorage.getItem('currentChannel');
+    if(!currentChannelId) return false;
+    const currentChannel = this.channelService.getChannelById(currentChannelId!);
+    const currentMembers = currentChannel?.members!;
+    return currentMembers.length === this.userService.users.length;
   }
 
 }

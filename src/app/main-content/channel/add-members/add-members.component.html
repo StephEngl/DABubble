@@ -6,14 +6,18 @@
 
     @if (!userSelectionActive) {
         <ul>
-            <li class="add-option" (click)="toggleAddAllMembers()">
-                <img [src]="allMembersCheckStatus" alt="">
-                <p>Add <span>all members</span> of your organization to the channel</p>
-            </li>
-            <li class="add-option" (click)="toggleAddSpecificMembers()">
-                <img [src]="specificMembersCheckStatus" alt="">
-                <p>Select <span>specific users</span> from your organization</p>
-            </li>
+            @if(listFull()) {
+                <li class="nothing-to-add">There is no more members to add.</li>
+            } @else {
+                <li class="add-option" (click)="toggleAddAllMembers()">
+                    <img [src]="allMembersCheckStatus" alt="">
+                    <p>Add <span>all members</span> of your organization to the channel</p>
+                </li>
+                <li class="add-option" (click)="toggleAddSpecificMembers()">
+                    <img [src]="specificMembersCheckStatus" alt="">
+                    <p>Select <span>specific users</span> from your organization</p>
+                </li>
+            }
         </ul>
         <footer class="button-wrapper">
             <button (click)="selectUsers()" type="button" [disabled]="!addSpecificMembers && !addAllMembers">Create</button>

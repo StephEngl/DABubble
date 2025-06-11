@@ -102,6 +102,12 @@ span {
     }
 }
 
+.nothing-to-add {
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--col-font-main);
+}
+
 .search-results {
     position: absolute;
     align-self: flex-start;
