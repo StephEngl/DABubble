@@ -47,6 +47,7 @@
                 }
                 @if (message) {
                 <app-chat-message
+                    [id]="message.id"
                     [threadMessage]="message"
                     [paddingHorizontal]="isMobileView() ? '45':'16'"
                     [isThreadMessage]="isThread">

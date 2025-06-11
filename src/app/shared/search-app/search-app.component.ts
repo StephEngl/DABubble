@@ -32,8 +32,11 @@ export class SearchAppComponent {
 
     return this.channelService.channels
       .filter(channel =>
-        channel.channelName.toLowerCase().includes(searchTerm) &&
-        this.isChannelMember(channel)
+        (
+        channel.channelName.toLowerCase().includes(searchTerm)
+        && this.isChannelMember(channel)
+        )
+        //|| channel.channelMessages?.some(m => m.text.toLowerCase().includes(searchTerm))
       );
   }
 
