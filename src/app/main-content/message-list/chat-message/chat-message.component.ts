@@ -259,7 +259,6 @@ export class ChatMessageComponent {
    */
   emojiSelect(event: any): void {
     if (this.emojiBar) {
-      this.disableScrolling();
       this.handleEmojiReaction(event.emoji.native);
     } else {
       this.appendEmojiToMessage(event.emoji.native);
@@ -351,14 +350,6 @@ export class ChatMessageComponent {
     return window.innerWidth < 850
     ? '20px 16px 20px ' + this.paddingHorizontal + 'px'
     : '20px ' + this.paddingHorizontal + 'px';
-  }
-
-  /** Temporarily disables scrolling by setting `sendingReaction` to true for 1 second. */
-  disableScrolling() {
-    this.signalService.sendingReaction.set(true);
-    setTimeout(() => {
-      this.signalService.sendingReaction.set(false);
-    }, 10);
   }
 
 }

@@ -43,6 +43,7 @@ export class AuthenticationService {
 
   constructor(private router: Router) {
     this.auth = getAuth();
+    this.checkAuthStatus(); 
   }
 
   /**

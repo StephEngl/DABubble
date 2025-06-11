@@ -4,6 +4,7 @@ import { FormsModule, NgForm } from '@angular/forms';
 import { UserLoginInterface } from '../../interfaces/user.interface';
 import { AuthenticationService } from '../../services/authentication.service';
 import { SignalsService } from '../../services/signals.service';
+import { ChannelsService } from '../../services/channels.service';
 
 @Component({
   selector: 'app-login-dialog',
@@ -15,6 +16,7 @@ import { SignalsService } from '../../services/signals.service';
 export class LoginDialogComponent {
   authService = inject(AuthenticationService);
   signalService = inject(SignalsService);
+  channelService = inject(ChannelsService);
   formSubmitted = false;
   passwordVisible: Boolean = false;
   emailInput: string = '';
@@ -67,6 +69,7 @@ export class LoginDialogComponent {
       }, 5000);
       console.error('Login fehlgeschlagen:', error);
     }
+    this.initChannelGeneral();
   }
 
   /**
@@ -79,6 +82,7 @@ export class LoginDialogComponent {
     this.isGuestLogin = true;
     this.noUserFound = false;
     await this.authService.signInUser(mail, password);
+    this.initChannelGeneral();
     setTimeout(() => (this.isGuestLogin = false), 100);
   }
 
@@ -90,5 +94,18 @@ export class LoginDialogComponent {
     // localStorage.setItem('returnUrl', returnUrl);
     // this.authService.signInWithGoogleRedirect();
     this.authService.signInWithGooglePopup();
+    this.initChannelGeneral();
+  }
+
+    /**
+   * Initializes the "General" channel for the given user ID.
+   * @param uid The user ID to add to the "General" channel.
+   */
+  async initChannelGeneral(): Promise<void> {
+    if(localStorage.getItem('currentChannel')) return;
+    const channel = this.channelService.getChannelByName('General');
+    if(!channel || !channel.id) return;
+    localStorage.setItem('currentChannel', channel.id);
+    await this.channelService.loadChannel(channel.id);
   }
 }

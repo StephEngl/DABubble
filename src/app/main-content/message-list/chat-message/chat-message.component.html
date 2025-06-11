@@ -125,7 +125,7 @@
                             }
                         } @else {
                             @if (!item.imgSrc) {
-                                <span class="last-reaction" (click)="item.clickFunction(); disableScrolling()">{{ item.emoji }}</span>
+                                <span class="last-reaction" (click)="item.clickFunction()">{{ item.emoji }}</span>
                             } @else {
                                 <img (click)="item.clickFunction();" [src]="item.imgSrc" alt="">
                             }
