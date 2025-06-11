@@ -75,6 +75,15 @@ header,
     }
 }
 
+.name-edit>button {
+    font-weight: 700;
+    font-size: 18px;
+    color: var(--col-font-main);
+    &:hover {
+        color: var(--col-bg-btn-main);
+    }
+}
+
 textarea,
 input {
     width: 100%;
