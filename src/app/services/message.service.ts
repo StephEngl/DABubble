@@ -1,3 +1,7 @@
+/**
+ * Service for handling messages in channels, threads, and direct conversations,
+ * including creation, updates, and emoji reactions.
+ */
 import { Injectable, inject } from '@angular/core';
 import { ChannelsService } from './channels.service';
 import { Timestamp } from '@angular/fire/firestore';
@@ -17,14 +21,16 @@ import { SignalsService } from './signals.service';
 })
 export class MessageService {
 
-  constructor() { }
-
   firestore: Firestore = inject(Firestore);
   channelService = inject(ChannelsService);
   conversationService = inject(ConversationService);
   signalService = inject(SignalsService);
   authService = inject(AuthenticationService);
 
+  /**
+   * Posts a message to the current channel
+   * @param message - Message object to be posted
+   */
   async postMessage(message: ChannelMessageInterface) {
     const activeChannel = localStorage.getItem("currentChannel");
     if (!activeChannel) return;
@@ -41,6 +47,10 @@ export class MessageService {
     }
   }
   
+  /**
+   * Posts a message to the current thread
+   * @param message - The thread message to post
+   */
   async postThreadMessage(message: ThreadMessageInterface) {
     const activeChannel = localStorage.getItem("currentChannel");
     const activeThread = localStorage.getItem("currentThread");
@@ -58,6 +68,12 @@ export class MessageService {
     }
   }
 
+  /**
+   * Updates a message or thread message in Firestore
+   * @param messageId - ID of the message to update
+   * @param updatedData - Partial updated data
+   * @param options - Optional flags (e.g. isThread)
+   */
   async updateMessage(
     messageId: string,
     updatedData: Partial<ChannelMessageInterface | ThreadMessageInterface>,
@@ -79,6 +95,13 @@ export class MessageService {
     }
   }
   
+  /**
+   * Adds or updates a reaction to a channel or thread message
+   * @param id - Message ID
+   * @param code - Emoji code
+   * @param targetArray - Existing reactions array
+   * @param isChannelMessage - True if message is a channel message
+   */
   postReaction(id: string, code: string, targetArray: ReactionInterface[], isChannelMessage: boolean): void {
     const user = this.authService.userId;
     let reactions = targetArray;
@@ -103,6 +126,11 @@ export class MessageService {
     }
   }
 
+  /**
+   * Posts a direct message in a conversation
+   * @param id - Conversation ID
+   * @param message - Direct message data
+   */
   async postDirectMessage (id: string, message: DirectMessageInterface) {
     try {
       await addDoc(this.conversationService.getDirectMessagesRef(id), {
@@ -117,6 +145,11 @@ export class MessageService {
     }
   }
 
+  /**
+   * Updates a direct message in Firestore
+   * @param id - Message ID
+   * @param message - Partial updated data
+   */
   async updateDirectMessage(id: string, message: Partial<DirectMessageInterface>) {
     try {
       let docRef = doc(this.conversationService.getDirectMessagesRef(this.signalService.activeConId()), id)
@@ -126,6 +159,12 @@ export class MessageService {
     }
   }
 
+  /**
+   * Adds or updates a reaction on a direct message
+   * @param id - Message ID
+   * @param code - Emoji code
+   * @param targetArray - Existing reactions array
+   */
   postDirectMessageReaction(id: string, code: string, targetArray: ReactionInterface[]): void {
     const user = this.authService.userId;
     let reactions = targetArray;

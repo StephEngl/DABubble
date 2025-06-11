@@ -1,5 +1,8 @@
+/**
+ * Service for managing channel data, including real-time Firestore subscriptions,
+ * CRUD operations for channels, and nested message/thread handling.
+ */
 import { Injectable, inject, OnDestroy } from '@angular/core';
-import { Timestamp } from '@angular/fire/firestore';
 import {
     Firestore,
     collection,
@@ -28,23 +31,22 @@ export class ChannelsService {
     this.unsubscribeChannels = this.subChannels();
   }
 
+  /** Cleans up Firestore subscriptions on destroy */
   ngOnDestroy() {
     if (this.unsubscribeChannels) {
       this.unsubscribeChannels();
     }
   }
 
+  /** Subscribes to the 'channels' collection and updates local array */
   subChannels() {
     const q = query(this.getChannelsRef(), orderBy('createdAt'));
-    return onSnapshot(
-      q,
-      (snapshot) => {
+    return onSnapshot(q, (snapshot) => {
         this.channels = [];
         snapshot.forEach((element) => {
           const channel = element.data();
           this.channels.push(this.setChannelObject(element.id, channel));
         });
-        
       },
       (error) => {
         console.error('Firestore Error', error.message);
@@ -52,14 +54,22 @@ export class ChannelsService {
     );
   }
 
+  /** Returns reference to the 'channels' Firestore collection */
   getChannelsRef() {
     return collection(this.firestore, 'channels');
   }
 
+  /** Returns a reference to a single channel document */
   getSingleDocRef(docId: string) {
     return doc(this.getChannelsRef(), docId);
   }
 
+  /**
+   * Maps Firestore data to a typed ChannelInterface object
+   * @param id - Document ID
+   * @param channelData - Raw Firestore data
+   * @returns ChannelInterface
+   */
   setChannelObject(id: string, channelData: any): ChannelInterface {
     return {
       id: id,
@@ -72,6 +82,11 @@ export class ChannelsService {
     };
   }
 
+  /**
+   * Adds a new channel to Firestore
+   * @param channel - Channel data
+   * @returns DocumentReference if successful
+   */
   async addChannel(channel: ChannelInterface): Promise<void | DocumentReference> {
     try {
       const channelRef = await addDoc(this.getChannelsRef(), channel);
@@ -81,6 +96,7 @@ export class ChannelsService {
     }
   }
 
+  /** Deletes a channel document from Firestore - currently not used in the app  */
   async deleteChannel(docId: string) {
     try {
       await deleteDoc(this.getSingleDocRef(docId));
@@ -89,6 +105,10 @@ export class ChannelsService {
     }
   }
 
+  /**
+   * Updates a channel document in Firestore
+   * @param channel - Channel data with ID
+   */
   async updateChannel(channel: ChannelInterface) {
     if (channel.id) {
       try {
@@ -100,6 +120,7 @@ export class ChannelsService {
     }
   }
 
+  /** Returns clean JSON object for Firestore */
   getCleanJson(channel: ChannelInterface) {
     return {
       createdAt: channel.createdAt,
@@ -110,24 +131,27 @@ export class ChannelsService {
     };
   }
 
-  // => Subcollection Channel Messages
+  /** Returns a reference to messages in a specific channel */
   getChannelMessagesRef(id:string) {
     return collection(this.firestore,`channels/${id}/channelMessages`);
   }
 
-  // => Subcollection Thread Messages
+  /** Returns a reference to thread messages of a specific message */
   getThreadMessagesRef(idChannel:string, idMessage: string) {
     return collection(this.firestore,`channels/${idChannel}/channelMessages/${idMessage}/threadMessages`);
   }
 
+  /** Returns a channel by ID from the local array */
   getChannelById(id: string) {
     return this.channels.find(channel => channel.id === id);
   }
 
+  /** Returns a channel by name from the local array */
   getChannelByName(name: string) {
     return this.channels.find(channel => channel.channelName === name);
   }
 
+  /** Finds a message by ID in the currently active channel */
   getMessageById(id: string) {
     const currentChannel = localStorage.getItem('currentChannel');
     if (!currentChannel) return;
@@ -136,6 +160,10 @@ export class ChannelsService {
     return channel.channelMessages.find(message => message.id === id);
   }
 
+  /**
+   * Subscribes to messages of a specific channel and auto-subscribes to thread messages
+   * @param channelId - Channel ID
+   */
   subscribeToChannelMessages(channelId: string) {
     const q = query(this.getChannelMessagesRef(channelId), orderBy('createdAt'));
     return onSnapshot(q, (snapshot) => {
@@ -150,7 +178,6 @@ export class ChannelsService {
         senderId: data.senderId,
         reactions: data.reactions,
         threadMessages: []
-        // threadMessages: data.threadMessages
       });
     });
 
@@ -165,9 +192,13 @@ export class ChannelsService {
     });
   }
 
+  /**
+   * Subscribes to thread messages of a specific message in a channel
+   * @param channelId - Channel ID
+   * @param messageId - Message ID
+   */
   subscribeToThreadMessages(channelId: string, messageId: string) {
     const q = query(this.getThreadMessagesRef(channelId, messageId), orderBy('createdAt'));
-
     return onSnapshot(q, (snapshot) => {
       const threadMessages: ThreadMessageInterface[] = [];
 
@@ -190,12 +221,16 @@ export class ChannelsService {
     });
   }
 
+  /**
+   * Loads a channel by ID, sets it active and subscribes to its messages
+   * @param id - Channel ID
+   */
   async loadChannel(id: string): Promise<void> {
     localStorage.setItem("currentChannel", id);
     this.subscribeToChannelMessages(id);
   }
 
-    /**
+  /**
    * Adds selected users to the current channel.
    * @param users Array of user IDs to add
    */
@@ -220,7 +255,5 @@ export class ChannelsService {
     ? this.signalService.triggerToast('Member added to channel','confirm')
     : this.signalService.triggerToast('Members added to channel','confirm')
   }
-
-
 
 }

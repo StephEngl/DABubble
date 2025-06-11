@@ -1,3 +1,6 @@
+/**
+ * Service for formatting Date objects into various string formats.
+ */
 import { Injectable } from '@angular/core';
 
 @Injectable({
@@ -5,9 +8,13 @@ import { Injectable } from '@angular/core';
 })
 export class TimeService {
 
-  constructor() { }
-
-    getDate(date: Date, format: 'dd-mm-yyyy' | 'hh-mm' | 'last-thread'):string {
+  /**
+   * Returns a formatted string representation of a date.
+   * @param date - The Date object to format.
+   * @param format - The format type ('dd-mm-yyyy', 'hh-mm', 'last-thread').
+   * @returns The formatted date string.
+   */
+  getDate(date: Date, format: 'dd-mm-yyyy' | 'hh-mm' | 'last-thread'):string {
     const day = date.getDate().toString().padStart(2, '0');
     const month = (date.getMonth() + 1).toString().padStart(2, '0');
     const year = date.getFullYear().toString().slice(-2);

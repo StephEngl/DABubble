@@ -1,3 +1,7 @@
+/**
+ * Service for managing UI state using Angular signals across channels, conversations, and authentication flows.
+ */
+
 import { Injectable, signal } from '@angular/core';
 import { ToastInterface } from '../interfaces/toast.interface';
 
@@ -32,6 +36,15 @@ export class SignalsService {
   scrollChannelToBottom = signal<boolean>(false);
   posScrollY = signal<number>(0);
 
+  // Signals for toasts
+  toast = signal<ToastInterface>({
+    message: '',
+    type: 'confirm',
+    isOpen: false,
+    isAnimated: false,
+    icon: '',
+  });
+
   // signal to toggle icon colors
   themeColorMain = signal<string>('black');
 
@@ -41,14 +54,11 @@ export class SignalsService {
   moveUp = signal<boolean>(false);
   fadeOut = signal<boolean>(false);
 
+  /** Starts the intro animation sequence */
   startIntroAnimation() {
-      // Slide out title logo after 1,3s
       setTimeout(() => this.slideOut.set(true), 1300);
-      // Animate complete logo to the upper left after 2,5s
       setTimeout(() => this.moveUp.set(true), 2500);
-      // // Fade out intro after 3,5s
       setTimeout(() => this.fadeOut.set(true), 3500);
-      // // End intro and delete from DOM after 4,2s
       setTimeout(() => this.showIntro.set(false), 4200);
     }
 
@@ -66,6 +76,7 @@ export class SignalsService {
   isPasswordForgottenDialog = signal<boolean>(false);
   isPasswordResetDialog = signal<boolean>(false);
 
+  /** Switches to login dialog */
   backToLogin() {
     this.isLoginDialog.set(true);
     this.isRegisterDialog.set(false);
@@ -74,6 +85,7 @@ export class SignalsService {
     this.isPasswordResetDialog.set(false);
   }
 
+  /** Shows register dialog */
   showRegisterDialog() {
     this.isLoginDialog.set(false);
     this.isRegisterDialog.set(true);
@@ -82,6 +94,7 @@ export class SignalsService {
     this.isPasswordResetDialog.set(false);
   }
 
+  /** Navigates to avatar choice screen */
   goToAvatarChoice() {
     this.isLoginDialog.set(false);
     this.isRegisterDialog.set(false);
@@ -90,6 +103,7 @@ export class SignalsService {
     this.isPasswordResetDialog.set(false);
   }
 
+  /** Shows forgotten password dialog */
   showPasswordForgottenDialog() {
     this.isPasswordForgottenDialog.set(true);
     this.isLoginDialog.set(false);
@@ -98,6 +112,7 @@ export class SignalsService {
     this.isPasswordResetDialog.set(false);
   }
 
+  /** Shows password reset dialog */
   showPasswordResetDialog() {
     this.isLoginDialog.set(false);
     this.isRegisterDialog.set(false);
@@ -106,15 +121,12 @@ export class SignalsService {
     this.isPasswordResetDialog.set(true);
   }
 
-  // Signals for toasts
-  toast = signal<ToastInterface>({
-    message: '',
-    type: 'confirm',
-    isOpen: false,
-    isAnimated: false,
-    icon: '',
-  });
-
+  /**
+   * Triggers a toast message
+   * @param message - Text to display in the toast
+   * @param type - Type of toast ('confirm', 'error', etc.)
+   * @param icon - Optional icon to display
+   */
   triggerToast(message: string,type: ToastInterface['type'],icon: string = '') {
     this.toast.set({
       message,
@@ -128,7 +140,10 @@ export class SignalsService {
     setTimeout(() => this.toast.update((t) => ({ ...t, isOpen: false })), 3500);
   }
 
-  // signal methods for triggering the different chat channels
+  /**
+   * Sets channel-related UI state
+   * @param id - The channel ID to activate
+   */
   setChannelSignals(id:string):void {
     this.activeReplyToId.set('');
     this.conversationActive.set(false);
@@ -137,6 +152,10 @@ export class SignalsService {
     this.startConversation.set(false);
   }
 
+  /**
+   * Sets conversation-related UI state
+   * @param id - The conversation ID to activate
+   */
   setConversationSignals(id:string):void {
     this.activeReplyToId.set('');
     this.channelActive.set(false);
@@ -146,6 +165,7 @@ export class SignalsService {
     this.startConversation.set(false);
   }
 
+  /** Hides workspace view on smaller mobile devices */
   hideWorkspaceOnMobile():void {
     if (window.innerWidth < 850) {
       this.showChannel.set(true);
@@ -153,6 +173,7 @@ export class SignalsService {
     }
   }
 
+  /** Displays thread-only view on mobile or smaller screens */
   showOnlyThreadOnMobile():void {
     if (window.innerWidth < 850) {
       this.showChannel.set(false);
@@ -161,6 +182,7 @@ export class SignalsService {
     }
   }
 
+  /** Switches back to channel view on mobile */
   backToChannelOnMobile():void {
     if (window.innerWidth < 850) {
       this.showChannel.set(true);
