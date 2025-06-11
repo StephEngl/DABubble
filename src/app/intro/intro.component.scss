@@ -5,7 +5,7 @@
   inset: 0;
   z-index: 100;
   opacity: 1;
-  background: linear-gradient(to bottom, #797ef3, #313ae5);
+  background: linear-gradient(to bottom, var(--col-font-href), #313ae5);
   transition: opacity 0.7s ease-in-out;
 }
 

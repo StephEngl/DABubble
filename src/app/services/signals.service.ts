@@ -45,8 +45,12 @@ export class SignalsService {
     icon: '',
   });
 
-  // signal to toggle icon colors
+  // signals to toggle icon colors
   themeColorMain = signal<string>('black');
+
+  get invertedThemeColorMain() {
+    return this.themeColorMain() === 'black' ? 'white' : 'black';
+  }
 
   // Signals for intro animation
   showIntro = signal<boolean>(true);
@@ -56,17 +60,17 @@ export class SignalsService {
 
   /** Starts the intro animation sequence */
   startIntroAnimation() {
-      setTimeout(() => this.slideOut.set(true), 1300);
-      setTimeout(() => this.moveUp.set(true), 2500);
-      setTimeout(() => this.fadeOut.set(true), 3500);
-      setTimeout(() => this.showIntro.set(false), 4200);
-    }
+    setTimeout(() => this.slideOut.set(true), 1300);
+    setTimeout(() => this.moveUp.set(true), 2500);
+    setTimeout(() => this.fadeOut.set(true), 3500);
+    setTimeout(() => this.showIntro.set(false), 4200);
+  }
 
   // Signal for current User-ID
   currentUid = signal<string>('');
 
   // Signals for password match of confirming password
-  passwordsMatch = signal<boolean>(false)
+  passwordsMatch = signal<boolean>(false);
   confirmPasswordInput = signal<string>('');
 
   // Signalmethods for showing the different dialogs at login-section
@@ -127,7 +131,11 @@ export class SignalsService {
    * @param type - Type of toast ('confirm', 'error', etc.)
    * @param icon - Optional icon to display
    */
-  triggerToast(message: string,type: ToastInterface['type'],icon: string = '') {
+  triggerToast(
+    message: string,
+    type: ToastInterface['type'],
+    icon: string = ''
+  ) {
     this.toast.set({
       message,
       type,
@@ -135,8 +143,14 @@ export class SignalsService {
       isOpen: true,
       isAnimated: false,
     });
-    setTimeout(() => this.toast.update((t) => ({ ...t, isAnimated: true })), 10);
-    setTimeout(() => this.toast.update((t) => ({ ...t, isAnimated: false })), 4000);
+    setTimeout(
+      () => this.toast.update((t) => ({ ...t, isAnimated: true })),
+      10
+    );
+    setTimeout(
+      () => this.toast.update((t) => ({ ...t, isAnimated: false })),
+      4000
+    );
     setTimeout(() => this.toast.update((t) => ({ ...t, isOpen: false })), 4500);
   }
 
@@ -144,7 +158,7 @@ export class SignalsService {
    * Sets channel-related UI state
    * @param id - The channel ID to activate
    */
-  setChannelSignals(id:string):void {
+  setChannelSignals(id: string): void {
     this.activeReplyToId.set('');
     this.conversationActive.set(false);
     this.scrollChannelToBottom.set(true);
@@ -156,7 +170,7 @@ export class SignalsService {
    * Sets conversation-related UI state
    * @param id - The conversation ID to activate
    */
-  setConversationSignals(id:string):void {
+  setConversationSignals(id: string): void {
     this.activeReplyToId.set('');
     this.channelActive.set(false);
     this.conversationActive.set(true);
@@ -166,7 +180,7 @@ export class SignalsService {
   }
 
   /** Hides workspace view on smaller mobile devices */
-  hideWorkspaceOnMobile():void {
+  hideWorkspaceOnMobile(): void {
     if (window.innerWidth < 850) {
       this.showChannel.set(true);
       this.showWorkspace.set(false);
@@ -174,7 +188,7 @@ export class SignalsService {
   }
 
   /** Displays thread-only view on mobile or smaller screens */
-  showOnlyThreadOnMobile():void {
+  showOnlyThreadOnMobile(): void {
     if (window.innerWidth < 850) {
       this.showChannel.set(false);
     } else if (window.innerWidth < 1500) {
@@ -183,7 +197,7 @@ export class SignalsService {
   }
 
   /** Switches back to channel view on mobile */
-  backToChannelOnMobile():void {
+  backToChannelOnMobile(): void {
     if (window.innerWidth < 850) {
       this.showChannel.set(true);
       this.showThread.set(false);
@@ -191,5 +205,4 @@ export class SignalsService {
       this.showThread.set(false);
     }
   }
-
 }
