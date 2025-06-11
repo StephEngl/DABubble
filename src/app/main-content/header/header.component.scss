@@ -13,7 +13,6 @@ header {
 
 .header-logo {
     @include dFlex($ai:center);
-    cursor: pointer;
     gap: 20px;
     >img:first-child {
         height: 55px;
