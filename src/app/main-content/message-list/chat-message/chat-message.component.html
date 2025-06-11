@@ -65,7 +65,7 @@
                     @if(reactions() && reactions().length > maxEmoji) {
                         <button (click)="toggleShownEmojis()">show all</button>
                     }
-                    @if(reactions() && reactions().length === maxEmoji) {
+                    @if(reactions() && reactions().length === maxEmoji && reactions().length != setMaxEmojiLength() ) {
                         <button (click)="toggleShownEmojis()">show less</button>
                     }
                 </div>
