@@ -4,22 +4,17 @@ import { AuthenticationService } from './authentication.service';
 import { Auth } from '@angular/fire/auth';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class PasswordService {
   signalService = inject(SignalsService);
   authService = inject(AuthenticationService);
   auth = inject(Auth);
 
-  passwordVisible: Boolean = false;
-  confirmPasswordVisible: Boolean = false;
-  passwordInput: string = '';
-  confirmPasswordInput: string = '';
-
   /**
    * Handles form submission: validates input and handles errors.
    */
-  async setNewPassword(oobCode:string, passwordInput:string) {
+  async setNewPassword(oobCode: string, passwordInput: string) {
     try {
       await this.resetPassword(oobCode, passwordInput);
       this.handlePasswordResetSuccess();
