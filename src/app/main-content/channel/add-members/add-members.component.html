@@ -7,7 +7,7 @@
     @if (!userSelectionActive) {
         <ul>
             @if(listFull()) {
-                <li class="nothing-to-add">There is no more members to add.</li>
+                <li class="nothing-to-add">There are no more members to add.</li>
             } @else {
                 <li class="add-option" (click)="toggleAddAllMembers()">
                     <img [src]="allMembersCheckStatus" alt="">
