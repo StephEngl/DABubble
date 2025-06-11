@@ -4,7 +4,7 @@
         <app-message-list [isConversation]="true"></app-message-list>
         <app-create-message [isConversation]="true"></app-create-message>
     } @else {
-        <app-message-list [isChannel]="true" [isConversation]="isConversation"></app-message-list>
+        <app-message-list [isChannel]="true" [isConversation]="false"></app-message-list>
         <app-create-message [isChannelMessage]="true"></app-create-message>
     }
 </section>

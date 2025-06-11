@@ -232,7 +232,7 @@ export class MessageListComponent implements AfterViewChecked {
   }
 
   /** Returns the creator ID of the current channel */
-  get channelCreator() {
+  channelCreator() {
     const currentChannel = this.channelService.getChannelById(this.currentChannel());
     if (currentChannel?.createdBy) {
       return currentChannel.createdBy
@@ -249,10 +249,12 @@ export class MessageListComponent implements AfterViewChecked {
 
   /** Returns formatted creation date of the current channel */
   get channelCreatedAt() {
-        const currentChannel = this.channelService.getChannelById(this.currentChannel())?.createdAt;
-    if (currentChannel) {
-      return this.timeService.getDate(currentChannel.toDate(), 'dd-mm-yyyy'); 
-    } return "Unknown";
+    const createdAt = this.channelService.getChannelById(this.currentChannel())?.createdAt;
+    if (createdAt) {
+      const date = createdAt.toDate?.() ?? createdAt;
+      return this.timeService.getDate(date, 'dd-mm-yyyy');
+    }
+    return "Unknown";
   }
 
   /** Checks if the app is currently viewed on a mobile screen */

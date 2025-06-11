@@ -9,7 +9,7 @@
     </header>
     <div [class]="{'close-list': !channelListOpened}" class="channels">
         <ul>
-            @for (channel of channelService.channels; track channel; let index = $index) {
+            @for (channel of channelService.channels; track channel.id; let index = $index) {
                 @if(isChannelMember(channel)) {
                 <li (mouseenter)="hoveredIndex = index" (mouseleave)="hoveredIndex = null" (click)="showChannelId(channel.id!)">
                     <img [src]="'./../../../../assets/icons/general/tag_' + imageColor(hoveredIndex === index) + '.svg'" alt="">

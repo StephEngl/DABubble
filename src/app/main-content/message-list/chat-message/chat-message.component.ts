@@ -358,7 +358,7 @@ export class ChatMessageComponent {
     this.signalService.sendingReaction.set(true);
     setTimeout(() => {
       this.signalService.sendingReaction.set(false);
-    }, 1000);
+    }, 10);
   }
 
 }

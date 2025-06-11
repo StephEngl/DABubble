@@ -67,7 +67,7 @@ export class ChannelsService {
       createdBy: channelData.createdBy,
       members: channelData.members,
       channelName: channelData.channelName,
-      channelMessages: channelData.channelMessages,
+      channelMessages: [],
       channelDescription: channelData.channelDescription || '',
     };
   }
@@ -149,12 +149,13 @@ export class ChannelsService {
         createdAt: data.createdAt,
         senderId: data.senderId,
         reactions: data.reactions,
-        threadMessages: data.threadMessages
+        threadMessages: []
+        // threadMessages: data.threadMessages
       });
     });
 
     const channel = this.getChannelById(channelId);
-      if (channel) {
+      if (channel && channel.channelMessages) {
         channel.channelMessages = [...messages];
 
         messages.forEach(msg => {
