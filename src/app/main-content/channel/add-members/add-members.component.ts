@@ -46,7 +46,7 @@ export class AddMembersComponent {
   /** Updates checkmark icons based on selected options. */
   toggleImages():void {
     this.allMembersCheckStatus = this.addAllMembers
-    ? './/menu/check_circle_blue.svg'
+    ? './assets/menu/check_circle_blue.svg'
     : './assets/icons/menu/circle_blue.svg';
     this.specificMembersCheckStatus = this.addSpecificMembers
     ? './assets/icons/menu/check_circle_blue.svg'
