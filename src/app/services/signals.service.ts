@@ -135,9 +135,9 @@ export class SignalsService {
       isOpen: true,
       isAnimated: false,
     });
-    setTimeout(() => this.toast.update((t) => ({ ...t, isAnimated: true })),10);
-    setTimeout(() => this.toast.update((t) => ({ ...t, isAnimated: false })),3000);
-    setTimeout(() => this.toast.update((t) => ({ ...t, isOpen: false })), 3500);
+    setTimeout(() => this.toast.update((t) => ({ ...t, isAnimated: true })), 10);
+    setTimeout(() => this.toast.update((t) => ({ ...t, isAnimated: false })), 4000);
+    setTimeout(() => this.toast.update((t) => ({ ...t, isOpen: false })), 4500);
   }
 
   /**
