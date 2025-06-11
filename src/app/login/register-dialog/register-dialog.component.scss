@@ -20,7 +20,7 @@
   transition: all 0.125s ease-in-out;
 
   &:hover {
-    background-color: #eceefe;
+    background-color: var(--col-bg-btn-hover);
   }
 }
 
@@ -119,8 +119,8 @@
     background-color: var(--col-bg-btn-main);
 
     &:hover {
-      background-color: #787ef2;
-      border-color: #787ef2;
+      background-color: var(--col-btn-hover-light);
+      border-color: var(--col-btn-hover-light);
     }
 
     &:disabled {
