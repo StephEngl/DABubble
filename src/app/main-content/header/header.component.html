@@ -85,13 +85,18 @@
                     </div>
                 }
             } @else {
-                <button (click)="toggleDarkMode()">
-                    @if(darkMode) {
-                        Light Mode
-                    } @else {
-                        Dark Mode
-                    }
-                </button>
+                <div class="mode-container"
+                    [style.backgroundColor]="isDarkMode()
+                        ? 'rgb(80, 133, 246)'
+                        :'rgb(246, 188, 80)'">
+                    <img 
+                        (click)="toggleDarkMode()"
+                        [class]="isDarkMode() ? 'mode-dark':'mode-light'" 
+                        [src]="isDarkMode()
+                            ? './../../../assets/icons/general/mode_dark.svg'
+                            :'./../../../assets/icons/general/mode_light.svg'"
+                        alt="">
+                </div>
                 <button (click)="showProfile()" >Profile</button>
                 <button routerLink="/legal-notice">Legal Notice</button>
                 <button routerLink="/privacy-policy">Privacy Policy</button>

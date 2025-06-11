@@ -124,7 +124,11 @@ export class HeaderComponent {
       localStorage.setItem('theme', 'dark-theme');
       this.signalService.themeColorMain.set('white');
     }
-    window.location.reload()
+    // window.location.reload()
+  }
+
+  isDarkMode(): boolean {
+    return localStorage.getItem('theme') === 'dark-theme';
   }
 
 }

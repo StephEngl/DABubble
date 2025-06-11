@@ -2,7 +2,7 @@
  * Root component of the application that
  * initializes theme and displays global components like router, toast, and intro.
  */
-import { Component, inject } from '@angular/core';
+import { Component, inject, AfterViewChecked } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { ToastComponent } from './shared/toast/toast.component';
 import { IntroComponent } from './intro/intro.component';
@@ -15,7 +15,7 @@ import { SignalsService } from './services/signals.service';
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
 })
-export class AppComponent {
+export class AppComponent implements AfterViewChecked {
   title = 'dabubble';
   signalService = inject(SignalsService);
 
@@ -24,8 +24,8 @@ export class AppComponent {
     this.setTheme();
   }
 
-  /** Lifecycle hook that runs on input changes and sets the theme. */
-  ngOnChanges() {
+  /** Lifecycle hook that runs on changes and sets the theme. */
+  ngAfterViewChecked() {
     this.setTheme();
   }
 

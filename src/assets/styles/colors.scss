@@ -26,9 +26,12 @@
 
   // transparency
     --col-transparent-shadow: rgba(0, 0, 0, 0.1);
+
+  // constants
+  --col-const-grey: #323232;
 }
 
-//dark mode, work in progress
+//dark mode
 body.dark-theme {
   --col-bg-main: #3c3c3c;
   --col-bg-secondary: #323232;

@@ -10,5 +10,5 @@ import { RouterLink } from '@angular/router';
   styleUrl: './privacy-policy.component.scss'
 })
 export class PrivacyPolicyComponent {
-signalService = inject(SignalsService)
+  signalService = inject(SignalsService)
 }
