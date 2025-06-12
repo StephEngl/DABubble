@@ -184,7 +184,24 @@ button {
   }
 
   button {
-    padding: 12px 22px;
+    padding: 8px 16px;
     font-size: 16px;
+  }
+
+  .login-content,
+  .form-login {
+    gap: 12px;
+  }
+
+  input {
+    padding: 9px 18px 9px 60px !important;
+
+  }
+  .icon {
+    top: 8px !important;
+  }
+
+  .recommendation {
+    font-size: 16px !important;
   }
 }

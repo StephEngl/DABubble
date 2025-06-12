@@ -97,7 +97,8 @@ a {
 @media screen and (max-width: 550px) {
   .login-header {
     justify-content: center;
-    padding: 16px;
+    padding: 16px 0 0 0;
+    height: 60px;
   }
 
   .login-footer {
@@ -107,4 +108,14 @@ a {
   .register-box-mobile {
     @include dFlex($fd: column, $gap: 12px);
   }
+
+  .header-logo {
+    > img:nth-child(1) {
+      height: 40px !important;
+    }
+    > img:nth-child(2) {
+      height: 20px !important;
+    }
+  }
+  
 }

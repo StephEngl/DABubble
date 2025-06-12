@@ -106,36 +106,36 @@
 
 @keyframes resize-logo-image-mobile {
   from {
-    width: 70px;
+    width: 40px;
   }
 }
 
 @keyframes resize-logo-title-mobile {
   from {
-    width: 160px;
+    width: 130px;
   }
 }
 
 @media screen and (max-width: 600px) {
   .logo-image {
-    width: 70px;
+    width: 40px;
 
     .move-up & {
-      animation: resize-logo-image-mobile 0.7s ease forwards;
+      animation: resize-logo-image-mobile 0.7s ease forwards !important;
     }
   }
 
   .logo-title {
-    width: 160px;
+    width: 130px;
 
     .move-up & {
-      animation: resize-logo-title-mobile 0.7s ease forwards;
+      animation: resize-logo-title-mobile 0.7s ease forwards !important;
     }
   }
 }
 
 @media screen and (max-width: 550px) {
   .intro-logo-group.move-up {
-    animation: move-logo-group-mobile 0.7s ease forwards;
+    animation: move-logo-group-mobile 0.7s ease forwards !important;
   }
 }
