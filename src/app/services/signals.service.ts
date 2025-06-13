@@ -177,6 +177,7 @@ export class SignalsService {
     this.activeConId.set(id);
     this.showThread.set(false);
     this.startConversation.set(false);
+    this.focusConversation.set(true);
   }
 
   /** Hides workspace view on smaller mobile devices */
