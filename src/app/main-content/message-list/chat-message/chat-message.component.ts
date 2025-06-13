@@ -197,6 +197,7 @@ export class ChatMessageComponent {
    */
   sendMessageUpdate(id: string) {
     const message = this.messageEditText;
+    this.currentMessageType!.text = this.messageEditText;
     if(this.isChannelMessage) {
       this.messageService.updateMessage(id, { text: message }, {});
     } else if(this.isDirectMessage) {
@@ -204,6 +205,7 @@ export class ChatMessageComponent {
     } else {
       this.messageService.updateMessage(id, { text: message }, { isThread: true });
     }
+    this.editMode = false;
   }
 
   /** Returns the sender's display name */

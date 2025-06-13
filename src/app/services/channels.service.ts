@@ -177,7 +177,7 @@ export class ChannelsService {
         createdAt: data.createdAt,
         senderId: data.senderId,
         reactions: data.reactions,
-        threadMessages: []
+        threadMessages: [], //data.threadMessages
       });
     });
 
