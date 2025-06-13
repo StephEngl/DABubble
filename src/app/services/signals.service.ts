@@ -11,6 +11,9 @@ import { ToastInterface } from '../interfaces/toast.interface';
 export class SignalsService {
   constructor() {}
 
+  // Signal for info popup
+  popupOpen = signal<boolean>(false);
+
   // signals for controlling various channel & message statuses
   focusChat = signal<boolean>(false);
   focusThread = signal<boolean>(false);

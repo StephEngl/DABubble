@@ -62,6 +62,62 @@ app-password-reset-dialog {
   padding: 16px 0 16px 0;
 }
 
+.info-btn {
+  cursor: pointer;
+  width: 36px;
+  height: 36px;
+  @include dFlex($pos: absolute);
+  right: 16px;
+  bottom: 16px;
+  border-radius: 50%;
+  background-color: var(--col-btn-hover-dark);
+  color: var(--col-const-white);
+  font-weight: bold;
+  font-size: 1.3rem;
+  border: none;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  transition: background-color 0.2s;
+
+  &:hover {
+    background-color: var(--col-btn-hover-light);
+  }
+}
+
+.popup {
+  @include dFlex($fd: column, $gap: 8px, $pos: absolute);
+  right: 45px;
+  bottom: 50px;
+  background-color: var(--col-bg-secondary);
+  border: var(--col-stroke-main) 1px solid;
+  border-radius: 25px 25px 0 25px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+  padding: 12px 18px;
+  min-width: 120px;
+  z-index: 10;
+  animation: fadeIn 0.15s;
+
+  a {
+    color: var(--col-bg-btn-main);
+    text-decoration: none;
+
+    &:hover {
+      color: var(--col-btn-hover-dark);
+      scale: 1.03;
+    }
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 .register {
   border: 1px solid var(--col-font-href);
   color: var(--col-bg-btn-main);

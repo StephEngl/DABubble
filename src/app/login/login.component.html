@@ -1,19 +1,23 @@
 <header class="login-header">
-  <div
-    class="header-logo"
-    routerLink="/login"
-  >
+  <div class="header-logo" routerLink="/login">
     <img src="./assets/icons/general/dabubble_logo.svg" alt="" />
-    <img [src]="'./assets/icons/general/dabubble_logo_title_'+ signalService.themeColorMain() +'.svg'" alt="">
+    <img
+      [src]="
+        './assets/icons/general/dabubble_logo_title_' +
+        signalService.themeColorMain() +
+        '.svg'
+      "
+      alt=""
+    />
   </div>
 
   @if (signalService.isLoginDialog()) {
-    <div class="register-box">
-      <p>New at DABubble?</p>
-      <a class="register" (click)="signalService.showRegisterDialog()"
+  <div class="register-box">
+    <p>New at DABubble?</p>
+    <a class="register" (click)="signalService.showRegisterDialog()"
       >Register</a
-      >
-    </div>
+    >
+  </div>
   }
 </header>
 
@@ -26,7 +30,28 @@
     <a class="register" (click)="signalService.showRegisterDialog()"
       >Register</a
     >
+    <button
+      class="info-btn"
+      type="button"
+      #popupBtn
+      (click)="togglePopup(); $event.stopPropagation()"
+    >
+      i
+    </button>
+    @if (signalService.popupOpen()) {
+    <div class="popup" (clickOutside)="signalService.popupOpen.set(false)">
+      <a
+        routerLink="/privacy-policy"
+        (click)="signalService.popupOpen.set(false)"
+        >Datenschutz</a
+      >
+      <a routerLink="/legal-notice" (click)="signalService.popupOpen.set(false)"
+        >Impressum</a
+      >
+    </div>
+    }
   </div>
+
   } @if (signalService.isRegisterDialog()) {
   <app-register-dialog></app-register-dialog>
   } @if (signalService.isPasswordForgottenDialog()) {

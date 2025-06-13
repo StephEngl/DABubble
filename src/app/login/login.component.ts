@@ -32,6 +32,7 @@ export class LoginComponent {
    */
   ngOnInit() {
     this.handlePasswordResetDialogFromQueryParams();
+    this.signalService.popupOpen.set(false);
   }
 
   /**
@@ -54,5 +55,17 @@ export class LoginComponent {
    */
   private isPasswordResetRequest(params: { [key: string]: any }): boolean {
     return params['mode'] === 'resetPassword' && !!params['oobCode'];
+  }
+
+  /**
+   * Toggles the visibility of the info popup.
+   * Uses the popupOpen signal from the SignalService to manage the popup state.
+   */
+  togglePopup() {
+    if (this.signalService.popupOpen()) {
+      this.signalService.popupOpen.set(false);
+    } else {
+      this.signalService.popupOpen.set(true);
+    }
   }
 }
