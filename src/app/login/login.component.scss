@@ -64,8 +64,8 @@ app-password-reset-dialog {
 
 .info-btn {
   cursor: pointer;
-  width: 36px;
-  height: 36px;
+  width: 24px;
+  height: 24px;
   @include dFlex($pos: absolute);
   right: 16px;
   bottom: 16px;
@@ -73,7 +73,7 @@ app-password-reset-dialog {
   background-color: var(--col-btn-hover-dark);
   color: var(--col-const-white);
   font-weight: bold;
-  font-size: 1.3rem;
+  font-size: 1.1rem;
   border: none;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
   transition: background-color 0.2s;
