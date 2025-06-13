@@ -1,18 +1,24 @@
 @if (signalService.showIntro()) {
 <div class="intro-bg" [class.fade-out]="signalService.fadeOut()">
-  <div class="intro-logo-group" [class.move-up]="signalService.moveUp()">
-    <img
-      src="./assets/icons/general/dabubble_logo.svg"
-      alt="Logo"
-      class="logo-image"
-      [class.slide-out]="signalService.slideOut()"
-    />
-    <img
-      [src]="'./assets/icons/general/dabubble_logo_title_'+ signalService.invertedThemeColorMain +'.svg'"
-      alt="Logo Title"
-      class="logo-title"
-      [class.slide-out]="signalService.slideOut()"
-    />
+  <div class="intro-wrapper">
+    <div class="intro-logo-group" [class.move-up]="signalService.moveUp()">
+      <img
+        src="./assets/icons/general/dabubble_logo.svg"
+        alt="Logo"
+        class="logo-image"
+        [class.slide-out]="signalService.slideOut()"
+      />
+      <img
+        [src]="
+          './assets/icons/general/dabubble_logo_title_' +
+          signalService.invertedThemeColorMain +
+          '.svg'
+        "
+        alt="Logo Title"
+        class="logo-title"
+        [class.slide-out]="signalService.slideOut()"
+      />
+    </div>
   </div>
 </div>
 }
