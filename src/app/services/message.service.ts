@@ -94,6 +94,14 @@ export class MessageService {
       console.error("Failed to update message:", error);
     }
   }
+
+  updateMessageText(id: string, newText: string, isChannelMessage: boolean): void {
+    if (isChannelMessage) {
+      this.updateMessage(id, { text: newText }, {});
+    } else {
+      this.updateMessage(id, { text: newText }, { isThread: true });
+    }
+  }
   
   /**
    * Adds or updates a reaction to a channel or thread message

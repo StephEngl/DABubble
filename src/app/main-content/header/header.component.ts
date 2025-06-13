@@ -58,21 +58,29 @@ export class HeaderComponent {
 
   /** Changes the user's name if it's different from the current one. */
   changeUserName() {
-    if(this.editName != this.authService.currentUser()!.name) {
+    if (this.userAlreadyExists()) {
+      this.signalService.triggerToast('User Name already exists', 'error');
+      return;
+    }
+    if(!this.noChangesToName()) {
       this.usersService.updateUserName(
         this.authService.userId,
         this.editName
       );
       this.editProfile = false;
       this.signalService.triggerToast('User Name changed successfully','confirm');
-    } else {
-      this.editProfile = false;
     }
+    this.editProfile = false;
+  }
+
+  userAlreadyExists(): boolean {
+    const searchName = this.editName.toLowerCase();
+    return this.usersService.users.some(u => u.name.toLowerCase() === searchName);
   }
 
   /** Returns true if the edited name equals the current name. */
   noChangesToName() {
-    return this.editName == this.authService.currentUser()!.name;
+    return this.editName == this.authService.currentUser()!.name || this.editName.trim().length < 2;
   }
 
   /**
