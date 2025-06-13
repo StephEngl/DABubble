@@ -7,12 +7,14 @@
     <img [src]="'./assets/icons/general/dabubble_logo_title_'+ signalService.themeColorMain() +'.svg'" alt="">
   </div>
 
-  <div class="register-box">
-    <p>New at DABubble?</p>
-    <a class="register" (click)="signalService.showRegisterDialog()"
+  @if (signalService.isLoginDialog()) {
+    <div class="register-box">
+      <p>New at DABubble?</p>
+      <a class="register" (click)="signalService.showRegisterDialog()"
       >Register</a
-    >
-  </div>
+      >
+    </div>
+  }
 </header>
 
 <main class="dialog-wrapper">
