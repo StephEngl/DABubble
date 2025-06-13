@@ -56,6 +56,11 @@ section {
   p,
   li {
     font-size: 20px;
+    color: var(--col-font-main);
+  }
+
+  a {
+    word-wrap: break-word;
   }
 
   span {
