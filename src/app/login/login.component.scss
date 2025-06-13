@@ -95,10 +95,22 @@ a {
 }
 
 @media screen and (max-width: 550px) {
+  .dialog-wrapper {
+    flex-grow: unset;
+  }
+
   .login-header {
     justify-content: center;
-    padding: 16px 0 0 0;
-    height: 60px;
+    padding: 16px;
+    height: auto;
+  }
+
+  app-login-dialog,
+  app-register-dialog,
+  app-choose-avatar-dialog,
+  app-password-dialog,
+  app-password-reset-dialog {
+    padding-top: 0;
   }
 
   .login-footer {
@@ -117,5 +129,4 @@ a {
       height: 20px !important;
     }
   }
-  
 }
