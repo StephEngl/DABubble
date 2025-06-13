@@ -10,7 +10,7 @@
 }
 
 .intro-logo-group {
-  @include dFlex($gap: 20px, $pos: absolute);
+  @include dFlex($ai: center, $gap: 20px, $pos: absolute);
   left: 50%;
   top: 50%;
   transform: translate(-50%, -50%);
@@ -21,7 +21,7 @@
 }
 
 .logo-image {
-  width: 180px;
+  height: 180px;
   z-index: 2;
   transition: transform 0.6s ease;
   transform: translateX(100px);
@@ -32,7 +32,7 @@
 }
 
 .logo-title {
-  width: 250px;
+  height: 40px;
   z-index: 1;
   opacity: 0;
   transform: translateX(-100px);
@@ -74,19 +74,19 @@
 
 @keyframes resize-logo-image {
   from {
-    width: 180px;
+    height: 180px;
   }
   to {
-    width: 70px;
+    height: 70px;
   }
 }
 
 @keyframes resize-logo-title {
   from {
-    width: 250px;
+    height: 40px;
   }
   to {
-    width: 160px;
+    height: 24px;
   }
 }
 
@@ -99,26 +99,32 @@
   }
   to {
     left: 50%;
-    top: 16px;
+    top: 21px;
     transform: translate(-50%, 0);
   }
 }
 
 @keyframes resize-logo-image-mobile {
   from {
-    width: 40px;
+    height: 40px;
+  }
+    to {
+    height: 40px;
   }
 }
 
 @keyframes resize-logo-title-mobile {
   from {
-    width: 130px;
+    height: 20px;
+  }
+  to {
+    height: 20px;
   }
 }
 
 @media screen and (max-width: 600px) {
   .logo-image {
-    width: 40px;
+    height: 40px;
 
     .move-up & {
       animation: resize-logo-image-mobile 0.7s ease forwards !important;
@@ -126,7 +132,7 @@
   }
 
   .logo-title {
-    width: 130px;
+    height: 20px;
 
     .move-up & {
       animation: resize-logo-title-mobile 0.7s ease forwards !important;

@@ -19,8 +19,7 @@ header {
   padding: 16px 16px 0 16px;
 
   .header-logo {
-    @include dFlex($ai: center);
-    gap: 20px;
+    @include dFlex($ai: center, $gap: 20px);
     > img:nth-child(1) {
       height: 70px;
     }
