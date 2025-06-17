@@ -92,6 +92,7 @@ export class ChannelsService {
       const channelRef = await addDoc(this.getChannelsRef(), channel);
       return channelRef;
     } catch (err) {
+      this.signalService.triggerToast("Something went wrong", "error")
       console.error(err);
     }
   }
