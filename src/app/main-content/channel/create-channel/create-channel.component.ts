@@ -5,7 +5,7 @@
 import { Component, inject } from '@angular/core';
 import { FormsModule, NgForm } from '@angular/forms';
 import { ChannelInterface } from '../../../interfaces/channel.interface';
-import { Timestamp } from 'firebase/firestore';
+import { Timestamp } from '@angular/fire/firestore';
 import { ChannelsService } from '../../../services/channels.service';
 import { SignalsService } from '../../../services/signals.service';
 import { AuthenticationService } from '../../../services/authentication.service';
@@ -30,6 +30,7 @@ export class CreateChannelComponent {
    * @param ngForm Angular form reference
    */
   async submitForm(ngForm: NgForm) {
+    // debugger;
     if (!ngForm.valid) return;
       const channelData = this.getChannelData();
     if (!this.channelAlreadyExists()) {

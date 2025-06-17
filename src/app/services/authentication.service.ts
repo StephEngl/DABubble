@@ -268,7 +268,7 @@ export class AuthenticationService {
       try {
         await sendPasswordResetEmail(this.auth, email, {
           // Optional: use of a continueUrl
-          url: 'https://dabubble-1175.developerakademie.net/angular-projects/dabubble/login',
+          url: 'https://dabubble.stephanie-englberger.de/',
           handleCodeInApp: true,
         });
         this.signalService.triggerToast('Email sent, if account exists. Please, also check your spam-folder', 'confirm', './assets/icons/login/send.svg');
