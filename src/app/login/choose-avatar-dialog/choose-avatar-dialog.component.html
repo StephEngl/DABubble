@@ -1,7 +1,7 @@
 <section class="avatar-dialog">
   <div class="choose-avatar-content">
     <img
-      src="./assets/icons/login/arrow-back-black.svg"
+      [src]="'./assets/icons/login/arrow_back_'+ signalService.themeColorMain() +'.svg'"
       alt="Arrow back"
       class="back-to-register"
       (click)="signalService.showRegisterDialog()"
