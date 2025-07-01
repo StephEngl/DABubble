@@ -34,7 +34,7 @@ import { SignalsService } from './signals.service';
 export class AuthenticationService {
   usersService = inject(UsersService);
   signalService = inject(SignalsService);
-  
+
   isAuthenticated = signal<boolean>(false);
   activeUserName: string = '';
   userId: string = '';
@@ -43,7 +43,7 @@ export class AuthenticationService {
 
   constructor(private router: Router) {
     this.auth = getAuth();
-    this.checkAuthStatus(); 
+    this.checkAuthStatus();
   }
 
   /**
@@ -95,8 +95,7 @@ export class AuthenticationService {
         email,
         password
       );
-      this.router.navigate(['/']);
-      this.isAuthenticated.set(true);
+      this.checkAuthStatus();
       return userCredential.user;
     } catch (error) {
       throw error;
@@ -108,8 +107,7 @@ export class AuthenticationService {
       const result = await signInWithPopup(this.auth, this.provider);
       const user = result.user;
       if (user) {
-        this.isAuthenticated.set(true);
-        this.router.navigate(['/']);
+        this.checkAuthStatus();
 
         await this.usersService.addUser(user.uid, {
           name: user.displayName ?? 'Unknown',
@@ -224,7 +222,7 @@ export class AuthenticationService {
       await signOut(this.auth);
       this.isAuthenticated.set(false);
       this.router.navigate(['/login']);
-      this.signalService.triggerToast('Logged out', 'confirm')
+      this.signalService.triggerToast('Logged out', 'confirm');
     } catch (error) {
       console.error('Sign out error:', error);
     }
@@ -241,7 +239,7 @@ export class AuthenticationService {
     try {
       await deleteUser(user);
       this.isAuthenticated.set(false);
-      this.signalService.triggerToast('User deleted', 'confirm')
+      this.signalService.triggerToast('User deleted', 'confirm');
       this.router.navigate(['/login']).then(() => location.reload());
     } catch (error) {
       console.error('Deleting active user failed', error);
@@ -260,27 +258,33 @@ export class AuthenticationService {
 
   currentUser() {
     const currentUserId = this.userId;
-    const user = this.usersService.users.find(user => user.id === currentUserId);
+    const user = this.usersService.users.find(
+      (user) => user.id === currentUserId
+    );
     return user;
   }
 
   async sendMailForNewPassword(email: string) {
-      try {
-        await sendPasswordResetEmail(this.auth, email, {
-          // Optional: use of a continueUrl
-          url: 'https://dabubble.stephanie-englberger.de/',
-          handleCodeInApp: true,
-        });
-        this.signalService.triggerToast('Email sent, if account exists. Please, also check your spam-folder', 'confirm', './assets/icons/login/send.svg');
-        setTimeout(() => {
-          this.signalService.backToLogin();
-        }, 2500);
-      } catch (error: any) {
-        this.signalService.triggerToast("Error", error)
-      }
+    try {
+      await sendPasswordResetEmail(this.auth, email, {
+        // Optional: use of a continueUrl
+        url: 'https://dabubble.stephanie-englberger.de/',
+        handleCodeInApp: true,
+      });
+      this.signalService.triggerToast(
+        'Email sent, if account exists. Please, also check your spam-folder',
+        'confirm',
+        './assets/icons/login/send.svg'
+      );
+      setTimeout(() => {
+        this.signalService.backToLogin();
+      }, 2500);
+    } catch (error: any) {
+      this.signalService.triggerToast('Error', error);
     }
+  }
 
-    /**
+  /**
    * Checks, if password-reset-code (out of reset-email) is valid.
    * Returns the belonging mail-address.
    */
@@ -296,14 +300,14 @@ export class AuthenticationService {
   /**
    * Reset password with oobCode and the new password.
    */
-  async confirmPasswordReset(oobCode: string, newPassword: string): Promise<void> {
+  async confirmPasswordReset(
+    oobCode: string,
+    newPassword: string
+  ): Promise<void> {
     try {
       await confirmPasswordReset(this.auth, oobCode, newPassword);
     } catch (error) {
       throw error;
     }
   }
-
 }
-
-
