@@ -87,7 +87,7 @@ export class ChatMessageComponent {
       imgSrc: './assets/icons/message/more_options_'+ this.signalService.themeColorMain() + '.svg',
       shownInThread: true,
       shownIfOwnMessage: true,
-      clickFunction: () => this.editMode = true
+      clickFunction: () => this.setEditMode()
     },
   ];
 
@@ -205,7 +205,7 @@ export class ChatMessageComponent {
     } else {
       this.messageService.updateMessage(id, { text: message }, { isThread: true });
     }
-    this.editMode = false;
+    this.leaveEditMode();
   }
 
   /** Returns the sender's display name */
@@ -352,6 +352,18 @@ export class ChatMessageComponent {
     return window.innerWidth < 850
     ? '20px 16px 20px ' + this.paddingHorizontal + 'px'
     : '20px ' + this.paddingHorizontal + 'px';
+  }
+
+   /** Enter edit Mode and disables focus on input fields */
+  setEditMode() {
+    this.editMode = true;
+    this.signalService.setFocus(false);
+  }
+
+  /** Leave edit Mode and set focus on input fields */
+  leaveEditMode() {
+    this.editMode = false;
+    this.signalService.setFocus(false);
   }
 
 }

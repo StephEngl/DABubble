@@ -209,4 +209,10 @@ export class SignalsService {
       this.showThread.set(false);
     }
   }
+
+    setFocus(status: boolean):void {
+    this.focusChat.set(status);
+    this.focusThread.set(status);
+    this.focusConversation.set(status);
+  }
 }
