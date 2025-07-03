@@ -1,271 +1,273 @@
-@import './../../../../assets/styles/mixins.scss';
+@import "./../../../../assets/styles/mixins.scss";
 
 .app-message {
-    @include dFlex($gap:20px, $ai:flex-start);
-    width: 100%; 
-    transition: all 0.3s ease;
-    border: 1px solid var(--col-bg-secondary);
+  @include dFlex($gap: 20px, $ai: flex-start);
+  width: 100%;
+  transition: all 0.3s ease;
+  border: 1px solid var(--col-bg-secondary);
 }
 
 .user-avatar {
-    width: 70px;
-    height: 70px;
-    border-radius: 50%;
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
 }
 
 .chat-message {
-    @include dFlex($fd:column, $gap:10px, $ai: flex-start);
-    flex: 1;
+  @include dFlex($fd: column, $gap: 10px, $ai: flex-start);
+  flex: 1;
 
-    .message-text {
-        padding: 10px 20px;
-        max-width: 100%;
-        word-break: break-all;
+  .message-text {
+    padding: 10px 20px;
+    max-width: 100%;
+    word-break: break-all;
+  }
+  .message-title {
+    @include dFlex($gap: 10px);
+    > h5 {
+      font-weight: 700;
     }
-    .message-title {
-        @include dFlex($gap:10px);
-        >h5 {
-            font-weight: 700;
-        }
+  }
+  .answers {
+    @include dFlex($gap: 5px);
+    > button {
+      color: var(--col-font-href);
+      font-size: 18px;
     }
-    .answers {
-        @include dFlex($gap:5px);
-        >button {
-            color: var(--col-font-href);
-            font-size: 18px;
-        }
-        >p {
-            color: var(--col-font-info);
-        }
+    > p {
+      color: var(--col-font-info);
     }
-    .reactions {
-        @include dFlex($gap: 8px, $jc:flex-start);
-        flex-wrap: wrap;
-        .reaction,
-        >button {
-            @include dFlex($gap: 6px);
-            border: 1px solid var(--col-stroke-main);
-            padding: 4px 8px;
-            border-radius: 50px;
-            background-color: var(--col-bg-secondary);
-            color: var(--col-font-main);
-            cursor: pointer;
-        }
-        >button:hover {
-            transform: scale(1.05);
-        }
+  }
+  .reactions {
+    @include dFlex($gap: 8px, $jc: flex-start);
+    flex-wrap: wrap;
+    .reaction,
+    > button {
+      @include dFlex($gap: 6px);
+      border: 1px solid var(--col-stroke-main);
+      padding: 4px 8px;
+      border-radius: 50px;
+      background-color: var(--col-bg-secondary);
+      color: var(--col-font-main);
+      cursor: pointer;
     }
-    .reaction-info {
-        @include dFlex($pos: absolute, $fd: column, $jc: flex-end, $ai:flex-start);
-        bottom: 40px;
-        left: 50%;
-        padding: 6px;
-        width: 120px;
-        border-radius: 20px 20px 20px 0;
-        z-index: 3;
-        background-color: var(--col-bg-btn-main);
-        >p {
-            color: var(--col-font-secondary);
-        }
-        >p:first-child {
-            font-size: 34px;
-            align-self: center;
-            padding-bottom: 6px;
-        }
-        .reaction-username {
-            font-weight: 700;
-        }
+    > button:hover {
+      transform: scale(1.05);
     }
+  }
+  .reaction-info {
+    @include dFlex($pos: absolute, $fd: column, $jc: flex-end, $ai: flex-start);
+    bottom: 40px;
+    left: 50%;
+    padding: 6px;
+    width: 120px;
+    border-radius: 20px 20px 20px 0;
+    z-index: 3;
+    background-color: var(--col-bg-btn-main);
+    > p {
+      color: var(--col-font-secondary);
+    }
+    > p:first-child {
+      font-size: 34px;
+      align-self: center;
+      padding-bottom: 6px;
+    }
+    .reaction-username {
+      font-weight: 700;
+    }
+  }
 }
 
 .reply-text {
-    padding: 10px 20px;
-    background-color: var(--col-bg-secondary) !important;
-    border: 1px solid var(--col-stroke-main);
-    .reply-title {
-        @include dFlex($jc: flex-start, $gap: 6px);
-        >img {
-            height: 24px;
-            width: 24px;
-            border-radius: 50%;
-        }
+  padding: 10px 20px;
+  background-color: var(--col-bg-secondary) !important;
+  border: 1px solid var(--col-stroke-main);
+  .reply-title {
+    @include dFlex($jc: flex-start, $gap: 6px);
+    > img {
+      height: 24px;
+      width: 24px;
+      border-radius: 50%;
     }
+  }
 }
 
 .edit-message {
-    @include dFlex($fd: column);
-    border-radius: 20px;
-    border: 1px solid var(--col-stroke-main);
-    background-color: var(--col-bg-secondary);
+  @include dFlex($fd: column);
+  border-radius: 20px;
+  border: 1px solid var(--col-stroke-main);
+  background-color: var(--col-bg-secondary);
+  width: 100%;
+  padding: 12px;
+  > textarea {
+    border-radius: 10px;
+    padding: 8px;
     width: 100%;
-    padding: 12px;
-    >textarea {
-        border-radius: 10px;
-        padding: 8px;
-        width: 100%;
+    font-size: 18px;
+  }
+
+  .edit-menu {
+    @include dFlex($jc: space-between);
+    width: 100%;
+    .edit-buttons {
+      @include dFlex($gap: 8px);
+      > button {
         font-size: 18px;
-    }
-    
-    .edit-menu {
-        @include dFlex($jc: space-between);
-        width: 100%;
-        .edit-buttons {
-            @include dFlex($gap: 8px);
-            >button {
-                font-size: 18px;
-                font-weight: 700;
-                padding: 10px 18px;
-                border-radius: 100px;
-                cursor: pointer;
-                border: 1px solid transparent;
-                color: var(--col-font-secondary);
-                transition: all 0.3s ease;
-            }
-            >button:first-child {
-                border: 1px solid var(--col-stroke-main);
-                color: var(--col-font-href);
-                &:hover {
-                    color: var(--col-bg-btn-main);
-                    background-color: var(--col-bg-main);
-                }
-            }
-            >button:nth-child(2) {
-                background-color: var(--col-font-href);
-                &:hover {
-                    color: var(--col-font-secondary);
-                    background-color: var(--col-bg-btn-main);
-                }
-            }
+        font-weight: 700;
+        padding: 10px 18px;
+        border-radius: 100px;
+        cursor: pointer;
+        border: 1px solid transparent;
+        color: var(--col-font-secondary);
+        transition: all 0.3s ease;
+      }
+      > button:first-child {
+        border: 1px solid var(--col-stroke-main);
+        color: var(--col-font-href);
+        &:hover {
+          color: var(--col-bg-btn-main);
+          background-color: var(--col-bg-main);
         }
+      }
+      > button:nth-child(2) {
+        background-color: var(--col-font-href);
+        &:hover {
+          color: var(--col-font-secondary);
+          background-color: var(--col-bg-btn-main);
+        }
+      }
     }
+  }
 }
 
 .own-message {
-    background-color: var(--col-font-href);
-    color: var(--col-font-secondary);
-    border-radius: 15px 0 15px 15px;
+  background-color: var(--col-font-href);
+  color: var(--col-font-secondary);
+  border-radius: 15px 0 15px 15px;
 }
 
 .normal-message {
-    background-color: var(--col-bg-main);
-    color: var(--col-font-main);
-    border-radius: 0 15px 15px 15px;
+  background-color: var(--col-bg-main);
+  color: var(--col-font-main);
+  border-radius: 0 15px 15px 15px;
 }
 
 .app-message:hover {
-    background-color: var(--col-bg-main);
-    .chat-message {
-        .normal-message {
-            background-color: var(--col-bg-secondary);
-        }
-        .own-message {
-            background-color: var(--col-bg-btn-main);
-        }
+  background-color: var(--col-bg-main);
+  .chat-message {
+    .normal-message {
+      background-color: var(--col-bg-secondary);
     }
-    .answers {
-        >button {
-            color: var(--col-bg-btn-main);
-        }
-        >p {
-            color: var(--col-font-main);
-        }
+    .own-message {
+      background-color: var(--col-bg-btn-main);
     }
+  }
+  .answers {
+    > button {
+      color: var(--col-bg-btn-main);
+    }
+    > p {
+      color: var(--col-font-main);
+    }
+  }
 }
 
 nav {
-    @include dFlex($pos: absolute, $gap: 4px);
-    top: 30px;
-    height: 0px;
-    padding: 12px;
-    overflow-y: hidden;
-    opacity: 0;
-    width: auto;
-    border: 1px solid var(--col-stroke-main);
-    background-color: var(--col-bg-secondary);
-    transition: all 0.5s ease;
-    >img {
-        border-radius: 50%;
-        width: 30px;
-        height: 30px;
-        padding: 5px;
-        object-fit: contain;
-        overflow:visible;
-        transition: all 0.3s ease;
-        cursor: pointer;
-        &:hover:nth-child(-n + 2) {
-            transform: scale(1.3);
-        }
-        &:hover:nth-child(n + 3) {
-            background-color: var(--col-bg-main);
-            border: 1px solid var(--col-stroke-main);
-        }
+  @include dFlex($pos: absolute, $gap: 4px);
+  top: 30px;
+  height: 0px;
+  padding: 12px;
+  overflow-y: hidden;
+  opacity: 0;
+  width: auto;
+  border: 1px solid var(--col-stroke-main);
+  background-color: var(--col-bg-secondary);
+  transition: all 0.5s ease;
+  > img {
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    padding: 5px;
+    object-fit: contain;
+    overflow: visible;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    &:hover:nth-child(-n + 2) {
+      transform: scale(1.3);
     }
-    .last-reaction:first-child {
-        padding-right: 3px;
+    &:hover:nth-child(n + 3) {
+      background-color: var(--col-bg-main);
+      border: 1px solid var(--col-stroke-main);
     }
-    .last-reaction {
-        cursor: pointer;
-        font-size: 18px;
-        &:hover {
-            transform: scale(1.1);
-            filter: brightness(1.2);
-        }
+  }
+  .last-reaction:first-child {
+    padding-right: 3px;
+  }
+  .last-reaction {
+    cursor: pointer;
+    font-size: 18px;
+    &:hover {
+      transform: scale(1.1);
+      filter: brightness(1.2);
     }
+  }
 }
 
 .left {
-    transform: translateX(50%);
-    border-radius: 20px 20px 0 20px;
-    left: 16px;
-    right: auto;
+  transform: translateX(50%);
+  border-radius: 20px 20px 0 20px;
+  left: 16px;
+  right: auto;
 }
 
 .right {
-    transform: translateX(-50%);
-    border-radius: 20px 20px 20px 0;
-    left: auto;
-    right: 16px;
+  transform: translateX(-50%);
+  border-radius: 20px 20px 20px 0;
+  left: auto;
+  right: 16px;
 }
 
 .shown {
-    transform: translateX(0%);
-    opacity: 1;
-    height: auto;
-    top: -10px;
+  transform: translateX(0%);
+  opacity: 1;
+  height: auto;
+  top: -10px;
 }
 
 .emoji-wrapper {
-    position: absolute;
-    margin: auto;
-    z-index: 3;
-    filter: drop-shadow(4px 4px 4px var(--col-transparent-shadow));
+  position: absolute;
+  margin: auto;
+  z-index: 3;
+  filter: drop-shadow(4px 4px 4px var(--col-transparent-shadow));
 }
 
 .emoji-mart-edit-mode {
-    position: absolute;
-    bottom: 30px;
+  position: absolute;
+  top: 30px;
+  left: 10px;
+  z-index: 5;
 }
 
 @media screen and (max-width: 950px) {
-    .user-avatar {
-        width: 46px;
-        height: 46px;
-    }
-    .answers>p {
-        font-size: 14px;
-    }
-    .left,
-    .right {
-        transform: translateX(-50%);
-        border-radius: 20px;
-        left: 50%;
-        right: auto;
-    }
-    .shown {
-        top: -40px;
-    }
-    h5,
-    p {
-        font-size: 16px;
-    }
+  .user-avatar {
+    width: 46px;
+    height: 46px;
+  }
+  .answers > p {
+    font-size: 14px;
+  }
+  .left,
+  .right {
+    transform: translateX(-50%);
+    border-radius: 20px;
+    left: 50%;
+    right: auto;
+  }
+  .shown {
+    top: -40px;
+  }
+  h5,
+  p {
+    font-size: 16px;
+  }
 }
